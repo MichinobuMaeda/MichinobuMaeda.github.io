@@ -5,6 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRY447EKHY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BRY447EKHY');
+    </script>
+
 {% seo %}
     <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
     <!--[if lt IE 9]>
@@ -29,6 +39,23 @@
         {% if site.github.is_user_page %}
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
         {% endif %}
+        
+        <!-- Sections -->
+        <ul>
+          <li><a href="https://michinobu.jp/tec/">工作室</a></li>
+          <li><a href="https://michinobu.jp/l/">厚生部</a></li>
+          <li><a href="https://michinobu.jp/p/">政治局</a></li>
+        </ul>
+
+        <!-- License -->
+        <p>&copy; Michinobu Maeda.</p>
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+        </a><br />
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+          Creative Commons Attribution 4.0 International License
+        </a>.
 
         {% if site.show_downloads %}
         <ul class="downloads">
