@@ -4,6 +4,17 @@
 @import "{{ site.theme }}";
 
 body {
+  font-family: "Yu Gothic Medium", "YuGothic Medium", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 18px;
-  color: #101010;
+  color: #111111;
+  line-height: 1.8em;
+}
+.wrapper {
+  width: 920px;
+}
+header {
+  width: 270px;
+}
+section {
+  width: 620px;
 }
