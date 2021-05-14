@@ -1,5 +1,5 @@
 body {
-  font: 18px/1.5 "Yu Gothic Medium", "YuGothic Medium", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font: 18px "Yu Gothic Medium", "YuGothic Medium", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-weight: 500;
   color: #111111;
   line-height: 1.8em;
@@ -18,6 +18,9 @@ header, footer {
   margin: 8px 0;
   padding: 16px 4px;
 }
+footer {
+  line-height: 1.5em;
+}
 section {
   width: 620px;
   max-width: 100%;
@@ -25,4 +28,9 @@ section {
   margin: 8px 0;
   padding: 16px 8px;
   word-break: break-all;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  padding: 4px 8px;
+  background-color: #e0e0e0;
 }
