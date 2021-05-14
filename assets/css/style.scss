@@ -2,4 +2,8 @@
 ---
 
 @import "{{ site.theme }}";
-@import "custom.scss";
+
+body {
+  font-size: 18px;
+  color: #101010;
+}
