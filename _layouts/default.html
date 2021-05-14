@@ -30,12 +30,13 @@
           <img src="{{site.logo | relative_url}}" alt="Logo" />
           <!-- Sections -->
           <a href="https://michinobu.jp/tec/">工作室</a> //
-          <a href="https://michinobu.jp/l/">厚生部</a> //
-          <a href="https://michinobu.jp/p/">政治局</a>
+          <a href="/l/">厚生部</a> //
+          <a href="/p/">政治局</a>
         {% endif %}
 
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
+        <!--
         {% if site.github.is_project_page %}
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ site.github.repository_nwo }}</small></a></p>
         {% endif %}
@@ -43,16 +44,7 @@
         {% if site.github.is_user_page %}
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
         {% endif %}
-
-        <!-- License -->
-        <p>&copy; Michinobu Maeda.</p>
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
-        </a><br />
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-          Creative Commons Attribution 4.0 International License
-        </a>.
+        -->
 
         {% if site.show_downloads %}
         <ul class="downloads">
@@ -68,6 +60,17 @@
 
       </section>
       <footer>
+        <!-- License -->
+        <p>
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+            <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
+          </a><br />
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+            Creative Commons Attribution 4.0 International License
+          </a>.
+        </p>
+
         {% if site.github.is_project_page %}
         <p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
         {% endif %}
