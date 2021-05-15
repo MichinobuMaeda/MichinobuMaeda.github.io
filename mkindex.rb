@@ -10,7 +10,7 @@ conf['sections'].each do |section|
     updated = nil
     File.open(md).read.gsub(/\r\n?/, "\n").each_line do |line|
       title ||= !title && line.gsub(/^#\ +/, '').strip
-      updated ||= !updated && /^Update:/.match(line) && line.gsub(/^Update:\ +/, '').strip
+      updated ||= !updated && /^Update:/.match(line) && line.gsub(/^Update:\ +/, '').gsub(/unknown/, '----------').strip
     end
     indexes.push("- #{updated} [#{title}](#{md[(section.length + 1) ... -3]}.html)")
   end
