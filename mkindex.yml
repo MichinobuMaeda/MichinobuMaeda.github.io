@@ -1,0 +1,7 @@
+sections:
+  - l
+  - p
+  - t
+index:
+  start: '<!-- section index: start -->'
+  end: '<!-- section index: end -->'

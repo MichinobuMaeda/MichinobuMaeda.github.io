@@ -25,6 +25,6 @@
     <img style="height: 18px; margin-right: 16px;" src="img/mixi.png" title="mixi" alt="mixi" />
 </a>
 
-[工作室](https://michinobu.jp/tec/) //
+[工作室](/t/) //
 [厚生部](/l/) //
 [政治局](/p/)
