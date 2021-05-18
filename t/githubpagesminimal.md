@@ -10,6 +10,8 @@ Markdown が使えるといいんだけど、あと、静的なページでい�
 を見ていたら GitHub Pages が上の方にいます。上の方といっても WordPress が圧倒的なので 10位より下は 1.0% 未満です。
 WordPress がいいものだとは思わないんだけどな。まあ、他人のことはいいです。
 
+GitHub Pages なら GitHub のオンラインの編集機能も利用できます。
+
 ## サブディレクトリ無しにするためのお約束
 
 GitHub にリポジトリを作れば Markdown でも HTML でもとにかく Pages で公開できることは知っていました。 `https://username.github.io/repositoryname` の形になります。でも、そのリポジトリ名のサブディレクトリは無しにしたいんだけどと調べてみたらリポジトリ名を `username.github.io` にしろとのこと。そうするとサブディレクトリ無しの `https://username.github.io/` で公開してくれます。
