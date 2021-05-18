@@ -5,3 +5,5 @@ sections:
 index:
   start: '<!-- section index: start -->'
   end: '<!-- section index: end -->'
+tags:
+  filterOff: フィルタ解除

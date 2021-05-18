@@ -2,62 +2,143 @@
 =====
 
 <!-- section index: start -->
-- 2021-05-18 [このサイトを GitHub Pages に引っ越し](githubpagesminimal.html)
+<p id="tag-cloud">
+<a id="tag-apache" style="font-size: 0.9em" href="javascript:filterByTag('apache')">apache</a>
+<a id="tag-arno-iptables-firewall" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('arno-iptables-firewall')">arno-iptables-firewall</a>
+<a id="tag-choco" style="font-size: 0.9em" href="javascript:filterByTag('choco')">choco</a>
+<a id="tag-chocolatey" style="font-size: 0.9em" href="javascript:filterByTag('chocolatey')">chocolatey</a>
+<a id="tag-chocolaty" style="font-size: 0.9em" href="javascript:filterByTag('chocolaty')">chocolaty</a>
+<a id="tag-chromebook" style="font-size: 0.9em" href="javascript:filterByTag('chromebook')">chromebook</a>
+<a id="tag-chromeos" style="font-size: 0.9em" href="javascript:filterByTag('chromeos')">chromeos</a>
+<a id="tag-cloud" style="font-size: 0.9em" href="javascript:filterByTag('cloud')">cloud</a>
+<a id="tag-composer" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('composer')">composer</a>
+<a id="tag-curl" style="font-size: 0.9em" href="javascript:filterByTag('curl')">curl</a>
+<a id="tag-debian" style="font-size: 1.3225490200071284em" href="javascript:filterByTag('debian')">debian</a>
+<a id="tag-design" style="font-size: 0.9em" href="javascript:filterByTag('design')">design</a>
+<a id="tag-devops" style="font-size: 0.9em" href="javascript:filterByTag('devops')">devops</a>
+<a id="tag-dns" style="font-size: 0.9em" href="javascript:filterByTag('dns')">dns</a>
+<a id="tag-docker" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('docker')">docker</a>
+<a id="tag-dokuwiki" style="font-size: 1.2494850021680095em" href="javascript:filterByTag('dokuwiki')">dokuwiki</a>
+<a id="tag-dovecot" style="font-size: 0.9em" href="javascript:filterByTag('dovecot')">dovecot</a>
+<a id="tag-draw.io" style="font-size: 0.9em" href="javascript:filterByTag('draw.io')">draw.io</a>
+<a id="tag-electron" style="font-size: 0.9em" href="javascript:filterByTag('electron')">electron</a>
+<a id="tag-email" style="font-size: 0.9em" href="javascript:filterByTag('email')">email</a>
+<a id="tag-evernote" style="font-size: 0.9em" href="javascript:filterByTag('evernote')">evernote</a>
+<a id="tag-fastcgi" style="font-size: 0.9em" href="javascript:filterByTag('fastcgi')">fastcgi</a>
+<a id="tag-firebase" style="font-size: 1.2494850021680095em" href="javascript:filterByTag('firebase')">firebase</a>
+<a id="tag-firewall" style="font-size: 0.9em" href="javascript:filterByTag('firewall')">firewall</a>
+<a id="tag-fpm" style="font-size: 0.9em" href="javascript:filterByTag('fpm')">fpm</a>
+<a id="tag-gimp" style="font-size: 0.9em" href="javascript:filterByTag('gimp')">gimp</a>
+<a id="tag-git" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('git')">git</a>
+<a id="tag-github" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('github')">github</a>
+<a id="tag-gitlab" style="font-size: 0.9em" href="javascript:filterByTag('gitlab')">gitlab</a>
+<a id="tag-haskell" style="font-size: 0.9em" href="javascript:filterByTag('haskell')">haskell</a>
+<a id="tag-icon-gen" style="font-size: 0.9em" href="javascript:filterByTag('icon-gen')">icon-gen</a>
+<a id="tag-imap" style="font-size: 0.9em" href="javascript:filterByTag('imap')">imap</a>
+<a id="tag-iptables" style="font-size: 0.9em" href="javascript:filterByTag('iptables')">iptables</a>
+<a id="tag-javascript" style="font-size: 1.2010299956639812em" href="javascript:filterByTag('javascript')">javascript</a>
+<a id="tag-jekyll" style="font-size: 0.9em" href="javascript:filterByTag('jekyll')">jekyll</a>
+<a id="tag-json" style="font-size: 0.9em" href="javascript:filterByTag('json')">json</a>
+<a id="tag-laravel" style="font-size: 1.4em" href="javascript:filterByTag('laravel')">laravel</a>
+<a id="tag-localization" style="font-size: 0.9em" href="javascript:filterByTag('localization')">localization</a>
+<a id="tag-macos" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('macos')">macos</a>
+<a id="tag-mailtrap" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('mailtrap')">mailtrap</a>
+<a id="tag-markdown" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('markdown')">markdown</a>
+<a id="tag-mysql" style="font-size: 0.9em" href="javascript:filterByTag('mysql')">mysql</a>
+<a id="tag-n" style="font-size: 0.9em" href="javascript:filterByTag('n')">n</a>
+<a id="tag-nginx" style="font-size: 0.9em" href="javascript:filterByTag('nginx')">nginx</a>
+<a id="tag-node" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('node')">node</a>
+<a id="tag-nodejs" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('nodejs')">nodejs</a>
+<a id="tag-password" style="font-size: 0.9em" href="javascript:filterByTag('password')">password</a>
+<a id="tag-php" style="font-size: 1.4569716761534184em" href="javascript:filterByTag('php')">php</a>
+<a id="tag-phpunit" style="font-size: 0.9em" href="javascript:filterByTag('phpunit')">phpunit</a>
+<a id="tag-pip" style="font-size: 0.9em" href="javascript:filterByTag('pip')">pip</a>
+<a id="tag-postfix" style="font-size: 0.9em" href="javascript:filterByTag('postfix')">postfix</a>
+<a id="tag-powershell" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('powershell')">powershell</a>
+<a id="tag-pure-ftpd" style="font-size: 0.9em" href="javascript:filterByTag('pure-ftpd')">pure-ftpd</a>
+<a id="tag-python" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('python')">python</a>
+<a id="tag-rewrite" style="font-size: 0.9em" href="javascript:filterByTag('rewrite')">rewrite</a>
+<a id="tag-ruby" style="font-size: 0.9em" href="javascript:filterByTag('ruby')">ruby</a>
+<a id="tag-security" style="font-size: 0.9em" href="javascript:filterByTag('security')">security</a>
+<a id="tag-smtp" style="font-size: 0.9em" href="javascript:filterByTag('smtp')">smtp</a>
+<a id="tag-spa" style="font-size: 0.9em" href="javascript:filterByTag('spa')">spa</a>
+<a id="tag-spam" style="font-size: 0.9em" href="javascript:filterByTag('spam')">spam</a>
+<a id="tag-spf" style="font-size: 0.9em" href="javascript:filterByTag('spf')">spf</a>
+<a id="tag-sqlite" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('sqlite')">sqlite</a>
+<a id="tag-ssh" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('ssh')">ssh</a>
+<a id="tag-ssl" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('ssl')">ssl</a>
+<a id="tag-starttls" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('starttls')">starttls</a>
+<a id="tag-tls" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('tls')">tls</a>
+<a id="tag-travisci" style="font-size: 0.9em" href="javascript:filterByTag('travisci')">travisci</a>
+<a id="tag-vim" style="font-size: 0.9em" href="javascript:filterByTag('vim')">vim</a>
+<a id="tag-virtualenv" style="font-size: 0.9em" href="javascript:filterByTag('virtualenv')">virtualenv</a>
+<a id="tag-vscode" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('vscode')">vscode</a>
+<a id="tag-vue" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('vue')">vue</a>
+<a id="tag-vuejs" style="font-size: 0.9em" href="javascript:filterByTag('vuejs')">vuejs</a>
+<a id="tag-web" style="font-size: 0.9em" href="javascript:filterByTag('web')">web</a>
+<a id="tag-wget" style="font-size: 0.9em" href="javascript:filterByTag('wget')">wget</a>
+<a id="tag-windows" style="font-size: 1.2890756251918218em" href="javascript:filterByTag('windows')">windows</a>
+<a id="tag-wordpress" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('wordpress')">wordpress</a>
+<a id="tag-wsl" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('wsl')">wsl</a>
+<a id="tag-xcode" style="font-size: 0.9em" href="javascript:filterByTag('xcode')">xcode</a>
+</p>
+<p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
+- 2021-05-18 [このサイトを GitHub Pages に引っ越し](githubpagesminimal.html "github ruby jekyll")
 - 2021-05-14 [Edge の開発者ツールを表示する手順](edgehowtoopendevtools.html)
-- 2021-05-08 [yarn の警告 "No license field" を止める](yarnwarningnolicensefield.html)
-- 2021-05-05 [Evernote で Markdown](evernotemarkdown.html)
-- 2021-05-05 [Chocolaty で Git や Node.js を入れる](windowschocogitnodejs.html)
-- 2021-04-29 [Windows に WordPress のテスト環境を作る](windowsxamppwordpress.html)
-- 2021-04-15 [Anaconda をインストールする](installanaconda.html)
-- 2021-03-13 [JavaScriptでスワイプ操作の検出](swipedetection.html)
-- 2021-02-27 [Mac の Finder の表示を更新するには](macfinerrefresh.html)
-- 2021-02-26 [Macで "xcrun: error:" が出たら](macosxcrunerror.html)
-- 2021-01-02 [DokuWikiの「サイドバー」を変更](dokuwikilang.html)
-- 2020-12-30 [SSH の基本的な使い方](sshabc.html)
-- 2020-09-05 [wget で Wordpress のサイトを丸ごとコピーする](getwordpresspageswithwget.html)
-- 2020-07-31 [WSL 2 に Docker を入れる](dockeronwsl2.html)
-- 2020-07-25 [Chrome OS の Debian を 10 にアップグレードする](chromeosdebianupgradeto10.html)
-- 2020-07-14 [このサイトのレイアウトを変更してみる](dokuwikimyuserstyle.html)
-- 2020-07-14 [DokuWiki のレイアウトを正しくカスタマイズする](dokuwikiuserstyle.html)
-- 2020-07-14 [Chocolatey で Windows に開発ツールをインストールする](devtoolsinstallbychocolaty.html)
-- 2020-07-11 [最近のWebアプリはアイコンがたくさん必要で](createwebappiconsbynodejs.html)
-- 2020-07-11 [Windows Subsystem for Linux の Debian で Web 開発の環境を作る](wsldebian.html)
-- 2020-07-11 [Windows 10 で Laravel を開発する](laravelwindows.html)
-- 2020-07-11 [VSCode Haskell Language Server の設定](vscode-haskell-language-server.html)
-- 2020-07-11 [PowerShell の一時ファイルを消さないと 65,536日目に死ぬ](powershellnewtempfile65536.html)
-- 2020-07-11 [Markdown のインデントはスペース 2個なのか 4個なのか](markdownspace2or4.html)
+- 2021-05-08 [yarn の警告 "No license field" を止める](yarnwarningnolicensefield.html "nodejs")
+- 2021-05-05 [Evernote で Markdown](evernotemarkdown.html "markdown evernote")
+- 2021-05-05 [Chocolaty で Git や Node.js を入れる](windowschocogitnodejs.html "windows chocolaty nodejs ssh")
+- 2021-04-29 [Windows に WordPress のテスト環境を作る](windowsxamppwordpress.html "windows apache mysql wordpress")
+- 2021-04-15 [Anaconda をインストールする](installanaconda.html "python")
+- 2021-03-13 [JavaScriptでスワイプ操作の検出](swipedetection.html "javascript vue")
+- 2021-02-27 [Mac の Finder の表示を更新するには](macfinerrefresh.html "macos")
+- 2021-02-26 [Macで "xcrun: error:" が出たら](macosxcrunerror.html "macos xcode")
+- 2021-01-02 [DokuWikiの「サイドバー」を変更](dokuwikilang.html "dokuwiki")
+- 2020-12-30 [SSH の基本的な使い方](sshabc.html "ssh")
+- 2020-09-05 [wget で Wordpress のサイトを丸ごとコピーする](getwordpresspageswithwget.html "wget wordpress")
+- 2020-07-31 [WSL 2 に Docker を入れる](dockeronwsl2.html "windows docker wsl")
+- 2020-07-25 [Chrome OS の Debian を 10 にアップグレードする](chromeosdebianupgradeto10.html "debian chromeos chromebook")
+- 2020-07-14 [このサイトのレイアウトを変更してみる](dokuwikimyuserstyle.html "dokuwiki")
+- 2020-07-14 [DokuWiki のレイアウトを正しくカスタマイズする](dokuwikiuserstyle.html "dokuwiki")
+- 2020-07-14 [Chocolatey で Windows に開発ツールをインストールする](devtoolsinstallbychocolaty.html "windows chocolatey choco vscode powershell")
+- 2020-07-11 [最近のWebアプリはアイコンがたくさん必要で](createwebappiconsbynodejs.html "nodejs gimp icon-gen")
+- 2020-07-11 [Windows Subsystem for Linux の Debian で Web 開発の環境を作る](wsldebian.html "windows wsl debian python pip virtualenv git")
+- 2020-07-11 [Windows 10 で Laravel を開発する](laravelwindows.html "php phpunit powershell laravel windows git sqlite")
+- 2020-07-11 [VSCode Haskell Language Server の設定](vscode-haskell-language-server.html "haskell vscode")
+- 2020-07-11 [PowerShell の一時ファイルを消さないと 65,536日目に死ぬ](powershellnewtempfile65536.html "powershell")
+- 2020-07-11 [Markdown のインデントはスペース 2個なのか 4個なのか](markdownspace2or4.html "markdown")
 - 2020-07-11 [Google Firebase のプロジェクトの設定](setupfirebaseproject.html)
-- 2020-07-11 [GitLab で Firebase の Functions のデプロイがうまくいかない](gitlabfirebasefunctiondeployerror.html)
-- 2020-07-11 [Firebase の CI/CD 用の Docker を作る](gitlabcicddockernodefirebase.html)
-- 2020-07-11 [Firebase の API Key は隠さなくていいよね？](firebaseapikye.html)
-- 2020-07-11 [Debian 9 から 10 にアップデート](updatedebian9to10.html)
-- 2020-06-24 [Vue の v-for の中の要素に ref を設定する](vuerefinvfor.html)
-- 2020-03-01 [絵が描けない私が気の利いたアイコンを作る](createicon.html)
-- 2019-11-10 [Dokuwiki でページをリダイレクトする](dokuwikipageredirectplugin.html)
-- 2019-06-24 [覚書: neovim のキーアサイン](vimkeys.html)
-- 2019-06-16 [本気でパスワード v2.0](honkipassv2.html)
-- 2019-03-16 [Pure-FTPd の Google Compute Engine 向けの設定](pureftpdgce.html)
-- 2019-01-04 [Windows で PHP の curl が証明書のエラーを出したら](phpcurlcertificateproblem.html)
-- 2019-01-01 [Laravel のログインページの URL を変更する](laravelchangeloginurl.html)
-- 2018-12-22 [Laraval 5 による開発の手順 #6](startlaravel6.html)
-- 2018-11-10 [draw.io で作図](draw_io.html)
-- 2018-10-14 [Laraval 5 による開発の手順 #5](startlaravel5.html)
-- 2018-10-04 [Laraval 5 による開発の手順 #4](startlaravel4.html)
-- 2018-10-03 [イベント受付サイトを構築しました](jsadogaku.html)
-- 2018-09-25 [Laraval 5 による開発の手順 #3](startlaravel3.html)
+- 2020-07-11 [GitLab で Firebase の Functions のデプロイがうまくいかない](gitlabfirebasefunctiondeployerror.html "git firebase devops")
+- 2020-07-11 [Firebase の CI/CD 用の Docker を作る](gitlabcicddockernodefirebase.html "docker firebase gitlab node n")
+- 2020-07-11 [Firebase の API Key は隠さなくていいよね？](firebaseapikye.html "firebase github")
+- 2020-07-11 [Debian 9 から 10 にアップデート](updatedebian9to10.html "debian iptables arno-iptables-firewall")
+- 2020-06-24 [Vue の v-for の中の要素に ref を設定する](vuerefinvfor.html "vue")
+- 2020-03-01 [絵が描けない私が気の利いたアイコンを作る](createicon.html "web design")
+- 2019-11-10 [Dokuwiki でページをリダイレクトする](dokuwikipageredirectplugin.html "dokuwiki")
+- 2019-06-24 [覚書: neovim のキーアサイン](vimkeys.html "vim")
+- 2019-06-16 [本気でパスワード v2.0](honkipassv2.html "javascript security password")
+- 2019-03-16 [Pure-FTPd の Google Compute Engine 向けの設定](pureftpdgce.html "pure-ftpd cloud")
+- 2019-01-04 [Windows で PHP の curl が証明書のエラーを出したら](phpcurlcertificateproblem.html "php curl ssl")
+- 2019-01-01 [Laravel のログインページの URL を変更する](laravelchangeloginurl.html "laravel")
+- 2018-12-22 [Laraval 5 による開発の手順 #6](startlaravel6.html "php laravel")
+- 2018-11-10 [draw.io で作図](draw_io.html "php draw.io electron")
+- 2018-10-14 [Laraval 5 による開発の手順 #5](startlaravel5.html "php laravel mailtrap")
+- 2018-10-04 [Laraval 5 による開発の手順 #4](startlaravel4.html "php laravel")
+- 2018-10-03 [イベント受付サイトを構築しました](jsadogaku.html "firebase github vuejs spa")
+- 2018-09-25 [Laraval 5 による開発の手順 #3](startlaravel3.html "php laravel localization")
 - 2018-09-25 [Chocolatey を使ってみる](chocolatey.html)
-- 2018-09-24 [Laraval 5 による開発の手順 #2](startlaravel2.html)
-- 2018-09-22 [共用型レンタルサーバで Laravel その２](laravelonsharedserver2.html)
-- 2018-09-22 [Laraval 5 による開発の手順 #1](startlaravel1.html)
-- 2018-07-17 [共用型レンタルサーバで Laravel](laravelonsharedserver.html)
-- 2018-07-03 [Debian 9 に PHP 7.1, 7.2 をインストールする](debian9php7_1.html)
-- 2018-07-01 [Travis CI で Firebase にデプロイする](firebasetravisci.html)
-- 2018-07-01 [JSONを名前順にソートして出力する](json-stable-stringify.html)
-- 2017-12-07 [smtp_tls_security_level](smtptlssecuritylevelpostfix.html)
-- 2017-12-03 [SPFレコードの設定](spfrecord.html)
-- 2017-12-02 [Debain 9 で Dovecot の SSL/TLS を設定する](debain9dovecotssltls.html)
-- 2017-11-26 [dokuwiki on Nginx](dokuwikionnginx.html)
-- 2017-11-26 [arno-iptables-firewall](arnoiptablesfirewall.html)
+- 2018-09-24 [Laraval 5 による開発の手順 #2](startlaravel2.html "php composer laravel mailtrap")
+- 2018-09-22 [共用型レンタルサーバで Laravel その２](laravelonsharedserver2.html "php laravel sqlite")
+- 2018-09-22 [Laraval 5 による開発の手順 #1](startlaravel1.html "php composer laravel sqlite")
+- 2018-07-17 [共用型レンタルサーバで Laravel](laravelonsharedserver.html "php laravel")
+- 2018-07-03 [Debian 9 に PHP 7.1, 7.2 をインストールする](debian9php7_1.html "debian php")
+- 2018-07-01 [Travis CI で Firebase にデプロイする](firebasetravisci.html "node javascript travisci firebase")
+- 2018-07-01 [JSONを名前順にソートして出力する](json-stable-stringify.html "node javascript json")
+- 2017-12-07 [smtp_tls_security_level](smtptlssecuritylevelpostfix.html "smtp starttls tls postfix")
+- 2017-12-03 [SPFレコードの設定](spfrecord.html "spf spam email dns")
+- 2017-12-02 [Debain 9 で Dovecot の SSL/TLS を設定する](debain9dovecotssltls.html "debian dovecot imap ssl tls starttls")
+- 2017-11-26 [dokuwiki on Nginx](dokuwikionnginx.html "nginx dokuwiki php fpm fastcgi debian rewrite")
+- 2017-11-26 [arno-iptables-firewall](arnoiptablesfirewall.html "debian firewall arno-iptables-firewall")
 - 2016-09-18 [PowerShell の Profile](misc/powershell-profile.html)
 - 2016-09-04 [arno-iptables-firewall は楽でいい](hardware-os/arno-iptables-firewall.html)
 - 2016-07-29 [ssh tunnel で scp と rsync](misc/ssh-tunnel-scp-rsync.html)
