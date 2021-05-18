@@ -2,6 +2,7 @@
 =====
 
 <!-- section index: start -->
+- 2021-05-18 [このサイトを GitHub Pages に引っ越し](githubpagesminimal.html)
 - 2021-05-14 [Edge の開発者ツールを表示する手順](edgehowtoopendevtools.html)
 - 2021-05-08 [yarn の警告 "No license field" を止める](yarnwarningnolicensefield.html)
 - 2021-05-05 [Evernote で Markdown](evernotemarkdown.html)

@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require 'yaml'
 
 conf = YAML.load_file('mkindex.yml')
