@@ -5,6 +5,7 @@
 <p id="tag-cloud">
 </p>
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
+- 2021-05-21 [Google Cloud から予算設定の警告？](20210521googlecloudbugdetalert.html)
 - 2021-05-17 [Facebookの投稿の表示範囲の変更](20210517.html)
 - 2012-04-12 [豚とオクラをコチュジャンで炒めてごはんにのせて](20120412.html)
 - 2012-02-10 [今日の晩ご飯](20120210.html)
@@ -69,5 +70,4 @@
 - 2004-12-25 [クリスマスの夜はイエローカレー](20041225.html)
 - 2004-12-05 [レッドカレー](20041205.html)
 - 2004-07-18 [初めてのグリーンカレー](20040718.html)
--  [Google Cloud から予算の警告？](20210521googlecloudbugdetalert.html)
 <!-- section index: end -->
