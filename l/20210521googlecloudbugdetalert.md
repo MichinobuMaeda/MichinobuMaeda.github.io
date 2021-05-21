@@ -1,4 +1,4 @@
-Google Cloud から予算設定の警告？
+Google Cloud から支払い金額の警告？
 =======
 
 Update: 2021-05-21
