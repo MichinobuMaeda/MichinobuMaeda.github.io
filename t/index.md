@@ -18,7 +18,7 @@
 <a id="tag-devops" style="font-size: 0.9em" href="javascript:filterByTag('devops')">devops</a>
 <a id="tag-dns" style="font-size: 0.9em" href="javascript:filterByTag('dns')">dns</a>
 <a id="tag-docker" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('docker')">docker</a>
-<a id="tag-dokuwiki" style="font-size: 1.2494850021680095em" href="javascript:filterByTag('dokuwiki')">dokuwiki</a>
+<a id="tag-dokuwiki" style="font-size: 1.2890756251918218em" href="javascript:filterByTag('dokuwiki')">dokuwiki</a>
 <a id="tag-dovecot" style="font-size: 0.9em" href="javascript:filterByTag('dovecot')">dovecot</a>
 <a id="tag-draw.io" style="font-size: 0.9em" href="javascript:filterByTag('draw.io')">draw.io</a>
 <a id="tag-electron" style="font-size: 0.9em" href="javascript:filterByTag('electron')">electron</a>
@@ -140,6 +140,7 @@
 - 2017-12-02 [Debain 9 で Dovecot の SSL/TLS を設定する](debain9dovecotssltls.html "debian dovecot imap ssl tls starttls")
 - 2017-11-26 [dokuwiki on Nginx](dokuwikionnginx.html "nginx dokuwiki php fpm fastcgi debian rewrite")
 - 2017-11-26 [arno-iptables-firewall](arnoiptablesfirewall.html "debian firewall arno-iptables-firewall")
+- 2016-09-22 [DokuWiki 日記](cms/20160922dokuwiki.html "dokuwiki")
 - 2016-09-18 [PowerShell の Profile](misc/powershell-profile.html)
 - 2016-09-04 [arno-iptables-firewall は楽でいい](hardware-os/arno-iptables-firewall.html)
 - 2016-07-29 [ssh tunnel で scp と rsync](misc/ssh-tunnel-scp-rsync.html)

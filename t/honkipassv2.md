@@ -3,6 +3,8 @@
 
 Update: 2019-06-16
 
+追記: 2021-05-23 最新版はこちら https://pages.michinobu.jp/t/20210522honkipass.html
+
 
 13年ぶりのリニューアルです。スマホでの使い勝手を改善しました。
 

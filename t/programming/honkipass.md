@@ -3,6 +3,8 @@
 
 Update: 2006-04-30
 
+追記: 2021-05-23 最新版はこちら https://pages.michinobu.jp/t/20210522honkipass.html
+
 ランダムにパスワードを生成するツールです。 JavaScript のお勉強を兼ねて作成しました。
 
 Windows の場合ダウンロードして、適当なフォルダに拡張子 .hta で保存してください。

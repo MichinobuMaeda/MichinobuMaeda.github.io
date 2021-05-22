@@ -94,3 +94,5 @@ fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
 
 画像サイズは 343,781 + 428,372 + 256,668 + 610,965 = 1,639,786 バイト、PDFのサイズは 1,634,738 バイトで小さくなっているような。。。なんで ^^)?
+
+[pdfimagesize.pdf](pdfimagesize.pdf)
