@@ -10,7 +10,7 @@ v3 で文字種のお任せ指定をできるようにしました。通常の�
 - 設置場所: [https://michinobu.jp/honkipass](https://michinobu.jp/honkipass)
 - ソース: [https://github.com/MichinobuMaeda/honkipass](https://github.com/MichinobuMaeda/honkipass)
 
-たまに文字種の制約が厳しいサイトがありますね。その場合は条件に合う物が出るまで繰り返して生成するか、「詳細設定」で「類似する文字」に条件に合わない文字を追加していただくかどちらかでお願いします。
+たまにパスワードで使用できる文字種の制約が厳しいサイトがありますね。その場合は条件に合う物が出るまで繰り返して生成するか、「詳細設定」で「類似する文字」に条件に合わない文字を追加していただくかどちらかでお願いします。
 
 UIのフレームワークには [Materialize](https://materializecss.com/) を使いました。コンポーネント等は少ないですが、簡単でいいです。
 
