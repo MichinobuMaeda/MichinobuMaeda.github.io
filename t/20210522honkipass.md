@@ -15,10 +15,10 @@ v3 で文字種のお任せ指定をできるようにしました。通常の�
 
 ~~UIのフレームワークには [Materialize](https://materializecss.com/) を使いました。コンポーネント等は少ないですが、簡単でいいです。~~
 
-UIのフレームワークには [MDB: Material Design for Bootstrap](https://mdbootstrap.com/) を使いました。使いやすいです。ただ、テキストフィールドが Outline だけです。ベースが Bootstrap だからでしょうか。　
+UIのフレームワークには [MDB: Material Design for Bootstrap](https://mdbootstrap.com/) を使いました。使いやすいです。ただ、テキストフィールドが Outline だけです。ベースが Bootstrap だからでしょうか。アイコンは [Font Awesome](https://fontawesome.com/) ではなく [Material Icons](https://fonts.google.com/icons) を使いました。
 
 Google の [Material Components for the web](https://github.com/material-components/material-components-web) はテキストフィールド１個だけでもたいへんです。
 
 [![](20210522honkipass.png)](../honkipass)
 
-Tag: javascript
+Tag: javascript material
