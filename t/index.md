@@ -27,6 +27,7 @@
 <a id="tag-fastcgi" style="font-size: 0.9em" href="javascript:filterByTag('fastcgi')">fastcgi</a>
 <a id="tag-firebase" style="font-size: 1.2494850021680095em" href="javascript:filterByTag('firebase')">firebase</a>
 <a id="tag-firewall" style="font-size: 0.9em" href="javascript:filterByTag('firewall')">firewall</a>
+<a id="tag-flutter" style="font-size: 0.9em" href="javascript:filterByTag('flutter')">flutter</a>
 <a id="tag-fpm" style="font-size: 0.9em" href="javascript:filterByTag('fpm')">fpm</a>
 <a id="tag-gimp" style="font-size: 0.9em" href="javascript:filterByTag('gimp')">gimp</a>
 <a id="tag-git" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('git')">git</a>
@@ -84,7 +85,7 @@
 <a id="tag-xcode" style="font-size: 0.9em" href="javascript:filterByTag('xcode')">xcode</a>
 </p>
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
-- 2021-06-03 [Flutter の Canvas で ○ 描いてみる](20210603fluttercanvas.html)
+- 2021-06-03 [Flutter の Canvas で ○ 描いてみる](20210603fluttercanvas.html "flutter")
 - 2021-05-26 [本気でパスワード v3](20210522honkipass.html "javascript material")
 - 2021-05-18 [このサイトを GitHub Pages に引っ越し](githubpagesminimal.html "github ruby jekyll")
 - 2021-05-14 [Edge の開発者ツールを表示する手順](edgehowtoopendevtools.html)
