@@ -72,6 +72,7 @@
 <a id="tag-starttls" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('starttls')">starttls</a>
 <a id="tag-tls" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('tls')">tls</a>
 <a id="tag-travisci" style="font-size: 0.9em" href="javascript:filterByTag('travisci')">travisci</a>
+<a id="tag-uml" style="font-size: 0.9em" href="javascript:filterByTag('uml')">uml</a>
 <a id="tag-vim" style="font-size: 0.9em" href="javascript:filterByTag('vim')">vim</a>
 <a id="tag-virtualenv" style="font-size: 0.9em" href="javascript:filterByTag('virtualenv')">virtualenv</a>
 <a id="tag-vscode" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('vscode')">vscode</a>
@@ -85,6 +86,7 @@
 <a id="tag-xcode" style="font-size: 0.9em" href="javascript:filterByTag('xcode')">xcode</a>
 </p>
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
+- 2021-07-10 [国語の問題文を分析してみる](20210710parsing.html "uml")
 - 2021-06-03 [Flutter の Canvas で ○ 描いてみる](20210603fluttercanvas.html "flutter")
 - 2021-05-26 [本気でパスワード v3](20210522honkipass.html "javascript material")
 - 2021-05-18 [このサイトを GitHub Pages に引っ越し](githubpagesminimal.html "github ruby jekyll")
