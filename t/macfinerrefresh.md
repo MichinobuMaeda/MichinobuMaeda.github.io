@@ -10,7 +10,7 @@ Finder に表示されません。また、ターミナルで「ダウンロー�
 Windows のエクスプローラーであればマウス右クリックで「最新の情報に更新」すればいいのですが Finder で同様の機能が見つけられません。他のフォルダを表示して戻ってきてもダメ。困ったなと調べて見つけたのがこの記事。たぶん Apple社のドキュメントにも書かれているのでしょう。
 
 How to Refresh a Finder Window in Mac OS X \\
-https://www.heatware.net/mac/how-to-refresh-finder-window
+<https://www.heatware.net/mac/how-to-refresh-finder-window>
 
 Optionキーを押しながら Dock の Finder のアイコンを右クリックすると、
 Optionキー無しでは表示されないメニュー項目「再度開く」が出てきます。これを実行します。すると

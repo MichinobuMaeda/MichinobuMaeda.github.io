@@ -18,12 +18,12 @@ warning ../package.json: No license field
 
 と表示されます。気になって調べてたらわかりました。
 
-https://stackoverflow.com/questions/45690202/how-to-have-yarn-not-issue-a-warning-for-the-license-field
+<https://stackoverflow.com/questions/45690202/how-to-have-yarn-not-issue-a-warning-for-the-license-field>
 
 によると上のディレクトリの ``package.json`` に ``license`` が無いからだそうです。確かにメッセージを見るとパスに ``../`` が付いてます。でも、そんなファイルを置いた覚えはないのだが、、、
 
 ```
-$ cat ../package.json 
+$ cat ../package.json
 {
   "dependencies": {}
 }

@@ -10,7 +10,7 @@ JavaScript の JSON.stringify() は便利なのですが、
 名前順に並んでくれるとうれしいんだけどなぁ、と探してみたところ
 ``json-stable-stringify`` というのがありました。
 
-https://github.com/substack/json-stable-stringify
+<https://github.com/substack/json-stable-stringify>
 
 使い方は簡単で、
 

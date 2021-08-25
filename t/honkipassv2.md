@@ -3,7 +3,7 @@
 
 Update: 2019-06-16
 
-追記: 2021-05-23 最新版はこちら https://pages.michinobu.jp/t/20210522honkipass.html
+追記: 2021-05-23 最新版はこちら <https://pages.michinobu.jp/t/20210522honkipass.html>
 
 
 13年ぶりのリニューアルです。スマホでの使い勝手を改善しました。
@@ -14,8 +14,8 @@ Windows の Internet Explorer の場合は Ctrlキーを押しながら Sキー�
 
 Windows の Edge でタスクバーかスタートにピン止めした場合やスマホでホーム画面に追加した場合は「本」アイコンになります。
 
-実物はこちらです。 https://michinobu.jp/honkipass/
+実物はこちらです。 <https://michinobu.jp/honkipass/>
 
-ソースはこちらです。 https://github.com/MichinobuMaeda/honkipass
+ソースはこちらです。 <https://github.com/MichinobuMaeda/honkipass>
 
 Tag: JavaScript security password

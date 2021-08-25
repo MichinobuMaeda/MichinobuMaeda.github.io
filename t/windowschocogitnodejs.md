@@ -6,7 +6,7 @@ Update: 2021-05-05
 
 [Tamuro デモ用ソース](https://github.com/MichinobuMaeda/tamurodemo) を Linux や Bash に慣れていない人に試してもらうための Chocolaty で Git や Node.js を入れる手順です。
 
-Linux で Bash などのシェルを使ったことある人は WSL2 https://docs.microsoft.com/ja-jp/windows/wsl/install-win10 を利用してください。その方が楽です。
+Linux で Bash などのシェルを使ったことある人は WSL2 <https://docs.microsoft.com/ja-jp/windows/wsl/install-win10> を利用してください。その方が楽です。
 WSL2 に GUI を入れてなくてもコンソールから code コマンドで Visual Studio Code を起動できますし、
 Visual Studio Code の中のターミナルで WSL2 の Bash を使うこともできます。
 
@@ -34,7 +34,7 @@ PS C:\WINDOWS\system32> Get-ExecutionPolicy
 RemoteSigned
 ```
 
-https://chocolatey.org/install に書いてある呪文をコピペして実行します。
+<https://chocolatey.org/install> に書いてある呪文をコピペして実行します。
 
 ```
 PS C:\WINDOWS\system32> Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
@@ -61,7 +61,7 @@ Linux と同じ感じのコンソールです。
 
 ## OpenJDK
 
-Firebase emulator を動かすのに Java が必要なので OpenJDK を入れます。 
+Firebase emulator を動かすのに Java が必要なので OpenJDK を入れます。
 ``"openjdk"`` で検索してみると 16 という新しいものが用意されているのでそれを入れます。
 
 ```
@@ -111,8 +111,8 @@ v12.22.1
 ## Visual Studio Code
 
 choco コマンドでもインストールできると思うのですが、私は
-https://code.visualstudio.com/Download
-からインストーラをダウンロードしてインストールしました。 
+<https://code.visualstudio.com/Download>
+からインストーラをダウンロードしてインストールしました。
 OS を再起動すると PowerShell からでも Git Bash からでも code で起動できるようになります。
 
 Windows 版のターミナルのデフォルトは PowerShell です。私は Bash を使い慣れているので Git Bash に設定変更しようかな、、、と思ったのですがその前に、公開しているソースなのに Bash でないと動かないものを作ってしまったような気がするのでしばらくは PowerShell のまま点検します。
@@ -238,7 +238,7 @@ Resolving deltas: 100% (4554/4554), done.
 
 ## Node.js のパッケージのインストール
 
-https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/prerequisites.md
+<https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/prerequisites.md>
 については n ではなく NVM を使うので、少し手順が変わります。次の 1行だけ実行してください。
 
 ```
@@ -256,7 +256,7 @@ added 2227 packages from 811 contributors in 196.005s
 
 先ほどの手順でコマンドを入れたので、念のための新しい PowerShell を開きなおします。
 
-https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/dev.md
+<https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/dev.md>
 は PowerShell でも同様に動きます。
 
 ```

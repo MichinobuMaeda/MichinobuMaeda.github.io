@@ -8,6 +8,6 @@ Update: 2021-06-03
 
 <iframe src="../vortex2/web" title="Vortex 2" width="320" height="320"></iframe>
 
-ソースは [https://github.com/MichinobuMaeda/vortex2](https://github.com/MichinobuMaeda/vortex2)
+ソースは <https://github.com/MichinobuMaeda/vortex2>
 
 Tag: flutter

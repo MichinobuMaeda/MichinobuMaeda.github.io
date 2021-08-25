@@ -5,7 +5,7 @@ Update: 2020-07-11
 
 
 Windows Subsystem for Linux の有効化の手順は
-https://docs.microsoft.com/ja-jp/windows/wsl/install-win10
+<https://docs.microsoft.com/ja-jp/windows/wsl/install-win10>
 を見てください。私は組み込み用途で使われることが多い Debian を選択しました。
 
 2019年6月時点では Debian 9 "stretch" が入ります。 Debian 10 "buster" はまだリリースされたばかりです。
@@ -48,13 +48,13 @@ $ virtualenv --version
 
 ```
 
-https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-9
+<https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-9>
 を参考に Node.js 10 を入れます。
 
 ```
 $ sudo apt install curl
 $ curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
-$ sudo bash nodesource_setup.sh                                                                                                   
+$ sudo bash nodesource_setup.sh
 $ sudo apt install nodejs
 $ node --version
 v10.16.0
@@ -68,7 +68,7 @@ $ yarn --version
 
 ```
 
-https://computingforgeeks.com/how-to-install-php-7-3-on-debian-9-debian-8/
+<https://computingforgeeks.com/how-to-install-php-7-3-on-debian-9-debian-8/>
 を参考に PHP 7.3 を入れます。
 
 ```
@@ -88,7 +88,7 @@ Serving HTTP on 0.0.0.0 port 8000 ...
 
 ```
 
-Webブラウザで URL http://localhost:8000/ が表示できるれば OK です。
+Webブラウザで URL <http://localhost:8000/> が表示できるれば OK です。
 
 Windows の notepad を起動することもできます。拡張し ``.exe`` を付けてください。
 ちなみに ``ping.exe`` で Windows版の ping が、

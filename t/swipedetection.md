@@ -7,7 +7,7 @@ Update: 2021-03-13
 マウスの操作でHTML上の要素を移動するプログラムを書いてみたんだけど、スマホでは反応しない、、、スワイプってそのものの名称のイベントはないようだけどどうするの？ と調べたらすぐ見つかりました。
 
 Detecting a swipe (left, right, top or down) using touch \
-http://www.javascriptkit.com/javatutors/touchevents2.shtml
+<http://www.javascriptkit.com/javatutors/touchevents2.shtml>
 
 なるほど、マルチタッチは無視して ``e.changedTouches[0]`` だけ見るわけですね。それから ``touchmove`` は ``e.preventDefault()`` で素通りしてしまうのが幸せになれるポイントのようです。
 

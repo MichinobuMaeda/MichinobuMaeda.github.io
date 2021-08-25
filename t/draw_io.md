@@ -19,7 +19,7 @@ Google Drive, OneDrive, DropBox, ローカルデバイスなどを選択でき�
 
 Windows, Mac, Linux 向けのデスクトップ版もこちらからダウンロードできます。
 
-https://about.draw.io/integrations/#integrations_offline
+<https://about.draw.io/integrations/#integrations_offline>
 
 Mac にダウンロードして中をのぞいてみたところ、
 デスクトップ用アプリの基盤には

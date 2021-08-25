@@ -14,7 +14,7 @@ Windows に Apache, PHP, MySQL を個別にインストールするのはたい�
 
 この後の作業の中でファイアウォールの警告が出たら「アクセスを許可する」を選択してください。
 
-まず https://www.apachefriends.org/download.html から "7.4.x / PHP 7.4.x" をダウンロードします。
+まず <https://www.apachefriends.org/download.html> から "7.4.x / PHP 7.4.x" をダウンロードします。
 
 ダウンロードした ``xampp-windows-x64-7.x.x-n-VC15-installer.exe`` を実行します。インストールする機能のうち FTP Server, Mail Server, Tomcat, Webalizer は不要です。
 Perl も不要かもしれません。
@@ -57,7 +57,7 @@ Apache の Start ボタンを押します。エラー無しで起動したらブ
 
 phpMyAdmin で「ユーザアカウント」を選択し、「ユーザアカウントを追加する」リンクをクリックします。「ユーザ名」、「パスワード」、「再入力」を記入し、「同名のデータベースを作成してすべての権限を与える。」にチェックを入れ、「実行」ボタンを押します。これらのデータベース名、ユーザ名、パスワードを WordPress で使います。
 
-https://ja.wordpress.org/download/ の「WordPress 5.x.x をダウンロード」ボタンを押し、ダウンロードした wordpress-5.x.x-ja.zip を解凍して ''C:\xampp\htdocs'' の下に移動してください。今回は ''C:\xampp\htdocs\wordpress'' とします。
+<https://ja.wordpress.org/download/> の「WordPress 5.x.x をダウンロード」ボタンを押し、ダウンロードした wordpress-5.x.x-ja.zip を解凍して ''C:\xampp\htdocs'' の下に移動してください。今回は ''C:\xampp\htdocs\wordpress'' とします。
 
 ブラウザで http://localhost:8080/wordpress/ を開くと、インストーラが表示されます。インストーラの指示に従い、「データベース名」、「ユーザー名」、「パスワード」を入力します。「データベースのホスト名」はデフォルトの "localhost" 、「テーブル接頭辞」はデフォルトの "wp_" のままでいいです。表示された指示に従ってインストーラの残りの手順も実行します。最後に WordPress にログインし、管理機能が表示できれば OK です。
 

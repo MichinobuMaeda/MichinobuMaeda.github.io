@@ -7,7 +7,7 @@ Update: 2020-07-11
 このサーバで Debian 9 を使っていたのですが、
 Debian 10 が出てからしばらく経つのでアップデートすることにします。
 
-参考にしたのはこちら https://phoenixnap.com/kb/how-to-upgrade-debian-9-stretch-to-debian-10-buster
+参考にしたのはこちら <https://phoenixnap.com/kb/how-to-upgrade-debian-9-stretch-to-debian-10-buster>
 
 まず設定をバックアップ
 
@@ -36,7 +36,7 @@ sudo apt upgrade
 サーバ屋さんが用意してくれている Web のコンソールから入り直して、
 とりあえず ``arno-iptables-firewall`` をアンインストールして ``iptables`` をリセット。
 
-https://kerneltalks.com/virtualization/how-to-reset-iptables-to-default-settings/
+<https://kerneltalks.com/virtualization/how-to-reset-iptables-to-default-settings/>
 
 ```
 sudo apt remove arno-iptables-firewall

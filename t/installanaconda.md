@@ -12,7 +12,7 @@ Python は使ったことがあるのですが、このテキストをぱらぱ�
 
 私は普段 Mac を使っているのですが、他の人といっしょにやる都合で Windows でやってみます。
 
-まず https://www.anaconda.com/products/individual のページの下の方から Windows の "64-Bit Graphical Installer" をダウンロードします。
+まず <https://www.anaconda.com/products/individual> のページの下の方から Windows の "64-Bit Graphical Installer" をダウンロードします。
 ``Anaconda3-2020.11-Windows-x86_64.exe`` という 457MB の（でかっ）インストーラがダウンロードできました。これを実行します。
 
 まず、なにかインストールするときのお約束のセキュリティの警告は「実行」を選択します。
@@ -130,7 +130,7 @@ Jupyter Notebook は、最初にコマンドプロンプトが表示されてし
 
 ![](anaconda_022.png)
 
-フロッピーディスクのボタン ![](anaconda_022c.png) ( って若い人はフロッピーディスクは知らんだろ ) を押して保存してブラウザのタブを閉じると ''Untitled.ipynb'' というファイルが保存されています。 
+フロッピーディスクのボタン ![](anaconda_022c.png) ( って若い人はフロッピーディスクは知らんだろ ) を押して保存してブラウザのタブを閉じると ''Untitled.ipynb'' というファイルが保存されています。
 
 ![](anaconda_023.png)
 
@@ -168,7 +168,7 @@ Jupyter Notebook は、最初にコマンドプロンプトが表示されてし
 
 ![](anaconda_031.png)
 
-先ほどと見た目は同じものが表示されたので、変数 ``a`` を覚えてくれているか試してみます。 ``a`` を入力して Run  
+先ほどと見た目は同じものが表示されたので、変数 ``a`` を覚えてくれているか試してみます。 ``a`` を入力して Run
 
 ![](anaconda_020b.png) ボタンで実行するとエラーになります。覚えていません。
 
@@ -215,7 +215,7 @@ print(a)
 
 Mac でも試してみたのですが、 Anaconda Navigator, Jupyter Notebook, Spyder は Windows と見た目がほとんど同じです。
 
-まず https://www.anaconda.com/products/individual のページの下の方から MacOS の "64-Bit Command Line Installer" をダウンロードして、コンソールで実行します。
+まず <https://www.anaconda.com/products/individual> のページの下の方から MacOS の "64-Bit Command Line Installer" をダウンロードして、コンソールで実行します。
 
 ```
 $ cd ~/Downloads/
