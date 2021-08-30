@@ -8,8 +8,8 @@
 <a id="tag-choco" style="font-size: 0.9em" href="javascript:filterByTag('choco')">choco</a>
 <a id="tag-chocolatey" style="font-size: 0.9em" href="javascript:filterByTag('chocolatey')">chocolatey</a>
 <a id="tag-chocolaty" style="font-size: 0.9em" href="javascript:filterByTag('chocolaty')">chocolaty</a>
-<a id="tag-chromebook" style="font-size: 0.9em" href="javascript:filterByTag('chromebook')">chromebook</a>
-<a id="tag-chromeos" style="font-size: 0.9em" href="javascript:filterByTag('chromeos')">chromeos</a>
+<a id="tag-chromebook" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('chromebook')">chromebook</a>
+<a id="tag-chromeos" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('chromeos')">chromeos</a>
 <a id="tag-cloud" style="font-size: 0.9em" href="javascript:filterByTag('cloud')">cloud</a>
 <a id="tag-composer" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('composer')">composer</a>
 <a id="tag-curl" style="font-size: 0.9em" href="javascript:filterByTag('curl')">curl</a>
@@ -80,12 +80,15 @@
 <a id="tag-vuejs" style="font-size: 0.9em" href="javascript:filterByTag('vuejs')">vuejs</a>
 <a id="tag-web" style="font-size: 0.9em" href="javascript:filterByTag('web')">web</a>
 <a id="tag-wget" style="font-size: 0.9em" href="javascript:filterByTag('wget')">wget</a>
-<a id="tag-windows" style="font-size: 1.2890756251918218em" href="javascript:filterByTag('windows')">windows</a>
+<a id="tag-windows" style="font-size: 1.3225490200071284em" href="javascript:filterByTag('windows')">windows</a>
 <a id="tag-wordpress" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('wordpress')">wordpress</a>
 <a id="tag-wsl" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('wsl')">wsl</a>
 <a id="tag-xcode" style="font-size: 0.9em" href="javascript:filterByTag('xcode')">xcode</a>
 </p>
+
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
+
+- 2021-08-30 [Tips](tips_20210830.html "windows chromeos chromebook")
 - 2021-07-10 [国語の問題文を分析してみる](20210710parsing.html "uml")
 - 2021-06-03 [Flutter の Canvas で ○ 描いてみる](20210603fluttercanvas.html "flutter")
 - 2021-05-26 [本気でパスワード v3](20210522honkipass.html "javascript material")
