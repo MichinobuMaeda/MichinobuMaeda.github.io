@@ -3,7 +3,9 @@ Flutter で見出し行・列固定のスクロール
 
 Update: 2021-10-03
 
-Flutter でExcelの「ウィンドウ枠の固定」と同じように見出し行・列固定のスクロールするサンプルを作ってみました。たかだか数十行のプログラムでこんなに簡単にできるとは・・・
+Flutter で Excel の「ウィンドウ枠の固定」と同じように見出し行・列固定のスクロールするサンプルを作ってみました。たかだか数十行のプログラムでこんなに簡単にできるとは・・・
+
+このサンプルには Excel　のようなセルが並んでいますけれど、表示するものは画像でもなんでもだいじょうぶです。
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ioyb_S5W4pU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
