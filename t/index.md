@@ -46,7 +46,7 @@
 <a id="tag-macos" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('macos')">macos</a>
 <a id="tag-mailtrap" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('mailtrap')">mailtrap</a>
 <a id="tag-markdown" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('markdown')">markdown</a>
-<a id="tag-material" style="font-size: 1.2010299956639812em" href="javascript:filterByTag('material')">material</a>
+<a id="tag-material" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('material')">material</a>
 <a id="tag-mysql" style="font-size: 0.9em" href="javascript:filterByTag('mysql')">mysql</a>
 <a id="tag-n" style="font-size: 0.9em" href="javascript:filterByTag('n')">n</a>
 <a id="tag-nginx" style="font-size: 0.9em" href="javascript:filterByTag('nginx')">nginx</a>
@@ -89,7 +89,7 @@
 
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
 
-- 2021-10-03 [Flutter で見出し行・列固定のスクロール](20211003flutterscroll2dirs.html "flutter dart material")
+- 2021-10-03 [Flutter で見出し行・列固定のスクロール](20211003flutterscroll2dirs.html "flutter dart")
 - 2021-09-25 [Flutter でパスワードの表示を切り替えるボタン](20210925fluttercustomwidget.html "flutter dart material")
 - 2021-09-19 [Flutter の provider で動的にダークモード設定する](20210919flutterproviderdarkmode.html "flutter dart material")
 - 2021-09-09 [Tips](tips_20210830.html "windows chromeos chromebook")

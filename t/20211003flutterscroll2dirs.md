@@ -303,6 +303,70 @@ List<String> dataRows = [
 
 ```
 
+追記
+
+Mac上ではこれでそこそこ快適に動いていたのですが、
+Android では横スクロールが遅い、
+Windows では横スクロールができない（一番下までスクロールしないと横スクロールバーが見えない）、
+という問題が出ました。標準の横スクロールバーではどうにも解決できなかったので、以下のようなボタンを下に追加しました。
+これで、左端、表示幅の1/4左、右、右端に移動できます。
+
+```
+    Row(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.first_page),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+        const Spacer(flex: 1),
+        IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              max(
+                  0,
+                  _dataScrollController.position.pixels -
+                      (width - fixedWidth) / 4),
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+        const Spacer(flex: 4),
+        IconButton(
+          icon: const Icon(Icons.keyboard_arrow_right),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              min(
+                  _dataScrollController.position.pixels +
+                      (width - fixedWidth) / 4,
+                  _dataScrollController.position.maxScrollExtent),
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+        const Spacer(flex: 1),
+        IconButton(
+          icon: const Icon(Icons.last_page),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              _dataScrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+      ],
+    ),
+```
 
 
-Tag: flutter dart material
+
+Tag: flutter dart
