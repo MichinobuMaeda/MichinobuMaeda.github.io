@@ -3,6 +3,12 @@ Flutter で見出し行・列固定のスクロール
 
 Update: 2021-10-03
 
+追記: 2021-10-06
+
+環境によって横スクロールが遅い問題などを解決するために [sticky-headers-table](https://github.com/AlexBacich/sticky-headers-table) を参考にして改善したものを <https://github.com/MichinobuMaeda/fixedtitlesview> に置きました。
+
+---
+
 Flutter で Excel の「ウィンドウ枠の固定」と同じように見出し行・列固定のスクロールするサンプルを作ってみました。たかだか数十行のプログラムでこんなに簡単にできるとは・・・
 
 このサンプルには Excel　のようなセルが並んでいますけれど、表示するものは画像でもなんでもだいじょうぶです。
