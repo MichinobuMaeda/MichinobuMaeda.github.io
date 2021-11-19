@@ -92,7 +92,7 @@
 
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
 
-- 2021-11-19 [react-scripts に Airbnb Style を入れる](20211119reactscriptseslintairbnb.html "nodejs react eslint")
+- 2021-11-19 [react-scripts に Airbnb Style を足す](20211119reactscriptseslintairbnb.html "nodejs react eslint")
 - 2021-11-07 [PWA のアップデート](20211107updatepwa.html "pwa nodejs react")
 - 2021-10-03 [Flutter で見出し行・列固定のスクロール](20211003flutterscroll2dirs.html "flutter dart")
 - 2021-09-25 [Flutter でパスワードの表示を切り替えるボタン](20210925fluttercustomwidget.html "flutter dart material")

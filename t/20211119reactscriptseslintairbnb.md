@@ -1,10 +1,10 @@
-react-scripts に Airbnb Style を入れる
+react-scripts に Airbnb Style を足す
 ======
 
 Update: 2021-11-19
 
 私はソースコードのスタイルをどうするか考えるのは面倒なのですが、かといってスタイルが揃ってないのも嫌なので、厳し目のルールを
-IDE などで自動で強制してくれるのが好みです。
+IDE などで自動で強制してもらうのが好みです。
 VS code で Flutter のコーディングをやるような環境は最高ですね。で、
 ``create-react-app`` で作ったプロジェクトに ``eslint`` の ``airebnb`` 拡張を入れようとすると、少しハマりました。
 
