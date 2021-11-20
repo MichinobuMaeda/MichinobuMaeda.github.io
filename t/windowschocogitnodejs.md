@@ -1,10 +1,10 @@
-Chocolaty で Git や Node.js を入れる
+Chocolatey で Git や Node.js を入れる
 =====
 
 Update: 2021-05-05
 
 
-[Tamuro デモ用ソース](https://github.com/MichinobuMaeda/tamurodemo) を Linux や Bash に慣れていない人に試してもらうための Chocolaty で Git や Node.js を入れる手順です。
+[Tamuro デモ用ソース](https://github.com/MichinobuMaeda/tamurodemo) を Linux や Bash に慣れていない人に試してもらうための chocolatey で Git や Node.js を入れる手順です。
 
 Linux で Bash などのシェルを使ったことある人は WSL2 <https://docs.microsoft.com/ja-jp/windows/wsl/install-win10> を利用してください。その方が楽です。
 WSL2 に GUI を入れてなくてもコンソールから code コマンドで Visual Studio Code を起動できますし、
@@ -299,7 +299,7 @@ PS C:\Users\michinobu> code tamurodemo
 
 ``[Ctrl]+[Shift]+[`]`` でターミナルを起動できます。デフォルトは PowerShell です。 PowerShell が苦手ない人は CMD や Git Bash に変えてもいいですが、今後 Windows のサーバサイドの仕事をする人は慣れておいた方がいいです。
 
-Tag: windows chocolaty nodejs ssh
+Tag: windows chocolatey nodejs ssh
 
 
 

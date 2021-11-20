@@ -6,8 +6,7 @@
 <a id="tag-apache" style="font-size: 0.9em" href="javascript:filterByTag('apache')">apache</a>
 <a id="tag-arno-iptables-firewall" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('arno-iptables-firewall')">arno-iptables-firewall</a>
 <a id="tag-choco" style="font-size: 0.9em" href="javascript:filterByTag('choco')">choco</a>
-<a id="tag-chocolatey" style="font-size: 0.9em" href="javascript:filterByTag('chocolatey')">chocolatey</a>
-<a id="tag-chocolaty" style="font-size: 0.9em" href="javascript:filterByTag('chocolaty')">chocolaty</a>
+<a id="tag-chocolatey" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('chocolatey')">chocolatey</a>
 <a id="tag-chromebook" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('chromebook')">chromebook</a>
 <a id="tag-chromeos" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('chromeos')">chromeos</a>
 <a id="tag-cloud" style="font-size: 0.9em" href="javascript:filterByTag('cloud')">cloud</a>
@@ -82,7 +81,7 @@
 <a id="tag-vscode" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('vscode')">vscode</a>
 <a id="tag-vue" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('vue')">vue</a>
 <a id="tag-vuejs" style="font-size: 0.9em" href="javascript:filterByTag('vuejs')">vuejs</a>
-<a id="tag-web" style="font-size: 0.9em" href="javascript:filterByTag('web')">web</a>
+<a id="tag-web" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('web')">web</a>
 <a id="tag-wget" style="font-size: 0.9em" href="javascript:filterByTag('wget')">wget</a>
 <a id="tag-windows" style="font-size: 1.3225490200071284em" href="javascript:filterByTag('windows')">windows</a>
 <a id="tag-wordpress" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('wordpress')">wordpress</a>
@@ -92,6 +91,7 @@
 
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
 
+- 2021-11-20 [オンラインのアイコン・ジェネレータ](20211120icongenerators.html "web")
 - 2021-11-19 [react-scripts に Airbnb Style を足す](20211119reactscriptseslintairbnb.html "nodejs react eslint")
 - 2021-11-07 [PWA のアップデート](20211107updatepwa.html "pwa nodejs react")
 - 2021-10-03 [Flutter で見出し行・列固定のスクロール](20211003flutterscroll2dirs.html "flutter dart")
@@ -105,7 +105,7 @@
 - 2021-05-14 [Edge の開発者ツールを表示する手順](edgehowtoopendevtools.html)
 - 2021-05-08 [yarn の警告 "No license field" を止める](yarnwarningnolicensefield.html "nodejs")
 - 2021-05-05 [Evernote で Markdown](evernotemarkdown.html "markdown evernote")
-- 2021-05-05 [Chocolaty で Git や Node.js を入れる](windowschocogitnodejs.html "windows chocolaty nodejs ssh")
+- 2021-05-05 [Chocolatey で Git や Node.js を入れる](windowschocogitnodejs.html "windows chocolatey nodejs ssh")
 - 2021-04-29 [Windows に WordPress のテスト環境を作る](windowsxamppwordpress.html "windows apache mysql wordpress")
 - 2021-04-15 [Anaconda をインストールする](installanaconda.html "python")
 - 2021-03-13 [JavaScriptでスワイプ操作の検出](swipedetection.html "javascript vue")
