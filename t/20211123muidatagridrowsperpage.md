@@ -15,7 +15,7 @@ Update: 2021-11-23
 
 ```
 <DataGrid
-  componentsProps={{
+  componentsProps={ {
     pagination: {
       labelRowsPerPage: t('Rows per page')
     }
