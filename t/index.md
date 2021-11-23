@@ -47,6 +47,7 @@
 <a id="tag-mailtrap" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('mailtrap')">mailtrap</a>
 <a id="tag-markdown" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('markdown')">markdown</a>
 <a id="tag-material" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('material')">material</a>
+<a id="tag-mui" style="font-size: 0.9em" href="javascript:filterByTag('mui')">mui</a>
 <a id="tag-mysql" style="font-size: 0.9em" href="javascript:filterByTag('mysql')">mysql</a>
 <a id="tag-n" style="font-size: 0.9em" href="javascript:filterByTag('n')">n</a>
 <a id="tag-nginx" style="font-size: 0.9em" href="javascript:filterByTag('nginx')">nginx</a>
@@ -61,7 +62,7 @@
 <a id="tag-pure-ftpd" style="font-size: 0.9em" href="javascript:filterByTag('pure-ftpd')">pure-ftpd</a>
 <a id="tag-pwa" style="font-size: 0.9em" href="javascript:filterByTag('pwa')">pwa</a>
 <a id="tag-python" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('python')">python</a>
-<a id="tag-react" style="font-size: 1.0505149978319905em" href="javascript:filterByTag('react')">react</a>
+<a id="tag-react" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('react')">react</a>
 <a id="tag-rewrite" style="font-size: 0.9em" href="javascript:filterByTag('rewrite')">rewrite</a>
 <a id="tag-ruby" style="font-size: 0.9em" href="javascript:filterByTag('ruby')">ruby</a>
 <a id="tag-security" style="font-size: 0.9em" href="javascript:filterByTag('security')">security</a>
@@ -91,6 +92,7 @@
 
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
 
+- 2021-11-23 [MUI の DataGrid の "Rows per page" をローカライズする](20211123muidatagridrowsperpage.html "react mui")
 - 2021-11-20 [オンラインのアイコン・ジェネレータ](20211120icongenerators.html "web")
 - 2021-11-19 [react-scripts に Airbnb Style を足す](20211119reactscriptseslintairbnb.html "nodejs react eslint")
 - 2021-11-07 [PWA のアップデート](20211107updatepwa.html "pwa nodejs react")
