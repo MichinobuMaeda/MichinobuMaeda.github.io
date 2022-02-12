@@ -28,7 +28,7 @@
 <a id="tag-fastcgi" style="font-size: 0.9em" href="javascript:filterByTag('fastcgi')">fastcgi</a>
 <a id="tag-firebase" style="font-size: 1.2494850021680095em" href="javascript:filterByTag('firebase')">firebase</a>
 <a id="tag-firewall" style="font-size: 0.9em" href="javascript:filterByTag('firewall')">firewall</a>
-<a id="tag-flutter" style="font-size: 1.2010299956639812em" href="javascript:filterByTag('flutter')">flutter</a>
+<a id="tag-flutter" style="font-size: 1.2494850021680095em" href="javascript:filterByTag('flutter')">flutter</a>
 <a id="tag-fpm" style="font-size: 0.9em" href="javascript:filterByTag('fpm')">fpm</a>
 <a id="tag-gimp" style="font-size: 0.9em" href="javascript:filterByTag('gimp')">gimp</a>
 <a id="tag-git" style="font-size: 1.1385606273598312em" href="javascript:filterByTag('git')">git</a>
@@ -92,6 +92,7 @@
 
 <p><a id="tag-ALL" href="javascript:filterByTag('ALL')">フィルタ解除</a></p>
 
+- 2022-02-12 [Flutter アプリの起動時にロゴなど表示する](20220212flutternativesplash.html "flutter")
 - 2021-11-23 [MUI の DataGrid の "Rows per page" をローカライズする](20211123muidatagridrowsperpage.html "react mui")
 - 2021-11-20 [オンラインのアイコン・ジェネレータ](20211120icongenerators.html "web")
 - 2021-11-19 [react-scripts に Airbnb Style を足す](20211119reactscriptseslintairbnb.html "nodejs react eslint")
