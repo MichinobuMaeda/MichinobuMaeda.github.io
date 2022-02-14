@@ -33,4 +33,4 @@ $ flutter pub run flutter_native_splash:create
 
 を実行すると、 web の場合 ``web/splash`` というフォルダができます。これでできあがりです。
 
-Tag: flutter
+Tag: flutter dart

@@ -18,4 +18,4 @@ Flutter の場合、その設定ファイルを変更した後にコード生成
 ``*.arb`` ファイルや　``l10n.yaml`` や ``pubspec.yaml`` の ``generate: true``
 の設定を消します。これでビルドが通れば OK.
 
-Tag: flutter
+Tag: flutter dart

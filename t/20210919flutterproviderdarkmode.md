@@ -1,7 +1,9 @@
-Flutter の provider で動的にダークモード設定する
+Flutter の Provider で動的にダークモード設定する
 ======
 
 Update: 2021-09-19
+
+追記: 2022-02-14 -- Provider より BLoC の方が楽でした。
 
 Flutter のダークモードはこのような感じで設定するのですが、
 ``light``, ``dark``, ``system`` をここで設定するとその後は変更できないようなんです。で、

@@ -35,4 +35,4 @@ Flutter の色の設定は
   );
 ```
 
-Tag: flutter
+Tag: flutter dart
