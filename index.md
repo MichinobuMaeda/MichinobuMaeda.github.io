@@ -12,17 +12,17 @@
 <img style="height: 96px;" src="img/portrait1.jpg" title="portrait 1" alt="portrait 1">
 <img style="height: 96px;" src="img/portrait2.jpg" title="portrait 2" alt="portrait 2">
 
-<a href="https://twitter.com/mixnb">
-    <img style="height: 18px; margin-right: 16px;" src="img/twitter.png" title="Twitter" alt="Twitter" />
+<a style="padding: 0 8px 0 8px;" href="https://twitter.com/mixnb">
+    <img style="height: 18px;" src="img/twitter.png" title="Twitter" alt="Twitter" />
 </a>
-<a href="https://www.facebook.com/michinobu.maeda">
-    <img style="height: 18px; margin-right: 16px;" src="img/facebook.png" title="Facebook" alt="Facebook" />
+<a style="padding: 0 8px 0 8px;" href="https://www.facebook.com/michinobu.maeda">
+    <img style="height: 18px;" src="img/facebook.png" title="Facebook" alt="Facebook" />
 </a>
-<a href="https://www.instagram.com/michinobumaeda/">
-    <img style="height: 18px; margin-right: 16px;" src="img/instagram.png" title="Instagram" alt="Instagram" />
+<a style="padding: 0 8px 0 8px;" href="https://www.instagram.com/michinobumaeda/">
+    <img style="height: 18px;" src="img/instagram.png" title="Instagram" alt="Instagram" />
 </a>
-<a href="http://mixi.jp/show_profile.pl?id=8734038">
-    <img style="height: 18px; margin-right: 16px;" src="img/mixi.png" title="mixi" alt="mixi" />
+<a style="padding: 0 8px 0 8px;" href="http://mixi.jp/show_profile.pl?id=8734038">
+    <img style="height: 18px;" src="img/mixi.png" title="mixi" alt="mixi" />
 </a>
 
 [工作室](/t/) //
