@@ -6,6 +6,7 @@ require 'yaml'
 conf = YAML.load_file('mkindex.yml')
 
 conf['sections'].each do |section|
+  puts "section: #{section}"
 
   # get timestamp, title and tags of each pages.
   indexes = Array.new
@@ -48,12 +49,12 @@ conf['sections'].each do |section|
       lines.push(line)
       lines.push('<p id="tag-cloud">')
       tag_cloud.keys.sort.each do |tag|
-        lines.push("<a id=\"tag-#{tag}\" style=\"font-size: #{0.9 + Math.log10(tag_cloud[tag]) / 2}em\" href=\"javascript:filterByTag('#{tag}')\">#{tag}</a>")
+        lines.push("<a id=\"tag-#{tag}\" style=\"font-size: #{0.9 + Math.log10(tag_cloud[tag]) / 2}em\" href=\"/#{section}/?tag=#{tag}\">#{tag}</a>")
       end
       lines.push('</p>')
       lines.push('')
-      if tag_cloud.keys.length
-        lines.push("<p><a id=\"tag-ALL\" href=\"javascript:filterByTag('ALL')\">#{conf['tags']['filterOff']}</a></p>")
+      if tag_cloud.keys.length > 0
+        lines.push("<p><a id=\"tag-ALL\" href=\"/#{section}/\">#{conf['tags']['filterOff']}</a></p>")
       end
       lines.push('')
       lines.concat(indexes.sort { |x, y| y <=> x})
