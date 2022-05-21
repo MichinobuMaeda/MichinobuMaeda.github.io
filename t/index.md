@@ -43,7 +43,7 @@
 <a id="tag-json" style="font-size: 0.9em" href="/t/?tag=json">json</a>
 <a id="tag-laravel" style="font-size: 1.4em" href="/t/?tag=laravel">laravel</a>
 <a id="tag-localization" style="font-size: 0.9em" href="/t/?tag=localization">localization</a>
-<a id="tag-macos" style="font-size: 1.0505149978319905em" href="/t/?tag=macos">macos</a>
+<a id="tag-macos" style="font-size: 1.1385606273598312em" href="/t/?tag=macos">macos</a>
 <a id="tag-mailtrap" style="font-size: 1.0505149978319905em" href="/t/?tag=mailtrap">mailtrap</a>
 <a id="tag-markdown" style="font-size: 1.0505149978319905em" href="/t/?tag=markdown">markdown</a>
 <a id="tag-material" style="font-size: 1.1385606273598312em" href="/t/?tag=material">material</a>
@@ -91,10 +91,12 @@
 <a id="tag-wordpress" style="font-size: 1.0505149978319905em" href="/t/?tag=wordpress">wordpress</a>
 <a id="tag-wsl" style="font-size: 1.0505149978319905em" href="/t/?tag=wsl">wsl</a>
 <a id="tag-xcode" style="font-size: 0.9em" href="/t/?tag=xcode">xcode</a>
+<a id="tag-zsh" style="font-size: 0.9em" href="/t/?tag=zsh">zsh</a>
 </p>
 
 <p><a id="tag-ALL" href="/t/">フィルタ解除</a></p>
 
+- 2022-05-21 [Mac の Zsh のプロプトに CPU アーキテクチャを表示する](20220521macterminalarch.html "macos zsh")
 - 2022-02-21 [結合テストでコーディングミスを見つけてはだめ](20220221dontfideimplbuginit.html "process v-model test")
 - 2022-02-21 [使ってよかった Flutter プラグイン](20220221flutterplugins.html "flutter dart")
 - 2022-02-14 [Flutter の色の設定で楽をする](20220214flutterflexcolorscheme.html "flutter dart")
