@@ -1,0 +1,22 @@
+name: Generate indexes
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Detect ruby version
+      id: ruby-version
+      run: echo "::set-output name=VERSION::$(cat .ruby-version)"
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '${{ steps.ruby-version.outputs.VERSION }}'
+    - name: Generate indexes
+      run: ruby mkindex.rb
+    - name: Commit report
+      run: |
+        git config --global user.name 'Michinobu Maeda'
+        git config --global user.email 'michinobumaeda@gmail.com'
+        git commit -am "Auto generate indexes on github actions"
+        git push
