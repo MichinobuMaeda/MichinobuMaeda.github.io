@@ -15,8 +15,6 @@ jobs:
     - name: Generate indexes
       run: ruby mkindex.rb
     - name: Commit report
-      run: |
-        git config --global user.name 'Michinobu Maeda'
-        git config --global user.email 'michinobumaeda@gmail.com'
-        git commit -am "Auto generate indexes on github actions"
-        git push
+      uses: EndBug/add-and-commit@v7
+      with:
+        default_author: github_actions
