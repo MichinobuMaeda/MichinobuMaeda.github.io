@@ -2,7 +2,7 @@
 
 Update: 2022-05-30
 
-GitHub Pages に　push する前に手元で目次ページを生成していたのを GitHub Actions で処理するようにしてみました。これで PC がなくても GitHub で直接ページを追加編集できるようになります。
+GitHub Pages に `push` する前に手元で目次ページを生成していたのを GitHub Actions で処理するようにしてみました。これで PC がなくても GitHub で直接ページを追加編集できるようになります。
 
 ```
 name: Generate indexes
