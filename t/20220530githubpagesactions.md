@@ -18,7 +18,7 @@ jobs:
     - name: Setup ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '${{ steps.ruby-version.outputs.VERSION }}'
+        ruby-version: '${{ "{{" }} steps.ruby-version.outputs.VERSION }}'
     - name: Generate indexes
       run: ruby mkindex.rb
     - name: Commit generated indexes
