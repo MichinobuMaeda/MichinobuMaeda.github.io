@@ -1,5 +1,3 @@
-<p><img src="img/dragon2013.jpg" alt="Dragon" /></p>
-
 前田道信
 
 1967年3月31日生まれ<br/>

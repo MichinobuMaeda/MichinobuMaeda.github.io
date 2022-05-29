@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="みちのぶのねぐら">
+    <meta property="og:image" content="/img/dragon2013.jpg">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BRY447EKHY"></script>
@@ -34,12 +36,13 @@
         <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
 
         {% if site.logo %}
-          <img src="{{site.logo | relative_url}}" alt="Logo" />
           <!-- Sections -->
           <a href="/t/">工作室</a> //
           <a href="/l/">厚生部</a> //
           <a href="/p/">政治局</a>
         {% endif %}
+
+        <div><img src="/img/dragon2013.jpg" alt="Dragon" /></div>
 
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
