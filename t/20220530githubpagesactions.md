@@ -31,7 +31,7 @@ Ruby のバージョンの設定は
 [GitHub Actions で言語のバージョンをファイルから読み出す](https://zenn.dev/rosylilly/articles/202202-github-actions-versions)
 を参考にしましt。他の言語でもだいたい同様にできそうです。
 
-Git　の `add`, `commit`, `push` には
+Git の `add`, `commit`, `push` には
 [Add & Commit](https://github.com/EndBug/add-and-commit)
 を使いました。
 `git` コマンドでもできるかなと思ったけれど、差分無しで空振りする場合の対応などが面倒ですね。便利なものを使わせていただくことにします。
