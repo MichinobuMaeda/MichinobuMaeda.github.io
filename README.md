@@ -13,7 +13,7 @@ $ bundle install
 $ bundle exec jekyll serve
 ```
 
-Generate indexes
+Generate indexes manually
 
 ```
 $ ruby mkindex.rb 
