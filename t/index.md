@@ -3,6 +3,7 @@
 
 <!-- section index: start -->
 <p id="tag-cloud">
+<a id="tag-actions" style="font-size: 0.9em" href="/t/?tag=actions">actions</a>
 <a id="tag-apache" style="font-size: 0.9em" href="/t/?tag=apache">apache</a>
 <a id="tag-arno-iptables-firewall" style="font-size: 1.0505149978319905em" href="/t/?tag=arno-iptables-firewall">arno-iptables-firewall</a>
 <a id="tag-choco" style="font-size: 0.9em" href="/t/?tag=choco">choco</a>
@@ -32,7 +33,7 @@
 <a id="tag-fpm" style="font-size: 0.9em" href="/t/?tag=fpm">fpm</a>
 <a id="tag-gimp" style="font-size: 0.9em" href="/t/?tag=gimp">gimp</a>
 <a id="tag-git" style="font-size: 1.1385606273598312em" href="/t/?tag=git">git</a>
-<a id="tag-github" style="font-size: 1.1385606273598312em" href="/t/?tag=github">github</a>
+<a id="tag-github" style="font-size: 1.2010299956639812em" href="/t/?tag=github">github</a>
 <a id="tag-gitlab" style="font-size: 0.9em" href="/t/?tag=gitlab">gitlab</a>
 <a id="tag-haskell" style="font-size: 0.9em" href="/t/?tag=haskell">haskell</a>
 <a id="tag-icon-gen" style="font-size: 0.9em" href="/t/?tag=icon-gen">icon-gen</a>
@@ -96,6 +97,7 @@
 
 <p><a id="tag-ALL" href="/t/">フィルタ解除</a></p>
 
+- 2022-05-30 [GitHub Pages で Actons を使う](20220530githubpagesactions.html "github actions")
 - 2022-05-21 [Mac の Zsh のプロプトに CPU アーキテクチャを表示する](20220521macterminalarch.html "macos zsh")
 - 2022-02-21 [結合テストでコーディングミスを見つけてはだめ](20220221dontfideimplbuginit.html "process v-model test")
 - 2022-02-21 [使ってよかった Flutter プラグイン](20220221flutterplugins.html "flutter dart")
