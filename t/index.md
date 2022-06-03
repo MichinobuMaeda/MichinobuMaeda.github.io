@@ -100,7 +100,7 @@
 
 - 2022-06-04 [GitHub Pages で Mermaid を使う](20220604mermaidingithubpages.html "github mermaid")
 - 2022-05-30 [GitHub Pages で Actons を使う](20220530githubpagesactions.html "github actions")
-- 2022-05-21 [Mac の Zsh のプロプトに CPU アーキテクチャを表示する](20220521macterminalarch.html "macos zsh")
+- 2022-05-21 [Mac の Zsh のプロンプトに CPU アーキテクチャを表示する](20220521macterminalarch.html "macos zsh")
 - 2022-02-21 [結合テストでコーディングミスを見つけてはだめ](20220221dontfideimplbuginit.html "process v-model test")
 - 2022-02-21 [使ってよかった Flutter プラグイン](20220221flutterplugins.html "flutter dart")
 - 2022-02-14 [Flutter の色の設定で楽をする](20220214flutterflexcolorscheme.html "flutter dart")
