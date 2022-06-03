@@ -33,7 +33,7 @@
 <a id="tag-fpm" style="font-size: 0.9em" href="/t/?tag=fpm">fpm</a>
 <a id="tag-gimp" style="font-size: 0.9em" href="/t/?tag=gimp">gimp</a>
 <a id="tag-git" style="font-size: 1.1385606273598312em" href="/t/?tag=git">git</a>
-<a id="tag-github" style="font-size: 1.2010299956639812em" href="/t/?tag=github">github</a>
+<a id="tag-github" style="font-size: 1.2494850021680095em" href="/t/?tag=github">github</a>
 <a id="tag-gitlab" style="font-size: 0.9em" href="/t/?tag=gitlab">gitlab</a>
 <a id="tag-haskell" style="font-size: 0.9em" href="/t/?tag=haskell">haskell</a>
 <a id="tag-icon-gen" style="font-size: 0.9em" href="/t/?tag=icon-gen">icon-gen</a>
@@ -48,6 +48,7 @@
 <a id="tag-mailtrap" style="font-size: 1.0505149978319905em" href="/t/?tag=mailtrap">mailtrap</a>
 <a id="tag-markdown" style="font-size: 1.0505149978319905em" href="/t/?tag=markdown">markdown</a>
 <a id="tag-material" style="font-size: 1.1385606273598312em" href="/t/?tag=material">material</a>
+<a id="tag-mermaid" style="font-size: 0.9em" href="/t/?tag=mermaid">mermaid</a>
 <a id="tag-mui" style="font-size: 0.9em" href="/t/?tag=mui">mui</a>
 <a id="tag-mysql" style="font-size: 0.9em" href="/t/?tag=mysql">mysql</a>
 <a id="tag-n" style="font-size: 0.9em" href="/t/?tag=n">n</a>
@@ -97,6 +98,7 @@
 
 <p><a id="tag-ALL" href="/t/">フィルタ解除</a></p>
 
+- 2022-06-04 [GitHub Pages で Mermaid を使う](20220604mermaidingithubpages.html "github mermaid")
 - 2022-05-30 [GitHub Pages で Actons を使う](20220530githubpagesactions.html "github actions")
 - 2022-05-21 [Mac の Zsh のプロプトに CPU アーキテクチャを表示する](20220521macterminalarch.html "macos zsh")
 - 2022-02-21 [結合テストでコーディングミスを見つけてはだめ](20220221dontfideimplbuginit.html "process v-model test")
