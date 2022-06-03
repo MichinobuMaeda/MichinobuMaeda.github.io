@@ -2,7 +2,8 @@
 
 Update: 2022-06-04
 
-GitHub が Markdown への Mermaid のダイアグラムの埋め込みに対応しました。
+しばらく前のことになりますが GitHub が Markdown への Mermaid のダイアグラムの埋め込みに対応しました。
+
 [Include diagrams in your Markdown files with Mermaid](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/)
 
 しかしながら Jekyll の本体はそんなものには対応していなくてプラグインなどが必要になります。で、
