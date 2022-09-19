@@ -1,4 +1,4 @@
-# GitHub Pages で Actons を使う
+# GitHub Pages で Actions を使う
 
 Update: 2022-05-30
 
