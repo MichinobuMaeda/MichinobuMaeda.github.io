@@ -10,7 +10,7 @@
 <a id="tag-chocolatey" style="font-size: 1.0505149978319905em" href="/t/?tag=chocolatey">chocolatey</a>
 <a id="tag-chromebook" style="font-size: 1.0505149978319905em" href="/t/?tag=chromebook">chromebook</a>
 <a id="tag-chromeos" style="font-size: 1.0505149978319905em" href="/t/?tag=chromeos">chromeos</a>
-<a id="tag-cloud" style="font-size: 0.9em" href="/t/?tag=cloud">cloud</a>
+<a id="tag-cloud" style="font-size: 1.0505149978319905em" href="/t/?tag=cloud">cloud</a>
 <a id="tag-composer" style="font-size: 1.0505149978319905em" href="/t/?tag=composer">composer</a>
 <a id="tag-curl" style="font-size: 0.9em" href="/t/?tag=curl">curl</a>
 <a id="tag-dart" style="font-size: 1.3225490200071284em" href="/t/?tag=dart">dart</a>
@@ -98,6 +98,7 @@
 
 <p><a id="tag-ALL" href="/t/">フィルタ解除</a></p>
 
+- 2022-10-22 [Google Cloud Workstations を使ってみる](googlecloudworkstations.html "cloud")
 - 2022-08-21 [Firebase で Cloud Tasks](20220821firebaseenqueue.html "firebase")
 - 2022-06-04 [GitHub Pages で Mermaid を使う](20220604mermaidingithubpages.html "github mermaid")
 - 2022-05-30 [GitHub Pages で Actions を使う](20220530githubpagesactions.html "github actions")
