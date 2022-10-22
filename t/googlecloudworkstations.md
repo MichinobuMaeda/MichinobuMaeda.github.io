@@ -5,9 +5,9 @@ Update: 2022-10-22
 
 Google が Cloud Workstations というサービスをはじめました。まだ Preview です。 Docker コンテナに Web版の Code OSS などのエディタやポートフォワーディングの機能が付いています。類似のものは GitHub など他からもでているのですが、私の用途に微妙に合わないところがあって使っていませんでした。これが使えると自分のPCの性能はどうでもよくなります。複数の環境の同居の仕組みで悩む必要もなくなります。
 
-サービスの仕様をざっと見た感じ iPad は難しいかな。でも Chrome Book は問題なさそうです。一度 Linux 環境を入れてみたもののそれっきりになっていた非力な Chrome Book で試してみます。
+サービスの仕様をざっと見た感じ iPad は難しいかな。でも Chromebook は問題なさそうです。一度 Linux 環境を入れてみたもののそれっきりになっていた非力な Chromebook で試してみます。
 
-Chrome Book 上の古い Debian は削除して、入れ直してみました。
+Chromebook 上の古い Debian は削除して、入れ直してみました。
 
 ```
 michinobu@penguin:~$ sudo apt update
