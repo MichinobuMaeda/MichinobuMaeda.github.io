@@ -82,4 +82,14 @@ user@workstation-php74:~$ curl localhost:80
  ... ... ...
 ```
 
+追記: 2022-10-26
+
+手元のPCから `scp` するときはこんなオプションが必要。
+
+```
+$ scp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -P 2222 from_path user@localhost:/home/user/
+```
+
+VMを再起動するとどうも `sudo apt install` で入れたものが残っていない雰囲気。代わりに Mac で使い慣れている Homebrew を使った。
+
 Tag: cloud
