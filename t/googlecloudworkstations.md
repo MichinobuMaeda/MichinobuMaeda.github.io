@@ -88,6 +88,6 @@ user@workstation-php74:~$ curl localhost:80
 $ scp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -P 2222 from_path user@localhost:/home/user/
 ```
 
-VMを再起動するとどうも `sudo apt install` で入れたものが残っていない雰囲気。代わりに Mac で使い慣れている Homebrew を使った。
+Workstation を再起動するとどうも `sudo apt install` で入れたものが残っていないような。。。代わりに Mac で使い慣れている Homebrew を使った。
 
 Tag: cloud
