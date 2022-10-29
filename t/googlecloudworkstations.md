@@ -5,9 +5,9 @@ Update: 2022-10-22
 
 Google が Cloud Workstations というサービスをはじめました。まだ Preview です。 Docker コンテナに Web版の Code OSS などのエディタやポートフォワーディングの機能が付いています。類似のものは GitHub など他からもでているのですが、私の用途に微妙に合わないところがあって使っていませんでした。これが使えると自分のPCの性能はどうでもよくなります。複数の環境の同居の仕組みで悩む必要もなくなります。
 
-サービスの仕様をざっと見た感じ iPad は難しいかな。でも Chromebook は問題なさそうです。一度 Linux 環境を入れてみたもののそれっきりになっていた非力な Chromebook で試してみます。
+ポートフォワーディングやSSH接続を使う場合は gcloud CLI が必要なので iPad は難しいかな。でも Chromebook は問題なさそうです。一度 Linux 環境を入れてみたもののそれっきりになっていた非力な Chromebook で試してみます。
 
-Chromebook 上の古い Debian は削除して、入れ直してみました。
+Chromebook 上の古い Debian は削除して、入れ直してみました。こんな感じです。
 
 ```
 michinobu@penguin:~$ sudo apt update
@@ -21,7 +21,7 @@ michinobu@penguin:~$ python3 --version
 Python 3.9.2
 ```
 
-ポートフォワーディングやSSH接続を使う場合は gcloud CLI を入れておきます。
+gcloud CLI を入れておきます。手順はこちら <https://cloud.google.com/sdk/docs/install>
 
 Google Cloud のプロジェクトが無い場合は作成して、
 Billing と Cloud Workstations API を有効にしてください。
@@ -36,27 +36,25 @@ Billing と Cloud Workstations API を有効にしてください。
 
 最初に Cluster を作成します。
 デフォルトは Public で、単純な構成ならデフォルトのままで良いと思います。
-Public とはいっても SSH tunnel を使うしか無い環境ですので、通常の用途でしたらセキュリティはそれでだいじょうぶでしょう。
+Public とはいっても SSH tunnel を使うしかない環境ですので、通常の用途でしたらセキュリティはそれでだいじょうぶでしょう。
 Cluster の作成には20分くらいかかります。
 
 次に Configuration を作成します。
 "Quick start workstations" はカネかかりそうなので無効にしました。
 今回は Apache + PHP の単純な Webサイトのテスト環境にしたいだけなので、
 "Machine type" は一番小さなものにしています。
-エディタなどもここで選択できます。私は普段 VS Code を使っているので、デフォルトのまま Code OSS としました。
-設定を保存すると Configuration はすぐにできます。
+エディタなどもここで選択できます。私は普段 VS Code を使っているので、デフォルトの Code OSS としました。
 
-最後に Workstation を作成します。
-名称を決めて Configuration を選択するだけですぐにできます。
+最後に Workstation を作成します。名称を決めて Configuration を選択するだけです。
 
-一覧の中の Workstation を "Start" すると 2分40秒くらいで起動しまして
+一覧の中の Workstation を "Start" すると 2分40秒くらいで起動して
 "START" が "LAUNCH" に変わります。
 "LAUNCH" をクリックすると Code OSS が表示されます。ブラウザを全画面表示にすると、デスクトップ版の VS Code とほとんど同じですね。
 
 Code OSS でターミナルを開くとこんな感じです。
 
 ```
- user@workstation-test:~$ pwd
+user@workstation-test:~$ pwd
 /home/user
 user@workstation-test:~$ echo $SHELL
 /bin/bash
