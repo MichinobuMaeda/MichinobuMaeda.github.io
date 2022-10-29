@@ -17,7 +17,7 @@ GCP: Google Cloud Platform のサービスで、以下のようなものがセ�
 - Hosting: 静的なファイルだけを置くことができる Webサーバ
 - その他、メッセージ配信、メール送信（メールサーバは別途必要）、アクセス解析など
 
-Firestore と Cloud Stroage は Authentication と組み合わせたアクセス制御が可能です。
+Firestore と Cloud Storage は Authentication と組み合わせたアクセス制御が可能です。
 Firestore はデータの内容に基づく動的な制御が可能で、アカウントやアカウントの権限・グループ等に紐付ける形で、読み書きのアクセス権を定義できます。
 
 Firestore の RDBとの違いは、
@@ -96,7 +96,7 @@ Visual Studio Code とほぼ同じ仕様の Code OSS が Web上で利用でき�
 
 ### 2. Firebase プロジェクトの作成
 
-Firebase　のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができます。
+Firebase のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができます。
 プロジェクトID を Flutter のパッケージ名と同じにする場合は、英小文字と数字だけにしてください。
 本番環境とは別にテスト用のプロジェクトを作る場合は、「プロジェクトID-test」のようなIDにするとわかりやすいです。
 Webを利用する場合はプロジェクトIDがそのままURLの一部になるので、ランダムな文字列などのてきとーなIDは後悔することになります。
