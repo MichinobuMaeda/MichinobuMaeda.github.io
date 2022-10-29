@@ -8,7 +8,7 @@ Update: 2022-11-26
 
 <https://firebase.google.com/>
 
-Google Cloud のサービスで、以下のようなものがセットになった Serverless のシステム基盤。
+GCP: Google Cloud Platform のサービスで、以下のようなものがセットになった Serverless のシステム基盤。
 
 - Authentication: 認証基盤
 - Firestore: NoSQL でトランザクションをサポートしたデータベース
@@ -37,7 +37,7 @@ JavaScript に似た Dart という言語を使う。型の定義が必要なの
 
 - Android
 - iOS/iPadOS
-- Web ( PWA: Progressiv Web Apps または SPA: Single-Page Application )
+- Web ( SPA: Single-Page Application / PWA: Progressiv Web Apps )
 - Windows
 - Mac OS
 - Linux
@@ -49,6 +49,8 @@ JavaScript に似た Dart という言語を使う。型の定義が必要なの
 
 Flutter は OS やブラウザの UI部品を使わず、すべて自前で描画するので、
 異なる OS でもほとんど同じ見た目になる。
+
+サンプル: <https://pages.michinobu.jp/honkipass/>
 
 参考: Facebook ( Meta ) の React Native は OS の UI部品を使う。
 対応する OS は Android と iOS/iPadOS だけで、デスクトップ OS には対応していない。
@@ -71,35 +73,40 @@ Visual Studio Code とほぼ同じ仕様の Code OSS が Web上で利用でき�
 
 以下の順番で環境を作成する。
 
-1. Google Cloud のアカウントの作成（無い場合）
+1. GCP のアカウントの作成（無い場合）
 2. Firebase プロジェクトの作成（他人と重複しないプロジェクト名が必要）
 3. gcloud CLI のインストール
-4. Cloud Workstations の環境の作成
-5. GitHub のアカウントの作成（無い場合）
+4. Workstation の作成
+5. 必要なパッケージのインストール
 6. Flutter のプロジェクトの作成
-7. GitHub のリポジトリの作成
-8. Firebase の設定の追加
+7. GitHub のアカウントの作成（無い場合）
+8. GitHub のリポジトリの作成
+9. Firebase の設定の追加
 
-### 1. Google Cloud のアカウントの作成
+### 1. GCP のアカウントの作成
 
-Gmail のアドレスが必要。
+- Gmail のアドレスが無ければ作成する。
+    - Android スマホ購入時に作成したものでもよいが、仕事で使う場合は 2要素認証の設定がお勧め。
+- https://cloud.google.com/ からアカウントを登録する。
+- 支配の設定をする。
+    - 手順: [支払い方法の追加、削除、更新](https://cloud.google.com/billing/docs/how-to/payment-methods)
+    - 各プロジェクトの支払いの有無と支払いを担当するアカウントは後から変更が可能。
 
 ### 2. Firebase プロジェクトの作成
 
-Google Cloud のプロジェクトも同じ名前でできる。
-Flutter のパッケージ名と同じにする場合は、小文字、数字、アンダースコアだけにしておくとよい。
-テスト用のプロジェクトを作る場合は「プロジェクト名-test」のような名称にしておくとよい。
-Webを利用する場合は、ランダムな文字列などのてきとーな名称にすると後悔することになる。
+Firebase　のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができる。
+プロジェクトID を Flutter のパッケージ名と同じにする場合は、英小文字と数字だけにしておくとよい。
+テスト用のプロジェクトを作る場合は「プロジェクトID-test」のようなIDのプロジェクトを追加で作成するとよい。
+Webを利用する場合はプロジェクトIDがそのままURLの一部になるので、ランダムな文字列などのてきとーなIDは後悔することになる。
 
 ### 3. gcloud CLI のインストール
 
-手元のPCからCloud Workstations に接続するには gcloud CLI が必要。
+手元のPCから Cloud Workstations に接続するには gcloud CLI が必要。
+gcloud CLI をインストールする前に Google Cloud のアカウントと、最初のプロジェクトを作成しておくこと。
 
 手順 <https://cloud.google.com/sdk/docs/install>
 
-Windows についてはインストーラが提供されている。
-gcloud CLI をインストールする前に、 Google Cloud のアカウントと、最初のプロジェクトを作成しておくこと。
-
+Windows で Python が入っていない場合はインストーラが簡単。
 デフォルトの設定でインストールすると、最初に以下の設置が必要になる。
 
 - Google Cloud のアカウントでログイン（これがないと何もできない）
@@ -115,18 +122,34 @@ Windows にインストールした後の初回の `gcloud` コマンド実行�
 > Set-ExecutionPolicy RemoteSigned
 ```
 
-### 4. Cloud Workstations の環境の作成
+### 4. Workstation の作成
 
-### 5. GitHub のアカウントの作成
+手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html)
 
-私の場合は <http://github.com/MichinobuMaeda/>
+### 5. 必要なパッケージのインストール
+
+どうも Workstation を再起動すると `apt` でインストールしたものが消えているようなので、
+[Homebrew](https://brew.sh/) を使った。
+Homebrew は Mac OS でよく使われているパッケージマネージャ。
+`yum` や 'apt' などの Linux の標準のパッケージマネージャと違って、インストールする言語のバージョンの設定ができるのが便利。
+
+Flutter はバージョンアップが速いので、 FVM: Flutter Version Management を使う。
+
+Firebase のために Node.js が必要。
+Firebase Emulator のために Java が必要。
 
 ### 6. Flutter のプロジェクトの作成
 
-### 7. GitHub のリポジトリの作成
+### 7. GitHub のアカウントの作成
+
+私の場合は [MichinobuMaeda](http://github.com/MichinobuMaeda/>)
+
+### 8. GitHub のリポジトリの作成
 
 Firebase のプロジェクト名や Flutter のパッケージ名と同じにしておくとよい。
 
-### 8. Firebase の設定の追加
+リポジトリのURLは `http://github.com/アカウント名/リポジトリ名`
+
+### 9. Firebase の設定の追加
 
 Tag: firebase flutter github
