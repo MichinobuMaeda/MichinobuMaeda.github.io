@@ -68,11 +68,11 @@ Visual Studio Code とほぼ同じ仕様の Code OSS が Web上で利用でき�
 - 非力なPCやChromebookで開発したい場合。
 - 自分のPCで複数のバージョンの言語やライブラリを管理するのが煩わしい場合。
 
-後述する gcloud CLI が不要であれば iPad や Android タブレットでも利用可能かもしれない。
+後述する gcloud CLI が不要であれば iPad や Android タブレットでも利用可能かもしれません。
 
 ## B. 環境の準備
 
-以下の順番で環境を作成する。
+以下の順番で環境を作成します。
 
 1. GCP のアカウントの作成（無い場合）
 2. Firebase プロジェクトの作成（他人と重複しないプロジェクト名が必要）
@@ -86,27 +86,28 @@ Visual Studio Code とほぼ同じ仕様の Code OSS が Web上で利用でき�
 
 ### 1. GCP のアカウントの作成
 
-- Gmail のアドレスが無ければ作成する。
-    - Android スマホ購入時に作成したものでもよいが、仕事で使う場合は 2要素認証の設定がお勧め。
-- https://cloud.google.com/ からアカウントを登録する。
-- 支配の設定をする。
+- Gmail のアドレスが無ければ作成します。
+    - Android スマホ購入時に作成したものでもいいですが、仕事で使う場合は 2要素認証の設定がお勧めです。
+- https://cloud.google.com/ からアカウントを登録します。
+- 支払の設定が必要です。
     - 手順: [支払い方法の追加、削除、更新](https://cloud.google.com/billing/docs/how-to/payment-methods)
-    - 各プロジェクトの支払いの有無と支払いを担当するアカウントは後から変更が可能。
+    - 各プロジェクトの支払いの有無と支払いを担当するアカウントは個別に設定できて、変更も可能です。
+    - 必ず予算の設定をしてください。 GCP全体とプロジェクト毎の上限を決めることができます。
 
 ### 2. Firebase プロジェクトの作成
 
-Firebase　のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができる。
-プロジェクトID を Flutter のパッケージ名と同じにする場合は、英小文字と数字だけにしておくとよい。
-テスト用のプロジェクトを作る場合は「プロジェクトID-test」のようなIDのプロジェクトを追加で作成するとよい。
-Webを利用する場合はプロジェクトIDがそのままURLの一部になるので、ランダムな文字列などのてきとーなIDは後悔することになる。
+Firebase　のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができます。
+プロジェクトID を Flutter のパッケージ名と同じにする場合は、英小文字と数字だけにしてください。
+本番環境とは別にテスト用のプロジェクトを作る場合は、「プロジェクトID-test」のようなIDにするとわかりやすいです。
+Webを利用する場合はプロジェクトIDがそのままURLの一部になるので、ランダムな文字列などのてきとーなIDは後悔することになります。
 
 ### 3. gcloud CLI のインストール
 
-手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 前半
+手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 前半参照
 
 ### 4. Workstation の作成
 
-手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 後半
+手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 後半参照
 
 ### 5. 必要なパッケージのインストール
 
@@ -128,7 +129,7 @@ Firebase Tools のために Node.js が必要です。また、 Firebase Emulato
 ### 8. GitHub のリポジトリの作成
 
 Firebase のプロジェクト名や Flutter のパッケージ名と同じにしておくといいです。
-リポジトリのURLは `http://github.com/アカウント名/リポジトリ名` です。
+リポジトリのURLは `https://github.com/アカウント名/リポジトリ名` です。
 
 ### 9. Firebase の設定の追加
 
