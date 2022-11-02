@@ -11,7 +11,7 @@ Update: 2022-11-26
 [Docker](https://www.docker.com/),
 [Git](https://git-scm.com/),
 [Node.js](https://nodejs.org/),
-[Material Design](https://m3.material.io/)
+[Material Design](https://m3.material.io/),
 [VS Code](https://code.visualstudio.com/)
 などの説明は省きます。
 
@@ -26,7 +26,7 @@ GCP: Google Cloud Platform のサービスで、以下のようなものがセ�
 - Authentication: 認証基盤
 - Firestore: トランザクションをサポートした NoSQL のデータベース
 - Cloud Storage: 画像や文書などのファイルを格納するストレージ
-- Cloud Functions: 単発の処理の実行環境 ※プロセスの常駐は不可で処理時間の制限有り
+- Cloud Functions: 単発の処理の実行環境（プロセスの常駐は不可で処理時間の制限有り）
 - Hosting: 静的なファイルだけを置くことができる Webサーバ
 - その他、メッセージ配信、メール送信（メールサーバは別途必要）、アクセス解析など
 
