@@ -79,6 +79,7 @@ Web向けの React とロジックは共有できますが、プレゼンテー�
 Visual Studio Code とほぼ同じ仕様の Code OSS が Web上で利用できます。
 
 - 非力なPCやChromebookで開発したい場合
+- 短期間の開発の場合
 - 自分のPCで複数のバージョンの言語やライブラリを管理するのが煩わしい場合
 - 開発環境を Docker のコンテナとして配布したい場合
 
@@ -110,10 +111,27 @@ Visual Studio Code とほぼ同じ仕様の Code OSS が Web上で利用でき�
 
 ### 2. Firebase プロジェクトの作成
 
+まず [Firebase のコンソール](https://console.firebase.google.com/) からプロジェクトを作成します。
+
 Firebase のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができます。
 プロジェクトID を Flutter のパッケージ名と同じにする場合は、英小文字と数字だけにしてください。
 本番環境とは別にテスト用のプロジェクトを作る場合は、「プロジェクトID-test」のようなIDにするとわかりやすいです。
 Webを利用する場合はプロジェクトIDがそのままURLの一部になるので、ランダムな文字列などのてきとーなIDは後悔することになります。
+
+今回は `cuflutter20221126` としました。
+
+次に以下の項目をせってします。
+
+- Project settings
+    - Default GCP resource location: asia-northeast2 (大阪)
+    - Your apps: </> ボタンから Web app: "CU Flutter20221126" を作成します。
+        - 作成後に表示されるキーは後で使用します。
+- Usage and billing
+    - Details & settings
+        - Functions を利用する場合は Spark (支払い無し)を Blaze (従量制課金) に変更します。
+- Build
+    - Firestore Database を作成します。とりあえず試用したい場合はアクセス制御無しの "test mode" でいいです。
+    - Readtime Database は使いません。旧バージョンのサービスとの互換性のためのもので、これを使う利点は無いです。
 
 ### 3. gcloud CLI のインストール
 
@@ -123,12 +141,19 @@ Webを利用する場合はプロジェクトIDがそのままURLの一部にな
 
 手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 後半参照
 
+GCP のプロジェクトは Firebase で作成したプロジェクトを使います。
+Flutter のコンパイラに CPU 能力が必要なので 4 CPU / メモリ 16 GB としました。
+
+Code OSS は VS Code の拡張が利用できます。下図の日本語パッケージの他、プログラミング言語、フレームワーク等に対応した拡張がたくさんあります。
+
+![Japanese Langage Pack](vscodejalangpack.png)
+
 ### 5. 必要なパッケージのインストール
 
 どうも Workstation を再起動すると `apt` でインストールしたものが消えているようなので
 [Homebrew](https://brew.sh/) を使いました。
 Homebrew は Mac OS でよく使われているパッケージマネージャです。
-`yum` や 'apt' などの Linux の標準のパッケージマネージャと違って、インストールする言語のバージョンの選択ができるのが便利です。
+`yum` や `apt` などの Linux の標準のパッケージマネージャと違って、インストールする言語のバージョンの選択ができるのが便利です。
 
 Flutter はバージョンアップが速いので、 FVM: Flutter Version Management を使います。
 
