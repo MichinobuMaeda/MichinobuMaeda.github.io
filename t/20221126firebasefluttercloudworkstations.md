@@ -144,6 +144,8 @@ Webを利用する場合はプロジェクトIDがそのままURLの一部にな
 GCP のプロジェクトは Firebase で作成したプロジェクトを使います。
 Flutter のコンパイラに CPU 能力が必要なので 4 CPU / メモリ 16 GB としました。
 
+ワークステーションの起動は、1回目約4分、２回目約2分15秒でした。
+
 Code OSS は VS Code の拡張が利用できます。下図の日本語パッケージの他、プログラミング言語、フレームワーク等に対応した拡張がたくさんあります。
 
 ![Japanese Langage Pack](vscodejalangpack.png)
@@ -155,11 +157,87 @@ Code OSS は VS Code の拡張が利用できます。下図の日本語パッ�
 Homebrew は Mac OS でよく使われているパッケージマネージャです。
 `yum` や `apt` などの Linux の標準のパッケージマネージャと違って、インストールする言語のバージョンの選択ができるのが便利です。
 
-Flutter はバージョンアップが速いので、 FVM: Flutter Version Management を使います。
+Flutter はバージョンアップが速いので、 [FVM](https://fvm.app/): Flutter Version Management を使います。
 
-Firebase Tools のために Node.js が必要です。また、 Firebase Emulator のために Java が必要です。
+Firebase Tools のために Node.js が必要です。
+Firebase Emulator のための Java は OS に入っている 17 がそのまま使えます。
+
+```
+## Homebrew のインストール（必ず [Homebrew](https://brew.sh/) のサイトに掲載された最新の手順に従うこと） 
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+## Homebrew のインストール時に表示される案内に従って設定する。
+## build-essential は後続のパッケージのインストール時に必要（たぶん）。
+$ echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/user/.profile
+$ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/user/.profile
+$ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+$ . .profile
+$ sudo sudo apt-get install build-essential
+
+## Homebrew で必要なパッケージをインストール
+$ brew install nvm
+$ brew tap leoafarias/fvm
+$ brew install fvm
+
+## nvm インストール時に表示される案内に従って設定する。
+$ mkdir ~/.nvm
+```
+
+.profile に以下の行を追加します。
+
+```
+export NVM_DIR="$HOME/.nvm"
+[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+```
+
+```
+## .profile を反映
+$ . .profile
+$ nvm --version
+0.39.2
+
+## Cloud Functions の現在(2022-11-03)の推奨の Node.js 16 をインストールする。
+$ nvm install 16
+
+## Flutter の現時点(2022-11-03)の最新 3.3.7 をインストールする。
+$ fvm install 3.3.7
+$ fvm global 3.3.7
+```
 
 ### 6. Flutter のプロジェクトの作成
+
+Web だけ対応のプロジェクトを作成します。他のプラットフォームは後から追加できます。
+
+```
+$ fvm flutter create cuflutter20221126 --platforms web
+```
+
+ターミナルで `cd cuflutter20221126` とするか、 Code OSS でフォルダ `/home/user/cuflutter20221126` を開くかします。
+そこにサンプルのアプリができているので、動かしてみます。
+Cloud Workstations の環境では直接ブラウザを開くことができないので、デバイスとして `web-server` を指定します。
+最初は Web SDK のダウンロードに時間がかかります。
+
+```
+$ fvm flutter run -d web-server --web-port=1234
+```
+
+手元のPCで SSH Port Fowarding します。呪文のように長いコマンドですが、
+Cloud Workstations の管理画面から案内された通りにします。
+
+```
+$ gcloud alpha workstations start-tcp-tunnel \
+  --project=cuflutter20221126 \
+  --cluster=cluster-test01 \
+  --config=config-test01 \
+  --region=asia-east1 \
+  workstation-test01 1234 \
+  --local-host-port=:8080
+```
+
+これでWebブラウザで http://localhost:8080/ を開くと、サンプルのアプリが表示されます。
+
+![Flutter Sample App](cuflutter20221126b.png)
 
 ### 7. GitHub のアカウントの作成
 
