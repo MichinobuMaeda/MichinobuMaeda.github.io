@@ -243,10 +243,44 @@ $ gcloud alpha workstations start-tcp-tunnel \
 
 私の場合は [MichinobuMaeda](http://github.com/MichinobuMaeda/>)
 
+Workstations の環境に GitHub で使う氏名、メールアドレスを設定し、 SSH鍵を生成します。
+
+```
+$ git config --global user.name "氏名"
+$ git config --global user.email "メールアドレス"
+$ ssh-keygen
+$ cat ~/.ssh/id_rsa.pub
+```
+
+SSH鍵 ( `id_rsa.pub` の内容 ) を GitHub のアカウント設定に追加します。原則としてパスフレーズは設定してください。
+
+SSH鍵は作業環境ごとに作成して GitHub に登録してください。秘密鍵をコピーして使いまわすのは漏洩の事故の元になりますので、やらないでください。
+
+コマンドラインから GitHub を操作する場合は
+
+```
+$ eval `ssh-agent`
+$ ssh-add
+```
+
+とするか、毎回パスフレーズを入力するかどちらかしてください。
+
 ### 8. GitHub のリポジトリの作成
 
 Firebase のプロジェクト名や Flutter のパッケージ名と同じにしておくといいです。
 リポジトリのURLは `https://github.com/アカウント名/リポジトリ名` です。
+
+リポジトリを作成すると設定の案内が表示されるので、それに従って
+
+```
+$ echo "# cuflutter20221126" >> README.md
+$ git init
+$ git add README.md
+$ git commit -m "first commit"
+$ git branch -M main
+$ git remote add origin git@github.com:MichinobuMaeda/cuflutter20221126.git
+$ git push -u origin main
+```
 
 ### 9. Firebase の設定の追加
 
