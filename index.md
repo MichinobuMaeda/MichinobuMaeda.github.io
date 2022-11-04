@@ -9,6 +9,7 @@
 
 <img style="height: 96px;" src="img/portrait1.jpg" title="portrait 1" alt="portrait 1">
 <img style="height: 96px;" src="img/portrait2.jpg" title="portrait 2" alt="portrait 2">
+<img style="height: 96px;" src="img/portrait3.jpg" title="portrait 3" alt="portrait 3">
 
 <a style="padding: 0 8px 0 8px;" href="https://twitter.com/mixnb">
     <img style="height: 18px;" src="img/twitter.png" title="Twitter" alt="Twitter" />
