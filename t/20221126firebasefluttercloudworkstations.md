@@ -209,9 +209,7 @@ $ fvm global 3.3.7
 
 Web だけ対応のプロジェクトを作成します。他のプラットフォームは後から追加できます。
 
-```
-$ fvm flutter create cuflutter20221126 --platforms web
-```
+[サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.1. Flutter のプロジェクトの作成
 
 ターミナルで `cd cuflutter20221126` とするか、 Code OSS でフォルダ `/home/user/cuflutter20221126` を開くかします。
 そこにサンプルのアプリができているので、動かしてみます。
@@ -283,5 +281,9 @@ $ git push -u origin main
 ```
 
 ### 9. Firebase の設定の追加
+
+[サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.2. Firebase の設定の追加
+
+この作業には Firebase のプロジェクトのアカウントへのログインが必要で Cloud Workstations 上ではできないので、ローカル PC で作業しました。
 
 Tag: firebase flutter github
