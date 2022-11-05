@@ -137,11 +137,11 @@ Webを利用する場合はプロジェクトIDがそのままURLの一部にな
 
 ### 3. gcloud CLI のインストール
 
-手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 前半参照
+参照: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 前半参照
 
 ### 4. Workstation の作成
 
-手順: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 後半参照
+参照: [Google Cloud Workstations を使ってみる](https://pages.michinobu.jp/t/googlecloudworkstations.html) 後半参照
 
 GCP のプロジェクトは Firebase で作成したプロジェクトを使います。
 Flutter のコンパイラに CPU 能力が必要なので 4 CPU / メモリ 16 GB としました。
@@ -167,23 +167,23 @@ Firebase Tools のために Node.js が必要です。
 Firebase Emulator のための Java は OS に入っている 17 がそのまま使えます。
 
 ```
-## Homebrew のインストール（必ず [Homebrew](https://brew.sh/) のサイトに掲載された最新の手順に従うこと） 
+##### 注 ##### Homebrew のインストールは必ず Homebrew の https://brew.sh/ サイトに掲載された最新の手順に従うこと。
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-## Homebrew のインストール時に表示される案内に従って設定する。
-## build-essential は後続のパッケージのインストール時に必要（たぶん）。
+##### 注 ##### Homebrew のインストール時に表示される案内に従って設定する。
+##### 注 ##### build-essential は後続のパッケージのインストール時に必要（たぶん）。
 $ echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/user/.profile
 $ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/user/.profile
 $ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 $ . .profile
 $ sudo sudo apt-get install build-essential
 
-## Homebrew で必要なパッケージをインストール
+##### 注 ##### Homebrew で必要なパッケージをインストール
 $ brew install nvm
 $ brew tap leoafarias/fvm
 $ brew install fvm
 
-## nvm インストール時に表示される案内に従って設定する。
+##### 注 ##### nvm インストール時に表示される案内に従って設定する。
 $ mkdir ~/.nvm
 ```
 
@@ -196,15 +196,15 @@ export NVM_DIR="$HOME/.nvm"
 ```
 
 ```
-## .profile を反映
-$ . .profile
+##### 注 ##### .profile を反映
+$ . ~/.profile
 $ nvm --version
 0.39.2
 
-## Cloud Functions の現在(2022-11-03)の推奨の Node.js 16 をインストールする。
+##### 注 ##### Cloud Functions の現在(2022-11-03)の推奨の Node.js 16 をインストールする。
 $ nvm install 16
 
-## Flutter の現時点(2022-11-03)の最新 3.3.7 をインストールする。
+##### 注 ##### Flutter の現時点(2022-11-03)の最新 3.3.7 をインストールする。
 $ fvm install 3.3.7
 $ fvm global 3.3.7
 ```
@@ -213,7 +213,7 @@ $ fvm global 3.3.7
 
 Web だけ対応のプロジェクトを作成します。他のプラットフォームは後から追加できます。
 
-[サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.1. Flutter のプロジェクトの作成
+参照: [サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.1. Flutter のプロジェクトの作成
 
 ターミナルで `cd cuflutter20221126` とするか、 Code OSS でフォルダ `/home/user/cuflutter20221126` を開くかします。
 そこにサンプルのアプリができているので、動かしてみます。
@@ -286,7 +286,7 @@ $ git push -u origin main
 
 ### 9. Firebase の設定の追加
 
-[サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.2. Firebase の設定の追加
+参照: [サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.2. Firebase の設定の追加
 
 この作業には Firebase のプロジェクトのアカウントへのログインが必要で Cloud Workstations 上ではできないので、ローカル PC で作業しました。
 
