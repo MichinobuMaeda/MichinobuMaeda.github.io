@@ -150,7 +150,7 @@ Flutter のコンパイラに CPU 能力が必要なので 4 CPU / メモリ 16 
 
 Code OSS は VS Code の拡張が利用できます。プログラミング言語、フレームワーク等に対応した拡張がたくさんあります。
 VS Code の日本語化パッケージはインストールできたものの動作しませんでした。
-Code OSS では対応しないようです。開発元の掲示板 <https://github.com/microsoft/vscode/issues> を見ると、 「ビルドに時間がかかるし、チームメンバーは英語しかできないし」とのことです。
+Code OSS では対応しないようです。開発元の掲示板 <https://github.com/microsoft/vscode/issues/130861> によると、ビルドに時間がかかるからだそうです。
 
 ![Japanese Langage Pack](vscodejalangpack.png)
 
