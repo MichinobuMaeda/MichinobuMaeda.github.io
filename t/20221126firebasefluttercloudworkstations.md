@@ -148,7 +148,9 @@ Flutter のコンパイラに CPU 能力が必要なので 4 CPU / メモリ 16 
 
 ワークステーションの起動は、1回目約4分、２回目約2分15秒でした。
 
-Code OSS は VS Code の拡張が利用できます。下図の日本語パッケージの他、プログラミング言語、フレームワーク等に対応した拡張がたくさんあります。
+Code OSS は VS Code の拡張が利用できます。プログラミング言語、フレームワーク等に対応した拡張がたくさんあります。
+VS Code の日本語化パッケージはインストールできたものの動作しませんでした。
+Code OSS では対応しないようです。開発元の掲示板 <https://github.com/microsoft/vscode/issues> を見ると、 「ビルドに時間がかかるし、チームメンバーは英語しかできないし」とのことです。
 
 ![Japanese Langage Pack](vscodejalangpack.png)
 
@@ -232,10 +234,10 @@ $ gcloud alpha workstations start-tcp-tunnel \
   --config=config-test01 \
   --region=asia-east1 \
   workstation-test01 1234 \
-  --local-host-port=:8080
+  --local-host-port=:1234
 ```
 
-これでWebブラウザで http://localhost:8080/ を開くと、サンプルのアプリが表示されます。
+これでWebブラウザで http://localhost:1234/ を開くと、サンプルのアプリが表示されます。
 
 ![Flutter Sample App](cuflutter20221126b.png)
 
