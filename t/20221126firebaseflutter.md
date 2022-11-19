@@ -7,7 +7,9 @@ Update: 2022-11-26
 このページの URL は <https://pages.michinobu.jp/t/20221126firebaseflutter.html> です。
 [GitHub Pages で作成](https://pages.michinobu.jp/t/githubpagesminimal.html)しました。
 
-[サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126) は BSD ライセンスで公開しました。商用を含めてコピペ・流用可ですが、私の氏名やメアドが入っている箇所やクラウド環境のキー等は書き換えてください。利用方法は  `README.md` 「A. 開発環境」をご参照ください。
+サンプルコード
+<https://github.com/MichinobuMaeda/cuflutter20221126>
+は BSD ライセンスで公開しています。商用を含めてコピペ・流用可ですが、クラウド環境のキー等は書き換えてください。利用方法は `README.md` 「A. 開発環境」をご参照ください。
 
 時間の制約により
 [Docker](https://www.docker.com/),
@@ -32,8 +34,12 @@ GCP: Google Cloud Platform のサービスで、以下のようなものがセ�
 - Hosting: 静的なファイルだけを置くことができる Webサーバ
 - その他、メッセージ配信、メール送信（メールサーバは別途必要）、アクセス解析など
 
+また、多数の言語向けのライブラリやローカルのテストのためのエミューレータが用意されています。対応している言語は JavaScript ( Web, Node.js ), Java ( Android, Server side ), Swift, Objective-C, Kotolin, Phthon, Unity, Go, PHP, C#, Ruby, Dart ( Flutter ) です。
+
 Firestore と Cloud Storage は Authentication と組み合わせたアクセス制御が可能です。
 Firestore はデータの内容に基づく動的な制御が可能で、アカウントやアカウントの権限・グループ等に紐付ける形で、読み書きそれぞれのアクセス権を定義できます。
+
+Cloud Storage は AWS の S3 、 Cloud Functions は AWS の Lambda と同様のサービスです。
 
 Firestore の RDB との違いは、
 
@@ -52,12 +58,26 @@ Flutter は一つのコードから以下の OS向けの実行モジュールを
 
 - Android
 - iOS/iPadOS
-- Web ( SPA: Single-Page Application / PWA: Progressiv Web Apps )
+- Web ( SPA / PWA: Progressiv Web Apps )
 - Windows
 - Mac OS
 - Linux
 
-見た目の雰囲気は、以下のどちらかを選択できます。
+サンプル: <https://pages.michinobu.jp/honkipass/>
+
+SPA ( Single-Page Application ) は Gmail や Google Maps のようにほとんどの機能を JavaScript で実装し、HTMLのページの遷移は無しで動作する Web アプリケーションです。
+[サンプルコードの HTML](https://github.com/MichinobuMaeda/cuflutter20221126/blob/main/web/index.html)
+
+PWA は SPA をモバイルアプリのように動作させる仕組みです。
+SPA との違いは以下のようになります。
+
+- ホーム画面にショートカットではなくアプリとしてのアイコンを置くことができる。
+- ブラウザのアドレスバーが表示されない。
+- Android ではアプリを閉じていても通知メッセージの受信が可能。
+
+![PWAのインストール](20221126firebaseflutterpwa.png)
+
+Flutter の見た目の雰囲気は、次のどちらかを選択できます。
 
 - Material ( Android 風 )
 - Cupertino ( iOS 風 )
@@ -65,11 +85,9 @@ Flutter は一つのコードから以下の OS向けの実行モジュールを
 Flutter は OS やブラウザの UI部品を使わず、すべて自前で描画するので、
 異なる OS でもほとんど同じ見た目になります。
 
-サンプル: <https://pages.michinobu.jp/honkipass/>
-
 #### 参考: React Native との違い
 
-Facebook ( Meta ) の React Native は OS の UI部品を使います。
+Facebook ( Meta ) の React Native は OS の UI部品を使います。したがって、特に意識しなくても動作している OS の標準的な見た目になります。
 対応する OS は Android と iOS/iPadOS だけで、デスクトップ OS には対応していません。
 Web向けの React とロジックは共有できますが、プレゼンテーション層は完全には共有できないようです。
 
@@ -93,7 +111,7 @@ Windows の場合は
 - Gmail のアドレスが無ければ作成します。
     - Android スマホ購入時に作成したものでもいいですが、仕事で使う場合は 2要素認証の設定がお勧めです。
 - <https://cloud.google.com/> から GCP のアカウントを登録します。
-- Firestore の一部の機能のために支払の設定が必要です。
+- Functions など Firebase の一部の機能のために支払の設定が必要です。
     - 手順: [支払い方法の追加、削除、更新](https://cloud.google.com/billing/docs/how-to/payment-methods)
     - 各プロジェクトの支払いの有無と支払いを担当するアカウントは個別に設定できて、変更も可能です。
     - 必ず予算の設定をしてください。 GCP 全体とプロジェクト毎の上限を決めることができます。
@@ -187,17 +205,17 @@ Web だけ対応のプロジェクトを作成します。他のプラットフ�
 
 参照: [サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.1. Flutter のプロジェクトの作成
 
-ターミナルで `cd cuflutter20221126` とするか、 Code OSS でフォルダ `/home/user/cuflutter20221126` を開くかします。
-そこにサンプルのアプリができているので、動かしてみます。
-最初は Web SDK のダウンロードに時間がかかります。
+プロジェクトの作成後、
 
 ```bash
+cd cuflutter20221126
 fvm flutter run -d chrome
 ```
 
-これでWebブラウザが自動で起動し、サンプルのアプリが表示されます。
+とすると Webブラウザが自動で起動し、サンプルのアプリが表示されます。
+初回は Flutter の Web SDK のダウンロードに時間がかかります。
 
-![Flutter Sample App](cuflutter20221126b.png)
+![Flutter Sample App](20221126firebaseflutterpreview.png)
 
 ### 5. GitHub のアカウントの作成
 
