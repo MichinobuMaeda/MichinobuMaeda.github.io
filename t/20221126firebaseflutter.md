@@ -4,7 +4,7 @@ Update: 2022-11-26
 
 [コンピュータ・ユニオン関西IT支部](https://cu-kansai-it.org/) IT技術者・クリエイターカフェ 2022年11月 資料
 
-このページの URL は <https://pages.michinobu.jp/t/20221126firebasefluttercloudworkstations.html> です。
+このページの URL は <https://pages.michinobu.jp/t/20221126firebaseflutter.html> です。
 [GitHub Pages で作成](https://pages.michinobu.jp/t/githubpagesminimal.html)しました。
 
 [サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126) は BSD ライセンスで公開しました。商用を含めてコピペ・流用可ですが、私の氏名やメアドが入っている箇所やクラウド環境のキー等は書き換えてください。利用方法は  `README.md` 「A. 開発環境」をご参照ください。
