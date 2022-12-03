@@ -13,8 +13,11 @@ Update: 2022-12-03
 - ライセンスは Laravel と同じ MIT とする。
 
 main ブランチで Codespace を作成します。
+
 ![Crate a codespace on main](20221203codespaceslaravel01.png)
+
 すると少し待たされて VS Code が表示されます。
+
 ![VS code on web](20221203codespaceslaravel02.png)
 
 ターミナルで環境を見るとこんな感じで必要なものはそろっているようです。テスト用のDBをSQLiteにすればテストもできますね。
@@ -53,9 +56,11 @@ Your branch is up to date with 'origin/main'.
 ここまででとりあえず commit & push しておきます。
 
 次に `php artisan serve` で開発用サーバを起動すると「ポート転送するか？」と聞かれるます。
+
 ![Open in Browser](20221203codespaceslaravel03.png)
 
 ボタン "Open in Browser" をクリックするとプロジェクト作成時に生成されたページが表示されました。
+
 ![Laravel demo page](20221203codespaceslaravel04.png)
 
 この後の作業もすべて Codespace 内でできそうです。
@@ -63,6 +68,7 @@ Your branch is up to date with 'origin/main'.
 VS Code の拡張は "PHP Extension Pack" と "Laravel Extension Pack"  と "SQLite Viewer" を入れました。
 
 作業が終わったら Codespace を止めます。
+
 ![Stop codespace](20221203codespaceslaravel05.png)
 
 Tag: codespaces laravel
