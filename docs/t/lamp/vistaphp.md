@@ -1,6 +1,6 @@
-整理中：Windows VistaでPHPの開発
+# 整理中：Windows VistaでPHPの開発
 
-2009-06-05
+Update: 2009-06-05
 
 
 

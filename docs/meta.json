@@ -1505,21 +1505,21 @@
         {
             "cat": "t",
             "path": "t/lamp/phponwin.html",
-            "title": "unknown",
-            "updated_at": "unknown",
+            "title": "整理中：Windows で PHP の開発",
+            "updated_at": "2008-06-30",
             "tags": []
         },
         {
             "cat": "t",
             "path": "t/lamp/vistaphp.html",
-            "title": "unknown",
-            "updated_at": "unknown",
+            "title": "整理中：Windows VistaでPHPの開発",
+            "updated_at": "2009-06-05",
             "tags": []
         },
         {
             "cat": "t",
             "path": "t/lamp/zendservercezendframework.html",
-            "title": "unknown",
+            "title": "整理中：Zend Server CE / Zend Framework",
             "updated_at": "unknown",
             "tags": []
         },
@@ -1591,7 +1591,7 @@
         {
             "cat": "t",
             "path": "t/misc/apachejames.html",
-            "title": "unknown",
+            "title": "整理中：テスト用転送無しメールサーバ",
             "updated_at": "unknown",
             "tags": []
         },
@@ -1778,7 +1778,7 @@
         {
             "cat": "t",
             "path": "t/programming/google-app-engine-de-jst-wo-shiu.html",
-            "title": "unknown",
+            "title": "Google App Engine で JST を使う ( python )",
             "updated_at": "unknown",
             "tags": []
         },
@@ -1806,15 +1806,15 @@
         {
             "cat": "t",
             "path": "t/programming/javascript-object-map.html",
-            "title": "unknown",
+            "title": "整理中：Javascript の Object と Map",
             "updated_at": "unknown",
             "tags": []
         },
         {
             "cat": "t",
             "path": "t/programming/jquerytrial.html",
-            "title": "unknown",
-            "updated_at": "unknown",
+            "title": "整理中：jQuery 日記",
+            "updated_at": "2011-01-24",
             "tags": []
         },
         {

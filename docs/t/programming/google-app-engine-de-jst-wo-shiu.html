@@ -26,7 +26,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
   <script>hljs.highlightAll();</script>
 
-  <title>みちのぶのねぐら</title>
+  <title>Google App Engine で JST を使う ( python ) - みちのぶのねぐら</title>
 </head>
 
 <body onload="onBodyLoading()">
@@ -88,7 +88,7 @@
   </div>
 
 
-  <div class="content"><p>Google App Engine で JST を使う ( python )</p>
+  <div class="content"><h1>Google App Engine で JST を使う ( python )</h1>
 <p>Update: unknown</p>
 <p>Google App Engine の python の DateTimeProperty は、タイムゾーン情報を持ちません。 datetime.datetime.now() を代入すると、 UTC の日時になります。これを日本標準時 JST に直すこと自体は簡単で、こちら <a href="http://teraapi.blogspot.jp/2008/05/google-app-enginejst.html">http://teraapi.blogspot.jp/2008/05/google-app-enginejst.html</a> で紹介されているとおり。 <a href="http://dateconv4gae.googlecode.com/svn/trunk/DateConvModule.py">DateConvModule.py</a> でほとんどの場合十分だと思います。</p>
 <p>では、 DateTimeProperty にタイムゾーン有りの値を代入したらどうなるか？ 試してみました。</p>

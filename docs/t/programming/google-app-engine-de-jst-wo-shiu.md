@@ -1,4 +1,4 @@
-Google App Engine で JST を使う ( python )
+# Google App Engine で JST を使う ( python )
 
 Update: unknown
 

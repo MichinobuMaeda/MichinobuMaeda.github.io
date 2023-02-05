@@ -1,6 +1,6 @@
-整理中：Windows で PHP の開発
+# 整理中：Windows で PHP の開発
 
-2008-06-30
+Update: 2008-06-30
 
 
 
