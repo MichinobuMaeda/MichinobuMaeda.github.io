@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Geeklogのページをwgetで静的ページに - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Geeklogのページをwgetで静的ページに</h1>
+<p>Update: 2010-03-07</p>
+<p>このサイトを DokuWiki と Movable Type に移動して ( 2011-01 にまた Google sites と Blogger に引っ越し ) 後に残された Geeklog のページを、 wget 使って静的ページに移行しました。これで MySQL がいらなくなります。単純に「ダウンロードしてアップロードして終わり」というわけにはいかないのですが、今回の手順をスクリプトで自動化すれば、サーバの負荷の低減のために Blog系CMS や Wiki のページを静的コンテンツとして公開することも難しくなさそうです。</p>
+<h2>wget でダウンロード</h2>
+<p><code>wget -m -k -p -E www.michinobu.jp</code></p>
+<p>でダウンロードしました。それぞれのパラメータの意味は</p>
+<p><code>wget --help</code></p>
+<p>など参照してください。ダウンロードした後、仮想ディレクトリなど、不要なものをを削除します。</p>
+<h2>アップロード</h2>
+<p>テスト用のディレクトリを作成してアップロードしました。私の環境の場合、仮想ホストの設定などは自由にできるので、テスト用のディレクトリを test.michinobu.jp としました。自分の PC の hosts に test.michinobu.jp を追加して、ブラウザで表示できることを確認します。</p>
+<h2>足りないものを追加</h2>
+<p>wget は CSS の中の URL までは追いかけてくれないようです。インクルードしている CSS ファイルや background-image に指定している画像ファイルなどを所定の場所に追加します。私の場合、元のサイトのディレクトリからサブディレクトリごとまとめてコピーで済みました。次のディレクトリです。</p>
+<ul>
+<li>images</li>
+<li>layout</li>
+</ul>
+<p>これで、見た目は OK。</p>
+<h2>その他の微調整</h2>
+<p>お問い合わせページは、 Movable Type のサイトに作ったものにリダイレクトするように修正。 <a href="http://blog.michinobu.jp/mail.php">http://blog.michinobu.jp/mail.php</a> これは、 Movable Type で問い合わせページ と同じもの。</p>
+<p>外部リンクがなぜか相対パスになっているのを修正。これは wget のパラメータが不適切だったのが原因ではないだろうか。</p></div>
+
+</body>
+
+</html>

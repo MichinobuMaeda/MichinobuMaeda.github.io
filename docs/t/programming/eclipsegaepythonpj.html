@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Eclipse Pydev で Google App Engine - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Eclipse Pydev で Google App Engine</h1>
+<p>Update: unknown</p>
+<p><a href="https://code.google.com/p/sangiin-votes/"></a></p>
+<p>参議院の押しボタン投票を集計する Google App Engine のアプリ <a href="http://code.google.com/p/sangiin-votes/"><a href="http://code.google.com/p/sangiin-votes/">http://code.google.com/p/sangiin-votes/</a></a> を作り始めました。そのための Eclipse のプロジェクトの作成の手順です。使用している Eclipse のプラグインなどについては <a href="https://sites.google.com/site/michinobumaeda/programming/gaepydev">Eclipse で Python</a> を見てください。</p>
+<p>アプリケーションの ID は <code>sangiin-votes</code> です。</p>
+<p>新しいプロジェクトを作成します。"Pydev Google App Engine Project" を選択します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/-b_ImD0FlXi4/TfRi9XHpKjI/AAAAAAAACDg/4zpd9VUJlv8/s1600/sv001.png" /></p>
+<p>プロジェクト名と Python のバージョン、パスを設定します。プロジェクト名はアプリケーション ID と同じにしました。私の MacBook の場合、<code>/usr/bin/python</code> は 2.6.1 なので、 <code>/usr/bin/python2.5</code> を指定しました。</p>
+<p><img alt="" src="https://lh4.googleusercontent.com/-33XNMU6edVo/TfRi9zj4FvI/AAAAAAAACDk/r6TayR-gO5A/s1600/sv002.png" /></p>
+<p>Google App Engine SDK のパスを設定します。 Mac OS X の場合は</p>
+<p><code>/Applications/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/google_appengine/</code></p>
+<p>のようなわかりにくい場所になります。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/-euNQNIB84uY/TfRjBKM-IJI/AAAAAAAACD0/vHICD_NGPbI/s1600/sv004.png" /></p>
+<p>アプリケーション ID と、サンプルコードの有無を指定します。</p>
+<p><img alt="" src="https://lh4.googleusercontent.com/-emsZhPBUaY4/TfRi_LEvRVI/AAAAAAAACDo/tWmiy6Nvsy0/s1600/sv005.png" /></p>
+<p><code>app.yaml</code> と <code>helloworld.py</code> のサンプルが生成されました。</p>
+<p><img alt="" src="https://lh5.googleusercontent.com/-OiyX_ZFxvao/TfRjAwahNNI/AAAAAAAACDw/W4MqarIX1fU/sv006.png" /></p>
+<p>アプリケーションをデプロイするスクリプト、開発用の実行環境を起動するスクリプト（データストアをクリアするものとしないもの）を作成します。</p>
+<p>sangiin-votes_deploy.sh</p>
+<pre class="highlight"><code>/usr/bin/python2.5 ¥
+ /Applications/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/google_appengine/appcfg.py ¥
+ --email=xxxxxxxxxxxxxxxxxxxx@gmail.com ¥
+ update ¥
+ /Users/michinobu/workspace/sangiin-votes/src
+</code></pre>
+
+<p>sangiin-votes_start_cleare.sh</p>
+<pre class="highlight"><code>/usr/bin/python2.5 ¥
+    /Applications/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/google_appengine/dev_appserver.py ¥
+    --admin_console_server= ¥
+    --port=8080 ¥
+    --use_sqlite ¥
+    --clear_datastore ¥
+    /Users/michinobu/workspace/sangiin-votes/src
+</code></pre>
+
+<p>sangiin-votes_start.sh</p>
+<pre class="highlight"><code>/usr/bin/python2.5 ¥
+    /Applications/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/google_appengine/dev_appserver.py ¥
+    --admin_console_server= ¥
+    --port=8080 ¥
+    --use_sqlite ¥
+    /Users/michinobu/workspace/sangiin-votes/src
+</code></pre>
+
+<p><code>sangiin-votes_start_cleare.sh</code> を実行して、ブラウザで確認します。</p>
+<p>アプリケーション <code>http://localhost:8080/</code></p>
+<p><img alt="" src="https://lh4.googleusercontent.com/-lqgH5wQTXYs/TfRjAtg965I/AAAAAAAACDs/H2gJfmygLS8/sv007.png" /></p>
+<p>管理機能 <code>http://localhost:8080/_ah/admin/</code></p>
+<p><img alt="" src="https://lh6.googleusercontent.com/-m8mF3wLjIX0/TfRjBvLfzPI/AAAAAAAACD4/YouosB3r1hg/s1600/sv008.png" /></p>
+<p>とりあえず <code>helloworld.py</code> のファイル名を <code>index.py</code> に変更し、 <code>app.yaml</code> の該当箇所も書き換えて、リポジトリに登録します。リポジトリの場所は <a href="http://sangiin-votes.googlecode.com/svn/trunk/"><a href="http://sangiin-votes.googlecode.com/svn/trunk/">http://sangiin-votes.googlecode.com/svn/trunk/</a></a> です。Google Project Hosting の場合、http が読み取り専用、 https が読み書き可能です。パースペクティブを "SVN Repository Exploring perspective" に変更し、新しいリポジトリ・ロケーションを追加します。</p>
+<p><img alt="" src="https://lh6.googleusercontent.com/-wsmSFYndmJQ/TfSNX2MS8GI/AAAAAAAACEI/a6MnhOqAOYk/s1600/sv009.png" /></p>
+<p>Pydev のパースペクティブに戻り、プロジェクトを共有します。</p>
+<p><img alt="" src="https://lh5.googleusercontent.com/-jfUf0ZDWrVo/TfSNX2TVgtI/AAAAAAAACEM/as820SaeRkQ/s1600/sv010.png" /></p>
+<p>リポジトリの種類は SVN を選択します。</p>
+<p><img alt="" src="https://lh6.googleusercontent.com/-Be7gfHCuYlg/TfSNX9MiD1I/AAAAAAAACEE/dXk3ZWuuq6Y/s1600/sv011.png" /></p>
+<p>登録済みのロケーションを選択します。</p>
+<p><img alt="" src="https://lh5.googleusercontent.com/-5KdzI8LLzgg/TfSNYIwA2II/AAAAAAAACEQ/wUyPAKaKxsM/s1600/sv012.png" /></p>
+<p>プロジェクトのロケーションが <a href="https://sangiin-votes.googlecode.com/svn/trunk/sangiin-votes"><a href="https://sangiin-votes.googlecode.com/svn/trunk/sangiin-votes">https://sangiin-votes.googlecode.com/svn/trunk/sangiin-votes</a></a> になるように設定します。</p>
+<p><img alt="" src="https://lh4.googleusercontent.com/-Cn4kMNfHqJg/TfSNYP0XK7I/AAAAAAAACEc/GhhWblDLjMw/s1600/sv013.png" /></p>
+<p>コメントは適当に。自動生成されたものでいいと思います。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/-6ZQWf2ZFSBY/TfSNYOM-bvI/AAAAAAAACEU/T24QhW1ntsk/s1600/sv014.png" /></p>
+<p>リソースのコミットのコメントは適当に。</p>
+<p><img alt="" src="https://lh4.googleusercontent.com/--FlQF6O1aws/TfSNYalmknI/AAAAAAAACEY/wFwDoOepMfE/s1600/sv015.png" /></p>
+<p>"SVN Repository Exploring perspective" に戻って、表示を更新すると、登録した結果を見ることができます。 </p>
+<p><img alt="" src="https://lh6.googleusercontent.com/-IKQIN-0mw7c/TfSNYao4MpI/AAAAAAAACEg/eVhfSCvG8-g/sv016.png" /></p></div>
+
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Google Sites で Java Applet - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Google Sites で Java Applet</h1>
+<p>Update: 2011-01-27</p>
+<p>IE などでは NG です!! ( 2011-02-05 追記 )</p>
+<p>本題の前に、 JavaScript と Java Applet はどう違うの？というような話は <a href="http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q136095388">http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q136095388</a> などをどうぞ。</p>
+<p>さて、 <a href="20110126b.html">Google Sites で JavaScript</a> や <a href="20110126a.html">Google Sites で Flash</a> と同じように、 DokuWiki から Google Sites に引っ越すにあたって少し苦労したお話の３個目です。 Google Sites の HTML エディタで <code>&lt;applet ...</code> とか書いてもだめなので、世の中に私と同じ悩みを持っていた人はいないかと探してみました。最初に見つかったのはこの記事 <a href="http://www.google.com/support/forum/p/sites/thread?tid=4ca6167e3376dcc1">Java applets in Google sites</a> なのですが、 "Google Web Toolkit に移植してしまえ" というぶっとんだ回答なのでパス。</p>
+<p>次に見つけたのは <a href="http://web.michaelchughes.com/how-to/embed-java-applets-in-google-sites">Embed Java Applets in Google Sites</a> です。 Code Wrapper gadget に <a href="http://java.sun.com/javase/6/docs/technotes/guides/jweb/deployment_advice.html">Java™ Rich Internet Applications Deployment Advice</a> で紹介されている Deployment Toolkit Script を入れて使いなさいとのことです。</p>
+<p>無事に引っ越しできたページは <a href="../programming/my1stjava.html">たぶんはじめての Java</a> です。</p>
+<p>まず、エディタのメニュー "Insert" - "More gadgets..." で "Code Wrapper" を検索します。 Code Wrapper gadget が間違いなく出てくるので、それをページに埋め込みます。設定するコードは、 Java™ Rich Internet Applications Deployment Advice のサンプルそのままならこんな感じ。</p>
+<pre class="highlight"><code>&lt;script src=&quot;http://www.java.com/js/deployJava.js&quot;&gt;&lt;/script&gt; &lt;script&gt;     var attributes = {codebase:'http://java.sun.com/products/plugin/1.5.0/demos/jfc/Java2D',                       code:'java2d.Java2DemoApplet.class',                       archive:'Java2Demo.jar',                       width:710, height:540} ;     var parameters = {fontSize:16} ;     var version = '1.6' ;     deployJava.runApplet(attributes, parameters, version); &lt;/script&gt;
+</code></pre>
+
+<p>すると、派手な Java2D のデモが表示できます。</p></div>
+
+</body>
+
+</html>

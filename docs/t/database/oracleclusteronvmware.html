@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Linux と VMware で Oracle の Cluster - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Linux と VMware で Oracle の Cluster</h1>
+<p>Update: 2008-02-10</p>
+<h2>低スペックマシンじゃ無理だぁ</h2>
+<p>日本Orale社から VMware 使ってお勉強などに使うための RAC ( Real Applicatin Cluster ) を構築するガイドが出ているので試してみました。ガイドでは Windows 上で VMware Server を使うことになっているのですが、自分がライセンス持っている Linux をホストにした VMware Workstation を使ってやってみたわけです。それ自体は大きな問題にはならないんですけどねぇ。 ガイドのものを大きく下回ったマシンのスペックで、なんとかインストール完了した Clusterware はすべてのアプリケーションが起動する前に何かがタイムアウトしてしまうようでとても不安定です。以下、それをなんとかした記録です。</p>
+<h2>ホストが Linux の場合の console</h2>
+<p>ホストが Linux の場合、ガイドに出てくる console マシンはゲストではなくホストを使ったのでいいです。それだけでかなり負荷が下がります。</p>
+<p>ホストが Fedora などの場合はたぶん追加の設定は不要です。 ssh の設定などをガイドの通りにすればだいじょうぶだと思います。</p>
+<p>私は最近流行の Ubuntu のデスクトップ用途の構成を使ったのですが、この場合は SSH のインストールと X の設定の変更が必要でした。 Ubuntu は追加のパッケージのインストールは簡単だから SSH のインストールの説明はいらないですね。 X については私もよくわからないので、エラーメッセージの内容で google 検索してみてください。日本語ページの検索は目的の場所にたどり着かないかもしれません。</p>
+<h2>VMware Workstation の場合の仮想ネットワークの設定</h2>
+<p>VMware Workstation はインストール後仮想ネットワークの設定を変更したりはできません。たぶん。私が理解している限りでは。</p>
+<p>まず、日本Oracle社のガイドの最初の部分をよく読んで、どんな設定にする必要があるのか理解しましょう。で、ネットワークアドレスなどはできるだけガイドのものに合わせましょう。そうしないとその後の作業できっと混乱します。</p>
+<p>VMware Workstation をインストールの際、「仮想ネットワークのためのウィザードを起動するか?」と聞かれますが、起動せず、マニュアルで設定するといいです。</p>
+<h2>Clusterware のインストーラが Public インターファエイスを認識しない</h2>
+<p>さっき画面で指定したつもりなんだけどなぁ、何でこんなエラーメッセージが出るの、と、最初につまずいたのがこれです。</p>
+<p>「指定のインタフェース”eth0”はパブリックではありません。パブリック・インタフェースを使用して仮想IPを構成する必要があります。」</p>
+<p>詳しい話は端折りますが、このエラーが出たら次のコマンドで仮想IPの設定画面を起動して設定して、 Clusterware のインストールを続けると、たぶん、うまくいきます。</p>
+<pre class="highlight"><code>[root@oracle02 ~]# cd /home/oracle/oracle/product/10.2.0/crs/bin/`
+[root@oracle02 bin]# ./vipca
+</code></pre>
+
+<p>Clusterware のインストールや Oracle のインスタンスの構築が終わったら次のコマンドで正常に起動終了するか確認しましょう。</p>
+<pre class="highlight"><code>[root@oracle01 ~]# cd /home/oracle/oracle/product/10.2.0/crs/bin/
+[root@oracle02 bin]# ./crsctl stop crs
+[root@oracle02 bin]# ./crsctl start crs
+[root@oracle01 bin]# ./crs_stat -t
+</code></pre>
+
+<h2>Oracle のインストールのリモートの側でエラー</h2>
+<p>何が原因かよくわからないのですが Oracle のインストールのリモートの側でエラーになって、ログなどみると次のコマンドを実行しろというようなことが書いてあったので、その通りにしたら正常にインストール完了となりました。画面表示の都合で複数行に分けて書いていますが1行のコマンドです。</p>
+<pre class="highlight"><code>/home/oracle/oracle/product/10.2.0/db/oui/bin/runInstaller -attachHome \
+-noClusterEnabled ORACLE_HOME=/home/oracle/oracle/product/10.2.0/db \
+ORACLE_HOME_NAME=OraDb10g_home1 \
+CLUSTER_NODES=oracle01,oracle02 \
+&quot;INVENTORY_LOCATION=/home/oracle/oracle/oraInventory&quot; \
+LOCAL_NODE=oracle02`
+</code></pre>
+
+<h2>Enterprise Manager がおそおぉぉぉぉぉぉい</h2>
+<p>インスタンスの構築までたどり着いて、最後に Enterprise Manager 入れたんですが、遅すぎてログイン画面もなかなか出てきません。これはもうどうしようもないので CPU をもう少し早いのにかえることに決めました。でも AMD の SocketA の CPU ってもう普通には売ってないんですよねぇ。中古品見つけたので次の週末にでも試してみることにします。</p></div>
+
+</body>
+
+</html>

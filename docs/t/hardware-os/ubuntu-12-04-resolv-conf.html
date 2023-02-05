@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>ubuntu 12.04 で resolv.conf が書き換えられる - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>ubuntu 12.04 で resolv.conf が書き換えられる</h1>
+<p>Update: 2012-08-25</p>
+<p>まず最初に、 <code>resolve.conf</code> ではなく <code>resolv.conf</code> だそうです ^^;) bash の補完機能は便利ですねぇ ^^;;)</p>
+<p>Ubuntu 10.04 のサーバを Ubuntu 12.04 server に置き換えるため、 OS インストールの後 <code>/etc/resolv.conf</code> の設定を書き換えました。そして、再起動すると、 resolv.conf の内容が書き換えられてしまいます。 Ubuntu 12.04 では <code>resolvconf</code> を使うので、 <code>/etc/resolvconf/resolv.conf.d/base</code> に書けばよいという話を聞いたの ( ソース不明 ) で Ubuntu 10.04 の旧サーバの <code>/etc/resolv.conf</code> の内容をそのままそこに書いて <code>sudo service resolvconf restart</code> としてみましたが、だめでした。旧サーバの <code>/etc/resolv.conf</code> の中の記述の順番に意味があるようなのですが、 resolvconf で書き換えたられた <code>/etc/resolv.conf</code> を見ると、順番が変わってしまっています。</p>
+<p>そもそも resolvconf の正しい使い方はどうなの？ということで調べてみました。</p>
+<p>まず、 Ubuntu がこのあたりの仕様を変えた理由はこちらです。</p>
+<blockquote>
+<p>Improvement to DNS resolving in Ubuntu</p>
+<p><a href="https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-dns-resolving"><a href="https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-dns-resolving">https://blueprints.launchpad.net/ubuntu/+spec/foundations-p-dns-resolving</a></a></p>
+</blockquote>
+<p>いろいろなネットワークにつながっていて、利用する DNS も複数あるような場合に交通整理したい（超訳）ということのようです。 Desktop に関することは省略します。</p>
+<p>Ubuntu のリリースノート <a href="https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes/UbuntuServer"><a href="https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes/UbuntuServer">https://wiki.ubuntu.com/PrecisePangolin/ReleaseNotes/UbuntuServer</a></a> によると、この仕様変更についてはこちらを見ろとのことです。</p>
+<blockquote>
+<p>DNS in Ubuntu 12.04</p>
+<p><a href="http://www.stgraber.org/2012/02/24/dns-in-ubuntu-12-04/"><a href="http://www.stgraber.org/2012/02/24/dns-in-ubuntu-12-04/">http://www.stgraber.org/2012/02/24/dns-in-ubuntu-12-04/</a></a></p>
+</blockquote>
+<ul>
+<li>静的なIPの構成の場合は <code>/etc/network/interfaces</code> に "dns-nameservers", "dns-search", "dns-domain" を設定する。</li>
+<li>/etc/resolvconf/resolv.conf.d/ の下のファイル <code>"base", "head", "tail"</code> に追加の設定を書くこともできる。</li>
+<li>この仕組みを使いたくない場合は、シンボリックリンクになっている <code>/etc/resolv.conf</code> を普通のファイルにすることもできる。お勧めはしないけど。</li>
+</ul>
+<p>というようなことを書いています。 Desktop に関することは省略します。</p>
+<p><code>/etc/network/interfaces</code> についてはこちらにサンプルがあります。</p>
+<blockquote>
+<p>Ubuntu Manpage: resolvconf - manage nameserver information</p>
+<p><a href="http://manpages.ubuntu.com/manpages/lucid/man8/resolvconf.8.html"><a href="http://manpages.ubuntu.com/manpages/lucid/man8/resolvconf.8.html">http://manpages.ubuntu.com/manpages/lucid/man8/resolvconf.8.html</a></a></p>
+</blockquote>
+<p>それぞれのインターフェースに設定できるということのようです。うまく使えば不要な問い合わせを減らすことができるかもしれません。</p></div>
+
+</body>
+
+</html>

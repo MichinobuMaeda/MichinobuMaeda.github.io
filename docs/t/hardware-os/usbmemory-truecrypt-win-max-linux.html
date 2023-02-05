@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>USBメモリを無料で暗号化 - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>USBメモリを無料で暗号化</h1>
+<p>Update: 2012-09-02</p>
+<blockquote>
+<p>追記 2021-05-15: TrueCrypt はメンテナンスが止まっています。後継のツールとして
+<a href="https://veracrypt.fr/en/Home.html">VeraCrypt</a> などがあります。</p>
+</blockquote>
+<p>おまけのついていない安い USBメモリを暗号化したい、 Windows でも Mac でも Linux でも使いたい、という私の贅沢な悩みを解決するツールを見つけました。 TrueCrypt <a href="http://www.truecrypt.org/"><a href="http://www.truecrypt.org/">http://www.truecrypt.org/</a></a> というフリーソフトです。 Vector 新着ソフトウェアレビュー <a href="http://www.vector.co.jp/magazine/softnews/110831/n1108311_reviewer.html"><a href="http://www.vector.co.jp/magazine/softnews/110831/n1108311_reviewer.html"><a href="http://www.vector.co.jp/magazine/softnews/110831/n1108311_reviewer.html">http://www.vector.co.jp/magazine/softnews/110831/n1108311_reviewer.html</a></a></a> でも紹介されていました。</p>
+<p>さっそく Windows と Mac と Linux で試してみました。。。って PC 何台持っているのかって？ ここで使ったのは１台ですっ！！ で、ここで使わなかったのは何台かって？ いやそれは、まあ、それは置いといて (L- -)L Windows 版のインストールの手順と私の場合の使い方について説明します。</p>
+<p>前提知識としては、暗号化しているしていないにかかわらず、USB メモリを PC からいきなり抜いたらダメということくらいかな。知らない場合は、周りの知ってそうな人にこっそり聞いてみてください。</p>
+<p>ダウンロードは上記の Vector からでもいいし、配布元 <a href="http://www.truecrypt.org/downloads"><a href="http://www.truecrypt.org/downloads">http://www.truecrypt.org/downloads</a></a> からでもいいです。ダウンロードした2012年9月1日現在の最新版 <code>TrueCrypt Setup 7.1a.exe</code> を実行します。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/8902b26a825eb02d49525b8344a1c54c.png" />]</p>
+<p>下の方の <code>I accept ...</code> のチェックを入れて、後はデフォルトの設定でどんどん進めてください。インストールが終わったら、Windows メニューの TruCriypt から起動してください。起動したら日本語化の設定をします。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/3f923b18ae3469454ab418b8a96fe1bc.png" /></p>
+<p>メニューの Settings の <code>Language...</code> を選択してください。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/680c9ad891763570a13f0c3b595ff2a2.png" /></p>
+<p>まだ English だけしかありません。下の方の <code>Download Language pack</code> をクリックしてください。ブラウザ ( インターネットエクスプローラとか、 FireFox とか ) でダウンロードページが表示されます。もしうまくいかないようなら <a href="http://www.truecrypt.org/localizations"><a href="http://www.truecrypt.org/localizations">http://www.truecrypt.org/localizations</a></a> を開いてください。たくさんの言語が並んでいますが、その中から日本語のファイルをダウンロードしてください。 <code>langpack-ja-1.0.0-for-truecrypt-7.1a.zip</code> のようなファイル名です。ファイルを解凍すると、</p>
+<ul>
+<li><code>Language.ja.xml</code></li>
+<li><code>Readme.txt</code></li>
+</ul>
+<p>というファイルが入っています。 Readme.txt の方に説明が書いてあります。英語で。要するに、 TrueCrypt をインストールしたフォルダ ( インストールの際に等に変更していなければ <code>C:\Program Files\TrueCrypt</code> ) に Language.ja.xml を入れろということだそうです。 TrueCrypt をいったん終了して、 Language.ja.xml を C:\Program Files\TrueCrypt にコピーして、 メニューの Settings の Language... をもう一度。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/4aed7e3dbf33c4ed591d54f7a89ed19d.png" />]</p>
+<p>「日本語」が出てきたので、マウスで「日本語」を選択して OK ボタンを押します。するとメニューなどが日本語になります。日本語訳担当は Ogoshi Masayuki さんだそうです。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/0eca6cd901428ddab7cf86e927f9a2b0.png" /></p>
+<p>ここまででインストールは完了です。次に、私が昨日買った安めの USB メモリを丸ごと暗号化してみます。 Mac と Linux でも使い方はほとんど同じです。</p>
+<p>まずはその USB メモリを突っ込みます。その USB メモリは <code>F:</code> ドライブになりました。このあたりはみなさんの PC の状態によって違います。すると、先ほどまで TrueCrypt の一番上に表示されていた <code>F:</code> が消えました。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/0cb6c11d4438f42f317517fddbe72e4d.png" /></p>
+<p>「ボリュームの作成」ボタンを押します。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/2867f1bca50ae6f3a1b4c62ce8230c07.png" /></p>
+<p>今回は「非システムパーティション/ドライブを暗号化」を選びました。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/21bdfe139a72264ebf8d287bf6f6c052.png" />
+説明を見たところ「隠しボリューム」は使うのに少々手間がかかるようだし、命と引き替えにするほどの大事なデータを預かる予定はないので、「 TrueCrypt 標準ボリューム」を選びました。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/b869505749703c1bb82d5b2cb3a46c29.png" /></p>
+<p>「デバイスの選択」ボタンを押して、 F: ドライブの USB メモリを指定します。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/04c3bb9b87f767849a7416fb57b79688.png" /></p>
+<p>なんだか難しいことが書いてありますが、気にせず「次へ」。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/c6ee103d3b5734240661258e9e7d9f54.png" /></p>
+<p>USB メモリは空だったので、「暗号化ボリュームを作成してフォーマット」を選択しました。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/c96efc0a4a7d5373f4758db4173ce91d.png" /></p>
+<p>暗号化のアルゴリズムについては、特にこだわりは無いので、デフォルトのままにしました。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/e3b80cbc3339d7b031d51f15cd443b61.png" /></p>
+<p>サイズについては選択の余地はありません。とにかく丸ごと全部です。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/28c1a58bc9a407f8c4b0cdeb69e08449.png" /></p>
+<p>パスワードは長い方がいいです。キーファイルを併用するとさらにいいのですが、キーファイルを無くすと暗号化の解除のしようが無くなってしまうので、管理に自信がある場合だけにした方がいいです。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/54e4eefc0d6ed16658876f4ab638562e.png" /></p>
+<p>パスワードが短いとおこられます。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/bdc86fa2a4f86d1bb3b3b21c5e4a36e5.png" /></p>
+<p>4GB を超えるような巨大なファイルを扱うことはあり得ないので、「いいえ」を選択しました。「はい」を選択するのは、ファイルシステム等々について知識がある人だけにしてください。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/a222e7fc5cc7ddcaa3d46cf1d3b4a538.png" /></p>
+<p>ファイルシステムは FAT を選びました。 NTFS を選択するのは、そのあたりの知識がある人だけにしてください。それから、特に急いでいる場合は別にして、「クイックフォーマット」は選ばない方がいいようです。今回の場合フォーマットに 15分くらい時間がかかりました。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/39c5c237e2314c9a25c2e48125767d40.png" /></p>
+<p>これで USB メモリの暗号化が完了しました。</p>
+<p>試す前に、 USB メモリを抜いて、差し込み直してみます。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/309d3bc1006312b4bfdd0ceec8e53554.png" /></p>
+<p>なるほど、これが出るから「暗号化されたファイルコンテナを作成」の方を初心者に勧めているわけですね。ここでフォーマットしてはいけません。「キャンセル」します。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/0cb6c11d4438f42f317517fddbe72e4d.png" /></p>
+<p>どれでもいいのですが、空いているドライブ、上記の例の場合 H: を選んで「マウント」ボタンを押します。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/a5dfb4f080c5ad2c60f618cbb5378feb.png" /></p>
+<p>パスワードを入力して、「キーファイル」ボタンを押してキーファイルを指定して、 OK します。</p>
+<p><img alt="" src="usbmemory-truecrypt-win-max-linux/1e5555bce8a36ac6e4e2fafad81250ab.png" /></p>
+<p>これで、暗号化した USB メモリが <code>H:</code> ドライブで使えるようになりました。 <code>F:</code> ドライブではありません。「マウント」ボタンの名前が「アンマウント」に変わっています。暗号化したドライブを使い終わったら、必ず「アンマウント」ボタンをして、さらに、 <code>F:</code> ドライブの接続も解除してから USB メモリを抜いてください。</p></div>
+
+</body>
+
+</html>

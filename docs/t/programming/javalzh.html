@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Java で LZH 形式のファイルを解凍する - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Java で LZH 形式のファイルを解凍する</h1>
+<p>Update: 2010-10-02</p>
+<p>郵便番号データを加工するプログラム <a href="http://www.zippyzip.jp/">http://www.zippyzip.jp/</a> ( 閉鎖 ) を Google App Engine に移植してみたいなと思い立ったのですが、最大の問題はデータが LHA で圧縮されて配布されていること。 Google App Engine で使うことができるプログラム言語はPython と Java なのですが、どちらも Zip 形式みたいに標準の API で OK なんてことは全くありません。</p>
+<p>まず、機会があれば使ってみたかった Python の方。ぐぐってみたところ、みなさんネイティブなものを呼び出してどうにかされているようです。これはやりたくないんだな Google App Engine では。</p>
+<p>Java の方は、２種類見つけました。</p>
+<ul>
+<li><a href="http://homepage1.nifty.com/dangan/Content/Program/Java/jLHA/LhaLibrary.html">Lha Library for Java</a></li>
+<li><a href="http://www.vector.co.jp/soft/other/java/se192202.html">JHLHA</a></li>
+</ul>
+<p>どちらでもいいのですが、 java.util.zip に似たインターフェイスにしているという <a href="http://homepage1.nifty.com/dangan/Content/Program/Java/jLHA/LhaLibrary.html">Lha Library for Java</a> の方を試してみることにします。</p>
+<p>まず、ソースとドキュメントをダウンロード。私が使ったのはこのバージョン。</p>
+<ul>
+<li><a href="https://sites.google.com/site/michinobumaeda/programming/javalzh/jlhasrc_20050504.tar.gz?attredirects=0">jlhasrc_20050504.tar.gz</a></li>
+<li><a href="https://sites.google.com/site/michinobumaeda/programming/javalzh/jlhadoc_20050504.tar.gz?attredirects=0">jlhadoc_20050504.tar.gz</a></li>
+</ul>
+<p>ソースの中には compile.xml というファイルが入っています。これは Ant 用だな。この設定は好みではないので、</p>
+<pre class="highlight"><code>    &lt;property name=&quot;javac.compiler&quot; value=&quot;modern&quot;/&gt;
+    &lt;property name=&quot;javac.target&quot;   value=&quot;1.1&quot;/&gt;
+    &lt;property name=&quot;src.dir&quot;        value=&quot;.&quot;/&gt;
+    &lt;property name=&quot;dest.dir&quot;       value=&quot;.&quot;/&gt;
+</code></pre>
+
+<p>こんな感じに修正します。</p>
+<pre class="highlight"><code>    &lt;property name=&quot;javac.compiler&quot; value=&quot;modern&quot;/&gt;
+    &lt;property name=&quot;javac.target&quot;   value=&quot;1.6&quot;/&gt;
+    &lt;property name=&quot;src.dir&quot;        value=&quot;.&quot;/&gt;
+    &lt;property name=&quot;dest.dir&quot;       value=&quot;./dest&quot;&gt;
+</code></pre>
+
+<p>で、ビルドすると、</p>
+<pre class="highlight"><code>$ mkdir dest
+$ ant -f compile.xml -l compile.log compileRelease
+</code></pre>
+
+<p>「非推奨」の警告が出るけど、気にしない。それを JAR ファイルにします。</p>
+<pre class="highlight"><code>$ cd dest
+$ jar cvf jlha.jar *
+</code></pre>
+
+<p>これで jlha.jar ができました。郵便番号データの場合、書庫の中のファイルは１個だけなので、その前提のテスト用のプログラムを書いてみます。エラー処理などは入っていません。</p>
+<pre class="highlight"><code>import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import jp.gr.java_conf.dangan.util.lha.LhaInputStream;
+import jp.gr.java_conf.dangan.util.lha.LhaHeader;
+public class JlhaTest {
+
+    public static void main(String[] args) {
+        try {
+            LhaInputStream is = new LhaInputStream(new FileInputStream(args[0]));
+            LhaHeader header = is.getNextEntry();
+            System.out.println(&quot;Entry : &quot; + header.getPath());
+            System.out.println(&quot;Size  : &quot; + header.getOriginalSize());
+            String outPath = args[0].replaceAll(&quot;lzh&quot;, &quot;csv&quot;);
+            System.out.println(&quot;Target: &quot; + outPath);
+            FileOutputStream os = new FileOutputStream(outPath);
+            long sz = 0;
+            int buff = is.read();
+
+            while (0 &lt;= buff) {
+                os.write(buff);
+                buff = is.read();
+                ++ sz;
+            }
+            os.flush();
+
+            os.close();
+            is.close();
+            System.out.println(&quot;Output: &quot; + sz);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+
+<p>これをコンパイルして実行すると、</p>
+<pre class="highlight"><code>$ javac -cp jlha.jar JlhaTest.java
+$ java -cp jlha.jar -cp . JlhaTest lzh/20050201000000_jigyosyo.lz
+Entry : jigyosyo.cs
+Size  : 292443
+Target: csv/20050201000000_jigyosyo.cs
+Output: 292443`
+</code></pre>
+
+<p>いいんじゃないかな。</p></div>
+
+</body>
+
+</html>

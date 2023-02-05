@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Subversion のレプリケート - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Subversion のレプリケート</h1>
+<p>Update: 2010-12-05</p>
+<p>Google Code に置いた Subversion のリポジトリを他のサーバに複製することはできないかな？と思ってやってみました。複製先は自宅の Linux 機です。</p>
+<p>資料はこちら <a href="http://svnbook.red-bean.com/en/1.5/svn.reposadmin.maint.html#svn.reposadmin.maint.replication">Version Control with Subversion (for Subversion 1.5) - Repository Replication</a></p>
+<p>複製先のリポジトリを作ります。</p>
+<pre class="highlight"><code># svnadmin create /home/backup/zippyzipjp/mirror
+</code></pre>
+
+<p>hook script を作ります。</p>
+<pre class="highlight"><code>$ cat mirror/hooks/pre-revprop-change
+#!/bin/sh
+
+USER=&quot;$3&quot;
+
+if [ &quot;$USER&quot; = &quot;syncuser&quot; ]; then exit 0; fi
+
+echo &quot;Only the syncuser user may change revision properties&quot; &gt;&amp;2
+exit 1
+$ chmod +x mirror/hooks/pre-revprop-change
+
+$ cat mirror/hooks/start-commit
+#!/bin/sh`
+
+USER=&quot;$2&quot;
+
+if [ &quot;$USER&quot; = &quot;syncuser&quot; ]; then exit 0; fi
+
+
+echo &quot;Only the syncuser user may commit new revisions&quot; &gt;&amp;2
+exit 1
+$ chmod +x mirror/hooks/start-commit`
+</code></pre>
+
+<p>svnsync で初期化します。</p>
+<pre class="highlight"><code>svnsync initialize file:///home/backup/zippyzipjp/mirror \
+ http://****.googlecode.com/svn/ \
+ --sync-username syncuser --sync-password ******
+</code></pre>
+
+<p>複製を実行します。</p>
+<pre class="highlight"><code>svnsync synchronize file:///home/backup/zippyzipjp/mirror
+</code></pre>
+
+<p>以上</p></div>
+
+</body>
+
+</html>

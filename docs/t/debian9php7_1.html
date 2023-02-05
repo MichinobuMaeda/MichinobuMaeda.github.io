@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Debian 9 に PHP 7.1, 7.2 をインストールする - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Debian 9 に PHP 7.1, 7.2 をインストールする</h1>
+<p>Update: 2018-07-03</p>
+<p>共用タイプのレンタルサーバの PHP のバージョンを調べてみると、
+今、この文章を書いている時点 ( 2018年7月 ) では
+PHP 7.1 とか 7.2 の場合が多いです。</p>
+<p>その環境で動くプログラムのテストのために自分のサーバの設定をしようとしたら、
+Debian 9 は PHP 7.0 なんですね。</p>
+<p>How to Install PHP 7.2, 7.1 and 5.6 on Debian 9 Stretch System\
+<a href="https://www.looklinux.com/how-to-install-php-7-2-7-1-and-5-6-on-debian-9-stretch-system/">https://www.looklinux.com/how-to-install-php-7-2-7-1-and-5-6-on-debian-9-stretch-system/</a></p>
+<p>に 7.0 以外のバージョンの PHP を Debian 9 に入れる方法が出ていました。</p>
+<p>PPA: Personal Package Archives を追加します。</p>
+<pre class="highlight"><code class="language-bash">sudo apt install ca-certificates apt-transport-https
+wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -
+sudo echo &quot;deb https://packages.sury.org/php/ stretch main&quot; | tee /etc/apt/sources.list.d/php.list
+</code></pre>
+
+<p>PHP 7.1 だったらこんな感じで。</p>
+<pre class="highlight"><code class="language-bash">sudo apt update
+sudo apt install php7.1
+</code></pre>
+
+<p>Tag: <a href="/t/?tag=debian">debian</a> <a href="/t/?tag=php">php</a></p>
+</div>
+
+</body>
+
+</html>

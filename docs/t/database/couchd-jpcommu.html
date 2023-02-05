@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>CouchDBを始めてみようと思ったのですが。。。 - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>CouchDBを始めてみようと思ったのですが。。。</h1>
+<p>Update: 2012-12-13</p>
+<p><a href="http://couchdb.apache.org/">Apache CouchDB</a> を始めてみようと思ったのですが、<a href="https://groups.google.com/group/couchdb-jp/topics?hl=ja">日本のコミュニティのメーリングリスト</a> は今年の１月あたりが最後の投稿になっているような。。。周回遅れだったかな。。。とりあえず登録はしました。</p>
+<p>CouchDB は JSON 形式でデータを格納する Document-oriented な NoSQL です。</p>
+<ul>
+<li>HTTP による単純なインターフェース ( REST API )</li>
+<li>いつでも電源OFFしてOKな感じの耐障害性</li>
+<li>Optimistic locking</li>
+<li>MapReduce による view</li>
+</ul>
+<p>といった特徴が気に入りました。これができるなら、ディスクを余分に使うことになっても、性能面で劣るとしても、 Mongo DB よりおもしろそうだと思ったのです。アプリケーションの処理の複雑さによっては CouchDB の方が性能が出る場合もあるかもしれません。 Mongo DB との比較は <a href="http://www.mongodb.org/display/DOCS/Comparing+Mongo+DB+and+Couch+DB">Comparing Mongo DB and Couch DB</a> をご覧ください。 CouchDB のストレージの概要については <a href="http://guide.couchdb.org/draft/btree.html">The Power of B-trees</a> を。まだ斜め読んだだけですが、確かにこの仕組みなら SSD が長持ちしそうです。</p>
+<p>まず、なにはともあれ動かしてみます。</p>
+<p>現時点 ( 2012-12-13 ) の最新の 1.2.0 を使います。 Mac OS X では後述する "Test Suite" が通りませんでした。 Ubuntu 12.04 で <code>aptitude show couchdb</code> してみると、 <code>Version: 1.0.1-0ubuntu18</code> 。。。 <a href="http://guide.couchdb.org/draft/source.html">ソースからインストール</a> することにします。まず、 OS のグループとユーザが必要です。こんな感じでいいのではないかと。</p>
+<p>/etc/group</p>
+<pre class="highlight"><code>couchdb:x:114:
+</code></pre>
+
+<p>/etc/passwd</p>
+<pre class="highlight"><code>couchdb:x:114:114::/opt/couchdb1.2.0:/bin/sh
+</code></pre>
+
+<p>/etc/shadow</p>
+<pre class="highlight"><code>couchdb:*:15680:0:99999:7:::
+</code></pre>
+
+<p>以下、実行したコマンドです。 <code>/opt/coucdb1.2.0</code> にインストールしたのは後で消しやすいようにということです。</p>
+<pre class="highlight"><code>$ sudo apt-get install build-essential erlang libicu-dev libmozjs-dev libcurl4-openssl-dev
+$ sudo mkdir /opt/couchdb1.2.0
+$ wget http://ftp.kddilabs.jp/infosystems/apache/couchdb/releases/1.2.0/apache-couchdb-1.2.0.tar.gz
+$ tar xzvf apache-couchdb-1.2.0.tar.gz
+$ cd apache-couchdb-1.2.0/
+$ ./configure --prefix=`/opt/couchdb1.2.0
+$ make &amp;&amp; sudo make install
+$ sudo chown -R couchdb.couchdb /opt/couchdb1.2.0/etc/couchdb/
+$ sudo chown -R couchdb.couchdb /opt/couchdb1.2.0/var/lib/couchdb/
+$ sudo chown -R couchdb.couchdb /opt/couchdb1.2.0/var/log/couchdb/
+$ sudo chown -R couchdb.couchdb /opt/couchdb1.2.0/var/run/couchdb/`
+</code></pre>
+
+<p>管理者のユーザ名とパスワードをこのファイルに</p>
+<pre class="highlight"><code>$ sudo vi /opt/couchdb1.2.0/etc/couchdb/local.ini
+</code></pre>
+
+<p>こんな感じで書いておくと、</p>
+<pre class="highlight"><code> ... ... ...
+[admins]
+admin = secret
+</code></pre>
+
+<p>初回起動時にパスワードを暗号化してくれるという妙な仕様になっています。だから /etc/couchdb の所有者を設定するのか、なるほど。セットアップが終わったら、起動して、ログ見て、トップページ ( と言うのかな？ ) を見てみます。</p>
+<pre class="highlight"><code>$ sudo /opt/``couchdb1.2.0``/etc/init.d/couchdb start
+$ cat /opt/``couchdb1.2.0``/var/log/couchdb/couch.log
+$ curl http://127.0.0.1:5984/`
+</code></pre>
+
+<p>こんなものも JSON で出力するこだわりがなんとも。基本的な使い方は <a href="http://guide.couchdb.org/draft/tour.html">Getting Started</a> をご覧ください。</p>
+<pre class="highlight"><code>{&quot;couchdb&quot;:&quot;Welcome&quot;,&quot;version&quot;:&quot;1.2.0&quot;}
+</code></pre>
+
+<p>デフォルトでは 127.0.0.1 しか Listen していません。外からもアクセスしたい場合は</p>
+<p>/opt/couchdb1.2.0/etc/couchdb/local.ini</p>
+<pre class="highlight"><code>bind_address = 0.0.0.0
+</code></pre>
+
+<p>とすればいいそうです ( <a href="http://serverfault.com/questions/79453/why-cant-i-access-my-couchdb-instance-externally-on-ubuntu-9-04-server">Why can't I access my CouchDB instance externally on Ubuntu 9.04 server?</a> ) 。ただし、この後の "Test Suite" はどうも <a href="http://127.0.0.1:5984/">http://127.0.0.1:5984/</a> でないとうまくいかないようです。 <a href="http://localhost:5984/">http://localhost:5984/</a> でもだめというような記述もありました。そんなわけで Firefox を入れて <code>ssh -X</code> で外から起動して、管理ツール Futon を開いて "Test Suite" をやってみます。 "Test Suite" 実行中は Firefox が固まったようになってしまって不安なので、ログを表示しておきます。</p>
+<pre class="highlight"><code>$ sudo apt-get install firefox
+$ firefox http://127.0.0.1:5984/_utils/ &amp;
+$ tail -f /opt/couchdb1.2.0/var/log/couchdb/couch.log`
+</code></pre>
+
+<p>Firefox で表示した Futon のページの右下の Login をクリックしてログインします。</p>
+<p>ページの右側のメニュー "Verify Installation" を選択して "Verify Your Installation" を実行します。正常にインストールできていれば "√ Your installation looks fine. Time to Relax." となります。</p>
+<p>ページの右側のメニュー "Test Suite" を選択して "Run All" を実行します。すると、 「このテストは Admin Party mode で実行するから "Remove Admins" をクリックしてね（抄訳）」とのたまうのでしょうがないからその通りにします。するとターミナルの方ではびゅんびゅんとログが流れ始めて Futon の方も Status に "success", "success", "success"... と出始めて待つこと10分くらい、 "rev_stemming" でエラーが出ました。メッセージ見てもわからないなあ。</p>
+<blockquote>
+<p>追記: まっさらの OS にインストールしてやり直したら、すべて "success" になりました。</p>
+</blockquote>
+<pre class="highlight"><code>1. Assertion failed: db.open(&quot;bar&quot;, {revs:true})._revisions.ids.length == newLimit + 1
+2. Assertion failed: docB2._conflicts[0] == docB1._rev) // We having already updated bar before setting the limit, so it's still got // a long rev history. compact to stem the revs. T(db.open(&quot;bar&quot;, {revs:true})._revisions.ids.length == newLimit + 1
+</code></pre>
+
+<p>上の方にある "Share Test Reports" を押して報告しておきました。</p>
+<p>ページの右側のメニュー "Overview" を選択します。するとテスト用のデータベースがたくさん残っています。掃除しておこうかな。。。</p>
+<p>まず、データベースの一覧を取得します。</p>
+<pre class="highlight"><code>$ curl -X GET http://127.0.0.1:5984/_all_dbs
+</code></pre>
+
+<p>JSON 形式で出てきます。実物は１行ですが、見やすいように改行入れます。</p>
+<pre class="highlight"><code>[
+    &quot;_replicator&quot;,
+    &quot;_users&quot;,
+    &quot;test_suite_db&quot;,
+    &quot;test_suite_db/with_slashes&quot;,
+    &quot;test_suite_db_a&quot;,
+    &quot;test_suite_db_b&quot;,
+    &quot;test_suite_db_c&quot;,
+    &quot;test_suite_foobar&quot;,
+    &quot;test_suite_reports&quot;
+]
+</code></pre>
+
+<p>削除します。データベースの名称の <code>"/"</code> は <code>"%2F"</code> に置き換えるといいようです。</p>
+<pre class="highlight"><code>$ curl -X DELETE http://admin:password@127.0.0.1:5984/test_suite_db
+$ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_db%2Fwith\_slashes
+$ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_db\_a
+$ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_db\_b
+$ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_db\_c
+$ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_foobar
+$ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_reports
+</code></pre>
+
+<p>正常に処理すると <code>{"ok":true}</code> と出力されます。</p>
+<p>最後に、couchdb を停止して、管理者のユーザ名とパスワードを設定し直して、再起動して終わりです。</p></div>
+
+</body>
+
+</html>

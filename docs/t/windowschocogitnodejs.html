@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Chocolatey で Git や Node.js を入れる - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Chocolatey で Git や Node.js を入れる</h1>
+<p>Update: 2021-05-05</p>
+<p><a href="https://github.com/MichinobuMaeda/tamurodemo">Tamuro デモ用ソース</a> を Linux や Bash に慣れていない人に試してもらうための chocolatey で Git や Node.js を入れる手順です。</p>
+<p>Linux で Bash などのシェルを使ったことある人は WSL2 <a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">https://docs.microsoft.com/ja-jp/windows/wsl/install-win10</a> を利用してください。その方が楽です。
+WSL2 に GUI を入れてなくてもコンソールから code コマンドで Visual Studio Code を起動できますし、
+Visual Studio Code の中のターミナルで WSL2 の Bash を使うこともできます。</p>
+<p>以下の作業中に Windows ファイアウォールが Java や Node.js によるネットワークアクセスの許可を求める表示を出したら許可してください。</p>
+<h2>Chocolatey</h2>
+<p>いろいろなツールを導入するために Chocolatey を使います。</p>
+<p>Chocolatey を PowerShell のコマンドでインストールするのですが、 Windows 10 のデフォルトの設定はセキュリティが厳しすぎるので <code>Restricted</code> から <code>RemoteSigned</code> に変更します。</p>
+<p>スタートメニューで Windows PowerShell をマウス右クリック &gt; その他 &gt; 管理者として実行</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; Get-ExecutionPolicy
+Restricted
+
+PS C:\WINDOWS\system32&gt; Set-ExecutionPolicy RemoteSigned
+
+Execution Policy Change
+... ... ...
+[Y] Yes ... ... .. : Y
+
+PS C:\WINDOWS\system32&gt; Get-ExecutionPolicy
+RemoteSigned
+</code></pre>
+
+<p><a href="https://chocolatey.org/install">https://chocolatey.org/install</a> に書いてある呪文をコピペして実行します。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+PS C:\WINDOWS\system32&gt; choco --version
+0.10.15
+</code></pre>
+
+<h2>Git</h2>
+<p>PowerShell を閉じて管理者として起動しなおします。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; choco install git
+ ... ... ...
+Do you want to run the script?([Y]es/[A]ll - yes to all/[N]o/[P]rint): A
+
+PS C:\WINDOWS\system32&gt; git --version
+git version 2.31.1.windows.1
+</code></pre>
+
+<p>Git といっしょに Git Bash というものも入っています。
+Linux と同じ感じのコンソールです。</p>
+<h2>OpenJDK</h2>
+<p>Firebase emulator を動かすのに Java が必要なので OpenJDK を入れます。
+<code>"openjdk"</code> で検索してみると 16 という新しいものが用意されているのでそれを入れます。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; choco search openjdk
+Chocolatey v0.10.15
+openjdk 16.0.1 [Approved] Downloads cached for licensed users
+ ... ... ...
+
+PS C:\WINDOWS\system32&gt; choco install openjdk
+ ... ... ...
+Do you want to run the script?([Y]es/[A]ll - yes to all/[N]o/[P]rint): A
+</code></pre>
+
+<p>表示されたメッセージにしたがい、PowerShell を閉じて管理者として起動しなおします。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; java --version
+openjdk 16.0.1 2021-04-20
+OpenJDK Runtime Environment (build 16.0.1+9-24)
+OpenJDK 64-Bit Server VM (build 16.0.1+9-24, mixed mode, sharing)
+</code></pre>
+
+<h2>Node.js</h2>
+<p>私は Mac では n というパッケージで Node.js のバージョンを切り替えて作業していたのですが、
+n は Windows には対応していないので NVM を入れます。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; choco install nvm
+ ... ... ...
+Do you want to run the script?([Y]es/[A]ll - yes to all/[N]o/[P]rint): A
+</code></pre>
+
+<p>表示されたメッセージにしたがい、PowerShell を閉じて管理者として起動しなおします。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; nvm --verison
+
+Running version 1.1.7.
+
+PS C:\WINDOWS\system32&gt; nvm install 12.22.1
+PS C:\WINDOWS\system32&gt; nvm use 12.22.1
+PS C:\WINDOWS\system32&gt; node --version
+v12.22.1
+</code></pre>
+
+<h2>Visual Studio Code</h2>
+<p>choco コマンドでもインストールできると思うのですが、私は
+<a href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a>
+からインストーラをダウンロードしてインストールしました。
+OS を再起動すると PowerShell からでも Git Bash からでも code で起動できるようになります。</p>
+<p>Windows 版のターミナルのデフォルトは PowerShell です。私は Bash を使い慣れているので Git Bash に設定変更しようかな、、、と思ったのですがその前に、公開しているソースなのに Bash でないと動かないものを作ってしまったような気がするのでしばらくは PowerShell のまま点検します。</p>
+<h2>SSH</h2>
+<p>GitHub の接続に SSH を使用します。
+ssh コマンドを実行してみて存在しない場合は、 Windows 10 のオプション機能を有効にします。</p>
+<p>Windows のスタートメニュー &gt; 設定 &gt; アプリ &gt; オプション機能 &gt; 機能の追加 &gt; OpenSSHクライアント</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; ssh -V
+OpenSSH_for_Windows_8.1p1, LibreSSL 3.0.2
+
+PS C:\WINDOWS\system32&gt; scp
+usage: scp [-346BCpqrTv] [-c cipher] [-F ssh_config] [-i identity_file]
+            [-J destination] [-l limit] [-o ssh_option] [-P port]
+            [-S program] source ... target
+</code></pre>
+
+<h2>SSH 公開鍵の作成</h2>
+<p>ここから後は管理者権限は不要です。</p>
+<p>Git で使用する自分の名前とメールアドレスを登録します。ここで設定したものがソースのコミット時に記録されます。 GitHub 等のサービスのアカウントとは別です（たぶん）。</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; git config --global user.name &quot;Your Name&quot;
+PS C:\Users\michinobu&gt; git config --global user.email you@example.com
+</code></pre>
+
+<p>SSH の鍵を作成します。
+SSHの鍵のファイルを置く場所は、特に複数のものを使い分ける用がなければ（普通ないです）デフォルトの場所のままにしてください。パスフレーズは文章のような長いものでもだいじょうぶです。</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\michinobu/.ssh/id_rsa):
+Created directory 'C:\Users\michinobu/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\michinobu/.ssh/id_rsa.
+Your public key has been saved in C:\Users\michinobu/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256: ... ... ...
+</code></pre>
+
+<p>生成された２ファイルのうち <code>id_rsa.pub</code> が公開キーです。これを GitHub などに登録して使います。秘密キー <code>id_rsa</code> は何があっても他人に渡したらダメです。</p>
+<p>パスフレーズを忘れたり、秘密キーが漏洩した場合は鍵を作り直して、他の接続手段を使うか誰か他の人に頼むかして設定しなおしましょう。ほとんどの場合はそれで運用は何とかなります。私の場合、複数の端末からそれぞれ異なるキーで接続できるようにしています。</p>
+<p>作業中に毎回パスフレーズを入力しなくて済むように ssh-agent という仕組みを使うことができるのですが、</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; ssh-add
+Error connecting to agent: No such file or directory
+</code></pre>
+
+<p>ssh-agent サービスが動いていない。。。</p>
+<p>タスクマネージャ &gt; 詳細 &gt; サービス  &gt; サービス管理ツールを開く &gt; OpenSSH Authenticate Agent をマウスダブルクリック &gt; スタートアップの種類：自動 &gt; 適用 &gt; 開始</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; ssh-add
+Enter passphrase for C:\Users\michinobu/.ssh/id_rsa:
+Identity added: C:\Users\michinobu/.ssh/id_rsa (michinobu@MICHINOBUMA635A)
+</code></pre>
+
+<p>Windows の場合は eval <code>ssh-agent</code> とかしなくていいみたいだな。</p>
+<p>デモ用ソースを clone しようとすると、、、</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; git clone git@github.com:MichinobuMaeda/tamurodemo.git
+Cloning into 'tamurodemo'...
+ ... ... ...
+Enter passphrase for key '/c/Users/michinobu/.ssh/id_rsa':
+</code></pre>
+
+<p>git が ssh-add した情報を認識してくれない。。。</p>
+<p><a href="https://snowdrift.tech/cli/ssh/git/tutorials/2019/01/31/using-ssh-agent-git-windows.html#:~:text=The">https://snowdrift.tech/cli/ssh/git/tutorials/2019/01/31/using-ssh-agent-git-windows.html#:~:text=The</a> ssh-agent that is included with git%2C while,is available for use. Enabling and starting ssh-agent
+によると、まず、 git コマンドより ssh コマンドの PATH を先にしろと、、、</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; Get-Command git | Select-Object Source
+
+Source
+------
+C:\Program Files (x86)\Git\cmd\git.exe
+
+PS C:\Users\michinobu&gt; Get-Command ssh | Select-Object Source
+
+Source
+------
+C:\WINDOWS\System32\OpenSSH\ssh.exe
+
+PS C:\Users\michinobu&gt; $env:PATH
+C:\Python39\Scripts\;C:\Python39\;C:\Program Files\Parallels\Parallels Tools\Applications;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Git\cmd;C:\Program Files\OpenJDK\jdk-16.0.1\bin;C:\ProgramData\nvm;C:\Program Files\nodejs;C:\Users\michinobu\AppData\Local\Microsoft\WindowsApps;;C:\Users\michinobu\AppData\Local\Programs\Microsoft VS Code\bin
+</code></pre>
+
+<p>、、、なってます。そうなってなければ Windows のスタートメニュー &gt; システム &gt; バージョン情報 &gt; システムの詳細設定 &gt; 詳細設定 &gt; 環境変数 でがんばって直します。</p>
+<p>それから環境変数 GIT_SSH を設定します。</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; [Environment]::SetEnvironmentVariable(&quot;GIT_SSH&quot;, &quot;$((Get-Command ssh).Source)&quot;, [System.EnvironmentVariableTarget]::User)
+</code></pre>
+
+<p>新しい PowerShell のコンソールを開いてデモ用ソースを clone するとうまくいきました。</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; git clone git@github.com:MichinobuMaeda/tamurodemo.git
+Cloning into 'tamurodemo'...
+remote: Enumerating objects: 6950, done.
+remote: Counting objects: 100% (6950/6950), done.
+remote: Compressing objects: 100% (2076/2076), done.
+Receiving objects: 100% (6950/6950), 4.86 MiB | 409.00 KiB/s, done.
+remote: Total 6950 (delta 4554), reused 6903 (delta 4510), pack-reused 0
+Resolving deltas: 100% (4554/4554), done.
+</code></pre>
+
+<h2>Node.js のパッケージのインストール</h2>
+<p><a href="https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/prerequisites.md">https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/prerequisites.md</a>
+については n ではなく NVM を使うので、少し手順が変わります。次の 1行だけ実行してください。</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; npm -g install yarn firebase-tools eslint jest @vue/cli
+ ... ... ...
++ yarn@1.22.10
++ firebase-tools@9.10.0
++ eslint@7.25.0
++ jest@26.6.3
++ @vue/cli@4.5.12
+added 2227 packages from 811 contributors in 196.005s
+</code></pre>
+
+<h2>開発環境のセットアップ</h2>
+<p>先ほどの手順でコマンドを入れたので、念のための新しい PowerShell を開きなおします。</p>
+<p><a href="https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/dev.md">https://github.com/MichinobuMaeda/tamurodemo/blob/master/docs/dev.md</a>
+は PowerShell でも同様に動きます。</p>
+<pre class="highlight"><code>PS C:\Users\michinobu&gt; cd tamurodemo
+PS C:\Users\michinobu\tamurodemo&gt; cd functions
+PS C:\Users\michinobu\tamurodemo\functions&gt; yarn
+PS C:\Users\michinobu\tamurodemo\functions&gt; cd ..
+PS C:\Users\michinobu\tamurodemo&gt; yarn
+PS C:\Users\michinobu\tamurodemo&gt; yarn test:unit
+ ... ... ...
+Test Suites: 26 passed, 26 total
+Tests:       135 passed, 135 total
+Snapshots:   0 total
+Time:        106.881s
+ ... ... ...
+Done in 143.10s.
+
+PS C:\Users\michinobu\tamurodemo&gt; tools/testOnly.bat tests/unit/auth/admin.spec.js
+ ... ... ...
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        5.658s
+Ran all test suites matching /tests\\unit\\auth\\admin.spec.js/i.
+ ... ... ...
+
+PS C:\Users\michinobu\tamurodemo&gt; yarn serve
+</code></pre>
+
+<p>ローカルサーバを実行するとコンパイル完了後に自動でブラウザが開きます。エラー等が表示されないのにブラウザが起動しない場合や、デフォルト以外のブラウザで表示したい場合は <a href="http://localhost:8000/">http://localhost:8000/</a> を開いてください。</p>
+<p>ローカルサーバは <code>[Ctrl]+[C]</code> で終了します。</p>
+<p>Visual Studio Code を起動して</p>
+<pre class="highlight"><code>PS C:\Users\michinobu\tamurodemo&gt; cd ..
+PS C:\Users\michinobu&gt; code tamurodemo
+</code></pre>
+
+<p><code>[Ctrl]+[Shift]+[`]</code> でターミナルを起動できます。デフォルトは PowerShell です。 PowerShell が苦手ない人は CMD や Git Bash に変えてもいいですが、今後 Windows のサーバサイドの仕事をする人は慣れておいた方がいいです。</p>
+<p>Tag: <a href="/t/?tag=windows">windows</a> <a href="/t/?tag=chocolatey">chocolatey</a> <a href="/t/?tag=nodejs">nodejs</a> <a href="/t/?tag=ssh">ssh</a></p>
+</div>
+
+</body>
+
+</html>

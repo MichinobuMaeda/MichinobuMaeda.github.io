@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>国語の問題文を分析してみる - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>国語の問題文を分析してみる</h1>
+<p>Update: 2021-07-10</p>
+<p>「AI vs. 教科書が読めない子どもたち」新井 紀子 ISBN：978-4-492-76239-4
+に次の問題の、中学生の正答率が 38% だったという話が載っています。最近 SNS で少し話題になっていたので買って読んでみました。</p>
+<blockquote>
+<p>Alex は男性にも女性にも使われる名前で、女性の名 Alexandra の愛称であるが、男性の名 Alexander の愛称でもある。</p>
+</blockquote>
+<p>という文章を読んで、</p>
+<blockquote>
+<p>Alexandraの愛称は（ ）である。</p>
+</blockquote>
+<p>の ( ) に入るものを</p>
+<ol>
+<li>Alex</li>
+<li>Alexander</li>
+<li>男性</li>
+<li>女性</li>
+</ol>
+<p>から選ぶという問題です。</p>
+<p>確かに少々回答に迷ってしまう問題です。
+SNS 上では文章の中の単語の意味に着目した意見が出ていました。でも、単語の意味が分からなくても解くことができなくはない問題のように思えます。引用元の本の他のところでも、コンピュータは人間のように意味を理解しているのかどうかについて論じています。「男性」、「女性」、「名前」のようなキーワードの意味がわからなくても正解を選択することが可能なのかどうか、考えていました。</p>
+<p>なお、念のため、以下の内容は、引用元の本の内容とは関係ありません。
+AI 技術がこんなことをしているというわけではありません。たぶん。知らんけど。</p>
+<p>まず、問題の文章を私なりに分解してみます。</p>
+<ol>
+<li>Alex は男性に使われる名前である。</li>
+<li>Alex は女性に使われる名前である。</li>
+<li>Alexandra は女性の名である。</li>
+<li>Alexander は男性の名である。</li>
+<li>Alex は Alexandra の愛称である。</li>
+<li>Alex は Alexander の愛称である。</li>
+</ol>
+<p>この中に正解がありますよね。</p>
+<p>では、次に、キーワードを全て</p>
+<ul>
+<li>A: Alex</li>
+<li>B: Alexandra</li>
+<li>C: Alexander</li>
+<li>D: 男性</li>
+<li>E: 女性</li>
+<li>F: 名前</li>
+<li>G: 名</li>
+<li>H: 愛称</li>
+</ul>
+<p>という形で記号に置き換えてみます。</p>
+<p>「名前」と「名」が違うの？ と思われた人は、このページの後半を見てください。この問題の文章では違う意味の単語として使われています。この文章の中で「名前」と「名」はシノニムではないし、また、混乱した状態で使われているわけでもありません。</p>
+<p>それから、「に使われる」は単に「の」に置き換えても十分に意味が通じますので、それも置き換えてしまいます。</p>
+<ol>
+<li>A は D の F である。</li>
+<li>A は E の F である。</li>
+<li>B は E の G である。</li>
+<li>C は D の G である。</li>
+<li>A は B の H である。</li>
+<li>A は C の H である。</li>
+</ol>
+<p>さらにこの場で私がてきとーに作った文法でプログラムっぽくしてみます。</p>
+<ol>
+<li>A is a F for D</li>
+<li>A is a F for E</li>
+<li>B is a G for E</li>
+<li>C is a G for D</li>
+<li>A is a H for B</li>
+<li>A is a H for C</li>
+</ol>
+<p>で、「 x is a H for B 」の x は何かと聞かれると、答えは一つしかありません。</p>
+<p>単語の意味（例えば一番難しそうな「愛称」）がわからなくて解けない人は確かにいるわけですけれど、それは単語の意味がわからないから解けないのではなくて、むしろ意味にを理解しようとすることにじゃまされて解けないというようなこともありそうな気がします。</p>
+<p>ただ、その前に、文章の構造を把握することができず、キーワードを追っかけるような読み方をしてしまう人、文章を書くと構造がはっきりしないキーワードが並んでいるだけのようものになってしまう人の場合は、一つでも意味のわからない単語があると、この問題を解くことができないか、ずいぶん苦労するかでしょう。</p>
+<p>次に、もう少しきちんとオブジェクト指向で分析してみます。まず <code>is a</code> ですが、</p>
+<blockquote>
+<p>X is a Y</p>
+</blockquote>
+<p>は 「 X はクラス Y のインスタンスである」ということで良さそうです。しかし <code>for</code> はダメです。プログラムの条件文の中で使う演算子に <code>for</code> みたいなものはたぶんありません。たいていのプログラミング言語で <code>for</code> は処理構造を表すものです。なにかうまく表現できていません。そこでまた意味に戻って考えてみます。</p>
+<p>上記の「 F for D 」は「男性の名前」です。まず、「名前」は明らかにクラスです。ここで使われれている意味としては、人やものを識別することに使われる名詞、というような意味になります。それに対して「男性の名前」は、「名前」のうち、男性（おそらく暗黙的に人間の男性、もしくは擬人化された動物のオスなど）に使われるもの、ということになります。つまり、「男性の名前」は「名前」のサブクラスです。ということは、私がなんとなく <code>for</code> と書いたものは、「条件を与えてサブクラスにする」という操作になるようです。他もそうなっているかどうか見てみます。</p>
+<ul>
+<li>「女性の名前」は「名前」のサブクラス</li>
+<li>「女性の名」は「名」のサブクラス</li>
+<li>「男性の名」は「名」のサブクラス</li>
+<li>「Alexandra の愛称」は「愛称」のサブクラス</li>
+<li>「Alexander の愛称」は「愛称」のサブクラス</li>
+</ul>
+<p>問題なさそう。ただ、「条件を与えてサブクラスにする」という操作を表す演算子のようなものは見たことないな。 UML では制約 ( Constraint ) なんですが。</p>
+<ol>
+<li>A is intance of (F constrainted by (F is an attibute of D))</li>
+<li>A is intance of (F constrainted by (F is an attibute of E))</li>
+<li>B is intance of (G constrainted by (G is an attibute of E))</li>
+<li>C is intance of (G constrainted by (G is an attibute of D))</li>
+<li>A is intance of (H constrainted by (H is an attibute of B))</li>
+<li>A is intance of (H constrainted by (H is an attibute of C))</li>
+</ol>
+<p>みたいな感じかな。</p>
+<p>まず、ざっくりとした関係を整理するためにベン図を描いてみます。</p>
+<p><img alt="" src="20210710parsing_1.png" /></p>
+<p>「名前」と「愛称」の関係は問題文には明示されていないのですが、「愛称」は「名前」のうち用途を限定したものだという制約があると判断できますので、「愛称」は「名前」のサブクラスとしました。</p>
+<p>「名」はおそらく「姓」と「名」の「名」、つまり First name だろうと思われます。その場合、「名前」のサブクラスになりそうです。しかし、これは問題の文章からは読み取ることができません。</p>
+<p>UML のクラス図を描いてみます。コメントの <code>{ }</code> は制約 ( Constraint ) です。</p>
+<p><img alt="" src="20210710parsing_2.png" /></p>
+<p>ずいぶん複雑になったな。この問題の文章はたしかに難しいです。とはいえ、このように形式的に表現できるのであれば、キーワードの意味がわからなくても解くことができる問題だということになると思います。</p>
+<p>例えば上記の「名」の正確な意味は私にはわからないままでしたが、この問題を解くことには全く影響ありません。「愛称」も、例えば "William" が "Bill" になるというような英語圏の Nickname は日本人にはなんだかよくわからないものですよね。</p>
+<p>Tag: <a href="/t/?tag=uml">uml</a></p>
+</div>
+
+</body>
+
+</html>

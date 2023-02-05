@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Oracle のロールバック表領域でブロックに障害が出たら - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Oracle のロールバック表領域でブロックに障害が出たら</h1>
+<p>Update: 2011-05-16</p>
+<p>★ Undo を使っていない古いバージョンのお話です ★</p>
+<p>Oracle のデータ・ブロック障害の対処方法について、それが普通の表領域ではなくてロールバック表領域の場合の手順をまとめたものはあまり見かけないので、ざっと書いてみました。新しいシステムでは、ロールバックセグメントではなく UNDOセグメントを使っていると思いますが、その場合はこれとは手順が異なります。RAC ( Real Application Clusters ) を使っている場合も手順が異なりますが、その規模のシステムなら専任のDBAさんがいますね。</p>
+<pre class="highlight"><code>ORA-01578 ファイル番号 string, ブロック番号 string でOracle データ・ブロックに障害が発生しました。
+</code></pre>
+
+<p>というようなエラーが出てそれがロールバックセグメントだった場合の応急処置は次のような感じです。Oracle のバージョンによってデータディクショナリの定義が違うことがありますが、だいたいこれでだいじょうぶでしょう。</p>
+<p>エラーリファレンスに書いてあるとおり次のコマンドでセグメント名を求めます。</p>
+<pre class="highlight"><code>SELECT SEGMENT_TYPE,OWNER||'.'||SEGMENT_NAME FROM DBA_EXTENTS
+WHERE ファイル番号 = FILE_ID AND ブロック番号 BETWEEN BLOCK_ID AND BLOCK_ID+BLOCKS -1;
+</code></pre>
+
+<p>ロールバックセグメントだとわかっている場合は次のようにセグメント名だけでもいいです。</p>
+<pre class="highlight"><code>SELECT SEGMENT_NAME FROM DBA_EXTENTS
+WHERE ファイル番号 = FILE_ID AND ブロック番号 BETWEEN BLOCK_ID AND BLOCK_ID+BLOCKS -1;
+</code></pre>
+
+<p>ロールバックセグメントは普通複数あるので、とりあえずエラーが出たセグメントをオフラインにします。そのセグメントを今使っているトランザクションがなければすぐオフラインになります。</p>
+<pre class="highlight"><code>ALTER ROLLBACK SEGMENT セグメント名 OFFLINE;
+</code></pre>
+
+<p>この処理の結果は次のSQLで確認できます。</p>
+<pre class="highlight"><code>SELECT SEGMENT_NAME, STATUS FROM DBA_ROLLBACK_SEGS;
+</code></pre>
+
+<p>セグメントが減って、ロールバック領域の不足が少し心配になるので、次のSQL文ですべてのロールバックセグメントのサイズを最適化します。一部のセグメントがどーんと大きな領域を占有している場合、それを開放してくれます。</p>
+<pre class="highlight"><code>ALTER ROLLBACK SEGMENT セグメント名 SHRINK;
+</code></pre>
+
+<p>で、根本解決ですが、失敗するとOracleが動かなくなってしまうので、テスト環境で試してからにしましょう。</p>
+<p>エラーになったファイルは捨てて、新しいファイルに乗り換えたいですね。まず、表領域名を調べます。</p>
+<pre class="highlight"><code>SELECT TABLESPACE_NAME FROM DBA_DATA_FILES
+WHERE FILE_ID = ファイル番号;
+</code></pre>
+
+<p>次にファイルの設定を調べます。</p>
+<pre class="highlight"><code>SELECT FILE_NAME, FILE_ID, BYTES/1024,
+AUTOEXTENSIBLE, MAXBYTES/1024, INCREMENT_BY
+FROM DBA_DATA_FILES WHERE TABLESPACE_NAME = 表領域名;
+</code></pre>
+
+<p>これで、ファイル名、ファイル番号、サイズ(KB)、自動拡張の有無、自動拡張Onの場合の最大サイズ(KB)、自動拡張Onの場合の増分ブロック数が取得できます。</p>
+<p>増分はサイズではなくブロック数しか取得できません。ブロックサイズ 4KB の場合 ブロック数×4 (KB) となります。</p>
+<p>同じサイズの表領域を作成するには、自動拡張Offの場合、</p>
+<pre class="highlight"><code>CREATE TABLESPACE 新しい表領域名
+DATAFILE '新しいファイル名' SIZE サイズK
+AUTOEXTEND OFF;
+</code></pre>
+
+<p>自動拡張Onの場合、</p>
+<pre class="highlight"><code>CREATE TABLESPACE 新しい表領域名
+DATAFILE '新しいファイル名' SIZE サイズK
+AUTOEXTEND ON NEXT 増分K MAXSIZE 最大サイズK;
+</code></pre>
+
+<p>このSQLを実行する前にディスクの空き容量が十分あるか確認してください。</p>
+<p>次に現状のロールバックセグメントの設定を調べます。</p>
+<pre class="highlight"><code>SELECT SEGMENT_NAME,
+INITIAL_EXTENT/1024, NEXT_EXTENT/1024,
+MIN_EXTENTS, MAX_EXTENTS, PCT_INCREASE
+FROM DBA_ROLLBACK_SEGS WHERE TABLESPACE_NAME = 表領域名;
+</code></pre>
+
+<p>これで、各セグメントのセグメント名、初期サイズ(KB)、増分サイズ(KB)、最少エクステント数、最大エクステント数、増分の増加の割合(%)が取得できます。で、ここで一つ問題が… 最適サイズが取得できません。上記の <code>"ALTER ROLLBACK SEGMENT セグメント名 SHRINK;"</code> の後の実サイズを取得することにします。</p>
+<pre class="highlight"><code>SELECT SEGMENT_NAME, BYTES/1024
+FROM DBA_SEGMENTS WHERE TABLESPACE_NAME = 表領域名;
+</code></pre>
+
+<p>で、新しい表領域に、現状と同じ数・設定の新しいロールバックセグメントを作ります。</p>
+<pre class="highlight"><code>CREATE ROLLBACK SEGMENT 新しいセグメント名
+TABLESPACE 新しい表領域名
+STORAGE (INITIAL 初期サイズK NEXT 増分サイズK
+MINEXTENTS 最少エクステント数 MAXEXTENTS 最大エクステント数
+PCTINCREASE 増分の増加の割合 OPTIMAL 最適サイズK);
+</code></pre>
+
+<p>新しい方のロールバックセグメントを使うように切り替えるには、初期設定ファイル <code>init&lt;SID&gt;.ora</code> の <code>ROLLBACK_SEGMENTS</code> の値を変更して再起動するわけですが、再起動無しでできないかな…</p></div>
+
+</body>
+
+</html>

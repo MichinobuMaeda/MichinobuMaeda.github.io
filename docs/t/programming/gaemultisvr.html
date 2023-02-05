@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Google App Engine は "multiple web servers" - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Google App Engine は "multiple web servers"</h1>
+<p>Update: 2010-10-25</p>
+<p>先日から Google App Engine を Java で試しているのですが、どうも挙動がおかしいのです。アクセスするたびに初期化をやり直しているような雰囲気なのです。 Singleton のオブジェクトに格納して置いたはずのキャッシュデータを意図した通りに読んでくれていないようなのです。</p>
+<p>ドキュメントを読み直すと書いてありました。</p>
+<p>“App Engine uses multiple web servers …”</p>
+<p>「クラウド」なわけだ。 Servlet の初期化も結局のところ、最初にアクセスされたときになるそうです。</p>
+<p>さらに、これは挙動を見ての推測なのですが、この “multiple” は、 1以上じゃなくて 0以上のように思えます。一度リクエストして起こしても、しばらく放置しておくとまた寝てしまうということです。この推測が正しとして、挙動を見る限り、「しばらく」というのは 5分か 10分のことのようです。</p>
+<p>そのようなわけで、私は、まず、テンプレートエンジン Velocity の利用を止めました。これが好きなんですが、というか、JSP があまり好きではないのですが、少しでもアクセス時にロードし直すライブラリを減らすためです。 JSP に変えたところ、少しマシになりました。</p>
+<p>そこそこ頻繁にアクセスがあるサイトでないと Java は向かないということなのかな。いっそのこと Python に変えてしまいたいところですが、 LZH の解凍するライブラリが見つからないし。 cron と Task Queues による定時の Job の実行の際にも、「まず一度何かを呼び出して、目を覚まさせてから」という手順にした方がよさそうです。</p>
+<h3>2010-10-26 追記</h3>
+<p>Spring Framework も外してみました。基本的な IoC と Spring MVC の機能しか使っていなかったので、自前の Application Context とコントローラを呼び出すサーブレットなどを作って、サービスや DAO は変更無しで済ませました。本番環境の前に、ローカルのテストサーバの起動が速くなりました。本番環境でも、おおむね数秒で目を覚ましてくれるようになりました。</p>
+<p>トップページを静的なページから JSP に変えて、そこで Application Context を呼び出し、ほとんどのクラスを参照させるようにしています。トップページでも他のページでもどれか一つを表示しさえすれば、その後は、どのページもほとんど待ち時間無しで表示できるようになりました。</p>
+<h3>2010-11-13 追記</h3>
+<p>現在、 Googlebot さんが定期的にアクセスしてくれていて、寝るヒマが無くなっているようです。 30秒〜5分毎くらいかな？ HTML 版の一覧のページ数が多いから、一巡するのにけっこうかかるようです。こんな他力本願な解決方法があったとは</p></div>
+
+</body>
+
+</html>

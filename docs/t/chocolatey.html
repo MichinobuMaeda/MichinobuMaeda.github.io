@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Chocolatey を使ってみる - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Chocolatey を使ってみる</h1>
+<p>Update: 2018-09-25</p>
+<p>職場の Windows マシンはセキュリティ上の理由で入れられるものが制限されているので、
+<a href="startlaravel1.html">Laraval 5 による開発の手順 #1</a> を書いたときにはまだ Chocolatey のことを知りませんでした。</p>
+<p>Chocolatey は Mac の Homebrew のようなものです、と、
+Mac を使ってない人に言ってもわかるわけないですね。
+Chocolatey は Windows 向けのパッケージマネージャーで、
+2018年9月現在で 6,000 を超えるアプリ、ツールに対応しています ( <a href="https://chocolatey.org/packages">https://chocolatey.org/packages</a> ) 。</p>
+<p>GUI のツールもあるようなのですが、開発に使うコマンドラインのツールを
+Linux の <code>yum</code> や <code>apt</code> のような感じでインストールできます。
+ざっと見たところ、
+<code>git</code>, <code>nodejs</code>, <code>python2</code>, <code>python3</code>, <code>php</code>, <code>composer</code>,
+<code>sqlite</code>, <code>openssh</code>, <code>make</code>, <code>mingw</code> ( <code>gcc</code> などを含む ), <code>gcc-arm</code>, <code>7zip</code>
+といったものがありました。
+<code>tar</code> が見つけられなかったけど、、、 <code>tartool</code> でいいのかな。。。</p>
+<p>Chocolatey そのもののインストール方法は簡単で、
+コマンドプロンプトか PowerShell のコンソールを管理者権限で開いて、
+<a href="https://chocolatey.org/install">https://chocolatey.org/install</a>
+に記載されている呪文を実行するだけです。
+PowerShell の場合は先にセキュリティの設定を見ておいてください。</p>
+<pre class="highlight"><code>Get-ExecutionPolicy
+</code></pre>
+
+<p>で一番厳しい <code>Restricted</code> だったら</p>
+<pre class="highlight"><code>Set-ExecutionPolicy AllSigned
+</code></pre>
+
+<p>としてください。</p>
+<p>Chocolatey をインストールしたらコンソールを開き直してください。</p>
+<p>全体のヘルプは、</p>
+<pre class="highlight"><code>choco -?
+</code></pre>
+
+<p>コマンドのヘルプは、例えば <code>install</code> コマンドの場合</p>
+<pre class="highlight"><code>choco install -?
+</code></pre>
+
+<p>です。</p>
+<pre class="highlight"><code>choco search git
+</code></pre>
+
+<p>で欲しいパッケージを探して、</p>
+<pre class="highlight"><code>choco info git
+</code></pre>
+
+<p>でパッケージについての情報を見ることができます。</p>
+<p>パッケージのインストールは</p>
+<pre class="highlight"><code>choco install git -y
+</code></pre>
+
+<p>です。 <code>-y</code> はコマンド実行中の問い合わせをすべて <code>Yes</code> とするオプションです。</p>
+<p>パッケージをインストールする際にたいてい <code>PATH</code> の設定をしていますので、
+インストール後はコンソールを開き直してください。</p>
+<p>インストールしたものの実行は、管理者権限不要です。</p>
+<p><code>vim</code> もありました。漢字を入力しても化けないようです。</p>
+<pre class="highlight"><code>choco upgrade all
+</code></pre>
+
+<p>ですべてのパッケージを最新にします。</p>
+<p><code>php</code> は <code>C:¥tools¥php72</code> のようなフォルダに置かれます。
+<code>php.ini</code> の <code>extensions</code> がすべてコメントアウトされているので、
+全く使いそうにないもの以外はコメントアウトを外してください。</p></div>
+
+</body>
+
+</html>

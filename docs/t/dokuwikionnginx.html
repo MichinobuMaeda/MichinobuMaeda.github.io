@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>dokuwiki on Nginx - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>dokuwiki on Nginx</h1>
+<p>Update: 2017-11-26</p>
+<p>久しぶりにサイトリニューアルしてみようかと思い立って、 Nginx に dokuwiki を載せてみました。
+サイト全体ではなくサブディレクトリに dokuwiki を置きます。
+OS は Debian 9 です。</p>
+<p>必要なパッケージは <code>nginx</code> <code>php-fpm</code> <code>php-xml</code> です。
+インストール後に <code>service --status-all</code> で <code>nginx</code> と <code>php7.0-fpm</code> が動いているのを確認します。
+dokuwiki は Debian のパッケージは使わずに手動で導入しました。コピーするだけだし。
+FPM や URL Rewrite は
+<a href="https://www.dokuwiki.org/install:nginx">https://www.dokuwiki.org/install:nginx</a>
+を参考に以下のような感じで。
+仕事では Nginx をリバースプロキシに使ったことしかなくて
+FastCGI の設定は初めてなので、不要な設定があるかもしれません。</p>
+<pre class="highlight"><code>  index index.html index.htm doku.php;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  location /tec/ { try_files $uri $uri/ @tec; }
+  location @tec {
+    rewrite ^/tec/_media/(.*) /tec/lib/exe/fetch.php?media=$1 last;
+    rewrite ^/tec/_detail/(.*) /tec/lib/exe/detail.php?media=$1 last;
+    rewrite ^/tec/_export/([^/]+)/(.*) /tec/doku.php?do=export_$1&amp;id=$2 last;
+    rewrite ^/tec/(.*) /tec/doku.php?id=$1&amp;$args last;
+  }
+  location ~ ^/tec/(data/|conf/|bin/|inc/|install.php) { deny all; }
+  location ~ ^/tec/.*\.php$ {
+    try_files $uri $uri/ /tec/doku.php;
+
+    #include snippets/fastcgi-php.conf;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    #try_files $fastcgi_script_name =404;
+    set $path_info $fastcgi_path_info;
+    fastcgi_param PATH_INFO $path_info;
+    fastcgi_index index.php;
+    include fastcgi.conf;
+
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param REDIRECT_STATUS 200;
+    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+  }
+</code></pre>
+
+<p><code>snippets/fastcgi-php.conf</code> は設定 <code>try_files</code> の競合が起きたので、それ以外の内容をコピーしました。
+dokuwiki のドキュメントには image medeia が云々と書かれていますが、最新版では何もしなくてだいじょうぶそうです。</p>
+<p>あとは、同様の設定を別のサブフォルダに入れて動くかどうかですね。</p>
+<p>Tag: <a href="/t/?tag=nginx">nginx</a> <a href="/t/?tag=dokuwiki">dokuwiki</a> <a href="/t/?tag=php">php</a> <a href="/t/?tag=fpm">fpm</a> <a href="/t/?tag=fastcgi">fastcgi</a> <a href="/t/?tag=debian">debian</a> <a href="/t/?tag=rewrite">rewrite</a></p>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Debian 9 から 10 にアップデート - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Debian 9 から 10 にアップデート</h1>
+<p>Update: 2020-07-11</p>
+<p>このサーバで Debian 9 を使っていたのですが、
+Debian 10 が出てからしばらく経つのでアップデートすることにします。</p>
+<p>参考にしたのはこちら <a href="https://phoenixnap.com/kb/how-to-upgrade-debian-9-stretch-to-debian-10-buster">https://phoenixnap.com/kb/how-to-upgrade-debian-9-stretch-to-debian-10-buster</a></p>
+<p>まず設定をバックアップ</p>
+<pre class="highlight"><code>sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+</code></pre>
+
+<p>次に <code>/etc/apt/sources.list</code> の中の <code>stretch</code> をすべて <code>buster</code> に変えます。</p>
+<p>このサーバに追加した参照先 ( <code>/etc/apt/sources.list.d/</code> の下 ) も同様に変更します。</p>
+<ul>
+<li><code>deb &lt;nowiki&gt;https://deb.nodesource.com/node_10.x&lt;/nowiki&gt; stretch main</code></li>
+<li><code>deb &lt;nowiki&gt;https://packages.sury.org/php/ stretch&lt;/nowiki&gt; main</code></li>
+</ul>
+<p>で、次に <code>sudo apt ...</code>  っていやまてこのページの編集しながらではダメだろ。。。というわけでいったん保存。</p>
+<p>念のためデータや <code>/etc</code> を手元の PC にバックアップして、</p>
+<pre class="highlight"><code>sudo apt update
+sudo apt upgrade
+</code></pre>
+
+<p>とやってる最中に <code>arno-iptables-firewall</code> が何やらエラーを表示。
+で、いやな予感の通り <code>ssh</code> のセッションが切れてしまったと思ったらネットワークが全くつながらない。
+サーバ屋さんが用意してくれている Web のコンソールから入り直して、
+とりあえず <code>arno-iptables-firewall</code> をアンインストールして <code>iptables</code> をリセット。</p>
+<p><a href="https://kerneltalks.com/virtualization/how-to-reset-iptables-to-default-settings/">https://kerneltalks.com/virtualization/how-to-reset-iptables-to-default-settings/</a></p>
+<pre class="highlight"><code>sudo apt remove arno-iptables-firewall
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -F
+</code></pre>
+
+<p>で、 <code>ssh</code> がつながるようになったので残りを実行。</p>
+<pre class="highlight"><code>sudo apt dist-update
+sudo shutdown -r now
+</code></pre>
+
+<p><code>arno-iptables-firewall</code> は再インストール。
+アンインストールする前の <a href="arnoiptablesfirewall.html">設定ファイル</a> は残っていたので再設定は不要でした。</p>
+<p>Tag: <a href="/t/?tag=debian">debian</a> <a href="/t/?tag=iptables">iptables</a> <a href="/t/?tag=arno-iptables-firewall">arno-iptables-firewall</a></p>
+</div>
+
+</body>
+
+</html>

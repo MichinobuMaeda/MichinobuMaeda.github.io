@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Checkstyle をチェックする - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Checkstyle をチェックする</h1>
+<p>Update: 2006-01-06</p>
+<p>あまり真剣に読まないように。</p>
+<blockquote>
+<p>関連記事 : <a href="checkstyle5forme.html">自分用 Checkstyle 5.0 暫定対応</a></p>
+</blockquote>
+<p>自分でスタイルを決めてJava のコーディングをする場合は、できるだけ Sun ( 現在は Oracle : 2011-01-24 追記 ) <a href="http://www.oracle.com/technetwork/java/codeconv-138413.html">“Java Code Conventions”</a> に従っているつもりでした。そのために Eclipse の機能や Checkstyle などのツールを使っているわけですが、ときどき「本当にこれは Sun “Java Code Conventions” のルールなの？」と疑問に思うことがあり、 久しぶりに原典を読み直してツールの機能を確認してみようと思ったわけです。</p>
+<p>このページはきわめて趣味的なものなので、まじめに最後まで読もうとか思わないでください。特に C言語のコメントがどうのとか、”Double-Checked Locking” とかは 99.9% の Java エンジニアには無関係な話です。</p>
+<p>カスタマイズした結果は次の通りです。</p>
+<pre class="highlight"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE module PUBLIC
+    &quot;-//Puppy Crawl//DTD Check Configuration 1.2//EN&quot;
+    &quot;http://www.puppycrawl.com/dtds/configuration_1_2.dtd&quot;&gt;
+&lt;!--
+  $Id: reduced_sun_checks.xml 36 2005-12-20 05:38:38Z michinobu $
+
+  Checkstyle 4.1 の配布物に含まれる設定ファイル sun_checks.xml
+  をカスタマイズしたものです。カスタマイズの内容の詳細は
+  http://www.mmichi,com/checkstyle/ をご参照ください。
+
+  Checkstyle については http://checkstyle.sf.net/ を
+  ご参照ください。
+
+  Checkstyle は GNU LESSER GENERAL PUBLIC LICENSE ( LGPL ) Version 2.1
+  により配布されています。 sun_checks.xml については個別に
+  ライセンスについて記述されていませんが、LGPL が適用されると
+  思われます。このファイルについてもそのライセンスを引き継ぎます。
+  LGPL についての詳細は http://www.gnu.org/copyleft/lesser.html を
+  ご参照ください。
+ --&gt;
+&lt;module name=&quot;Checker&quot;&gt;
+  &lt;module name=&quot;PackageHtml&quot;/&gt;
+  &lt;module name=&quot;Translation&quot;/&gt;
+  &lt;module name=&quot;TreeWalker&quot;&gt;
+    &lt;module name=&quot;JavadocMethod&quot;/&gt;
+    &lt;module name=&quot;JavadocType&quot;/&gt;
+    &lt;module name=&quot;JavadocVariable&quot;/&gt;
+    &lt;module name=&quot;JavadocStyle&quot;&gt;
+      &lt;property name=&quot;checkFirstSentence&quot; value=&quot;false&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;ConstantName&quot;/&gt;
+    &lt;module name=&quot;LocalFinalVariableName&quot;/&gt;
+    &lt;module name=&quot;LocalVariableName&quot;/&gt;
+    &lt;module name=&quot;MemberName&quot;/&gt;
+    &lt;module name=&quot;MethodName&quot;/&gt;
+    &lt;module name=&quot;PackageName&quot;/&gt;
+    &lt;module name=&quot;ParameterName&quot;/&gt;
+    &lt;module name=&quot;StaticVariableName&quot;/&gt;
+    &lt;module name=&quot;TypeName&quot;/&gt;
+    &lt;module name=&quot;AvoidStarImport&quot;&gt;
+      &lt;property name=&quot;excludes&quot; value=&quot;java.io,java.util&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;IllegalImport&quot;/&gt;
+    &lt;module name=&quot;RedundantImport&quot;/&gt;
+    &lt;module name=&quot;UnusedImports&quot;/&gt;
+    &lt;module name=&quot;FileLength&quot;/&gt;
+    &lt;module name=&quot;LineLength&quot;/&gt;
+    &lt;module name=&quot;MethodLength&quot;/&gt;
+    &lt;module name=&quot;ParameterNumber&quot;/&gt;
+    &lt;module name=&quot;EmptyForIteratorPad&quot;/&gt;
+    &lt;module name=&quot;MethodParamPad&quot;/&gt;
+    &lt;module name=&quot;NoWhitespaceAfter&quot;/&gt;
+    &lt;module name=&quot;NoWhitespaceBefore&quot;/&gt;
+    &lt;module name=&quot;OperatorWrap&quot;/&gt;
+    &lt;module name=&quot;ParenPad&quot;/&gt;
+    &lt;module name=&quot;TypecastParenPad&quot;/&gt;
+    &lt;module name=&quot;TabCharacter&quot;/&gt;
+    &lt;module name=&quot;WhitespaceAfter&quot;/&gt;
+    &lt;module name=&quot;WhitespaceAround&quot;&gt;
+      &lt;property name=&quot;allowEmptyMethods&quot; value=&quot;true&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;ModifierOrder&quot;/&gt;
+    &lt;module name=&quot;RedundantModifier&quot;/&gt;
+    &lt;module name=&quot;AvoidNestedBlocks&quot;/&gt;
+    &lt;module name=&quot;EmptyBlock&quot;/&gt;
+    &lt;module name=&quot;LeftCurly&quot;/&gt;
+    &lt;module name=&quot;NeedBraces&quot;/&gt;
+    &lt;module name=&quot;RightCurly&quot;/&gt;
+    &lt;module name=&quot;DoubleCheckedLocking&quot;/&gt;
+    &lt;module name=&quot;EmptyStatement&quot;/&gt;
+    &lt;module name=&quot;EqualsHashCode&quot;/&gt;
+    &lt;module name=&quot;HiddenField&quot;&gt;
+      &lt;property name=&quot;ignoreSetter&quot; value=&quot;true&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;IllegalInstantiation&quot;/&gt;
+    &lt;module name=&quot;InnerAssignment&quot;/&gt;
+    &lt;module name=&quot;MagicNumber&quot;&gt;
+      &lt;property name=&quot;ignoreNumbers&quot; value=&quot;-1, 0, 1&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;MissingSwitchDefault&quot;/&gt;
+    &lt;module name=&quot;RedundantThrows&quot;/&gt;
+    &lt;module name=&quot;SimplifyBooleanExpression&quot;/&gt;
+    &lt;module name=&quot;SimplifyBooleanReturn&quot;/&gt;
+    &lt;module name=&quot;FinalClass&quot;/&gt;
+    &lt;module name=&quot;HideUtilityClassConstructor&quot;/&gt;
+    &lt;module name=&quot;InterfaceIsType&quot;/&gt;
+    &lt;module name=&quot;VisibilityModifier&quot;/&gt;
+    &lt;module name=&quot;ArrayTypeStyle&quot;/&gt;
+    &lt;module name=&quot;FinalParameters&quot;/&gt;
+    &lt;module name=&quot;TodoComment&quot;&gt;
+      &lt;property name=&quot;format&quot; value=&quot;(TODO|XXX|FIXME)&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;UpperEll&quot;/&gt;
+  &lt;/module&gt;
+&lt;/module&gt;
+</code></pre>
+
+<p>Eclipse プラグインに設定ファイルとして読み込んだり、 Maven の checkstyle:checkstyle ゴールの propertiesFile パラメタに設定できたりします、が、現状の Maven 2 用のプラグインは国際化対応とクラスローダの 問題があってうまく動きません。リソースバンドルの不足については jira に登録したら早速 「SVN のソースでは直っているよ」とコメントがつきました。でも、サイトに掲示されている SVN の URL が間違っているという別の報告済みの問題があって、これはまだ直っていないです。 クラスローダの件もすでに他の人が登録していたのでそのうち直るでしょう。</p>
+<p>以下の文章で ”[ 変更 ]” ”[ 不可 ]” としている事項が、私が Checkstlye をカスタマイズした箇所です。</p>
+<h2>Sun "Java Code Conventions" の復習</h2>
+<p>なぜ Sun “Java Code Conventions” なのかというと、世の中に広く受け入れられているからです。 それは、規定の内容そのものの優劣より重要なことだと思います。</p>
+<p>配布元 URL は <a href="http://java.sun.com/docs/codeconv/index.html">http://java.sun.com/docs/codeconv/index.html</a> です ( 現在は <a href="http://www.oracle.com/technetwork/java/codeconv-138413.html"><a href="http://www.oracle.com/technetwork/java/codeconv-138413.html">http://www.oracle.com/technetwork/java/codeconv-138413.html</a></a> : 2011-01-24 追記 ) 。1997 年に作成されてそれ以降改訂されていないようで、バージョン番号などは記されていません。</p>
+<h3>ファイル名、クラス名など</h3>
+<p>議論の対象になることはほとんどなさそうなので略します。 クラス名に数字のコード値を割り当てるような仕事なら私はさっさと逃げます。 そのような会社があると噂には聞いていたのですが、この目で見たときには絶句しました。</p>
+<p>ときどきインターフェイスの名称の先頭に “I” をつけているものを見ますが、いい方法ではないと思います。 そのインターフェイスを使う側にはそれがインターフェイスなのかどうかを意識させない方がオブジェクト指向のプログラムとして自然な姿だと思うからです。 Java より先に「インターフェイス」という言葉を世の中に広めた Microsoft の COM を例に挙げると、 VB の部品や Office の公開インターフェイスにすべていちいち “I” がついていたりはしません。</p>
+<h3>ファイルの先頭のコメント</h3>
+<pre class="highlight"><code>/*
+ * Classname
+ *
+ * Version info
+ *
+ * Copyright notice
+ */
+</code></pre>
+
+<p>… だそうです。 “11 - Code Examples” の場合、 “Classname” と “Version info” に相当すると思われる行は次のようになっています。</p>
+<pre class="highlight"><code>/*
+ * %W% %E% Firstname Lastname
+ *
+````
+
+
+
+CVS や Subversion であれば $Id$ など入れておけばよさそうです。 Eclipse 3.1 の場合このブロックコメントを折りたたんでもこの 1行だけは表示されるのでいい感じです。
+
+### import
+
+”.\*” を使ったものが例示されています。 ”.\*” を原則使わないという流儀もあって私も従っているのですが、 Eclipse などインテリジェントな環境で作業するのでなければ、java.\* の下のパッケージは ”.\*” を使ってインポートしてもいいと思います。 依存関係のチェックの対象とする必要はないからです。
+
+### メンバの記述の順番
+
+メンバの記述の順番は次のようになります。
+
+1.  クラス ( static ) 変数
+2.  インスタンス変数
+3.  コンストラクタ
+4.  メソッド
+
+### インデントとタブ
+
+少しわかりにくい書き方になっているのですが、私が読み取った内容は次のようになります。
+
+
+
+Sun “Java Code Conventions” が決めていることは次の通りです。
+
+*   インデントは4桁である。
+*   タブは8桁である。
+
+Sun “Java Code Conventions” が決めていないことは次の通りです。
+
+*   インデントを記述するのにスペースだけを使うかタブも使うか。
+
+Eclipse などいくつかのツールのデフォルトの動作ではタブを4桁として表示してしまいますので、 スペースだけを使うのが無難だと思います。
+
+### 1行の長さ
+
+80桁を超える行は避けるように、とのことです。
+
+
+
+多くのツールやターミナルによってうまく処理できるように、という趣旨なので、日本語の場合は 80文字ではなくいわゆる半角で 80桁以内にということになりますし、 改行の表示のことを考えるとたぶん 79桁以内の方がいいのだろうと思います。
+
+### 処理行の途中の改行
+
+次のような原則が示されれています。
+
+*   カンマの後で改行する。
+*   演算子の前で改行する。
+*   できるだけ高いレベルで ( 演算の優先順位を指していると思われる ) 改行する。
+*   同じレベルの改行は先頭をそろえる。
+*   インデントする場合は 8桁。
+
+いくつかの例が挙げられていますが、厳密に次の例の通りに書かれたソースはいまだかつて見たことがありません。
+</code></pre>
+
+<pre><code>if ((condition1 &amp;&amp; condition2)
+        || (condition3 &amp;&amp; condition4)
+        ||!(condition5 &amp;&amp; condition6)) {
+    doSomethingAboutIt();
+}
+</code></pre>
+<pre class="highlight"><code>”!” の前後にスペースは入れないのですね。 “10.5.1 Parentheses” の考え方に従うなら !(…) は (!(…)) とする方がいいように思います。
+
+### コメント
+
+省略しますが次の点だけ。
+
+
+
+“\*” などで箱を描かないように、とのことです。 C言語でよく使いますね。私も使っていましたが、 100桁を超えるような幅の箱は環境によっては困ったことになります。
+
+&quot;//&quot; で連続する複数行をコメントアウトするのはいいが、 連続する複数行の文章の記述には使わないように、とのことです。
+
+はっきりと記述されているわけではないのですが、次のように解釈していいようです。
+
+
+
+*   `/*…*/` をコメントアウトに使わない。
+*   `/*…*/` は次のフォーマットで。
+</code></pre>
+
+<pre><code>/*
+ * 1行目
+ * 2行目
+ * 3行目
+ */
+</code></pre>
+<pre class="highlight"><code>少し話がそれますが、次のような形のコメントアウトの記述ミスで痛い目に遭った C言語プログラマはたくさんいらっしゃるでしょう。
+</code></pre>
+
+<p>/<em>
+    ここから
+     ...
+    ここまでコメントアウト
+</em>/</p>
+<pre class="highlight"><code>で、「C言語でも &quot;//&quot; 使えばいい」という人もいるのですが、 それ、きっと、たぶん ANSI C じゃないです。少し格好悪いですが、次のように書くことが可能です。 コメントアウトの途中に /\*…\*/ が入っていてもだいたいうまくいきます。
+</code></pre>
+
+<p>/<em>
+</em>//<em>    ここから
+</em>//<em>    ...
+</em>//<em>    ここまでコメントアウト
+</em>/`
+````</p>
+<p>変数の宣言</p>
+<p>次のようなことが書かれています。</p>
+<ul>
+<li>1行に 1個の変数を宣言する。で、次のようにコメントをつけるのが望ましい。</li>
+</ul>
+<pre class="highlight"><code>    int level; // indentation level
+    int size; // size of table
+</code></pre>
+
+<ul>
+<li>型と変数の間のスペースは次のどちらかにする。</li>
+<li>スペース1個。</li>
+<li>タブを使って変数の先頭をそろえる。</li>
+<li>ブロック ( {…} で囲まれたブロック ) の先頭で宣言する。 for 文のインデックスだけは例外。</li>
+<li>ローカル変数はできるだけ宣言した場所で初期化する。</li>
+</ul>
+<p>私の場合 C++ を書き始めたときにブロックの途中でローカル変数が宣言時に初期化できるのがうれしくて Java になってからも多用していたのですが、そもそもメソッドのサイズを小さくするなどして避けるようにします。</p>
+<h3>クラスとインターフェイスの宣言</h3>
+<p>例の通りなので省略。</p>
+<p>{...}</p>
+<p>“7.2 Compound Statements” に、きっとたぶん日本語に訳してもなお晦渋 ( 怪獣 ) であろうと思われる書き方で定義していますが、 その後の各節の例を見れば誤解なく理解できるだろうと思います。</p>
+<p>重要な事項としては次のようなことがあります。</p>
+<ul>
+<li>if, if-else 文は必ず {…} を使う。</li>
+<li>switch 文で break; を省略する場合は /* falls through */ といったコメントを break; が ( 省略せずに入れるとすれば ) 入ることになる場所に記述する。</li>
+<li>switch 文には default: を記述する。</li>
+<li>switch 文の default: にも break; を記述する。</li>
+</ul>
+<p>switch 文の体裁は C/C++ でも様々な流儀があったので例を引用しておきます。</p>
+<pre class="highlight"><code>    switch (condition) {
+    case ABC:
+        statements;
+        /* falls through */
+    case DEF:
+        statements;
+        break;
+    case XYZ:
+        statements;
+        break;
+    default:
+        statements;
+        break;
+    }
+</code></pre>
+
+<p>「使わないはずの default: には assert を入れておけばよい」と言う人もいます。そういえば私は Java の assert は活用できていないなぁ。</p>
+<p>C/C++ でも少数派だとは思いますが、「if 文の else を必ず」といった記述はありませんでした。</p>
+<h3>空行</h3>
+<p>細かくいろいろ決まっています。</p>
+<ul>
+<li>2行入れるべき箇所</li>
+<li>ソースファイルの “sections” の間</li>
+<li>クラスもしくはインターフェイスの宣言の間</li>
+<li>1行入れるべき箇所</li>
+<li>メソッドの間</li>
+<li>メソッドの中のローカル変数と最初のステートメントの間</li>
+<li>コメントの前</li>
+<li>その他メソッドの中のロジカルな “sections” の間で可読性を向上できる場合</li>
+</ul>
+<p>間に 2行入れるべき “sections” というのは “11.1 Java Source File Example” を見てもよくわかりません。 import とクラスの宣言の間は対象になりそうです。</p>
+<h3>スペース</h3>
+<p>スペースを入れるべき箇所も細かく記述されています。</p>
+<ul>
+<li>キーワードと ”(” の間に入れる。メソッド名と ”(” の間に入れない。</li>
+<li>引数のリストのカンマの後</li>
+<li>”.” 以外の二項演算子とそのオペランドの間。 ”++” ”–” とそのオペランドの間には入れない。</li>
+<li>“for” 文の条件説の間</li>
+<li>キャストの後</li>
+</ul>
+<h3>命名規則</h3>
+<p>省略。</p>
+<h3>プログラムの記述</h3>
+<ul>
+<li>インスタンス変数は public にしない。ただし、振る舞いを全く含まないデータ構造を表すクラスはその限りではない。</li>
+<li>クラス変数とクラスメソッドを参照する場合は、オブジェクト名ではなくクラス名を使う。</li>
+<li>-1 と 0, 1 以外の数値を直書きしない。</li>
+<li>1行で複数の変数に値を代入したり、評価と代入をいっぺんにやったり、とにかく難しいことをしない。</li>
+</ul>
+<h3>その他</h3>
+<ul>
+<li>演算子の優先順位で混乱しないよう丸括弧は明示的につけたほうがいい。</li>
+<li>プログラムの構造を明確にするために、 if…else の途中などでの return は避ける。</li>
+<li>3項演算子 ?: の ”?” の前で演算する場合は丸括弧を付与する。</li>
+<li>特別なコメント</li>
+<li>XXX 「正しくないがとりあえず動いてはいる。</li>
+<li>FIXME 「正しくない、動いていない、修正が必要。」</li>
+</ul>
+<p>Eclipse 3.1 の場合 “Task Tags” として XXX, FIXME, TODO が登録されています。</p>
+<h2>Checkstyle 4.1 の sun_checks.xml の検討</h2>
+<p>Checkstyle 4.1 に添付されている sun_checks.xml を詳しく見てみることにします。これまで使ってみた感じでは、 Sun “Java Code Conventions” そのものの内容の他に “some best practices” として追加された事項がたくさんあり、中にはあまり品質には影響しそうにないもの、 環境によっては作業効率を落とす可能性の高いもの、そもそも不合理なものが含まれているように思います。</p>
+<p>以下、各モジュールについての意見です。</p>
+<p>[ 可 ] : Sun “Java Code Conventions” のとおり。</p>
+<p>[ 追加 ] : “Java Code Conventions” には含まれないが、使いたい事項。</p>
+<p>[ 変更 ] : プロパティの追加など変更を加えて使いたい事項。</p>
+<p>[ 不可 ] : 使いたくない事項。</p>
+<h3>Module: PackageHtml</h3>
+<p>[ 追加 ]</p>
+<p>package.html の有無をチェックします。</p>
+<h3>Module: NewlineAtEndOfFile</h3>
+<p>[ 不可 ]</p>
+<p>ファイルの末尾が改行文字かどうかをチェックします。</p>
+<p>改行文字の種類もチェックしているため、たとえば Windows 上で LF のみとした場合にエラーとなってしまいます。 NetBeans で作業しているときにこの問題が発生しました。 あまり重要な事項ではないし、環境が変わるたびに設定を変更するのは面倒なので不可とします。</p>
+<h3>Module: Translation</h3>
+<p>[ 追加 ]</p>
+<p>国際化対応のためのプロパティファイルが同じキーを重複なく一つだけ含むかどうかをチェックします。</p>
+<h3>Module: JavadocMethod</h3>
+<p>[ 可 ]</p>
+<p>コンストラクタおよびメソッドの JavaDoc コメントをチェックします。</p>
+<p>scope のデフォルトは private ですが、 クラスの外からどのような形でも参照されないわけで、 package くらいでもいいと思ったのですが、とりあえずこのままで。</p>
+<p>継承したメソッドについては Eclipse が自動で付与してくれる</p>
+<p><code>/* (non-Javadoc)</code></p>
+<p><code>* @see com.mmichi.o2X.analysis.Analyser#getDocument()</code></p>
+<p><code>*/</code></p>
+<p>を認識してくれなくて不満だったのですが、ドキュメントをよく読むと</p>
+<p><code>/** {@inheritDoc} */</code></p>
+<p>を使えと書いています。 Eclipse の設定を変えてしまうことにします。</p>
+<h3>Module: JavadocType</h3>
+<p>[ 可 ]</p>
+<p>クラスまたはインターフェイスの JavaDoc コメントをチェックします。</p>
+<p>scope については JavadocMethod と同様です。</p>
+<h3>Module: JavadocVariable</h3>
+<p>[ 可 ]</p>
+<p>変数の JavaDoc コメントをチェックします。</p>
+<p>scope については JavadocMethod と同様です。</p>
+<h3>Module: JavadocStyle</h3>
+<p>[ 変更 ]</p>
+<p>JavaDoc の体裁をチェックします。</p>
+<p>先頭行がピリオド等で終わることのチェックは、国際化対応していなくて日本語の「。」は認識しません。 またプロパティなどで追加することもできないようです。 少し惜しい気がしますが checkFirstSentence プロパティは false で使うことにします。</p>
+<h3>Module: ConstantName</h3>
+<p>[ 可 ]</p>
+<p>static final の定数の名称をチェックします。</p>
+<h3>Module: LocalFinalVariableName, LocalVariableName, MemberName, MethodName, PackageName, ParameterName, StaticVariableName, TypeName</h3>
+<p>[ 可 ]</p>
+<p>命名規則のチェックです。</p>
+<p>Checkstyle のモジュールのうち AbstractClassName は含みません。</p>
+<h3>Module: AvoidStarImport</h3>
+<p>[ 変更 ]</p>
+<p>.* によるインポートをチェックします。</p>
+<p>デフォルトではすべて禁止ですが、プロパティ excludes に次のものを追加して使うことにします。</p>
+<ol>
+<li><code>java.io</code></li>
+<li><code>java.util</code></li>
+</ol>
+<h3>Module: IllegalImport</h3>
+<p>[ 追加 ]</p>
+<p>デフォルトで <code>sun.*</code> のインポートをチェックします。理由は 100% Pure Java でないからだそうです。</p>
+<h3>Module: RedundantImport</h3>
+<p>[ 追加 ]</p>
+<p>冗長なインポートの記述をチェックします。</p>
+<h3>Module: UnusedImports</h3>
+<p>[ 追加 ]</p>
+<p>使用されないインポートをチェックします。</p>
+<h3>Module: FileLength</h3>
+<p>[ 可 ]</p>
+<p>ファイルの行数をチェックします。デフォルトで 2,000行です。</p>
+<h3>Module: LineLength</h3>
+<p>[ 可 ]</p>
+<p>行の文字数をチェックします。デフォルトで 80文字です。タブは 8文字として計算します。</p>
+<h3>Module: MethodLength</h3>
+<p>[ 追加 ]</p>
+<p>メソッドの行数をチェックします。デフォルトで 150行です。</p>
+<h3>Module: ParameterNumber</h3>
+<p>[ 追加 ]</p>
+<p>コンストラクタとメソッドのパラメタの数をチェックします。デフォルトで 7個です。</p>
+<p>なぜ 7個なのか不明ですが、まぁ妥当な数だと思うのでそのままとします。</p>
+<h3>Module: EmptyForIteratorPad</h3>
+<p>[ 追加 ]</p>
+<p>要するに次のような場合の第3項目 ;) のスペースの有無をチェックします。 デフォルトでは「スペース無し」です。</p>
+<p><code>for (Iterator it = set.iterator(); it.hasNext();) {</code></p>
+<p>「スペース有り」の設定にもできます。どっちでもいいような気もするのですが、 “pad policy” に <code>method(a, b);</code> と <code>method( a, b );</code> という例が挙げられていて、それならやはり「スペース無し」かなと思うのでデフォルトに従います。</p>
+<h3>Module: MethodParamPad</h3>
+<p>[ 可 ]</p>
+<p>メソッドの宣言 ( ドキュメントには “definition” と書いていますが “declaration” ではないかな？ ) のスペースの有無をチェックします。</p>
+<p>デフォルトではプロパティ allowLineBreaks が false です。 Sun “Java Code Conventions” の “4.2 Wrapping Lines” を厳格に解釈するとそうなります。</p>
+<h3>Module: NoWhitespaceAfter</h3>
+<p>[ 追加 ]</p>
+<p>プロパティ “tokens” に設定された文字列の後の空白が無いことをチェックします。 次のものが設定されています。</p>
+<ul>
+<li>ARRAY_INIT : 配列を初期化する {</li>
+<li>BNOT : ~</li>
+<li>DEC : オペランドの前に付く –</li>
+<li>DOT : .</li>
+<li>INC : オペランドの前に付く ++</li>
+<li>LNOT : !</li>
+<li>UNARY_MINUS : 負の数値を表す +</li>
+<li>UNARY_PLUS : 正の数値を表す -</li>
+</ul>
+<p>デフォルトでは改行は認めます。 ARRAY_INIT 以外は認めたくないけどそのままとします。</p>
+<h3>Module: NoWhitespaceBefore</h3>
+<p>[ 追加 ]</p>
+<p>プロパティ “tokens” に設定された文字列の前の空白が無いことをチェックします。 次のものが設定されています。</p>
+<ul>
+<li>SEMI : ;</li>
+<li>POST_DEC : オペランドの後に付く –</li>
+<li>POST_INC : オペランドの後に付く ++</li>
+</ul>
+<p>デフォルトでは改行も認めません。</p>
+<p>セミコロン ; については Sun “Java Code Conventions” に明記していないように思うのですが、当然だと思うのでデフォルトの設定に従います。</p>
+<h3>Module: OperatorWrap</h3>
+<p>[ 可 ]</p>
+<p>演算子に関する改行のポリシーをチェックします。</p>
+<h3>Module: ParenPad</h3>
+<p>[ 可 ]</p>
+<p>丸括弧に関する空白のポリシーをチェックします。</p>
+<h3>Module: TypecastParenPad</h3>
+<p>[ 可 ]</p>
+<p>キャストに関する空白のポリシーをチェックします。</p>
+<h3>Module: TabCharacter</h3>
+<p>[ 追加 ] !! Sun “Java Code Conventions” とは異なる設定です。</p>
+<p>タブ '\t' が使われていないことをチェックします。</p>
+<p>これはタブの使用の可否を決めていないことを明記している Sun “Java Code Conventions” に反しますが、これまで私自身タブ '\t' で困ったし、ドキュメントで挙げられている理由も理解できるので、 あえて「追加」とします。</p>
+<h3>Module: WhitespaceAfter</h3>
+<p>[ 追加 ]</p>
+<p>プロパティ “tokens” に設定された文字列の後に空白があることをチェックします。 次のものが設定されています。</p>
+<ul>
+<li>COMMA : ,</li>
+<li>SEMI : ;</li>
+<li>TYPECAST : キャスト (…)</li>
+</ul>
+<p>セミコロン ; については Sun “Java Code Conventions” に明記していないように思うのですが、当然だと思うのでデフォルトの設定に従います。 for (Iterator …; …;) は別途設定しているとおり例外となります。</p>
+<h3>Module: WhitespaceAround</h3>
+<p>[ 変更 ]</p>
+<p>プロパティ “tokens” に設定された文字列の前後に空白があることをチェックします。 “tokens” にはデフォルトでたくさんのものが設定されています。</p>
+<p>プロパティ allowEmptyMethods は true にして 空のコンストラクタとメソッドについては <code>method (){}</code> とすることを許可します。</p>
+<h3>Module: ModifierOrder</h3>
+<p>[ 可 ]</p>
+<p>次の順番になっていることをチェックします。</p>
+<ul>
+<li>public</li>
+<li>protected</li>
+<li>private</li>
+<li>abstract</li>
+<li>static</li>
+<li>final</li>
+<li>transient</li>
+<li>volatile</li>
+<li>synchronized</li>
+<li>native</li>
+<li>strictfp</li>
+</ul>
+<h3>Module: RedundantModifier</h3>
+<p>[ 追加 ]</p>
+<p>冗長な修飾子をチェックします。例えばインターフェイスのメソッドに public abstract を付けるのはエラーとなります。</p>
+<p>ドキュメントに書いている理由では納得できなかったのですが、 『プログラミング言語 Java 第 3版』の該当箇所と思われる項に「慣習として…省略」 する旨記述されていたので従うことにします。</p>
+<h3>Module: AvoidNestedBlocks</h3>
+<p>[ 追加 ]</p>
+<p><code>{…}</code> だけの、つまり if 文などを伴わないブロックの無いことをチェックします。 <code>switch</code> 文について、ローカル変数を宣言するために case: 全体を、 break; も含めて <code>{…}</code> で囲むことは許可します。</p>
+<h3>Module: EmptyBlock</h3>
+<p>[ 追加 ]</p>
+<p>空のブロックがないことをチェックします。</p>
+<p>空の catch など通過することがあり得ない場合は assert false など入れておくとして、それ以外に空のブロックが発生することはほとんどなさそうなので従います。</p>
+<h3>Module: LeftCurly</h3>
+<p>[ 可 ]</p>
+<p>ブロック開始の { の位置をチェックします。デフォルトでは行末です。</p>
+<h3>Module: NeedBraces</h3>
+<p>[ 可 ]</p>
+<p>ブロックが {…} で囲まれていることをチェックします。</p>
+<h3>Module: RightCurly</h3>
+<p>[ 可 ]</p>
+<p>else, try, catch ブロック終了の } とそれに続く文の位置をチェックします。</p>
+<h3>Module: AvoidInlineConditionals</h3>
+<p>[ 不可 ]</p>
+<p>ドキュメントには対象となる範囲を詳しく書いていないのですが、 例として 3項演算子 ?: が挙げられています。 事実上これを禁止するもののようです。</p>
+<p>Sun “Java Code Conventions” では、不適切な例を書き換えた適切なものの例としてこの 3項演算子を使ったものを挙げている箇所があります。それをさらに if-else で書き換える ( もちろん適切な形で ) ことも可能ですが、判断がつかないので「不可」とします。</p>
+<p>ドキュメントでは「禁止している会社もある」という書き方をしていますが、周囲の意見や習慣が判断の基準になると思います。</p>
+<h3>Module: DoubleCheckedLocking</h3>
+<p>[ 追加 ]</p>
+<p>アプリケーションの実装で使うことはないだろうと思いますが、この問題の詳細は "Double-Checked Locking is Broken" Declaration を参照してください。</p>
+<p>synchronized の使用は確かに減らしたいですが、そのような背景を知らずに初めて DOL の例を見たときは何したい処理なのか意味わかりませんでした。 そこまでしたいのなら他の言語を使った方がいいのではないでしょうか。 アセンブラならきっと間違いなくできます。</p>
+<h3>Module: EmptyStatement</h3>
+<p>[ 追加 ]</p>
+<p><code>;</code> だけの行がないかチェックします。</p>
+<h3>Module: EqualsHashCode</h3>
+<p>[ 追加 ]</p>
+<p><code>equals()</code> をオーバライドした場合 <code>hashCode()</code> もオーバーライドしていることをチェックします。</p>
+<h3>Module: HiddenField</h3>
+<p>[ 変更 ]</p>
+<p>ローカル変数や引数がそのクラスのメンバ変数と同じ名前になっていないかチェックします。</p>
+<p>プロパティ ignoreSetter を true にして Setter は例外とします。</p>
+<h3>Module: IllegalInstantiation</h3>
+<p>[ 追加 ]</p>
+<p>ファクトリメソッドを使用すべき箇所をチェックします。</p>
+<h3>Module: InnerAssignment</h3>
+<p>[ 追加 ]</p>
+<p>次の例のようなものをチェックします。</p>
+<pre class="highlight"><code>    String s = Integer.toString(i = 2);
+</code></pre>
+
+<h3>Module: MagicNumber</h3>
+<p>[ 変更 ]</p>
+<p>マジックナンバーを禁止します。デフォルトでは -1, 0, 1 の他に 2 を許可していますが、 Sun “Java Code Conventions” の通り禁止とします。</p>
+<h3>Module: MissingSwitchDefault</h3>
+<p>[ 可 ]</p>
+<p>switch 文の default: があることをチェックします。</p>
+<h3>Module: RedundantThrows</h3>
+<p>[ 追加 ]</p>
+<p><code>throws</code> の冗長な例外の定義をチェックします。</p>
+<h3>Module: SimplifyBooleanExpression</h3>
+<p>[ 追加 ]</p>
+<ul>
+<li><code>if (b == true)</code></li>
+<li><code>b || true</code></li>
+<li><code>!false</code></li>
+</ul>
+<p>のようなものがないかチェックします。</p>
+<h3>Module: SimplifyBooleanReturn</h3>
+<p>[ 追加 ]</p>
+<p><code>boolean</code> 値の <code>return</code> について必要以上に複雑な書き方になっていないかチェックします。</p>
+<h3>Module: DesignForExtension</h3>
+<p>[ 不可 ]</p>
+<p>static でも private でも無いメソッドについて、 次のいずれかとなっていることをチェックします。</p>
+<ul>
+<li>abstract</li>
+<li>final</li>
+<li>空の実装</li>
+</ul>
+<p>何かのまちがいでしょう。</p>
+<h3>Module: FinalClass</h3>
+<p>[ 追加 ]</p>
+<p>プライベートなコンストラクタだけを持っているクラスが final であることをチェックします。</p>
+<h3>Module: HideUtilityClassConstructor</h3>
+<p>[ 追加 ]</p>
+<p>スタティックメソッドだけを持っているクラスが public コンストラクタを持たないことをチェックします。デフォルトコンストラクタは次のようにします。</p>
+<pre class="highlight"><code>    protected StringUtils() {
+        throw new UnsupportedOperationException(); // prevents calls from subclass
+    }
+</code></pre>
+
+<h3>Module: InterfaceIsType</h3>
+<p>[ 追加 ]</p>
+<p>インターフェイスが 1個以上のメソッドを持つことをチェックします。</p>
+<p>典拠は “Effective Java” ですね。たぶん。</p>
+<h3>Module: VisibilityModifier</h3>
+<p>[ 可 ]</p>
+<p><code>static final</code> のメンバ変数だけが <code>public</code> であることをチェックします。デフォルトではそれ以外のメンバ変数が <code>private</code> であることをチェックします。</p>
+<h3>Module: ArrayTypeStyle</h3>
+<p>[ 追加 ]</p>
+<p>配列の定義について、C言語のように <code>[]</code> を変数の後に付けないスタイルとなっていることをチェックする。</p>
+<p>プロパティを変更して C言語のようなスタイルにするようチェックすることも可能です。</p>
+<h3>Module: FinalParameters</h3>
+<p>[ 追加 ]</p>
+<p><code>abstract</code> でないメソッドとコンストラクタについて、パラメタが <code>final</code> であることをチェックします。</p>
+<p>プロパティの設定により <code>catch</code> もチェックすることが可能です。</p>
+<h3>Module: GenericIllegalRegexp</h3>
+<p>[ 不可 ]</p>
+<p>次のようなプロパティが設定されています。</p>
+<pre class="highlight"><code>    &lt;property name=&quot;format&quot; value=&quot;\s+$&quot;/&gt;
+    &lt;property name=&quot;message&quot; value=&quot;Line has trailing spaces.&quot;/&gt;
+</code></pre>
+
+<p>行末のスペースは無いに越したことはないのですが、 インテリジェントな開発環境が自動的に削除してくれるならともかく手作業で消すのは大変で、 品質上のメリットと釣り合うとは思えません。</p>
+<h3>Module: TodoComment</h3>
+<p>[ 変更 ]</p>
+<p>コメントに TODO: が残っていないかチェックします。</p>
+<p>これは便利な機能です。せっかくなので <code>":"</code> は外して次の文字列をチェックするようにします。</p>
+<ul>
+<li>TODO</li>
+<li>XXX</li>
+<li>FIXME</li>
+</ul>
+<h3>Module: UpperEll</h3>
+<p>[ 追加 ]</p>
+<p><code>long</code> の定数 ( リテラル？ ) に、小文字の <code>l</code> ではなく <code>L</code> が付与されていることをチェックする。</p>
+<p>Tag: <a href="/t/?tag=java">java</a> <a href="/t/?tag=checkstyle">checkstyle</a></p>
+</div>
+
+</body>
+
+</html>

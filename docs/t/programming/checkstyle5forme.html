@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>自分用 Checkstyle 5.0 暫定対応 - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>自分用 Checkstyle 5.0 暫定対応</h1>
+<p>Update: 2010-01-04</p>
+<p>以前 sun_checks.xml をカスタマイズしたもの ( <a href="checkstyle4me.html">Checkstyle をチェックする</a> 参照 ) を、 Checkstyle 5.0 に対応できるように修正しました。</p>
+<ul>
+<li>PackageHtml を JavadocPackage に変更しました。</li>
+<li>FileLength と FileTabCharacter が Checker の直系の子どもになりました。</li>
+</ul>
+<p>Checkstyle 5.0 ではこれら以外にたくさんのモジュールが変更されていますが、今回はとりあえずここまで。</p>
+<pre class="highlight"><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE module PUBLIC
+&quot;-//Puppy Crawl//DTD Check Configuration 1.2//EN&quot;
+&quot;http://www.puppycrawl.com/dtds/configuration_1_2.dtd&quot;&gt;
+&lt;!--
+ Checkstyle 4.1 の配布物に含まれる設定ファイル sun_checks.xml
+ をカスタマイズしたものです。カスタマイズの内容の詳細は
+ http://www.michinobu.jp/article.php/CheckCheckstyle
+ をご参照ください。
+ Checkstyle 5.0 に対応できるよう修正しました。
+ http://www.michinobu.jp/article.php/CheckCheckstyle5.0
+ Checkstyle については http://checkstyle.sf.net/ を
+ ご参照ください。
+ Checkstyle は GNU LESSER GENERAL PUBLIC LICENSE ( LGPL ) Version 2.1
+ により配布されています。 sun_checks.xml については個別に
+ ライセンスについて記述されていませんが、LGPL が適用されると
+ 思われます。このファイルについてもそのライセンスを引き継ぎます。
+ LGPL についての詳細は http://www.gnu.org/copyleft/lesser.html を
+ ご参照ください。
+ --&gt;
+&lt;module name=&quot;Checker&quot;&gt;
+  &lt;module name=&quot;JavadocPackage&quot;/&gt;
+  &lt;module name=&quot;Translation&quot;/&gt;
+  &lt;module name=&quot;FileLength&quot;/&gt;
+  &lt;module name=&quot;FileTabCharacter&quot;/&gt;
+  &lt;module name=&quot;TreeWalker&quot;&gt;
+    &lt;module name=&quot;JavadocMethod&quot;/&gt;
+    &lt;module name=&quot;JavadocType&quot;/&gt;
+    &lt;module name=&quot;JavadocVariable&quot;/&gt;
+    &lt;module name=&quot;JavadocStyle&quot;&gt;
+     &lt;property name=&quot;checkFirstSentence&quot; value=&quot;false&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;ConstantName&quot;/&gt;
+    &lt;module name=&quot;LocalFinalVariableName&quot;/&gt;
+    &lt;module name=&quot;LocalVariableName&quot;/&gt;
+    &lt;module name=&quot;MemberName&quot;/&gt;
+    &lt;module name=&quot;MethodName&quot;/&gt;
+    &lt;module name=&quot;PackageName&quot;/&gt;
+    &lt;module name=&quot;ParameterName&quot;/&gt;
+    &lt;module name=&quot;StaticVariableName&quot;/&gt;
+    &lt;module name=&quot;TypeName&quot;/&gt;
+    &lt;module name=&quot;AvoidStarImport&quot;&gt;
+     &lt;property name=&quot;excludes&quot; value=&quot;java.io,java.util&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;IllegalImport&quot;/&gt;
+    &lt;module name=&quot;RedundantImport&quot;/&gt;
+    &lt;module name=&quot;UnusedImports&quot;/&gt;
+    &lt;module name=&quot;LineLength&quot;/&gt;
+    &lt;module name=&quot;MethodLength&quot;/&gt;
+    &lt;module name=&quot;ParameterNumber&quot;/&gt;
+    &lt;module name=&quot;EmptyForIteratorPad&quot;/&gt;
+    &lt;module name=&quot;MethodParamPad&quot;/&gt;
+    &lt;module name=&quot;NoWhitespaceAfter&quot;/&gt;
+    &lt;module name=&quot;NoWhitespaceBefore&quot;/&gt;
+    &lt;module name=&quot;OperatorWrap&quot;/&gt;
+    &lt;module name=&quot;ParenPad&quot;/&gt;
+    &lt;module name=&quot;TypecastParenPad&quot;/&gt;
+    &lt;module name=&quot;WhitespaceAfter&quot;/&gt;
+    &lt;module name=&quot;WhitespaceAround&quot;&gt;
+     &lt;property name=&quot;allowEmptyMethods&quot; value=&quot;true&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;ModifierOrder&quot;/&gt;
+    &lt;module name=&quot;RedundantModifier&quot;/&gt;
+    &lt;module name=&quot;AvoidNestedBlocks&quot;/&gt;
+    &lt;module name=&quot;EmptyBlock&quot;/&gt;
+    &lt;module name=&quot;LeftCurly&quot;/&gt;
+    &lt;module name=&quot;NeedBraces&quot;/&gt;
+    &lt;module name=&quot;RightCurly&quot;/&gt;
+    &lt;module name=&quot;DoubleCheckedLocking&quot;/&gt;
+    &lt;module name=&quot;EmptyStatement&quot;/&gt;
+    &lt;module name=&quot;EqualsHashCode&quot;/&gt;
+    &lt;module name=&quot;HiddenField&quot;&gt;
+     &lt;property name=&quot;ignoreSetter&quot; value=&quot;true&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;IllegalInstantiation&quot;/&gt;
+    &lt;module name=&quot;InnerAssignment&quot;/&gt;
+    &lt;module name=&quot;MagicNumber&quot;&gt;
+     &lt;property name=&quot;ignoreNumbers&quot; value=&quot;-1, 0, 1&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;MissingSwitchDefault&quot;/&gt;
+    &lt;module name=&quot;RedundantThrows&quot;/&gt;
+    &lt;module name=&quot;SimplifyBooleanExpression&quot;/&gt;
+    &lt;module name=&quot;SimplifyBooleanReturn&quot;/&gt;
+    &lt;module name=&quot;FinalClass&quot;/&gt;
+    &lt;module name=&quot;HideUtilityClassConstructor&quot;/&gt;
+    &lt;module name=&quot;InterfaceIsType&quot;/&gt;
+    &lt;module name=&quot;VisibilityModifier&quot;/&gt;
+    &lt;module name=&quot;ArrayTypeStyle&quot;/&gt;
+    &lt;module name=&quot;FinalParameters&quot;/&gt;
+    &lt;module name=&quot;TodoComment&quot;&gt;
+     &lt;property name=&quot;format&quot; value=&quot;(TODO|XXX|FIXME)&quot;/&gt;
+    &lt;/module&gt;
+    &lt;module name=&quot;UpperEll&quot;/&gt;
+  &lt;/module&gt;
+&lt;/module&gt;
+</code></pre>
+
+<p>Tag: <a href="/t/?tag=java">java</a> <a href="/t/?tag=checkstyle">checkstyle</a></p>
+</div>
+
+</body>
+
+</html>

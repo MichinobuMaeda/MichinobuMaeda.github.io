@@ -45,7 +45,7 @@ def set_tag_links(html, cat, tags):
         html,
         flags=re.IGNORECASE
     )
-    return html.replace(ret[-1][0], el) if len(ret) else html
+    return html.replace(ret[-1][0], el) if cat and len(ret) else html
 
 
 def render_markdown(path):
@@ -84,7 +84,7 @@ def save_html(tmpl, cat, path, content, sample=False):
         )
     )
 
-    return [title, updated_at, tags]
+    return (title, updated_at, tags)
 
 
 def sort_key_path(el):
@@ -106,7 +106,7 @@ def generate_cat_index(pages, cat, title):
             updated_at = page['updated_at']
             title = page['title']
             path = page['path']
-            html = f'{html}<li>{updated_at} <a href="{path}">{title}</a></li>\n'
+            html = f'{html}<li>{updated_at} <a href="/{path}">{title}</a></li>\n'
     html = f'{html}</ul>\n'
     return html
 
@@ -115,9 +115,9 @@ if __name__ == '__main__':
     src = os.path.dirname(__file__)
     docs = os.path.join(src, '..', 'docs')
     categories = {
-        'l': '工作室',
-        'p': '厚生部',
-        't': '政治局'
+        'l': '厚生部',
+        'p': '政治局',
+        't': '工作室',
     }
     meta_path = os.path.join(docs, 'meta.json')
     ts = datetime.datetime.now(
@@ -143,27 +143,34 @@ if __name__ == '__main__':
         sample=True
     )
 
+    md_path = os.path.join(docs, 'index.md')
+    save_html(
+        tmpl,
+        None,
+        re.sub(r"\.md$", '.html', md_path, flags=re.IGNORECASE),
+        render_markdown(md_path),
+    )
+
     for cat in categories.keys():
         for root, dirs, files in os.walk(os.path.join(docs, cat)):
             for file in files:
                 if re.match(r".*\.md$", file, flags=re.IGNORECASE):
                     md_path = os.path.join(root, file)
-                    save_html(
+                    (title, updated_at, tags) = save_html(
                         tmpl,
                         't',
                         re.sub(r"\.md$", '.html', md_path,
                                flags=re.IGNORECASE),
                         render_markdown(md_path),
-                        sample=True
                     )
 
                     dir = os.path.relpath(root, docs).replace('\\', '/')
                     pages.append({
                         'cat': cat,
                         'path': re.sub(r"\.md$", '.html', f'{dir}/{file}', flags=re.IGNORECASE),
-                        'title': '',
-                        'updated_at': 'unkown',
-                        'tags': [],
+                        'title': title if title else 'unknown',
+                        'updated_at': updated_at,
+                        'tags': tags,
                     })
 
     for cat in categories.keys():
@@ -172,7 +179,6 @@ if __name__ == '__main__':
             't',
             os.path.join(docs, cat, 'index.html'),
             generate_cat_index(pages, cat, categories[cat]),
-            sample=True
         )
 
     pages.sort(key=sort_key_path)

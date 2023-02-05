@@ -94,11 +94,23 @@ ol, ul {
   @apply pl-4
 }
 
-.content a,
-footer a {
-  @apply underline text-cyan-600
+ul.index {
+  @apply pl-0
 }
 
-code:not(.mermaid) {
-  @apply block bg-white border-slate-200 border-2 my-2 rounded-lg
+ul.index li {
+  @apply list-none ml-0
+}
+
+.content a,
+footer a {
+  @apply underline text-cyan-700
+}
+
+code {
+  @apply text-rose-900 px-2 bg-rose-50
+}
+
+pre code:not(.mermaid) {
+  @apply block bg-white text-black border-slate-200 border-2 my-2 rounded-lg
 }

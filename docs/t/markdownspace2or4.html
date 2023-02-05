@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Markdown のインデントはスペース 2個なのか 4個なのか - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Markdown のインデントはスペース 2個なのか 4個なのか</h1>
+<p>Update: 2020-07-11</p>
+<h2>EditorConfig が効かない？</h2>
+<p>先日 JetBrains の開発ツールを買って有料のもののありがたさを感じているところなのですが、
+どうも <a href="https://editorconfig.org/">EditorConfig</a> の</p>
+<pre class="highlight"><code>indent_style = space
+indent_size = 2
+</code></pre>
+
+<p>の設定が反映されないようです。
+[Tab] キーでスペースが 4個入ります。
+こんなところにバグが残っているわけないよな、もしかして、スペース 4個が正しいのかもと調べてみました。</p>
+<p>「正しい」とは言っても GitHub に入れたソースの <code>README.md</code>などはスペース 2個で問題なく表示されます。
+さらに、私が Markdown でインデントを使うのはリストの入れ子くらいなので、
+つまり、実用上は何を持って「正しい」とするのかをあまりこだわってもしょうがないさそうですが、でも気になるから。</p>
+<h2>CommonMark</h2>
+<p>で、そもそもの正統な Markdown って何？ というところからよく知らなかったのですが、これ
+<a href="https://commonmark.org/">CommonMark</a>
+のようですね。</p>
+<p><a href="https://spec.commonmark.org/">CommonMark Spec</a> Version 0.29 (2019-04-06)
+が最新の仕様なのかな。</p>
+<p>まず、
+<a href="https://spec.commonmark.org/0.29/#tabs">2.2Tabs</a>
+には</p>
+<blockquote>
+<p>tabs behave as if they were replaced by spaces with a tab stop of 4 characters.</p>
+</blockquote>
+<p>と書かれています。
+考え方としてはスペース 4個のようです。</p>
+<p>で、かなり長文なので <code>indent</code>
+でざっと検索してみたところインデントでスペースを使う場合は 4個のようです。
+2個でもいいというような記載はなさそうです。
+また、出力結果に影響しないものとしてスペース 3個までのインデントを認めている箇所がいろいろあるので、
+出力に影響がある（つまり意味がある）インデントはスペース 4個にしないと不都合があるかもしれません。</p>
+<h2>GitHub Flavored Markdown</h2>
+<p><a href="https://github.github.com/gfm/">GitHub Flavored Markdown</a>
+の仕様はどうなっているか調べてみたところ、
+GitHub Flavored で追加された項目 ( テーブルとかタスクリストとか )
+以外は CommonMark と同じもののようです。</p>
+<p>GitHub のサイトの表示でスペース 2個を許容しているのは、
+HTML みたいに仕様通りでなくても救っているということなのでしょう。</p>
+<h2>結論</h2>
+<p>JetBrains のツールの挙動に任せるのでいいや。</p>
+<p>Tag: <a href="/t/?tag=markdown">markdown</a></p>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Windows で netsh を簡単に使う - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Windows で netsh を簡単に使う</h1>
+<p>Update: 2009-05-19</p>
+<p>Windows のコマンドラインツール <code>netsh</code> を使うと、ネットワークの設定の変更などが自動化できます。かなり複雑な設定でもできます。便利なのですが、高機能な分、コマンドやパラメータなどの種類が多くてとっつきにくいです。IPアドレスを変えるだけといった簡単な操作を、簡単に実現する手順を説明します。</p>
+<h2>現状の設定を内容を表示する</h2>
+<p><code>netsh</code> でネットワークカードの設定を表示・変更するコンテキストは <code>interface ip</code> です。そのコンテキストで <code>dump</code> コマンドを実行すると、私の PC の場合次のように表示されます。</p>
+<pre class="highlight"><code>C:\&gt; netsh -c &quot;interface ip&quot;
+netsh interface ip\&gt;dump
+
+# ----------------------------------
+# インターフェイス IP 構成
+# ----------------------------------
+pushd interface ip
+
+# &quot;ローカル エリア接続&quot; のインターフェイス IP 構成
+
+set address name=&quot;ローカル エリア接続&quot; source=dhcp
+set dns name=&quot;ローカル エリア接続&quot; source=dhcp register=PRIMARY
+set wins name=&quot;ローカル エリア接続&quot; source=dhcp
+
+popd
+# インターフェイス IP 構成の最後
+</code></pre>
+
+<h2>元の設定に戻すスクリプトを作成する</h2>
+<p>上の出力例の先頭が <code>set</code> の行が設定内容です。この例の場合、すべて DHCP で設定していることがわかります。この先頭 <code>set</code> の行は <code>netsh</code> のコマンドの形式です。つまり、これらの行を保存しておいて、この PC の設定を変えた後、 <code>interface ip</code> コンテキストでそのまま実行すれば、元の設定に戻すことができます。</p>
+<p>【注意】 上の例の “ローカル エリア接続” の部分は PC によって異なります。</p>
+<p>そのためには、まず、次の内容のファイル <code>DHCPを使う.txt</code> を作成します。</p>
+<pre class="highlight"><code>set address name=&quot;ローカル エリア接続&quot; source=dhcp
+set dns name=&quot;ローカル エリア接続&quot; source=dhcp register=PRIMARY
+set wins name=&quot;ローカル エリア接続&quot; source=dhcp
+</code></pre>
+
+<p>このファイルを使って次のオプションを指定して netsh を実行すれば、DHCP を使う設定に変更できます。</p>
+<pre class="highlight"><code>netsh -c &quot;interface ip&quot; -f DHCPを使う.txt
+</code></pre>
+
+<h2>いろいろな設定に変更するためのバッチを作成する</h2>
+<p>DHCP を使わない静的な IP アドレスを設定して <code>dump</code> コマンドを実行すると、私の PC の場合次のように表示されます。</p>
+<pre class="highlight"><code>C:\&gt;netsh interface ip&gt;dump
+
+# ----------------------------------
+# インターフェイス IP 構成
+# ----------------------------------
+pushd interface ip
+
+# &quot;ローカル エリア接続&quot; のインターフェイス IP 構成
+
+set address name=&quot;ローカル エリア接続&quot; source=static addr=192.168.1.101 mask=255.255.255.0
+set address name=&quot;ローカル エリア接続&quot; gateway=192.168.1.1 gwmetric=0
+set dns name=&quot;ローカル エリア接続&quot; source=static addr=none register=PRIMARY
+set wins name=&quot;ローカル エリア接続&quot; source=static addr=none
+
+popd
+# インターフェイス IP 構成の最後
+</code></pre>
+
+<p>DHCP の例と同じように、次の内容のファイル <code>静的アドレスを使う.txt</code> を作成します。</p>
+<pre class="highlight"><code>set address name=&quot;ローカル エリア接続&quot; source=static addr=192.168.1.101 mask=255.255.255.0
+set address name=&quot;ローカル エリア接続&quot; gateway=192.168.1.1 gwmetric=0
+set dns name=&quot;ローカル エリア接続&quot; source=static addr=none register=PRIMARY
+set wins name=&quot;ローカル エリア接続&quot; source=static addr=none
+</code></pre>
+
+<p>DHCP 設定用、静的アドレス用、それぞれのバッチファイルを作成します。</p>
+<p>DHCPを使う.bat</p>
+<pre class="highlight"><code>netsh -c &quot;interface ip&quot; -f DHCPを使う.txt
+ipconfig /ALL
+</code></pre>
+
+<p>静的アドレスを使う.bat</p>
+<pre class="highlight"><code>netsh -c &quot;interface ip&quot; -f 静的アドレスを使う.txt
+ipconfig /ALL
+</code></pre></div>
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Pure-FTPd の Google Compute Engine 向けの設定 - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Pure-FTPd の Google Compute Engine 向けの設定</h1>
+<p>Update: 2019-03-16</p>
+<p>クラウドで FTP サーバを動かす用があって、
+Google Compute Engine に Pure-FTPd を入れてみました。</p>
+<p>なぜ Pure-FTPd を選んだのかというと、
+ProFTPD や vsftpd よりセキュアだとされていて
+( <a href="https://systembash.com/evaluating-ftp-servers-proftpd-vs-pureftpd-vs-vsftpd/">Evaluating FTP Servers: ProFTPd vs PureFTPd vs vsftpd | systemBash</a> ) 、
+chroot した仮想ユーザの設定が楽だからです。
+インストールの基本的な手順は
+<a href="https://www.vultr.com/docs/setup-pure-ftpd-with-tls-on-debian-9">Setup Pure-FTPd With TLS on Debian 9</a>
+を参考にしました。</p>
+<p>Google Cloud や AWS などのクラウド環境の場合、以下の追加の設定が必要です。</p>
+<h2>Firewall のポートの穴あけ</h2>
+<p>Port 21 の他、 PassivePortRange に設定したポートの穴を開ける必要があります。
+Passive ではないモードも使うのなら 20 も必要かな。
+詳しくは、それぞれのクラウドサービスのマニュアルを見てください。</p>
+<h2>External IP</h2>
+<p>Google Compute Engine の場合、
+<code>sudo ifconfig</code> とかしたときに表示される Internal IP と、
+外から接続するときに使う External IP が異なります。
+Passive 接続する FTP クライアントにその External IP
+を明示的に教えてあげないとダメな場合があります。
+そのあたりの動作は FTP クライアントによって違うようで、
+明示的に教えてあげなくても、最初に接続した External IP を使うクライアントもあります。
+そうでない場合、どうも Internal IP に接続しようとしてしまうようです。</p>
+<p>設定は簡単で、
+<code>/etc/pure-ftpd/conf/ForcePassiveIP</code>
+というファイルを無ければ追加して External IP を記載すればいいです。
+設定の反映のために <code>sudo service pure-ftpd restart</code> してください。
+( <a href="http://getasysadmin.com/2012/12/enable-passive-mode-for-pure-ftpd-on-aws/">Enable passive mode for Pure-ftpd on AWS</a> )</p>
+<p>Tag: <a href="/t/?tag=pure-ftpd">pure-ftpd</a> <a href="/t/?tag=cloud">cloud</a></p>
+</div>
+
+</body>
+
+</html>

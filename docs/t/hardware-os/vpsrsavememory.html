@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>VPS でメモリを節約する - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>VPS でメモリを節約する</h1>
+<p>Update: 2009-09-26</p>
+<p>このサーバ ( 記事を書いた当初のサーバ ) は VPS ( Virtual Private Server ) を利用しているのですが、ある一つのメモリのパラメータだけが不足気味でした。それを、各プロセスの設定の変更でかなり改善できました。</p>
+<p>この VPS は Parallels の製品を使っています。最初はプロバイダが提供する最小単位を使っていたのですが、メールサーバ、DBサーバ、LDAPサーバなどを入れた後、 <code>yum install</code> で複数のパッケージをインストールするだけでハングするようになってしまいました。それで今は 2個分に拡張しています。それでもまだときどき <code>privvmpages</code> についてアラートが出ていました。それを本気出してチューニングしてみようと思ったわけです。ちなみに、チューニングの前も後もあまり変わらない全体の状況は…</p>
+<pre class="highlight"><code># free
+ total       used       free     shared    buffers     cached
+Mem:        368640      77668     290972          0          0          0
+-/+ buffers/cache:      77668     290972
+Swap:            0          0          0
+</code></pre>
+
+<p>物理メモリはかなり余っています。 Swap が無いですが、それは VPS だから。</p>
+<h2>httpd の調整はあまり効果無し</h2>
+<p><code>ps -ef</code> してみるとたくさん表示されるのが <code>httpd</code> と <code>saslauthd</code> です。<code>saslauthd</code> のメモリの消費量は少ないようなので、 <code>httpd</code> のプロセスの数を減らしたり、不要なモジュールを読み込まないようにしたのですが、あまり効果がありません。 DSO ( Dynamic Shared Object ) によるメモリの節約が効いているのかな？</p>
+<h2>本当にメモリを浪費しているプロセスは?</h2>
+<p>次に <code>ps aux</code> とか <code>grep Vm /proc/*/status</code> とかやってみます。 <code>privvmpages</code> に関係あるのは <code>VmData</code> かなぁ。 <code>grep VmData /proc/*/status</code> で大食いのプロセスを探します。どうも MySQL と OpenLDAP のようです。</p>
+<h2>OpenLDAP のデータキャッシュを減らす</h2>
+<p>OpenLDAP のバックエンドには BDB を使っています。「そういえば <code>/var/lib/ldap/DB_CONFIG</code> はインストールした後デフォルトのまま放置していたなぁ」と見てみると、大きなキャッシュサイズを設定しています。LDAP のエントリの数は両手で足りるくらいしかないので、これをおもいっきり小さくして、 <code>slapd</code> を再起動します。 Parallels の管理画面の Resources - Memory - Secondary System Parameters - privvmpages を見ると効果有りです。</p>
+<h2>MySQL は MyISAM しか使っていないので...</h2>
+<p>MySQL のメモリ使用量は起動オプションで調整できます。つまり、 <code>/etc/init.d/mysqld</code> を編集すればいいわけです。</p>
+<p>このサイトの場合 <code>–key_buffer_size</code> と <code>–sort_buffer_size</code> は小さな値でだじょうぶです。それぞれの意味については MySQL のドキュメントの “7.5.3. Tuning Server Parameters” などを見てください。これらを変更して再起動するとばっちり効果有りです。</p>
+<p>他に何か無いかなぁと探していると <a href="http://www.lowendbox.com/blog/reducing-mysql-memory-usage-for-low-end-boxes/">Reducing MySQL Memory Usage for Low End Boxes</a> という記事を見つけました。このサーバでは MyISAMしか使っていません。起動オプションに <code>–skip-bdb</code> と <code>–skip-innodb</code> を追加して再起動します。めちゃめちゃ効果有りです。</p>
+<p>ここまでやった結果は次の通り。 LDAP がなければ VPS １部屋分の最小単位でもだいじょうぶかな。</p>
+<pre class="highlight"><code>Parameter   Current Use Soft Limit Hard Limit Units
+privvmpages      52,466    125,000    150,000 4KB pages
+</code></pre></div>
+
+</body>
+
+</html>

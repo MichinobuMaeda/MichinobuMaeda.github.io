@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Eclipse で Python - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Eclipse で Python</h1>
+<p>Update: unknown</p>
+<p>Google App Engine の Python の方、やってみようと思って、 Mac で使えるPython のエディタを探してみました。</p>
+<p><a href="http://wiki.python.org/moin/PythonEditors"><a href="http://wiki.python.org/moin/PythonEditors">http://wiki.python.org/moin/PythonEditors</a></a></p>
+<p>いろいろあるものです。結局、使い慣れた Eclipse で、プラグイン PyDev を使うことにしました。</p>
+<p>プラグインはお約束の方法で入れれば OK 。 Mac OS X 用の Google App Engine SDK も入れます。 MacBook のターミナルで <code>python --version</code> とやってみると微妙に新しいバージョンだったので、 PyDev も SDK も <code>/usr/bin/python2.5</code> を使うように設定します。</p>
+<p>GoogleAppEngineLauncher で新しいアプリケーションを作成すると、あっさりできてしましました。実行すると "Hello World!" 表示します。こんなに簡単でいいのかなってくらい簡単です。 PyDev が入った Eclipse では、プロジェクトの新規作成で "PyDev Google App Engine Project" を選択できるので、試してみます。できあがったプロジェクトは空っぽです。 GoogleAppEngineLauncher で生成されたファイルを移動して、ディレクトリの位置を入れ替えて、 Eclipse のプロジェクトの位置と、 GoogleAppEngineLauncher が認識するアプリケーションの位置が同じになるようにします。</p>
+<p>GoogleAppEngineLauncher で、管理用のコンソールを開いたり、デプロイしたりできるようです。これだけあれば、普通の開発で困ることはなさそうです。</p>
+<p>で、気になるのが、プロジェクト作成時に自動生成された <code>src</code> サブフォルダ。これはどう使うんだろう？ Python の開発の全体像を理解していないのでよくわかりません。</p>
+<p>なにはともあれ設定など確認してみようと <code>app.yaml</code> を開くとシステムのデフォルトのエディタが起動してしまいました。これはあまり好みではないので、 YEdit というプラグインを追加しました。機能としては、色つけてくれるくらいなのかなぁ。その色を好みの感じに変えました。</p></div>
+
+</body>
+
+</html>

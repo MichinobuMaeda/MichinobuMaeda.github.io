@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>PWA のアップデート - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>PWA のアップデート</h1>
+<p>Update: 2021-11-07</p>
+<p>PWA のアプリをアップデートする単純で確実な仕組みがなかなか見つからなくて困っていました。
+以前 <a href="https://quasar.dev/">Quasar</a> で作ったアプリはキャッシュを削除してリロードするのでよかったようなのですが、
+<code>@vue/cli-plugin-pwa</code> で作ったものは Android の場合アプリやブラウザを終了して再起動するまでUIが更新されない場合があるようです。</p>
+<pre class="highlight"><code>$ npx create-react-app my-app --template cra-template-pwa
+</code></pre>
+
+<p>で作ったアプリも同様です。</p>
+<p><a href="https://stackoverflow.com/questions/45467842/how-to-clear-cache-of-service-worker">How to clear cache of service worker?</a>
+で <code>registration.unregister()</code> している例は試したことがないので</p>
+<p>上記の React の <code>cra-template-pwa</code> で作成した <code>App.js</code> を</p>
+<pre class="highlight"><code>import React from 'react';
+import './App.css';
+
+const updateApp = () =&gt; navigator.serviceWorker.ready
+  .then((registration) =&gt; registration.unregister())
+  .then(() =&gt; { window.location.reload(); });
+
+function App() {
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+      &lt;header className=&quot;App-header&quot;&gt;
+        &lt;p&gt;Ver.5&lt;/p&gt;
+        &lt;p&gt;&lt;button onClick={updateApp}&gt;Update&lt;/button&gt;&lt;/p&gt;
+      &lt;/header&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;
+</code></pre>
+
+<p>としたものを Firebase hosting に置いて試してみました。</p>
+<p>Android はこれでよさそうです。</p>
+<p>Tag: <a href="/t/?tag=pwa">pwa</a> <a href="/t/?tag=nodejs">nodejs</a> <a href="/t/?tag=react">react</a></p>
+</div>
+
+</body>
+
+</html>

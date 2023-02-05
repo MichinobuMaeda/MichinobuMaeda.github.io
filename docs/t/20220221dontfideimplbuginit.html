@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>結合テストでコーディングミスを見つけてはだめ - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>結合テストでコーディングミスを見つけてはだめ</h1>
+<p>Update: 2022-02-21</p>
+<p>※ 以下の文章では「設計」と「仕様」、それから「プログラム」と「コード」と「実装」（会社や人によっては「製造」）、さらに「フェーズ」と「工程」といった用語を特に区別せずに用いています。用語が違うとそればかりが気になるのか後の話を聞いてくれない人がいるのですが、特定の方法論や会社等の組織の基準を前提に書いたものではありません。</p>
+<p>ウォーター・フォールとか V-model といったオーソドックスなプロセスで開発している場合も、インクリメンタルだとかアジャイルだとかのプロセスで開発している場合も、単体テスト ( Unit test ) より後の工程でコーディング・ミスが見つかるのは良くありません。コーディング・ミスはコード・レビューと単体テストで見つけるものです。</p>
+<p>比較的単純な V-model の概念は、この Wikipedia 日本語版から借りてきたイメージのようになります。</p>
+<p><img alt="V-model" src="20220221VModelConcept.png" /></p>
+<p><a href="https://ja.wikipedia.org/wiki/V%E3%83%A2%E3%83%87%E3%83%AB#/media/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:VModelConcept.png">https://ja.wikipedia.org/wiki/V%E3%83%A2%E3%83%87%E3%83%AB#/media/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:VModelConcept.png</a></p>
+<h2>単体テストでやること</h2>
+<p>会社やプロジェクトによって工程の分け方や名称が異なるでしょうし、テスト・ファーストであれば設計の作業の一部はテスト・プログラムの作成になります。その辺は自分がやっていることにあわせて読み替えてください。とはいえ、たいていの場合、「単体テスト」もしくは "Unit test" と呼ばれる工程があるでしょう。そこで、</p>
+<ul>
+<li>一番下のレベルの仕様（上記の図では詳細設計）の通りに実装していること。</li>
+<li>個々の設計書では定義されない共通のルール（エラー処理やログ出力など）に従って実装していること。</li>
+</ul>
+<p>といったことをテストします。上記の図では「詳細設計」と「単体テスト」の間に矢印が引かれていますが、これは、詳細設計の通りにコーディングされていることを単体テストで確認する、という意味です。</p>
+<p>当然のことながら、プログラムのすべての行をテストすること ( coverage ) が求められます。単に「すべての行」ではなく、分岐やループの扱いなどを細かく決めている場合もあるでしょう。いずれにしても本番と同じような環境とデータでは実施不可能なテスト項目がありますから、単体テストのためのデータや、ドライバ・スタブ・モック等を使う必要があります。したがって、この工程で摘出すべき問題を、後の工程に残してはいけません。</p>
+<h2>結合テストでやること</h2>
+<p>では、単体テストの後の工程の結合テストにどのような問題が摘出されないまま残ってよいのかというと、それは詳細設計の問題です。上記の図では「機能設計」と「結合テスト」の間に矢印が引かれています。これは、機能設計で定義した仕様を満たす詳細設計になっていることを結合テストで確認する、という意味です。</p>
+<p>したがって、結合テストで摘出すべき問題は、「機能設計で定義した仕様を満たす詳細設計になっていないこと」です。「詳細設計の通りにコーディングされていないこと」を結合テストで見つけてはいけません。それは単体テストで済ませていなければならないことです。その前に、詳細設計の通りにコーディングされていない状態では、結合テストをしても「機能設計で定義した仕様を満たす詳細設計になっていないこと」のテストができません。詳細設計で定義された内容とは違うコードでテストしてしまうことになるからです。</p>
+<p>また、結合テストで見つかった問題の対処のためには設計書とコードの両方の修正が必要なはずです。</p>
+<p>「修正が必要なのは設計書だけです」という場合、コードが正しいのは偶然か、そうでなければ設計担当者がよくわかってないけどでコーディング担当者が本当の仕様を知っているという古いシステムにありがちな状態なのか、どちらかでしょう。</p>
+<p>「修正が必要なのはコードだけでした」という場合、単体テストに抜けがあったのか、詳細設計に必要な処理が書かれていなくてさらにこの対処の後も欠落したままなのかの、どちらかでしょう。</p>
+<p>どちらの場合でも、確実に言えることは、一番下のレベルの仕様（上記の図の場合、詳細設計）とコードが合っていません。そして、それは単体テスト ( もしくはその前のコード・レビュー ) で見つけなければならないことなのに、見つけられていません。</p>
+<h2>コーディング・ミスが結合テストで見つかったら</h2>
+<p>コーディング・ミスが結合テストで見つかった場合、そのコードの問題そのものだけでなく、開発のプロセスの問題を解決しなければなりません。「修正して、修正の影響範囲をテストし直しました」だけではだめです。たぶん、次のようなことを見直す必要があるだろうと思います。問題の根源がプロセスの定義や担当者のスキルだということになれば、関係するところを点検し直すことにもなります。</p>
+<ul>
+<li>単体テストの実施方法や記録に問題はなかったのか？</li>
+<li>単体テストで摘出した問題の修正の確認に問題はなかったのか？</li>
+<li>単体テストの評価項目は十分だったのか？</li>
+<li>単体テストの評価項目の作成の基準は適切だったのか？</li>
+<li>コード・レビューは基準通りに実施されたのか？</li>
+<li>コード・レビューで摘出した問題の修正の確認に問題はなかったのか？</li>
+<li>コード・レビューの基準が適切だったのか？</li>
+<li>コーディングの基準は適切だったのか？</li>
+<li>担当者のスキルは十分だったのか？</li>
+</ul>
+<p>Tag: <a href="/t/?tag=process">process</a> <a href="/t/?tag=v-model">v-model</a> <a href="/t/?tag=test">test</a></p>
+</div>
+
+</body>
+
+</html>

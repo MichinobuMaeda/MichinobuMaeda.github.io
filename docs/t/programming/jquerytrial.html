@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><p>整理中：jQuery 日記</p>
+<h2>2010-07-03 ちょいと試す</h2>
+<p>参考にした本は「JavaScript + jQuery ベーシックマスター」 ISBN978-4-7678-0956-4 です。何はともあれ <a href="http://jquery.com/"><a href="http://jquery.com/">http://jquery.com/</a></a> から jquery-1.4.2.min.js をダウンロードして試してみます。練習の課題にするのは、以前 prototype.js で作った 郵便番号データを利用する機能 と同じようなもの。要素のイベントを設定したり、受信した JSON データで選択リストを作ってみたりします。とりあえず、都道府県のリストだけ生成する簡単なプログラムを。素の機能の使い勝手を比べてみたかんじ prototype.js より簡単そうです。</p>
+<p>今日のところはとりあえずこんな感じ。</p>
+<p><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"</code></p>
+<p><code>"http://www.w3.org/TR/html4/loose.dtd"&gt;</code></p>
+<p><code>&lt;html&gt;</code></p>
+<p><code>&lt;head&gt;</code></p>
+<p><code>&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;</code></p>
+<p><code>&lt;title&gt;郵便番号JSON細切れデータを jQury で利用するサンプル&lt;/title&gt;</code></p>
+<p><code>&lt;link rel="stylesheet" type="text/css" href="jquery-json.css" /&gt;</code></p>
+<p><code>&lt;script type="text/javascript" charset="UTF-8" src="jqueryui/js/jquery-1.4.2.min.js"&gt;&lt;/script&gt;</code></p>
+<p><code>&lt;script type="text/javascript" charset="UTF-8" src="jquery-json.js"&gt;&lt;/script&gt;</code></p>
+<p><code>&lt;/head&gt;</code></p>
+<p><code>&lt;body&gt;</code></p>
+<p><code>&lt;div id="content"&gt;</code></p>
+<p><code>&lt;div id="header"&gt;</code></p>
+<p><code>&lt;h1&gt;&lt;/h1&gt;</code></p>
+<p><code>&lt;div id="breadcrumb"&gt;&lt;a href="/"&gt;Top&lt;/a&gt; » &lt;a href="./"&gt;サンプル&lt;/a&gt;&lt;/div&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div id="body"&gt;</code></p>
+<p><code>&lt;form id="main"&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;郵便番号&lt;/span&gt;</code></p>
+<p><code>&lt;input type="text" id="zip1" name="zip1" value="" maxlength="3" /&gt;</code></p>
+<p><code>-</code></p>
+<p><code>&lt;input type="text" id="zip2" name="zip2" value="" maxlength="4" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;都道府県&lt;/span&gt;</code></p>
+<p><code>&lt;input type="text" id="pref" name="pref" value="" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;市区町村&lt;/span&gt;</code></p>
+<p><code>&lt;input type="text" id="city" name="city" value="" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;住所１&lt;/span&gt;</code></p>
+<p><code>&lt;input type="text" id="add1" name="add1" value="" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;住所２&lt;/span&gt;</code></p>
+<p><code>&lt;input type="text" id="add2" name="add2" value="" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;事業所&lt;/span&gt;</code></p>
+<p><code>&lt;input type="text" id="corp" name="corp" value="" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div&gt;</code></p>
+<p><code>&lt;span class="title"&gt;&amp;nbsp;&lt;/span&gt;</code></p>
+<p><code>&lt;input type="reset" id="reset" name="reset" value="リセット" /&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;/form&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;div id="footer"&gt;</code></p>
+<p><code>&lt;div id="copyright"&gt;Copyright &lt;span id="crYear"&gt;&lt;/span&gt; Michinobu Maeda.&lt;/div&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;/div&gt;</code></p>
+<p><code>&lt;/body&gt;</code></p>
+<p><code>&lt;/html&gt;</code></p>
+<p><code>$(function () {</code></p>
+<p><code>// h1 には title と同じ内容を設定する。</code></p>
+<p><code>$('h1').append($('title').text());</code></p>
+<p><code>// Copyright の年を計算して設定する。</code></p>
+<p><code>var crYear = 2010;</code></p>
+<p><code>var crNow = new Date().getYear() + 1900;</code></p>
+<p><code>if (crYear == (crNow - 1)) {</code></p>
+<p><code>crYear += ',' + crNow;</code></p>
+<p><code>} else if (crYear &lt; crNow) {</code></p>
+<p><code>crYear += '-' + crNow;</code></p>
+<p><code>}</code></p>
+<p><code>$('#crYear').append(crYear);</code></p>
+<p><code>// 都道府県の選択リストを作成する。</code></p>
+<p><code>$.ajax ({</code></p>
+<p><code>url: '/data/json/pref/prefs.json',</code></p>
+<p><code>success: function(data) {</code></p>
+<p><code>$('#pref').replaceWith(</code></p>
+<p><code>'&lt;select id="pref" name="pref"&gt;' +</code></p>
+<p><code>'&lt;option value="-" selected&gt;-- 選択してください --&lt;/option&gt;' +</code></p>
+<p><code>'&lt;/select&gt;');</code></p>
+<p><code>for (i = 0; i &lt; data.length; ++i) {</code></p>
+<p><code>$('#pref').append(</code></p>
+<p><code>'&lt;option value="' + data[i].x0401 + '"&gt;' + data[i].name + '&lt;/option&gt;');</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>});</code></p>
+<p><code>});</code></p>
+<h2>2010-07-05 jQuery UI を入れてみる</h2>
+<p>あうちっ！ お勉強中の JavaScript のソース消しちゃったよ。でもあわてない、こんなときのために自分一人のために立てた Subversion のリポジトリ（汗）から復旧！ Eclipse のローカルヒストリーからさらに最新に復旧！ 安心安心。</p>
+<p>さてと、まず <a href="http://jqueryui.com/"><a href="http://jqueryui.com/">http://jqueryui.com/</a></a> から一式ダウンロードします。なにやらいろいろオプションが選べるようなのですが、デフォルトのままダウンロード。自分の作業環境の適当なところにおいて、参考書に書いてある順番で CSS と JavaScript を読み込むよう HTML のソースを変更します。</p>
+<p>すると、自分が作ったページがいきなりかっこよくなるのか？と思ったけど、全く変わりません。既存の CSS の設定には影響しないようになっているようです。</p>
+<p>development-bundle ディレクトリは、、、よくわからないけどとりあえず消しておこう。</p>
+<h2>2010-07-07 先頭のテキストボックスにフォーカスをあてる</h2>
+<p><a href="http://www.devcurry.com/2009/09/set-focus-to-first-textbox-on-page.html">Set Focus to the First TextBox on a Page using jQuery</a> によると</p>
+<p><code>// 先頭のテキストボックスにフォーカスをあてる。</code></p>
+<p><code>$("input[type='text']:enabled:first").focus();</code></p>
+<p>だそうな。こりゃいいや。</p>
+<h2>2010-07-07 フォーカス On/Off で背景色を変える</h2>
+<p>まとめて複数の要素を指定できるのがうれしい。</p>
+<p><code>$('#zip1, #zip2, #pref, #city, #add1, #add2, #corp').focus(function() {</code></p>
+<p><code>$(this).css('background', '#ffa');</code></p>
+<p><code>});</code></p>
+<p><code>$('#zip1, #zip2, #pref, #city, #add1, #add2, #corp').blur(function() {</code></p>
+<p><code>$(this).css('background', '#fff');</code></p>
+<p><code>});</code></p>
+<h2>2010-07-11 IE でうまくいかないことが</h2>
+<p>この部分が IE ではうまく動いてくれませんでした。どうしても JavaScript にさせたい処理ではないので削除しました。</p>
+<p><code>// h1 には title と同じ内容を設定する。</code></p>
+<p><code>$('h1').append($('title').text());</code></p>
+<p>それから、次のような処理もエラーになりました。</p>
+<p><code>$('#addListDialog').dialog('option', 'width', window.innerWidth * 0.9);</code></p>
+<p>Safari, FireFox, Opera, Chrome すべてだいじょうぶなんだけどなぁ。</p>
+<p>あと、キーイベントの処理で微妙な違いが。これは後で解決できたとしても、文章にするのは難しいかもしれないなぁ。</p>
+<h2>2010-07-11 最初のサンプル公開</h2>
+<p>郵便番号を 7桁全部入力したら、その候補を探しに行って、あれば選択リストを表示する、というサンプルを公開しました。</p>
+<p><a href="http://www.zippyzip.jp/sample/jquery-json.html">http://www.zippyzip.jp/sample/jquery-json.html</a> ( 閉鎖 )</p>
+<p>使用しているデータについては <a href="http://www.zippyzip.jp/">http://www.zippyzip.jp/</a> ( 閉鎖 ) の説明を見てください。私が趣味で作成している独自のものです。日本郵便が配布しているデータを基に、毎月自動で更新しています。</p>
+<h3>2011-01-24 追記</h3>
+<p>サンプルはこちらに移動しました。</p>
+<p><a href="http://code.google.com/p/zippyzipjp/"><a href="http://code.google.com/p/zippyzipjp/">http://code.google.com/p/zippyzipjp/</a></a></p></div>
+
+</body>
+
+</html>

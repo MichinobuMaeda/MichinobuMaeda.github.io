@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Rails 4.0 beta を Ubuntu 12.04 に入れてみた - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Rails 4.0 beta を Ubuntu 12.04 に入れてみた</h1>
+<p>Update: 2012-12-16</p>
+<p>Rails 未経験の私がひょんなことで Rails 4.0 beta を使ってみることになりました。職場の iMac に続いて自分の MacBook 中の VM で動いている Ubuntu に入れた記録です。MacBook にそのまま入れなかったのは、あまりきれいな環境ではなくて依存するものなど把握するにはよくない状態だからです。ベースにしたのは <a href="https://sites.google.com/site/michinobumaeda/database/couchd-jpcommu">CouchDBを始めてみようと思ったのですが。。。</a> を入れた環境です。Ruby は入っていません。</p>
+<ul>
+<li>Create a Rails 4.0 Beta Project <a href="http://www.drurly.com/blog/2012/09/08/create-a-rails-4-project"><a href="http://www.drurly.com/blog/2012/09/08/create-a-rails-4-project">http://www.drurly.com/blog/2012/09/08/create-a-rails-4-project</a></a></li>
+<li>Installing rails 4.0.0 beta <a href="https://gist.github.com/2515536"><a href="https://gist.github.com/2515536">https://gist.github.com/2515536</a></a></li>
+</ul>
+<p>を参考にしました。</p>
+<p>まず RVM を。</p>
+<pre class="highlight"><code>$ curl -L https://get.rvm.io | bash -s stable
+$ . .bashrc
+$ rvm --version
+$ rvm requirements
+$ sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev ibssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake ibtool bison subversion pkg-config
+$ sudo apt-get install nodejs
+$ rvm install 1.9.3 --default
+$ ruby --version
+$ rvm gemset create rails-4.0-beta
+$ bash --login
+$ rvm 1.9.3@rails-4.0-beta
+</code></pre>
+
+<p>次に Rails の最新を github からとってきてお勉強用の blog アプリを作ろうとしましたが、いろいろ足りないと言われます。</p>
+<pre class="highlight"><code>$ mkdir github
+$ cd github
+$ git clone https://github.com/rails/rails.git
+$ ruby rails/railties/bin/rails new blog --dev
+</code></pre>
+
+<p>足りないものを入れて、こんな入れ方でいいのかな？ 再実行。</p>
+<pre class="highlight"><code>$ gem install thread_safe
+$ gem install i18n
+$ gem install thor
+$ ruby rails/railties/bin/rails new blog --dev
+$ cd blog
+$ vi Gemfile
+</code></pre>
+
+<p>結果おーらいということで、 Gemfile をこんな感じに。</p>
+<pre class="highlight"><code>source https://rubygems.org
+
+gem 'rails', path: '/home/michinobu/github/rails'
+gem 'journey', :git =&gt; 'git://github.com/rails/journey.git'
+gem 'arel'
+gem 'activerecord-deprecated_finders', git: 'git://github.com/rails/activerecord-deprecated_finders.git'
+
+gem 'sqlite3'
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sprockets-rails'
+  gem 'sass-rails', :git =&gt; 'git://github.com/rails/sass-rails.git'
+  gem 'coffee-rails', :git =&gt; 'git://github.com/rails/coffee-rails.git'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', platforms: :ruby
+
+  gem 'uglifier', '1.0.3'
+end
+
+gem jquery-rails
+
+# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+gem 'turbolinks'
+
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~&gt; 3.0.0'
+
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+# gem 'jbuilder'
+
+# Use unicorn as the app server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano', group: :development
+
+# To use debugger
+# gem 'debugger'
+</code></pre>
+
+<p>動かしてみます。</p>
+<pre class="highlight"><code>$ bundle install --binstubs
+$ bin/rails -v
+$ bin/rails s
+</code></pre>
+
+<p>ブラウザで表示してみます。</p>
+<pre class="highlight"><code>$ firefox http://127.0.0.1:3000/ &amp;
+</code></pre>
+
+<p>ガイドの HTML を生成します。</p>
+<pre class="highlight"><code>$ cd ../rails/guides
+$ rake guides:generate:html
+</code></pre>
+
+<p>またいろいろ足りないと言われるので、こんな入れ方でいいのかな？と思いつつ入れて、何はともあれできました。</p>
+<pre class="highlight"><code>$ gem install redcarpet
+$ gem install nokogiri
+$ gem install thread_safe
+$ gem install i18n
+$ gem install rack
+$ gem install erubis
+$ rake guides:generate:html
+$ firefox output/index.html &amp;
+</code></pre>
+
+<p>で、生成されたガイドの "Getting Started with Rails" なのですが、 <a href="http://guides.rubyonrails.org/getting_started.html">http://guides.rubyonrails.org/getting_started.html</a> とは違うもので、 <a href="http://edgeguides.rubyonrails.org/getting_started.html">http://edgeguides.rubyonrails.org/getting_started.html</a> に近いもののようなのですが、どうも Strong Parameters 対応していないような。。。</p>
+<h2>追記：</h2>
+<p>新しいページを作るほどの内容ではないので、続きをここに。</p>
+<p>この手順でインストールした場合、サーバは WEBrick になります。ところが、その WEBrick のログ出力でトラブって <code>*.css</code> や <code>*.js</code> の一部が読み込めないという困ったことになっていました。 WEBrick のソースを見ると確かにあまり凝った作りではないなあ。。。というわけで、職場で使っている Phusion Passenger を入れることにしました。</p>
+<p>インストールはこの一行だけ。</p>
+<pre class="highlight"><code>$ gem install passenger
+</code></pre>
+
+<p>ガイドに従って次のように起動しようとすると、パスの通っているところにはいません。</p>
+<pre class="highlight"><code>$ sudo passenger start -p 80
+</code></pre>
+
+<p>探してみると <code>~/.rvm/gems/ruby-1.9.3-p327@rails-4.0-beta/bin/passenger</code> にいます。ポート 80 使う必要もないし、次のようにして起動しました。</p>
+<pre class="highlight"><code>$ ~/.rvm/gems/ruby-1.9.3-p327@rails-4.0-beta/bin/passenger start -p 3000
+</code></pre>
+
+<p>すると、なにやらいろいろダウンロードしてセットアップしている様子です。 nginx-1.2.4.tar.gz とかも入れようとしている模様。それらの処理が終わると、そのままサービスを始めました。</p>
+<pre class="highlight"><code>Processing by WelcomeController#index as HTML
+Can't verify CSRF token authenticity
+</code></pre>
+
+<p>以外にはエラーは出ていないようです。</p></div>
+
+</body>
+
+</html>

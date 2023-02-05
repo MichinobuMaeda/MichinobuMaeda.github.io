@@ -661,14 +661,32 @@ ol, ul {
   padding-left: 1rem;
 }
 
+ul.index {
+  padding-left: 0px;
+}
+
+ul.index li {
+  margin-left: 0px;
+  list-style-type: none;
+}
+
 .content a,
 footer a {
   --tw-text-opacity: 1;
-  color: rgb(8 145 178 / var(--tw-text-opacity));
+  color: rgb(14 116 144 / var(--tw-text-opacity));
   text-decoration-line: underline;
 }
 
-code:not(.mermaid) {
+code {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 241 242 / var(--tw-bg-opacity));
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(136 19 55 / var(--tw-text-opacity));
+}
+
+pre code:not(.mermaid) {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   display: block;
@@ -678,4 +696,6 @@ code:not(.mermaid) {
   border-color: rgb(226 232 240 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }

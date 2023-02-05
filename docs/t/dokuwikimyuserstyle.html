@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>このサイトのレイアウトを変更してみる - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>このサイトのレイアウトを変更してみる</h1>
+<p>Update: 2020-07-14</p>
+<p>追記: 現在、当サイトは DokuWiki を使っていません。</p>
+<p>以前、別のサイトのカスタマイズをした時のことを <a href="dokuwikiuserstyle.html">DokuWiki のレイアウトを正しくカスタマイズする</a> に残していたのですが今度は自分のサイトでやってみます。</p>
+<p>まず、ロゴとアイコンは <code>logo.png</code> と <code>favicon.ico</code> のファイル名で名前空間無し ( ルート ) にアップロードしさえすれば自動で置き換わります。</p>
+<p>アプリのテーマカラー ( 例えば Android スマホで表示した場合のブラウザの上部の色 ) は管理メニュー「テンプレートのスタイル設定」で設定するか、 <code>lib/tpl/テンプレート名/style.ini</code> を直接編集します。</p>
+<p>その他、管理者メニュー「サイト設定」で変更できることはそこでやってしまいます。</p>
+<p>それ以外は <code>conf/userstyle.css</code> かまたは <code>conf/userstyle.less</code> でどうにかします。それでどうにかならないようなら自分でテンプレートを作るしかないでしょう。</p>
+<p>スタイルを設定したい箇所ののクラスや ID はブラウザの開発者機能で調べます。 Chrome はこんな感じ。 Firefox も同様です。左上端のボタンをクリックした後で、ページ上の調べたい箇所をクリックすると、該当する HTML要素とそこに効いている CSS の定義を表示してくれます。 Wiki や Blog で自動出力されたコンテンツの場合、これ無しで人間がコードを読んで解析するのはとてもじゃないけど無理です。</p>
+<p><img alt="" src="chrome-dev-tool-202007.ping.png" /></p>
+<p>作成した CSS は以下のうようになります。游ゴシックは Windows で薄く表示されるので、少し太めにしました。それから、検索以外のサイトツールは非表示に。</p>
+<pre class="highlight"><code>body {
+  font-family: &quot;Montserrat&quot;,&quot;游ゴシック&quot;,YuGothic,&quot;ヒラギノ角ゴ ProN W3&quot;,&quot;Hiragino Kaku Gothic ProN&quot;,&quot;メイリオ&quot;,Meiryo,sans-serif;
+  font-size: 110%;
+  font-weight: 500;
+  background-color: #101010;
+}
+#dokuwiki__header .tools li,
+#dokuwiki__header h1 span,
+.dokuwiki div.breadcrumbs,
+.dokuwiki .docInfo,
+#dokuwiki__footer {
+  color: snow;
+}
+#dokuwiki__header a,
+#dokuwiki__footer a {
+  color: PaleTurquoise;
+}
+p, li, td, dd {
+  line-height: 1.75em;
+}
+#dokuwiki__header {
+  padding: 0.75em 0 0.25em 0;
+}
+#dokuwiki__usertools,
+#dokuwiki__sitetools ul,
+#dokuwiki__header ul.a11y.skip,
+#dokuwiki__header .mobileTools select,
+.dokuwiki .pageId,
+#dokuwiki__pagetools div.tools {
+  display: none;
+}
+#dokuwiki__sitetools form#dw__search {
+  width: 99%;
+}
+#dokuwiki__header .headings,
+#dokuwiki__header .tools {
+  margin-bottom: 0.25em;
+}
+.dokuwiki div.page h1 {
+ margin: 0 0 1em 0;
+ padding: 0 0.1em 0 0.1em;
+ border-bottom: dotted 4px DarkSlateGrey;
+ color: DarkSlateGrey;
+ font-size: 1.6em;
+}
+.dokuwiki div.page h2 {
+ padding: 0 0.1em 0 0.1em;
+ border-bottom: dashed 2px #606060;
+ color: #606060;
+ font-size: 1.4em;
+}
+.dokuwiki div.page h3 {
+ padding: 0 0.1em 0 0.1em;
+ border-bottom: solid 1px #606060;
+ color: #303030;
+ font-size: 1.2em;
+}
+.autoarchive_selector {
+ padding-bottom: 48px;
+}
+.autoarchive_selector ul {
+  padding-left: 0;
+}
+div.dokuwiki div.autoarchive_selector ul,
+div.dokuwiki div.autoarchive_selector ul div.li {
+  margin: 0;
+}
+div.dokuwiki div.autoarchive_selector ul li {
+  margin-left: 0.75em;
+}
+</code></pre>
+
+<p>Tag: <a href="/t/?tag=dokuwiki">dokuwiki</a></p>
+</div>
+
+</body>
+
+</html>

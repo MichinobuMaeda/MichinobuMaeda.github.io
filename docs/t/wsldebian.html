@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Windows Subsystem for Linux の Debian で Web 開発の環境を作る - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Windows Subsystem for Linux の Debian で Web 開発の環境を作る</h1>
+<p>Update: 2020-07-11</p>
+<p>Windows Subsystem for Linux の有効化の手順は
+<a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">https://docs.microsoft.com/ja-jp/windows/wsl/install-win10</a>
+を見てください。私は組み込み用途で使われることが多い Debian を選択しました。</p>
+<p>2019年6月時点では Debian 9 "stretch" が入ります。 Debian 10 "buster" はまだリリースされたばかりです。
+私の好みで neovim を入れました。</p>
+<pre class="highlight"><code>$ cat /etc/issue
+Debian GNU/Linux 9 \n \l
+
+$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt install neovim
+$ nvim --version
+NVIM 0.1.7
+</code></pre>
+
+<p>標準のパッケージとして ssh クライアントと git と python3 を入れます。</p>
+<pre class="highlight"><code>$ sudo apt install openssh-client
+$ sudo apt install git
+$ git --version
+git version 2.11.0
+
+$ git config --global user.name &quot;Firstname Lastname&quot;
+$ git config --global user.email &quot;michinobumaeda@gmail.com&quot;
+
+$ sudo apt install python3
+$ python3 --version
+Python 3.5.3
+
+$ sudo apt install python3-pip
+$ pip3 --version
+pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.5)
+
+$ pip3 install virtualenv
+$ virtualenv --version
+16.6.1
+</code></pre>
+
+<p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-9">https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-debian-9</a>
+を参考に Node.js 10 を入れます。</p>
+<pre class="highlight"><code>$ sudo apt install curl
+$ curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh
+$ sudo bash nodesource_setup.sh
+$ sudo apt install nodejs
+$ node --version
+v10.16.0
+
+$ npm --version
+6.9.0
+
+$ sudo npm install yarn -g
+$ yarn --version
+1.16.0
+</code></pre>
+
+<p><a href="https://computingforgeeks.com/how-to-install-php-7-3-on-debian-9-debian-8/">https://computingforgeeks.com/how-to-install-php-7-3-on-debian-9-debian-8/</a>
+を参考に PHP 7.3 を入れます。</p>
+<pre class="highlight"><code>$ sudo apt -y install lsb-release apt-transport-https ca-certificates
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+$ echo &quot;deb https://packages.sury.org/php/ $(lsb_release -sc) main&quot; | sudo tee /etc/apt/sources.list.d/php7.3.list
+deb https://packages.sury.org/php/ stretch main
+
+$ sudo apt update
+$ sudo apt -y install php7.3
+$ php --version
+PHP 7.3.6-1+0~20190531112735.39+stretch~1.gbp6131b7 (cli) (built: May 31 2019 11:27:35) ( NTS )
+
+$ echo test &gt; index.html
+$ python3 -m http.server
+Serving HTTP on 0.0.0.0 port 8000 ...
+</code></pre>
+
+<p>Webブラウザで URL <a href="http://localhost:8000/">http://localhost:8000/</a> が表示できるれば OK です。</p>
+<p>Windows の notepad を起動することもできます。拡張し <code>.exe</code> を付けてください。
+ちなみに <code>ping.exe</code> で Windows版の ping が、
+<code>ping</code> で Debian の ping が起動できます。</p>
+<pre class="highlight"><code>$ notepad.exe index.html
+</code></pre>
+
+<p><code>ls /mnt/c/</code> で Windows の C: ドライブも参照できます。</p>
+<p>Windows のエクスプローラやコマンドプロンプトから <code>\\wsl$\Debian</code> Debian のファイルシステムが参照できます。</p>
+<p>WSL 環境からのインターネット接続がうまくいかない場合は、
+<code>ipconfig.exe /all</code> で DNS サーバの IPアドレスを調べて、
+<code>/etc/resolv.conf</code> に <code>nameserver IPアドレス</code> と設定してやると取り敢えずなんとかなるようです。
+私自身、モバイル環境でトラブったのですが、正しい手順はよくわかりません。</p>
+<p>ssh クライアントは Linux とまったく同じように利用できます。</p>
+<pre class="highlight"><code>$ mksir ~/.ssh
+$ mkdir ~/.ssh
+$ chmod 700 ~/.ssh
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa):
+
+$ eval `ssh-agent`
+$ ssh-add
+</code></pre>
+
+<p>Visual Studio Code をインストール済みであれば、コマンド <code>code</code> で起動できるようです。</p>
+<pre class="highlight"><code>$ git clone gtit@gitlab.com:UserName/project-name.git
+$ code project-name
+</code></pre>
+
+<p>[Ctrl]+[Shift]+P で <code>Terminal: Select Default Shell</code> を入力するとターミナルのデフォルトのシェルの選択肢が出てきますので、
+<code>WSL Bash C:\Windows\System32\wsl.exe</code> を選択します。</p>
+<p>ターミナルはメニューの <code>Terminal</code> -- <code>New Terminal</code> で表示できます。
+OSによってショートカットキーが異なるかもしれないので、メニューに表示されるものを使ってください。</p>
+<p>Python の場合、プロジェクトごとの環境設定は以下のようにするとよいです。</p>
+<pre class="highlight"><code>$ virtualenv venv
+$ . venv/bin/activate
+$ python --version
+Python 3.5.3
+
+$ which python
+project-directory/venv/bin/python
+
+$ which pip
+project-directory/venv/bin/pip
+</code></pre>
+
+<p>プロジェクトに <code>requirements.txt</code> がある場合は以下のコマンドで必要なパッケージが導入できます。
+パッケージはグローバルではなく、プロジェクトのディレクトリの <code>venv</code> サブディレクトリの下に入ります。</p>
+<pre class="highlight"><code>$ pip install -r requirements.txt
+$ ls venv/lib/python3.5/
+</code></pre>
+
+<p>一度設定すると、次回からは</p>
+<pre class="highlight"><code>$ . venv/bin/activate
+</code></pre>
+
+<p>だけでだいじょうぶです。</p>
+<p>virtualenv で python のバージョンをプロジェクト毎に設定することも可能です。
+Node.js や PHP などの他の言語にも Python の virtualenv に似た仕組みがあります。</p>
+<p>Tag: <a href="/t/?tag=windows">windows</a> <a href="/t/?tag=wsl">wsl</a> <a href="/t/?tag=debian">debian</a> <a href="/t/?tag=python">python</a> <a href="/t/?tag=pip">pip</a> <a href="/t/?tag=virtualenv">virtualenv</a> <a href="/t/?tag=git">git</a></p>
+</div>
+
+</body>
+
+</html>

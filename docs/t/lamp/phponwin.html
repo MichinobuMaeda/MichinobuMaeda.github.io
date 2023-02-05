@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><p>整理中：Windows で PHP の開発</p>
+<p>2008-06-30</p>
+<blockquote>
+<p>この記事を書いた後に <a href="http://www.zend.com/en/products/server-ce/">Zend Server</a> や <a href="http://www.apachefriends.org/jp/xampp.html">XAMPP</a> などを知りました。この記事のように個別に入れるよりこれらのパッケージを利用する方が楽です。 ( 参照 : <a href="zendservercezendframework.html">Zend Server CE / Zend Framework</a> / <a href="phpdebugger.html">PHPのデバッグができる環境</a> )</p>
+</blockquote>
+<p>システムの仕事をしている人の場合自宅に Windows PCが 1台あることが多いです。でも、そこに LAMP ( Linux, Apache, MySQL, PHP : 仕事で使える特に優れたオープンソース製品 ) 一式入れて本格的な環境を作るとなるとたいへんです。 OS は Windows のまま、 Web 開発のための最小限の環境を短時間で作る手順を紹介します。</p>
+<p>それから、このページに表示されているバックスラッシュ「\」は、半角「￥」と置き換えて読んでください。</p>
+<h2>1. はじめに</h2>
+<h3>1.1. 対象となる読者</h3>
+<p>Windows を普通に使えるエンジニアで、PHP 未経験の人を対象にします。</p>
+<p>「Virtual Machine 使えば？」という人はスキルが高すぎるので対象外です。</p>
+<p>「PHP を Windows 上で動かしてだいじょうぶなの？」と思う人もいるかもしれませんが、 Xoops など動かしてみた限りでは問題ありませんでした。 Micorsoft社が Zend社と提携したというニュースも流れていましたので将来は IIS 上で PHP なんてことが普通になるかもしれません。</p>
+<p>HTML や CSS の基本はここでは扱いません。</p>
+<p>セッションの管理やオブジェクト指向など PHP のより高度な機能についてもここでは扱いません。</p>
+<p>PHP から MySQL に接続する API には 2種類ありますが、古い方 ( 性能が落ちるかもしれないけど簡単な方 ) を使います。</p>
+<h3>1.2. 必要なもの</h3>
+<p>Windows PC 1台、低いスペックでも OK です。この記事の内容の検証には Windows Vista を使っています。 Windows XP もだいじょうぶ、 Windows 2000 でも問題ないと思います。</p>
+<p>資材を入手するためにインターネットに接続する環境が必要です。</p>
+<p>tar.gz 形式の圧縮ファイルを解凍できるツールが必要です。 PHP のドキュメントなど tar.gz 形式で配布されているものがあります。</p>
+<blockquote>
+<p>例) <a href="http://www.vector.co.jp/soft/win95/util/se166893.html">Lhaca デラックス版</a></p>
+</blockquote>
+<p>PHP のソースの編集のためにテキストエディタがあるといいのですが、「メモ帳」でもだいじょうぶです。</p>
+<h3>1.3. 各製品の簡単な説明</h3>
+<h4>Apache</h4>
+<p>Apache は広く使われている Webサーバ ( HTTPサーバ ) です。フリーソフトですが品質性能とも非常に高く、仕事でも安心して利用できます。 Microsoft社の IIS 以外の商用製品が売れない原因になっているような。。。</p>
+<h4>PHP</h4>
+<p>PHP は Apache や IIS などの Webサーバで動的なページを作成するための言語です。 C, Java, C# 等に似た文法で習得しやすく、「とりあえず手間かけずに動かしたい」場合も 「しっかりモジュール化してきちんとしたシステムを作りたい」場合にも使えます。 大規模システムの採用の例としては楽天市場があります。</p>
+<h4>MySQL</h4>
+<p>MySQL はフリーと商用の両方のライセンスで配布されている RDBMS ( Relational Database Management System ) です。性能や品質はきわめて高く、特に性能面では Oracle 以外の商用の製品にも負けません。機能は少なめですが、普通のシステムを作るには十分です。 商用ライセンス買っても安いので、仕事で使う場合はサポート付けることをお勧めします。</p>
+<h3>1.4. 文字コードについて</h3>
+<p>ほとんどデフォルトの設定のままインストールしますが、文字コードだけは最初に設定しておいた方がいいです。ここでは文字コードに UTF-8 を使う設定で説明します。</p>
+<p>Windows では Shift_JIS と UNICODE ( UTF-16 ) がよく使われます。 UNIX / Linux ではこれまで EUC-JP が使われていましたが、最近 UTF-8 も使われるようになりました。 Apache と MySQL はどれでもだいじょうぶです。 PHP は Shift_JIS と UNICODE ( UTF-16 ) が苦手です。今回は開発の最中に文字コードについては考えなくて済むように UTF-8 を使います。 Windows XP の「メモ帳」も UTF-8 に対応しています。 PC用の Webブラウザで UTF-8 に対応していないものは見たことがありません。携帯電話も古い機種 ( i-mode がこの世に登場したばかりの頃とか ) でなければ UTF-8 に対応しています。</p>
+<h2>2. Apache のインストール</h2>
+<h3>2.1. インストーラの入手</h3>
+<p>2008年 5月 2日現在の最新版とその入手先です。</p>
+<p>The Apache Software Foundation <a href="http://www.apache.org/"><a href="http://www.apache.org/">http://www.apache.org/</a></a></p>
+<p><code>- Apache Projects</code></p>
+<p><code>- HTTP Server</code></p>
+<p><code>- Download!</code></p>
+<p><code>- from a mirror</code></p>
+<p><code>- Win32 Binary including OpenSSL 0.9.8g (MSI Installer):</code></p>
+<p><code>apache_2.2.8-win32-x86-openssl-0.9.8g.msi</code></p>
+<h3>2.2. インストール</h3>
+<p>Apache のインストーラ <code>apache_2.2.8-win32-x86-openssl-0.9.8g.msi</code> を実行します。 PC によって次の「 Server Information 」の画面の各項目にデフォルト値が入っている場合と空欄の場合があります。空欄の場合は適当な値、例えば <code>localdomain</code>, <code>localhost.localdomain</code>, <code>admin@localhost.localdomain</code> といった感じの値を入れてください。それ以外はすべてデフォルトの設定のままでインストールします。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5OmlywqI/AAAAAAAABp8/AbWQDaLayKY/s1600/amponwin02_1_original.gif" /></p>
+<p>インストールが終わったら Webブラウザで <code>http://localhost/</code> を表示してください。「 It works! 」と表示されたら OK です。</p>
+<p>こんな感じのフォルダ構成になっています。</p>
+<p><code>C:\PROGRAM FILES</code></p>
+<p><code>\APACHE SOFTWARE FOUNDATION</code></p>
+<p><code>\APACHE2.2</code></p>
+<p><code>\bin</code></p>
+<p><code>\cgi-bin</code></p>
+<p><code>\conf</code></p>
+<p><code>httpd.conf -- 設定ファイル</code></p>
+<p><code>\error</code></p>
+<p><code>\htdocs</code></p>
+<p><code>index.html -- 「 It works! 」</code></p>
+<p><code>\icons</code></p>
+<p><code>\logs</code></p>
+<p><code>\manual</code></p>
+<p><code>\modules</code></p>
+<p>設定ファイル <code>httpd.conf</code> はこの後何度か使うので、この場所を覚えておいてください。</p>
+<h3>2.3. DocumentRoot の移動</h3>
+<p>表示するコンテンツを置く <code>htdocs</code> の場所がここでは使いにくいので、新しいフォルダ C:\MySite\html を作ってそちらに移動します。まず、 <code>httpd.conf</code> の次の行を変更してください。 行の先頭「 <code>＃</code> 」はコメント行で変更前の内容です。</p>
+<p><code>#DocumentRoot "C:/Program Files/Apache Software Foundation/Apache2.2/htdocs"</code></p>
+<p><code>DocumentRoot "C:/MySite/html"</code></p>
+<p>もう１カ所変更します。</p>
+<p><code>#&lt;Directory "C:/Program Files/Apache Software Foundation/Apache2.2/htdocs"&gt;</code></p>
+<p><code>&lt;Directory "C:/MySite/html"&gt;</code></p>
+<p>ファイル <code>C:\MySite\html\index.html</code> を作成して、テキストエディタかメモ帳で次の内容の HTML ソースを書きます。</p>
+<p><code>&lt;html&gt;</code></p>
+<p><code>&lt;head&gt;</code></p>
+<p><code>&lt;title&gt;My Page&lt;/title&gt;</code></p>
+<p><code>&lt;/head&gt;</code></p>
+<p><code>&lt;body&gt;</code></p>
+<p><code>&lt;h1&gt;My Page&lt;/h1&gt;</code></p>
+<p><code>&lt;/body&gt;</code></p>
+<p><code>&lt;/html&gt;</code></p>
+<p>Apache を再起動します。 Windows XP の場合は画面右下の <img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5PcXCmnI/AAAAAAAABqA/C0VbWJdAgLw/amponwin02_2.gif" /> をマウス左ボタンでクリックして「 Stop 」を選択、次に「 Start 」を選択してください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5PzR5b5I/AAAAAAAABqE/_WqhqEAnKVg/amponwin02_3_original.gif" /></p>
+<p>Windows Vista はこれではうまくいかないようです。 画面右下の <img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5PcXCmnI/AAAAAAAABqA/C0VbWJdAgLw/amponwin02_2.gif" />  をマウス右ボタンでクリックして「 Open Services 」を選択して表示される Windows の「サービス」画面を使ってください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5QkBSMII/AAAAAAAABqI/JXJJpbjoVv0/amponwin02_4_original.gif" /></p>
+<p>もう一度Webブラウザで <code>http://localhost/</code> を表示し直してください。「 My Page 」と表示されたら OK です。</p>
+<h2>3. PHP のインストール</h2>
+<h3>3.1. ドキュメントと Windows 版の入手</h3>
+<p>PHP の Windows 用のインストーラというものもあるのですが、あまり出来が良くなくて、 Apache や MySQL のように「全部デフォルトでインストールすればとりあえず動く」ようなものではありません。マニュアル ( 手動 ) インストールでもたいして手間はかからないのでそちらを使います。</p>
+<p>2008年 5月 2日現在の最新版のドキュメントと Windows 版は次のところからダウンロードしてください。</p>
+<p>PHP: Hypertext Preprocessor <a href="http://www.php.net/"><a href="http://www.php.net/">http://www.php.net/</a></a></p>
+<p><code>- Documentation</code></p>
+<p><code>- Downloads</code></p>
+<p><code>- documentation downloads Page</code></p>
+<p><code>- Japanese</code></p>
+<p><code>- downloas</code></p>
+<p><code>- Windows Binaries</code></p>
+<p><code>- PHP 5.2.6 zip package</code></p>
+<h3>3.2. ドキュメントと実行環境のコピー</h3>
+<p>先にドキュメントを用意します。 フォルダ <code>C:\MySite\html\documents\php</code> を新規に作成してください。 <code>php_manual_ja.tar.gz</code> を解凍して、 サブフォルダ <code>html</code> の中のファイルを作成したフォルダにすべてコピーしてください。</p>
+<p>「 2. 」でインストールした Apache により <code>http://localhost/documents/php/</code> で表示できます。　Internet Explorer の場合一部のページが正常に表示できないことがあります。 UTF-8 の文字コードの自動認識がうまくいかないようです。「エンコード」の設定が「日本語(自動選択)」とか「日本語(シフトJIS)」になっている場合は「自動選択」に変更してみてください。</p>
+<p>インストールに関係のあるページは次の通りです。</p>
+<p><code>- インストールと設定</code></p>
+<p><code>- Windows システムへのインストール</code></p>
+<p><code>- マニュアルインストール</code></p>
+<p><code>- Apache 2.0.x （Microsoft Windows 用）</code></p>
+<p>PHP の動作モードには次の 3種類があるのですが、詳しい説明は省きます。</p>
+<ul>
+<li>CGI 実行ファイル</li>
+<li>CLI 実行ファイル</li>
+<li>サーバモジュール</li>
+</ul>
+<p>ここでは「サバーバモジュール」を使います。</p>
+<p>マニュアルと同じフォルダ <code>C:\PHP</code> を作成して <code>php-5.2.6-Win32.zip</code> の中身を解凍してください。次のようなフォルダ構成になります。</p>
+<p><code>C:\PHP</code></p>
+<p><code>\dev</code></p>
+<p><code>\ext</code></p>
+<p><code>\extras</code></p>
+<p><code>\PEAR</code></p>
+<p><code>C:\PHP</code> の直下のファイル <code>php.ini-recommended</code> をコピーして同じフォルダにファイル <code>php.ini</code> を作ります。</p>
+<h3>3.3. PHP の設定の変更</h3>
+<p><code>php.ini</code> の中にたくさんの設定が入っていますが、そのほとんどは行の先頭「 <code>;</code> 」でコメントアウトされています。次の項目について、コメントアウトされていれば「 <code>;</code> 」を消して有効にして「 <code>=</code> 」の右側の値を変更してください。</p>
+<p><code>extension_dir = "./ext"</code></p>
+<p><code>extension=php_mbstring.dll</code></p>
+<p><code>extension=php_mcrypt.dll</code></p>
+<p><code>extension=php_mysql.dll</code></p>
+<p><code>[mbstring]</code></p>
+<p><code>mbstring.language = Japanese</code></p>
+<p><code>mbstring.internal_encoding = UTF-8</code></p>
+<p><code>mbstring.encoding_translation = Off</code></p>
+<p><code>mbstring.substitute_character = none;</code></p>
+<p><code>mbstring.func_overload = 0</code></p>
+<h3>3.4. Apache の設定の変更</h3>
+<p>Apache の <code>httpd.conf</code> の末尾に次の設定を追加してください。</p>
+<p><code>LoadModule php5_module "c:/php/php5apache2_2.dll"</code></p>
+<p><code>AddType application/x-httpd-php .php</code></p>
+<p><code>PHPIniDir "C:/php"</code></p>
+<p>Apache の <code>httpd.conf</code> の <code>&lt;IfModule dir_module&gt;</code> という箇所を探して設定を変更してください。 URL の指定でファイル名を省略した場合に表示する候補となるファイルの名称を追加します。</p>
+<p><code>&lt;IfModule dir_module&gt;</code></p>
+<p><code>DirectoryIndex index.php index.html</code></p>
+<p><code>&lt;/IfModule&gt;</code></p>
+<p>Apache の <code>httpd.conf</code> の次の行が「 <code>#</code> 」でコメントアウトされているので「 <code>#</code> 」を削除して有効にしてください。</p>
+<p><code>Include conf/extra/httpd-manual.conf</code></p>
+<h3>3.5. 動作の確認</h3>
+<p>表示の確認のためのページを <code>C:\MySite\html</code> の下に作成します。まず <code>index.php</code> を作成します。</p>
+<p><code>&lt;html&gt;</code></p>
+<p><code>&lt;head&gt;</code></p>
+<p><code>&lt;meta http-equiv="Content-Type" content="text/html;charset=utf-8" /&gt;</code></p>
+<p><code>&lt;title&gt;Hello PHP!!&lt;/title&gt;</code></p>
+<p><code>&lt;/head&gt;</code></p>
+<p><code>&lt;body&gt;</code></p>
+<p><code>&lt;h1&gt;Hello PHP!!&lt;/h1&gt;</code></p>
+<p><code>&lt;h2&gt;マニュアル&lt;/h2&gt;</code></p>
+<p><code>&lt;ul&gt;</code></p>
+<p><code>&lt;li&gt;&lt;a href="manual/"&gt;Apache 2.2&lt;/a&gt;&lt;/li&gt;</code></p>
+<p><code>&lt;li&gt;&lt;a href="documents/php"&gt;PHP 5.2&lt;/a&gt;&lt;/li&gt;</code></p>
+<p><code>&lt;li&gt;&lt;a href="documents/mysql"&gt;MySQL 5.1&lt;/a&gt;&lt;/li&gt;</code></p>
+<p><code>&lt;/ul&gt;</code></p>
+<p><code>&lt;h2&gt;その他&lt;/h2&gt;</code></p>
+<p><code>&lt;ul&gt;</code></p>
+<p><code>&lt;li&gt;&lt;a href="phpinfo.php"&gt;phpinfo&lt;/a&gt;&lt;/li&gt;</code></p>
+<p><code>&lt;li&gt;&lt;a href="phpMyAdmin"&gt;phpMyAdmin&lt;/a&gt;&lt;/li&gt;</code></p>
+<p><code>&lt;/ul&gt;</code></p>
+<p><code>&lt;/body&gt;</code></p>
+<p><code>&lt;/html&gt;</code></p>
+<p>次に <code>phpinfo.php</code> も同じフォルダ <code>C:\MySite\html</code> に作成します。このファイルで PHP の動作環境の設定内容の一覧を表示することができます。</p>
+<p><code>&lt;?php phpinfo(); ?&gt;</code></p>
+<p>Apache を再起動して <code>http://localhost/</code> を表示し直してください。「 Hello PHP!! 」と表示されたら OK です。</p>
+<h3>3.6. 設定ファイル</h3>
+<p>修正済みの設定ファイルです。修正箇所は「 <code>2008/05/05</code> 」で検索してください。</p>
+<ul>
+<li><a href="https://sites.google.com/site/michinobumaeda/lamp/phponwin/httpd_conf.zip?attredirects=0">httpd.conf</a></li>
+<li><a href="https://sites.google.com/site/michinobumaeda/lamp/phponwin/php_ini.zip?attredirects=0">php.ini</a></li>
+</ul>
+<h2>4. MySQL のインストール</h2>
+<h3>4.1. インストーラとドキュメントの入手</h3>
+<p>2008年 5月 2日現在の最新版とその入手先です。</p>
+<p>MySQL <a href="http://www.mysql.com/"><a href="http://www.mysql.com/">http://www.mysql.com/</a></a></p>
+<p><code>- Developer Zone</code></p>
+<p><code>- Downloads</code></p>
+<p><code>- MySQL Community Server / Download</code></p>
+<p><code>- Windows downloads</code></p>
+<p><code>- Windows ZIP/Setup.EXE (x86)</code></p>
+<p><code>- Pick a mirror</code></p>
+<p>“New Users” でアカウント登録するか、 “No thanks, just take me to the downloads!” を選択するかしてください。</p>
+<p>ドキュメントは、仕様の詳細から導入・保守まで網羅した完成度の高いものです。</p>
+<p><code>- Developer Zone</code></p>
+<p><code>- Documentation</code></p>
+<p><code>- Japanese v5.1</code></p>
+<h3>4.2. インストール</h3>
+<p><code>mysql-5.0.51b-win32.zip</code> を解凍してインストーラを実行してください。 MySQL のシステムのインストールが終わると自動でデータベース・インスタンスのインストーラも起動します。前半のシステムの方はすべてデフォルトの設定です。データベース・インスタンスのインストールで「 Please select the default character set. 」画面が出てきたら「 Best Support For Multilingualizm 」 ( 要するに　UTF-8 ) を選択してください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5SqoaMSI/AAAAAAAABqM/47-WeM_CfMA/s1600/amponwin04_1_original.gif" /></p>
+<p>「 Please set the security options. 」画面が出てきたら、管理者 <code>root</code> ユーザのパスワードを入力してください。このパスワードは忘れないでください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5UHfgjBI/AAAAAAAABqQ/kRo_-RDuvO0/s1600/amponwin04_2_original.gif" /></p>
+<p>開発環境とはいえできるだけセキュリテリは守りたいですから、特に必要なければ「 Enable root access from remote machines 」は有効にしないでください。今回構築しようとしている環境も、 Apache と MySQL が同じ PC に同居しているのでリモートアクセスは不要です。</p>
+<h3>4.3. ドキュメントのコピー</h3>
+<p>フォルダ <code>C:\MySite\html\documents\mysql</code> を新規に作成してください。 <code>refman-5.1-ja.html-chapter.zip</code> を解凍して、中のファイルを作成したフォルダにすべてコピーしてください。「 3.5. 動作の確認 」で作成したページ <code>http://localhost/</code> のリンク「 MySQL 5.1 」から参照できるようになります。</p>
+<h3>4.3. phpMyAdmin の入手</h3>
+<p>phpMyAdmin は Web 版の MySQL の管理ツールです。</p>
+<p>phpMyAdmin : <a href="http://www.phpmyadmin.net/"><a href="http://www.phpmyadmin.net/">http://www.phpmyadmin.net/</a></a></p>
+<p><code>- DOWNLOADS</code></p>
+<p><code>- all-languages.zip</code></p>
+<h3>4.4. phpMyAdmin のインストール</h3>
+<p>フォルダ <code>C:\MySite\html\phpMyAdmin</code> を新規に作成してください。 <code>phpMyAdmin-2.11.6-all-languages.zip</code> を解凍して、中のファイルを作成したフォルダにすべてコピーしてください。「 3.5. 動作の確認 」で作成したページ <code>http://localhost/</code> のリンク「 phpMyAdmin 」から参照できるようになります。</p>
+<p>初めて表示したときはメッセージ 「 設定ファイルが作成されていないものと思われます。セットアップスクリプト を利用して設定ファイルを作成してください 」 が表示されます。このツールの作者はこの「 セットアップスクリプト 」を使うと簡単に設定できると主張していますが、今回使いたい範囲の機能の実現のためには全然簡単ではないので、次の手順で設定してください。</p>
+<p>ファイル <code>C:\MySite\html\phpMyAdmin\config.sample.inc.php</code> をコピーしてファイル <code>C:\MySite\html\phpMyAdmin\config.inc.php</code> を作成してください。そのファイルの次の項目に適当な値を設定してください。次の例のように本当にてきとうーな値でいいです</p>
+<p><code>$cfg['blowfish_secret'] = 'lkasdjfkladgkahskdfla';</code></p>
+<p>もう一度 <code>http://localhost/phpMyAdmin/</code> を表示します。今度はエラーなど無しにログイン画面が表示されます。「 言語 」は「 日本語 - Japanese (utf-8) 」を選択して、ユーザ root でログインしてください。</p>
+<h2>5. テスト用 DB の作成</h2>
+<h3>5.1. ユーザとデータベースを作成する</h3>
+<p>「インスタンス」とか「データベース」とか「ユーザ」とか「スキーマ」という言葉が出てきますが RDBMS 製品によってこのあたりの関係が違っていて困ります。でも、きっとどうにもならないのであきらめましょう。</p>
+<p>先ほど作成した MySQL のインスタンスにユーザとデータベース ( ツールによっては「スキーマ」 )を作成するのですが、 MySQL の場合次のルールにしておくと管理が楽です。</p>
+<ul>
+<li>一人のユーザが一つのデータベースを使用する</li>
+<li>そのユーザとデータベースの名前は同じ</li>
+</ul>
+<p>そのようなわけで、 <code>phpsite</code> ユーザと <code>phpsite</code> データベースを作成します。</p>
+<p>前項でセットアップした phpMyAdmin に <code>root</code> ユーザでログインすると、最初の画面の真ん中より下の方「 特権 」というすごい名前のリンクがあるのでクリックします。</p>
+<p>次の画面の真ん中あたりに「 新しいユーザを追加する 」リンクがあるのでクリックします。</p>
+<p>「ログイン情報」の各欄に値を入力します。</p>
+<p>ユーザ名</p>
+<p>phpsite</p>
+<p>ホスト</p>
+<p>localhost</p>
+<p>パスワード</p>
+<p>この値はお任せします。</p>
+<p>パスワードを複雑な値にしたければ、記入欄の下の「パスワードを生成する」機能を使うといいでしょう。</p>
+<p>その下の「ユーザ専用データベース」は「同名のデータベースを作成してすべての特権を与える」を選択します。</p>
+<p>さらにその下の「グローバル特権」は設定不要です。</p>
+<p>画面の一番下の [ 実行する ] ボタンを押して出来上がりです。</p>
+<p>では、ここで一度ログアウトして今度はユーザ <code>phpsite</code> でログインしてみましょう。ログアウトのボタンはとてもわかりにくいです。画面左上 phoMyAdmin の下の５個並んだアイコンの左から２番目「 Exit 」とほとんど読めないくらい小さな字で無理矢理書いたアイコンです。 ログインするときは念のため「 言語 」で「 日本語 - Japanese (utf-8) 」を選択していることを確認してください。ユーザ名 phpsite と先ほど設定したパスワードで無事ログインできれば OK です。</p>
+<h3>5.2. テーブルを作成する</h3>
+<p>phpMyAdmin にユーザ <code>phpsite</code> でログインすると、画面左側にデータベース名が２個「 <code>information_schema</code> 」と「 <code>phpsite</code> 」が並んでいますので「 <code>phpsite</code> 」の方を選択します。すると「 データベース phpsite に新しいテーブルを作成する 」という今まさにやりたいことがそのまま書かれていますので、名前に「 <code>HATSUYUME</code> 」フィールド数に「 2 」を入力して右の方の [ 実行する ] ボタンを押します。全部半角です。 MySQL が日本語のテーブル名カラム名に対応しているかどうかは未確認です。誰か試してみてください。</p>
+<p>最初のフィールドは次の設定です。</p>
+<p>フィールド</p>
+<p>NO</p>
+<p>種別</p>
+<p>INT</p>
+<p>長さ/値</p>
+<p>※設定無し</p>
+<p>照合順序</p>
+<p>※設定無し</p>
+<p>属性</p>
+<p>※設定無し</p>
+<p>ヌル(NULL)</p>
+<p>not null</p>
+<p>デフォルト値</p>
+<p>※設定無し</p>
+<p>その他</p>
+<p>auto_incriment</p>
+<p>インデックスの設定</p>
+<p>主キー　( 鍵のマークを選択 )</p>
+<p>全文検索の設定</p>
+<p>※設定無し</p>
+<p>２番目のフィールドは次の設定です。</p>
+<p>フィールド</p>
+<p>NAME</p>
+<p>種別</p>
+<p>VARCHAR</p>
+<p>長さ/値</p>
+<p>100</p>
+<p>照合順序</p>
+<p>※設定無し</p>
+<p>属性</p>
+<p>※設定無し</p>
+<p>ヌル(NULL)</p>
+<p>not null</p>
+<p>デフォルト値</p>
+<p>※設定無し</p>
+<p>その他</p>
+<p>※設定無し</p>
+<p>インデックスの設定</p>
+<p>※設定無し ( — を選択 )</p>
+<p>全文検索の設定</p>
+<p>※設定無し</p>
+<p>画面下の方に「ストレージエンジン」という選択欄がありますが、これはとりあえずデフォルトの InnoDB でいいです。最後に、その下の [ 保存する ] ボタンを押してください。</p>
+<h3>5.3. データを入れる</h3>
+<p>引き続き phpMyAdmin 上の作業です。「 サーバ: <code>localhost</code> データベース: <code>phpsite</code> テーブル: <code>HATSUYUME</code> 」のまま作業を続けます。この画面の上の方のタブ「 挿入 」を選択してください。</p>
+<p>入力する値は次の通りです。一度に最大２行しか入力できないので、操作を繰り返してください。</p>
+<p>NO</p>
+<p>NAME</p>
+<p>1</p>
+<p>富士</p>
+<p>2</p>
+<p>鷹</p>
+<p>3</p>
+<p>茄</p>
+<p>画面上のタブ「 表示 」で結果を確認してください。</p>
+<h2>6. DB の内容をWebで表示する</h2>
+<h3>6.1. PHP の MySQL に関する機能</h3>
+<p>PHP の MySQL に関する機能はマニュアルのこの目次をたどってください。各関数について、使用例を挙げて詳しく説明しています。</p>
+<p><code>- 関数リファレンス</code></p>
+<p><code>- データベース関連</code></p>
+<p><code>- ベンダー固有のモジュール</code></p>
+<p><code>- MySQL</code></p>
+<h3>6.2. サンプルページ</h3>
+<p>ファイル <code>C:\MySite\html\hatsuyume.php</code> を新規で作成してください。内容は次の通りです。ファイルを保存するときに文字コードを UTF-8 にしてください。</p>
+<p><code>&lt;html&gt;</code></p>
+<p><code>&lt;head&gt;</code></p>
+<p><code>&lt;meta http-equiv="Content-Type" content="text/html;charset=utf-8" /&gt;</code></p>
+<p><code>&lt;title&gt;初夢&lt;/title&gt;</code></p>
+<p><code>&lt;/head&gt;</code></p>
+<p><code>&lt;body&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>// MySQL に接続する。</code></p>
+<p><code>$link = mysql_connect("localhost:3306", "phpsite", "phpsite");</code></p>
+<p><code>if (!$link) {</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;p&gt;Error: MySQL に接続できませんでした。&lt;/p&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>// クライアント側の文字コードの設定</code></p>
+<p><code>} elseif (!mysql_set_charset("utf8")) {</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;p&gt;Error: MySQL のクライアント側の文字コードの設定ができませんでした。&lt;/p&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>// データベース phpsite を選択</code></p>
+<p><code>} elseif (!mysql_select_db("phpsite")) {</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;p&gt;Error: MySQL のデータベース phpsite を選択できませんでした。&lt;/p&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>} else {</code></p>
+<p><code>// 問い合わせの実行</code></p>
+<p><code>$result = mysql_query("SELECT NO, NAME FROM HATSUYUME");</code></p>
+<p><code>// 問い合わせの結果のチェック</code></p>
+<p><code>if (!$result) {</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;p&gt;Error: MySQL の問い合わせでエラー &lt;?php echo mysql_error(); ?&gt; が発生しました。&lt;/p&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>} else {</code></p>
+<p><code>// 結果を表示</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;table&gt;</code></p>
+<p><code>&lt;tr&gt;</code></p>
+<p><code>&lt;th&gt;No.&lt;/th&gt;</code></p>
+<p><code>&lt;th&gt;Name&lt;/th&gt;</code></p>
+<p><code>&lt;/tr&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>while ($row = mysql_fetch_assoc($result)) {</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;tr&gt;</code></p>
+<p><code>&lt;td&gt;&lt;?php echo htmlspecialchars($row["NO"], ENT_COMPAT, "utf8"); ?&gt;&lt;/td&gt;</code></p>
+<p><code>&lt;td&gt;&lt;?php echo htmlspecialchars($row["NAME"], ENT_COMPAT, "utf8"); ?&gt;&lt;/td&gt;</code></p>
+<p><code>&lt;/tr&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>}</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;/table&gt;</code></p>
+<p><code>&lt;?php</code></p>
+<p><code>}</code></p>
+<p><code>// MySQL の接続を閉じる。</code></p>
+<p><code>mysql_close($link);</code></p>
+<p><code>}</code></p>
+<p><code>?&gt;</code></p>
+<p><code>&lt;/body&gt;</code></p>
+<p><code>&lt;/html&gt;</code></p>
+<p><code>http://localhost/hatsuyume.php</code> で表示を確認してください。正常なら次のように表示されます。何かエラーがあればできるだけ画面上に表示するプログラムにしてありますのでメッセージを確認してください。</p>
+<p><code>No.</code> <code>Name</code></p>
+<p><code>1</code> <code>富士</code></p>
+<p><code>2</code> <code>鷹</code></p>
+<p><code>3</code> <code>茄</code></p>
+<h2>番外編 osCommerce</h2>
+<p>なぜ番外編なのかというと、 osCommerce は、古いバージョンの PHP や MySQL を前提にしていて、日本語版の文字コードも EUC-JP だからです。 ソースに手を入れることによる PHP5 対応や UTF-8 対応 も可能なのですが、少々面倒です。それから、自分の作業環境の都合で Windows XP で動作確認しています。</p>
+<h3>1. 作業のためのツール</h3>
+<p>tar.gz 形式の圧縮ファイルの解凍、文字コード ECU-JP のファイルの編集など Windows ではなじみの薄い作業のために私が使っているフリーのツールです。他のものでもかまいません。</p>
+<h4>1.1. +Lhaca デラックス版</h4>
+<ul>
+<li>Lhaca123.EXE</li>
+</ul>
+<p>対応している形式の多い Windows 用の圧縮解凍ツールです。入手先 URL はこちらです。<a href="http://park8.wakwak.com/~app/Lhaca/lhacadx.html"><a href="http://park8.wakwak.com/~app/Lhaca/lhacadx.html">http://park8.wakwak.com/~app/Lhaca/lhacadx.html</a></a></p>
+<h4>1.2. TeraPad</h4>
+<ul>
+<li>tpad093.zip</li>
+</ul>
+<p>ごく普通のテキストエディタです。入手先 URL はこちらです。 <a href="http://www5f.biglobe.ne.jp/~t-susumu/library/tpad.html"><a href="http://www5f.biglobe.ne.jp/~t-susumu/library/tpad.html">http://www5f.biglobe.ne.jp/~t-susumu/library/tpad.html</a></a></p>
+<p>よく、秀丸エディタを未登録のまま使っている人がいますが、使うんなら金払う、金払わないんなら使わない、私は秀丸のライセンス買ってますが、微妙な挙動の好みの問題で他の製品を使っています。</p>
+<h3>2. Apache</h3>
+<ul>
+<li>apache_2.0.63-win32-x86-openssl-0.9.7m.msi</li>
+</ul>
+<p>バージョンは 2.2 ではなく 2.0 ですが、インストールの手順は 2. Apache のインストール と同じです。デフォルトのインストール先は <code>C:\Program Files\Apache Group\Apache2</code> です。 <code>C:\Program Files\Apache Group\Apache2\conf\httpd.conf</code> の設定内容を追加・変更した箇所は次の通り。 <code>default.php</code> は osCommerce で使われていたので追加しました。 Web のコンテンツを置く場所は本編と同じ <code>C:\MySite\html</code> としています。 PHP をインストールする場所も本編と同じ <code>C:\php</code> としています。</p>
+<p><code>... 変更 ...</code></p>
+<p><code>DocumentRoot "C:/MySite/html"</code></p>
+<p><code>... 変更 ...</code></p>
+<p><code>&lt;Directory "C:/MySite/html"&gt;</code></p>
+<p><code>... 変更 ...</code></p>
+<p><code>DirectoryIndex index.php default.php index.html index.html.var</code></p>
+<p><code>... 追加 ...</code></p>
+<p><code>LoadModule php4_module "c:/php/php4apache2.dll"</code></p>
+<p><code>AddType application/x-httpd-php .php</code></p>
+<p><code>PHPIniDir "C:/php"</code></p>
+<h3>3. PHP</h3>
+<ul>
+<li>php-4.4.8-Win32.zip</li>
+<li>libmcrypt.dll</li>
+<li>php_manual_ja.tar.gz</li>
+</ul>
+<p>本編の PHP5 より PHP4 の方が手順が少々増えます。</p>
+<p>まず、 phpMyAdmin が使用する mcrypt で必要となる <code>libmcrypt.dll</code> が Windows バイナリパッケージに含まれていません。次の URL から入手して、 C:\php にコピーしてください。</p>
+<p><a href="http://files.edin.dk/php/win32/mcrypt/"><a href="http://files.edin.dk/php/win32/mcrypt/">http://files.edin.dk/php/win32/mcrypt/</a></a></p>
+<p>ドキュメントの Windows でのインストールの手順に書いているように、 <code>C:\php\dlls</code> と <code>C:\php\sapi</code> の下のファイルをすべて <code>C:\php</code> の下に移動してください。</p>
+<p><code>php.ini</code> の設定も少し異なります。 まず、 PHP5 と違って <code>php_mysql.dll</code> というのはありません。デフォルトで MySQL への接続に対応しています。それから、 <code>extension_dir</code> の値は相対パス指定ではうまく動かないようです。次の例のようにフルパス指定してください。</p>
+<p><code>extension_dir = "c:/php/extensions"</code></p>
+<p><code>...</code></p>
+<p><code>extension=php_mbstring.dll</code></p>
+<p><code>...</code></p>
+<p><code>extension=php_mcrypt.dll</code></p>
+<p>osCommerce のための追加の設定が必要です。 osCommerce 日本語版 ( 「 6. osCommerce 」参照 ) の INSTALL_japanese.txt の中の「 2.2 PHPの設定 」の記述に従って設定してください。</p>
+<p>環境変数 <code>PATH</code> に <code>C:\php</code> を追加したら念のため OS を再起動してください。</p>
+<h3>4. MySQL</h3>
+<ul>
+<li>mysql-essential-4.1.22-win32.msi</li>
+<li>refman-4.1-ja.html-chapter.zip</li>
+</ul>
+<p>MySQL も古いバージョンになります。インストールの手順は、文字コードに「 UTF-8」ではなく「 ujis 」 ( EUC-JP のこと ) を選択する以外「 4. MySQL 」のインストール と同じです。PHP に含まれる MySQL のクライアントのバージョンが古いようで、インストール完了後に次の設定が必要です。</p>
+<p><code>Windows 「スタート」メニュー</code></p>
+<p><code>→ すべてのプログラム</code></p>
+<p><code>→ MySQL</code></p>
+<p><code>→ MySQL Server 4.1</code></p>
+<p><code>→ MySQL Command Line Client</code></p>
+<p>を選択し、インストール時に設定した <code>root</code> のパスワードを入力して次のコマンドを実行してください。「 '****' 」には root のパスワードを入れてください。 MySQL にユーザを追加したとき、および、 MySQL のユーザのパスワードを変更したときは毎回この操作が必要です。</p>
+<p><code>mysql&gt; SET PASSWORD FOR root@localhost = OLD_PASSWORD('****');</code></p>
+<h3>5. phpMyAdmin</h3>
+<ul>
+<li>phpMyAdmin-2.11.7-all-languages.zip</li>
+</ul>
+<p>「4. MySQL のインストール 」の「 4.3. phpMyAdmin の入手 」「 4.4. phpMyAdmin のインストール 」と同じです。ログイン時の「 言語 」は UTF-8 でも euc でもどちらでもいいです。データベースと同じ euc の方が文字化け等の心配が少ないかもしれません。</p>
+<h3>6. osCommerce</h3>
+<ul>
+<li>oscommerce-2.2ms1j-R8.tar.gz</li>
+</ul>
+<p>php.ini に「 3. PHP 」の設定が間違いなくできていることを確認したら、念のため Apache を再起動してください。 osCommerce のインストール時のエラーの表示はあまり親切ではないようなので、事前に設定をよく確認してください。</p>
+<p>phpMyAdmin を使って、 MySQL に osCommerce 用のユーザとデータベースを作成します。 5. テスト用 DB の作成 と同じ要領でユーザ osc とデータベース osc を作成します。違う名称でもいいですが、その場合は以下の説明の「 <code>osc</code> 」を読み替えてください。</p>
+<p><code>oscommerce-2.2ms1j-R8.tar.gz</code> は Lhaca などを使って解凍してください。解凍すると一番上のディレクトリにファイル <code>INSTALL_japanese.txt</code> があります。ここに記述された手順に従ってインストールします。</p>
+<p>まず、 <code>oscommerce-2.2ms1j-R8.tar.gz</code> の中のサブフォルダ <code>admin</code> と <code>catalog</code> をフォルダごと <code>C:\MySite\html</code> の下にコピーします。たくさんのディレクトリとファイルがありますが、この後使う主なものは次のようになります。</p>
+<p><code>C:</code></p>
+<p><code>+---MySite</code></p>
+<p><code>+---html</code></p>
+<p><code>+---admin</code></p>
+<p><code>|   +----includes</code></p>
+<p><code>|           configure.php</code></p>
+<p><code>+---catalog</code></p>
+<p><code>+----includes</code></p>
+<p><code>|       configure.php</code></p>
+<p><code>+----install</code></p>
+<p>次に、設定ファイルに Windows の全てのユーザとグループに設定ファイルの書き込み権限を与えます。本当は全部のユーザ・グループでなくていいのですが、みなさんの PC の環境によって対象が異なりますし、どっちみちインストール完了後に元に戻すので、とりあえず全部でいいです。エクスプローラで各ファイルを選択してマウス右クリックし、ポップアップメニューの「プロパティ」を選択し、タブ「全般」の「読み取り専用」のチェックが Off になっていることを確認します。さらに、タブ「セキュリティ」が表示されている場合は ( PC の環境によっては表示されないこともあります ) 、その一覧に表示されている全てのユーザとグループに「フルアクセス」権限を与えてください。設定ファイルは次の２個です。</p>
+<ul>
+<li><code>admin\includes\configure.php</code></li>
+<li><code>catalog\includes\configure.php</code></li>
+</ul>
+<p>インストーラは Web ブラウザから実行します。 <code>http://localhost/catalog/install</code> を表示してください。</p>
+<p>PHP などの設定に問題なければ次の画面が表示されます。</p>
+<p><code>ようこそ osCommerce へ!</code></p>
+<p><code>インストール方法を選択して、インストールを開始してください:</code></p>
+<p>ボタン [ New Install ] をクリックしてください。次の画面でデータベースの情報を入力します。</p>
+<p><code>新規インストール</code></p>
+<p><code>1. インストールのためのオプションを設定してください:</code></p>
+<p><code>[v] カタログ・データベースのインポート</code></p>
+<p><code>[v] 自動設定</code></p>
+<p><code>2. ウェブ・サーバに関する情報を入力してください:</code></p>
+<p><code>ウェブ・サーバのルート・ディレクトリ : C:/MySite/html</code></p>
+<p><code>カタログ・ディレクトリ : /catalog/</code></p>
+<p><code>管理ツール・ディレクトリ : /admin/</code></p>
+<p><code>WWW カタログ・ディレクトリ : /catalog/</code></p>
+<p><code>WWW 管理ツール・ディレクトリ : /admin/</code></p>
+<p><code>3. データベース・サーバに関する情報を入力してください:</code></p>
+<p><code>データベース・サーバ : localhost</code></p>
+<p><code>ユーザ名 : osc</code></p>
+<p><code>パスワード : ***</code></p>
+<p><code>データベース : osc</code></p>
+<p>入力が終わったらボタン [ Continue ] をクリックしてください。次の画面「 Step 1: データベース・インポート 」もボタン [ Continue ] をクリックしてください。その次の画面「 Step 2: osCommerce の設定 」はほとんどデフォルトのままでいいのですが、最後の項目は「 セッション情報をファイルに保存する 」ではなく「 セッション情報をデータベースに保存する 」を選択してください。性能に影響があるのですが、開発・テストの環境の場合は後で手間のかからない方を選びます。</p>
+<p>入力が終わったらボタン [ Continue ] をクリックしてください。最後の画面で次の 2個のボタンが表示されます。</p>
+<ul>
+<li>[ Catalog ]</li>
+<li>[ Administration Tool ]</li>
+</ul>
+<p>それぞれのボタンを押して、新しい画面が正常に表示されることを確認します。</p>
+<p>[ Catalog ] の方で画面の上の方に警告のメッセージが表示されます。次の作業をして、この画面を更新してください。これらのメッセージが消えるはず、だと思うのですが、 PC の環境によっては他にも何か対処が必要かもしれません。</p>
+<ul>
+<li>ディレクトリ <code>C:\MySite\html\catalog\install</code> を削除する。</li>
+<li>
+<p>設定ファイル：それぞれのアクセス権限を元に戻し、「プロパティ」のタブ「全般」の「読み取り専用」のチェックを On にする。</p>
+</li>
+<li>
+<p><code>admin\includes\configure.php</code></p>
+</li>
+<li><code>catalog\includes\configure.php</code></li>
+</ul>
+<p>[ Administration Tool ] の方は管理機能のログイン画面が表示されます。ユーザは <code>admin</code> 、初期パスワードは <code>admin</code> です。</p></div>
+
+</body>
+
+</html>

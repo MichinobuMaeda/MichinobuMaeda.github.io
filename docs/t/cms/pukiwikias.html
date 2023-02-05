@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>PukiWiki で普通のサイトを作る - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>PukiWiki で普通のサイトを作る</h1>
+<p>Update: 2008-12-30</p>
+<p><a href="http://pukiwiki.sourceforge.jp/">PukiWiki</a> で Wiki じゃない普通のサイトを作りました <a href="http://www.union-net.or.jp/compliance/">IT業界の法令遵守をすすめよう!!</a> 。簡単です。 Wiki らしい機能を画面上から隠して、編集済みのページを凍結するだけです。</p>
+<p>PukiWiki のインストール手順は <a href="http://pukiwiki.sourceforge.jp/?PukiWiki%2FInstall">PukiWikiのインストール</a> を見てください。その他 PukiWiki の一般的な情報は <a href="http://pukiwiki.sourceforge.jp/?%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AEPukiWiki">はじめてのPukiWiki</a> や <a href="http://pukiwiki.sourceforge.jp/?FAQ">FAQ</a> などを見てください。</p>
+<p>PukiWiki の見た目をカスタマイズするには、次の 3個のファイルを編集します。</p>
+<ul>
+<li><code>pukiwiki.ini.php</code></li>
+<li><code>skin/pukiwiki.skin.php</code></li>
+<li><code>skin/pukiwiki.css.php</code></li>
+</ul>
+<p>これらのファイルの内容と、実際の表示を見比べながらの地道な作業になります。でも、掲示板や Blog の形式の CMS に比べて仕組みが単純なので、かなり大胆に変更してもだいじょうぶです。その他、画像なども必要に応じて追加変更します。</p>
+<p>私自身は HTML を直接書くのは苦にならなくて、いま、この記事も HTML モードで書いているのですが、そんな私でも Wiki の編集画面の方が楽だと感じます。文章は普通に書けばいいです。 <code>[[ ]]</code> の使い方を覚えれば、新しいページとそのページへのリンクができます。その他、画像の貼り付け方、番号有・無のリスト、見出し、表組みなどの書き方が理解できれば十分です。 PukiWiki をインストールすると、ヘルプと練習ページもついてくるので有効活用してください。私は入門書など無しで済ませました。</p>
+<p>デザイナーなどがカスタマイズしてサイトを準備して、サイトのオーナーが自分で内容を更新するといった使い方ができると思います。</p>
+<p>Wiki パッケージとしては WikiPedia に使われている <a href="http://www.mediawiki.org/wiki/MediaWiki/ja">MediaWiki</a> もあります。こちらの方が高機能なようです。試してはいないのですが、カスタマイズして使う場合、高機能な方が手間がかかると思います。変更が影響を及ぼす範囲の確認の作業が増えるからです。 Wiki の本来の用途のために使う場合は好きな方でいいと思います。また、組織内の情報蓄積・整理の用途に特化した Enterprise Wiki というものもあります。フリーの <a href="http://twiki.org/">TWiki</a> などが有名です。。。とはいっても私も使ったことがないし、 Enterprise Wiki を知っている人の中では有名ということです。</p></div>
+
+</body>
+
+</html>

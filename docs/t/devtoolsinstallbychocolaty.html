@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Chocolatey で Windows に開発ツールをインストールする - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>Chocolatey で Windows に開発ツールをインストールする</h1>
+<p>Update: 2020-07-14</p>
+<p>Chocolatey ( <a href="https://chocolatey.org/">https://chocolatey.org/</a> ) はたぶん主にシステム開発をやる人を主なターゲットとした
+Windows にいろいろなものをインストールするツールとそのいろいろなもののリポジトリです。
+オープンソースの製品を使って Windows でいまどきの Web の開発をするには必要でしょう。</p>
+<p>とはいっても WSL ( <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a> )
+というものがあるので Linux というか bash や zsh などの UNIX系の Shell に抵抗ないのであれば
+WSL を使うことをお勧めします。私はまだ WSL 2 は試していませんが、
+WSL 1 でもそこから <code>$ code</code> で Visual Studio Code が起動できるしそれなら
+ベースが Windows でも Mac でも Chrome OS でも Linux でもなんでもいいや、という感じです。</p>
+<p>Chocolatey は non-administrative の手順
+( <a href="https://chocolatey.org/docs/installation#non-administrative-install">https://chocolatey.org/docs/installation#non-administrative-install</a> )
+で入れてみました。
+その後でいろいろ入れてみた感じ、 non-administrative ではない方がいいような気がします。</p>
+<p>コマンドプロンプトではなく PowerShell を使ってください。
+余談ですが、これから Windows でシステムの開発や運用の仕事をする人は PowerShell に慣れておきましょう。</p>
+<pre class="highlight"><code>PS&gt; notepad ChocolateyInstallNonAdmin.ps1
+PS&gt; Set-ExecutionPolicy Bypass -Scope Process -Force;
+PS&gt; .\ChocolateyInstallNonAdmin.ps1
+PS&gt; choco
+Chocolatey v0.10.15
+Please run 'choco -?' or 'choco &lt;command&gt; -?' for help menu.
+PS&gt; choco -?
+This is a listing of all of the different things you can pass to choco.
+
+Commands
+
+ * list - lists remote or local packages
+ * find - searches remote or local packages (alias for search)
+ * search - searches remote or local packages (alias for list)
+ * info - retrieves package information. Shorthand for choco search pkgname --exact --verbose
+ * install - installs packages from various sources
+ * pin - suppress upgrades for a package
+ * outdated - retrieves packages that are outdated. Similar to upgrade all --noop
+ * upgrade - upgrades packages from various sources
+ * uninstall - uninstalls a package
+ * pack - packages up a nuspec to a compiled nupkg
+ * push - pushes a compiled nupkg
+ * new - generates files necessary for a chocolatey package from a template
+ * sources - view and configure default sources (alias for source)
+ * source - view and configure default sources
+ * config - Retrieve and configure config file settings
+ * feature - view and configure choco features
+ * features - view and configure choco features (alias for feature)
+ * setapikey - retrieves, saves or deletes an apikey for a particular source (alias for apikey)
+ * apikey - retrieves, saves or deletes an apikey for a particular source
+ * unpackself - have chocolatey set itself up
+... ... ...
+
+     --log-file=VALUE
+     Log File to output to in addition to regular loggers. Available in 0.1-
+       0.8+.
+Chocolatey v0.10.15
+</code></pre>
+
+<p>RedHat系の yum や Debian の apt や Mac の brew 等々と同じようなコマンドが使えるようです。</p>
+<p>まず git を入れます。</p>
+<pre class="highlight"><code>PS&gt; choco install git -y
+Chocolatey v0.10.15
+Chocolatey detected you are not running from an elevated command shell
+ (cmd/powershell).
+
+ You may experience errors - many functions/packages
+ require admin rights. Only advanced users should run choco w/out an
+ elevated shell. When you open the command shell, you should ensure
+ that you do so with &quot;Run as Administrator&quot; selected. If you are
+ attempting to use Chocolatey in a non-administrator setting, you
+ must select a different location other than the default install
+ location. See
+ https://chocolatey.org/install#non-administrative-install for details.
+
+
+ Do you want to continue?([Y]es/[N]o): Y
+</code></pre>
+
+<p>なにやら警告が出ますが要するに Windows に何かインストールするときにたいてい出る確認のダイアログで「はい」押して、ということのようなのでそのまま進みます。</p>
+<pre class="highlight"><code>PS&gt; git --version
+git : 用語 'git' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません。
+名前が正しく記述されていることを確認し、パスが含まれている場合はそのパスが正しいことを確認してから、再試行してください
+。
+発生場所 行:1 文字:1
++ git --version
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (git:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+</code></pre>
+
+<p>git コマンドが見えてないようなので PowerShell を開き直してみます。</p>
+<pre class="highlight"><code>PS&gt; git --version
+git version 2.27.0.windows.1
+PS&gt; git config --global user.name &quot;Michinobu Maeda&quot;
+PS&gt; git config --global user.email &quot;michinobumaeda@gmail.com&quot;
+</code></pre>
+
+<p>正常にインストールできているようなので <code>user.name</code> と <code>user.email</code> を設定しておきます。
+git を使う場合これらの設定は事実上必須です。
+git の Windows 版には <code>bash</code> が付いてますが、それを使うくらいなら WSL でいいんじゃないかな。</p>
+<p>次に Python 3 を入れます。これは PowerShell を管理者として起動して実行しなければうまくいきませんでした。</p>
+<pre class="highlight"><code>PS&gt; choco install python3 -y
+
+The recent package changes indicate a reboot is necessary.
+ Please reboot at your earliest convenience.
+</code></pre>
+
+<p>リブートしろ、と Windows みたいなことを言われるので素直に従います。</p>
+<pre class="highlight"><code>PS&gt; python3 --version
+</code></pre>
+
+<p>なにも表示されない。。。</p>
+<pre class="highlight"><code>PS&gt; python -V
+Python 3.8.3
+</code></pre>
+
+<p>Python 2 はいまさら使うなという前提かな。</p>
+<p>次に Node.js を入れます。
+Mac ならとりあえず最新 ( 14 とか 12 LTS とか ) を入れて
+n でその都度必要なバージョンを指定するのが便利なのですが、
+n は Windows に対応していません。私の場合、当面は 10 を使いたいのでバージョンを指定してインストールします。
+npm も入るのですが、 npm が最新でない可能性もあります。
+npm そのものを入れ直して、その他のグローバルでよく使うツールもついでに入れておきます。</p>
+<pre class="highlight"><code>PS&gt; choco install nodejs-lts --version=10.16.0 -y
+PS&gt; node --version
+v10.16.0
+PS&gt; npm ---version
+6.9.0
+PS&gt; npm i -g npm yarn eslint jest firebase-tools @vue/cli
+... ... ...
+
++ jest@26.1.0
++ @vue/cli@4.4.6
++ firebase-tools@8.4.3
++ eslint@7.4.0
++ npm@6.14.5
+</code></pre>
+
+<p>PHP を入れます。
+Composer もいまどきの開発では必須ですから入れます。</p>
+<pre class="highlight"><code>PS&gt; choco install php -y
+PS&gt; php --version
+PHP 7.4.7 (cli) (built: Jun  9 2020 13:34:30) ( NTS Visual C++ 2017 x64 )
+Copyright (c) The PHP Group
+Zend Engine v3.4.0, Copyright (c) Zend Technologies
+
+PS&gt; choco install composer -y
+PS&gt; composer -V
+Composer version 1.10.8 2020-06-24 21:23:30
+</code></pre>
+
+<p>Chocolatey で GUI のツールもインストールできます。
+Visual Studio Code を入れてみます。</p>
+<pre class="highlight"><code>PS&gt; choco install vscode -y
+PS&gt; code --version
+1.46.1
+cd9ea6488829f560dc949a8b2fb789f3cdc05f5d
+x64
+</code></pre>
+
+<p>インストール後、私の環境では <code>code</code> で起動できました。ただし、この記事を書く前に普通に入れたものをアンインストールしています。もしかすると
+PowerShell を起動し直すか OS 再起動するまでは <code>code</code> では起動できないかもしれません。</p>
+<p><a href="https://chocolatey.org/packages">パッケージのリポジトリ</a>
+を見ると他にも Gimp などいろいろあるようです。</p>
+<p>で、結論として、 Linux というか bash や zsh が嫌いでなければ WSL を使うことをお勧めします。</p>
+<p>Tag: <a href="/t/?tag=windows">windows</a> <a href="/t/?tag=chocolatey">chocolatey</a> <a href="/t/?tag=choco">choco</a> <a href="/t/?tag=vscode">vscode</a> <a href="/t/?tag=powershell">powershell</a></p>
+</div>
+
+</body>
+
+</html>

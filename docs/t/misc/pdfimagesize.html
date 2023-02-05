@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>画像を埋め込んでもサイズが大きくならないPDF生成 - みちのぶのねぐら</title>
+</head>
+
+<body>
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <div class="menu">
+    <header>
+      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+        みちのぶのねぐら</a>
+    </header>
+
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+
+    <footer>
+      <ul class="social">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      <div class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+      </div>
+      <div class="license-desc">
+        This work is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+          International
+          License</a>.
+      </div>
+    </footer>
+  </div>
+
+
+  <div class="content"><h1>画像を埋め込んでもサイズが大きくならないPDF生成</h1>
+<p>Update: 2013-02-16</p>
+<p>PDFに画像埋め込んだら、どうも元のデータサイズに比べてできあがったPDFの方がかなり大きいような。。。ということはよくあります。PDFである限り避けられないようなことではなかろうと思ったので、久しぶりに Apache FOP で試してみました。７年ぶりくらいかな？まだ Apache FOP ってあるのかな？と少し心配だったのですが、ありました --&gt; <a href="http://xmlgraphics.apache.org/fop/"><a href="http://xmlgraphics.apache.org/fop/">http://xmlgraphics.apache.org/fop/</a></a></p>
+<p>fop-1.1 をダウンロードして、解凍して、動作確認を "Quick Start Guide" にあるとおり</p>
+<pre class="highlight"><code>./fop -fo examples/fo/basic/readme.fo -awt
+</code></pre>
+
+<p>とすると、エラーです - -;)</p>
+<p>まあ、Mac OS X だからと気を取り直して ( GUI関係はOS依存になってる可能性高いです )</p>
+<pre class="highlight"><code>./fop -fo examples/fo/basic/readme.fo -pdf readme.pdf
+</code></pre>
+
+<p>とすると、無事 PDF ができました。</p>
+<p>A4いっぱいのサイズ ( 297mm x 210mm ) の画像を 4個用意してこんなソースを書いてマージンもなんにもなしの 4ページを生成してみます。画像ファイルは相対パスでおいとけば OK。</p>
+<p>image-test.fo</p>
+<pre class="highlight"><code>fo:root xmlns:fo=&quot;http://www.w3.org/1999/XSL/Format&quot;
+ fo:layout-master-set
+ fo:simple-page-master margin-right=&quot;0cm&quot; margin-left=&quot;0cm&quot; margin-bottom=&quot;0cm&quot; margin-top=&quot;0cm&quot; page-width=&quot;21cm&quot; page-height=&quot;29.7cm&quot; master-name=&quot;fp&quot;
+ fo:region-body/
+ /fo:simple-page-master
+ /fo:layout-master-set
+ fo:page-sequence id=&quot;P1&quot; master-reference=&quot;fp&quot;
+ fo:flow flow-name=&quot;xsl-region-body&quot;
+ fo:block
+ fo:external-graphic width=&quot;21cm&quot; height=&quot;29.7cm&quot; content-width=&quot;21cm&quot; content-height=&quot;29.7cm&quot; src=&quot;sample1.jpg&quot;/
+ /fo:block
+ /fo:flow
+ /fo:page-sequence
+ fo:page-sequence id=&quot;P2&quot; master-reference=&quot;fp&quot;
+ fo:flow flow-name=&quot;xsl-region-body&quot;
+ fo:block
+ fo:external-graphic width=&quot;21cm&quot; height=&quot;29.7cm&quot; content-width=&quot;21cm&quot; content-height=&quot;29.7cm&quot; src=&quot;sample2.jpg&quot;/
+ /fo:block
+ /fo:flow
+ /fo:page-sequence
+ fo:page-sequence id=&quot;P3&quot; master-reference=&quot;fp&quot;
+ fo:flow flow-name=&quot;xsl-region-body&quot;
+ fo:block
+ fo:external-graphic width=&quot;21cm&quot; height=&quot;29.7cm&quot; content-width=&quot;21cm&quot; content-height=&quot;29.7cm&quot; src=&quot;sample3.jpg&quot;/
+ /fo:block
+ /fo:flow
+ /fo:page-sequence
+ fo:page-sequence id=&quot;P4&quot; master-reference=&quot;fp&quot;
+ fo:flow flow-name=&quot;xsl-region-body&quot;
+ fo:block
+ fo:external-graphic width=&quot;21cm&quot; height=&quot;29.7cm&quot; content-width=&quot;21cm&quot; content-height=&quot;29.7cm&quot; src=&quot;sample4.jpg&quot;/
+ /fo:block
+ /fo:flow
+ /fo:page-sequence
+/fo:root
+</code></pre>
+
+<p>このようなコマンドを実行すると</p>
+<pre class="highlight"><code>./fop -fo image-test.fo -pdf image-test.pdf
+</code></pre>
+
+<p>できましたよ。 Mac の Preview で見ると 1ドットくらい、 Adobe Reader だと 2ドットくらい上端が白いのがちょっと気になります。 <a href="https://docs.google.com/viewer?a=v&amp;pid=sites&amp;srcid=ZGVmYXVsdGRvbWFpbnxtaWNoaW5vYnVtYWVkYXxneDo0ZTUxN2JmNWVhNzJiMTg5">Google Docs のビュアー</a> でも出るなあ。</p>
+<p>画像サイズは 343,781 + 428,372 + 256,668 + 610,965 = 1,639,786 バイト、PDFのサイズは 1,634,738 バイトで小さくなっているような。。。なんで ^^)?</p>
+<p><a href="pdfimagesize.pdf">pdfimagesize.pdf</a></p></div>
+
+</body>
+
+</html>
