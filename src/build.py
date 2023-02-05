@@ -84,6 +84,9 @@ def save_html(tmpl, cat, md_path, sample=False):
     return [title, updated_at, tags]
 
 
+def sort_key_path(el):
+    return el['path']
+
 if __name__ == '__main__':
     src = os.path.dirname(__file__)
     docs = os.path.join(src, '..', 'docs')
@@ -101,9 +104,7 @@ if __name__ == '__main__':
         ts[0:4]
     )
 
-    meta = {
-        'pages': []
-    }
+    pages = []
 
     save_html(
         tmpl,
@@ -118,7 +119,7 @@ if __name__ == '__main__':
                 if re.match(r".*\.md$", file, flags=re.IGNORECASE):
                     dir = os.path.relpath(root, docs).replace('\\', '/')
                     path = f'{dir}/{file}'
-                    meta['pages'].append({
+                    pages.append({
                         'cat': cat,
                         'path': path,
                         'title': '',
@@ -126,5 +127,9 @@ if __name__ == '__main__':
                         'tags': [],
                     })
 
+    pages.sort(key=sort_key_path)
+    meta = {
+        'pages': pages
+    }
     with open(meta_path, 'w', encoding='utf-8') as f:
         json.dump(meta, f, ensure_ascii=False, indent=4)
