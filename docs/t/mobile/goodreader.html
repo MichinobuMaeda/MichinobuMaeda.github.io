@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,28 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>GoodReader を使ってみた</h1>
+<p>Update: 2010-09-18</p>
+<p>GoodReader というのは iPhone, iPad 向けの PDF Viewer その他の機能を持ったツールです。私の iPod touche でも動きます。書店でたまたま「GoodReader パーフェクトブック」 ( ISBN978-4-7973-6137-7 ) を見かけて買って、気に入ったので実物買いました。本は 1,280円、実物は 115円、なんだかなぁ。</p>
+<p>私の場合 Apple 社のサービス MobileMe を使っています。以前 Evernote を試してみようとしたこともあるのですが、素の Mac の方が Evernote の PC 用のクライアントより使いやすくて、結局 MobileMe で済ませています。先日は Evernote でデータ消失事故とかあったみたいだし、使って無くて良かった、という話は置いといて。</p>
+<p>GoodReader は MobileMe や Evernote のようなサービスにも対応しています。 iPod touch の場合、無線 LAN が使えないところでは手もとのファイルしか見ることができないのですが、 GoodReader であらかじめダウンロードしておけばいつでもそのファイルを見ることができる、というわけです。</p>
+<p>使ってみて、本に書いてなかったこと…</p>
+<ul>
+<li>iPhone 版はオプションも全部セットになっているようです。本にはいくつかの機能を別に買う必要があるように記していたのですが、どうもそのうち少なくとも２個の機能は本体に入っているようです。実質値下げしたようです。</li>
+<li>指２本で表示を拡大できます。これは新機能なのかもしれません。指２本をディスプレイにあてて、そーっと指の間を広げると、表示が少しずつ大きくなります。</li>
+</ul>
+<p>なお、本に書いてあったことはネタばらしになるので書きません。</p>
+<p>PC で保存した PDF などのファイルは問題なく見ることができることがわかったので、次に Google Documents を試してみました。以前 iPod touch から Google Documents の新規ファイルを作成しようてそんなメニューがないことに気がついて悲しい思いをしたことがあります。今回は、まず PC から簡単なスプレッドシートを作成して、 iPod touch で表示してみます。あたり前だけど表示できます。結構きれいです。入力したセル範囲は編集できます。定型フォームの入力あたりで使えそうです。</p>
+<p>さて、 GoodReader でこの文書をダウンロードしています。 Excel のファイルとしてダウンロードしたようです。ファイル名の末尾が ”.xls” になっています。表示すると、ん、ま、いいんじゃないかな。一部 URL と判断した箇所にリンクをつけてくれていますが、残念ながら外れです。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,36 +89,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>GoodReader を使ってみた</h1>
-<p>Update: 2010-09-18</p>
-<p>GoodReader というのは iPhone, iPad 向けの PDF Viewer その他の機能を持ったツールです。私の iPod touche でも動きます。書店でたまたま「GoodReader パーフェクトブック」 ( ISBN978-4-7973-6137-7 ) を見かけて買って、気に入ったので実物買いました。本は 1,280円、実物は 115円、なんだかなぁ。</p>
-<p>私の場合 Apple 社のサービス MobileMe を使っています。以前 Evernote を試してみようとしたこともあるのですが、素の Mac の方が Evernote の PC 用のクライアントより使いやすくて、結局 MobileMe で済ませています。先日は Evernote でデータ消失事故とかあったみたいだし、使って無くて良かった、という話は置いといて。</p>
-<p>GoodReader は MobileMe や Evernote のようなサービスにも対応しています。 iPod touch の場合、無線 LAN が使えないところでは手もとのファイルしか見ることができないのですが、 GoodReader であらかじめダウンロードしておけばいつでもそのファイルを見ることができる、というわけです。</p>
-<p>使ってみて、本に書いてなかったこと…</p>
-<ul>
-<li>iPhone 版はオプションも全部セットになっているようです。本にはいくつかの機能を別に買う必要があるように記していたのですが、どうもそのうち少なくとも２個の機能は本体に入っているようです。実質値下げしたようです。</li>
-<li>指２本で表示を拡大できます。これは新機能なのかもしれません。指２本をディスプレイにあてて、そーっと指の間を広げると、表示が少しずつ大きくなります。</li>
-</ul>
-<p>なお、本に書いてあったことはネタばらしになるので書きません。</p>
-<p>PC で保存した PDF などのファイルは問題なく見ることができることがわかったので、次に Google Documents を試してみました。以前 iPod touch から Google Documents の新規ファイルを作成しようてそんなメニューがないことに気がついて悲しい思いをしたことがあります。今回は、まず PC から簡単なスプレッドシートを作成して、 iPod touch で表示してみます。あたり前だけど表示できます。結構きれいです。入力したセル範囲は編集できます。定型フォームの入力あたりで使えそうです。</p>
-<p>さて、 GoodReader でこの文書をダウンロードしています。 Excel のファイルとしてダウンロードしたようです。ファイル名の末尾が ”.xls” になっています。表示すると、ん、ま、いいんじゃないかな。一部 URL と判断した箇所にリンクをつけてくれていますが、残念ながら外れです。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

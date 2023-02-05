@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,33 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Eclipse の Shell Script エディタ</h1>
+<p>Update: 2013-04-25</p>
+<p>追記 ( 2013-04-25 )：</p>
+<blockquote>
+<p>Eclipse 4.2 ( Juno ) の場合はこちらのURLを使ってください。</p>
+<p><code>https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.2/update</code></p>
+</blockquote>
+<p>追記 ( 2012-04-21 )：</p>
+<blockquote>
+<p>下の文章を書いたときとは別の環境で同じ手順を試すとダメでした。</p>
+<p><code>http://download.eclipse.org/technology/linuxtools/update</code></p>
+<p>から Man Page Viewer を入れるとうまくいきました。</p>
+</blockquote>
+<p>Eclipse で Shell Script をちょっと書きたいというとき、 Text Editor でもいいのですが、せめて色つけくらいしてくれるものはないかと探してみました。 ShellEd というのがあります。 <a href="http://marketplace.eclipse.org/content/shelled">Eclipse Marketplace</a> の案内に従って Zip ファイルダウンロードしてインストールしたらうまくいきません。 man の表示もしてくれるというすぐれものらしいのでもう少し粘って探してみたら <a href="http://sourceforge.net/apps/trac/shelled/wiki/Documentation/InstallGuide">Installation Guide</a> に Update サイトの案内がありました。</p>
+<p><a href="https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.1/update"></a></p>
+<p><code>https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.1/update</code></p>
+<p>私の環境が Java 6 なのを確認して、このアップデートサイトからインストールするとエラー無しで完了。拡張子 <code>.sh</code> のファイルを開いてみると、色付いてます。 Eclipse の環境設定の Shell Script &gt; Interpreters に <code>/bin/bash</code> を追加すると Mac OS X でも man の表示ができました。 Windows はだめじゃないかな。。。</p>
+<p><img alt="スクリプトの中のコマンドのを選択すると man ページが表示される" src="eclipse-shell-script-editor/shelled.png" /></p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,41 +94,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Eclipse の Shell Script エディタ</h1>
-<p>Update: 2013-04-25</p>
-<p>追記 ( 2013-04-25 )：</p>
-<blockquote>
-<p>Eclipse 4.2 ( Juno ) の場合はこちらのURLを使ってください。</p>
-<p><code>https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.2/update</code></p>
-</blockquote>
-<p>追記 ( 2012-04-21 )：</p>
-<blockquote>
-<p>下の文章を書いたときとは別の環境で同じ手順を試すとダメでした。</p>
-<p><code>http://download.eclipse.org/technology/linuxtools/update</code></p>
-<p>から Man Page Viewer を入れるとうまくいきました。</p>
-</blockquote>
-<p>Eclipse で Shell Script をちょっと書きたいというとき、 Text Editor でもいいのですが、せめて色つけくらいしてくれるものはないかと探してみました。 ShellEd というのがあります。 <a href="http://marketplace.eclipse.org/content/shelled">Eclipse Marketplace</a> の案内に従って Zip ファイルダウンロードしてインストールしたらうまくいきません。 man の表示もしてくれるというすぐれものらしいのでもう少し粘って探してみたら <a href="http://sourceforge.net/apps/trac/shelled/wiki/Documentation/InstallGuide">Installation Guide</a> に Update サイトの案内がありました。</p>
-<p><a href="https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.1/update"></a></p>
-<p><code>https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.1/update</code></p>
-<p>私の環境が Java 6 なのを確認して、このアップデートサイトからインストールするとエラー無しで完了。拡張子 <code>.sh</code> のファイルを開いてみると、色付いてます。 Eclipse の環境設定の Shell Script &gt; Interpreters に <code>/bin/bash</code> を追加すると Mac OS X でも man の表示ができました。 Windows はだめじゃないかな。。。</p>
-<p><img alt="スクリプトの中のコマンドのを選択すると man ページが表示される" src="eclipse-shell-script-editor/shelled.png" /></p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

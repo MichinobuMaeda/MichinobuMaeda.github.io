@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,29 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Flutter の多言語化で JSON を使いたくない</h1>
+<p>Update: 2022-02-14</p>
+<p>Flutter の<a href="https://docs.flutter.dev/development/accessibility-and-localization/internationalization">国際化のガイド</a>
+に <code>*.arb</code> という
+JSON ベースの設定ファイルが出てくるのですけれど、あまり好きではないな。</p>
+<p>Flutter の場合、その設定ファイルを変更した後にコード生成のための一手間が必要ですし、設定に何か間違いがあればコード生成の後でビルドエラーになってしまいます。生成されたコードを見ると設定ファイルに比べて可読性が悪いようにも思えませんし、それなら Dart で直接書けばいいと思ったわけです。そうすれば、何か変更した瞬間に IDE が他のプログラムと同じようにエラー検出してくれますから、その方がいいです。コーディングのペースを維持できます。</p>
+<p>とはいえ、最初から全部書くのはたいへんなので、まず、上記のページの手順で一度コードを生成します。その際、サンプルとしてパラメータの埋め込みがあるようなデータも入れておきます。</p>
+<p>生成したコードは <code>.dart_tool/flutter_gen/gen_l10n</code> に出力されるので、それを
+<code>lib</code> の下の自分の好きな場所にコピーします。ファイル名も変えたければ変えていいです。</p>
+<p>そして、 <code>import 'package:flutter_gen/gen_l10n/app_localizations.dart';</code>
+をその場所に変更して、コード生成のために作成した
+<code>*.arb</code> ファイルや　<code>l10n.yaml</code> や <code>pubspec.yaml</code> の <code>generate: true</code>
+の設定を消します。これでビルドが通れば OK.</p>
+<p>Tag: flutter dart</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,37 +90,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Flutter の多言語化で JSON を使いたくない</h1>
-<p>Update: 2022-02-14</p>
-<p>Flutter の<a href="https://docs.flutter.dev/development/accessibility-and-localization/internationalization">国際化のガイド</a>
-に <code>*.arb</code> という
-JSON ベースの設定ファイルが出てくるのですけれど、あまり好きではないな。</p>
-<p>Flutter の場合、その設定ファイルを変更した後にコード生成のための一手間が必要ですし、設定に何か間違いがあればコード生成の後でビルドエラーになってしまいます。生成されたコードを見ると設定ファイルに比べて可読性が悪いようにも思えませんし、それなら Dart で直接書けばいいと思ったわけです。そうすれば、何か変更した瞬間に IDE が他のプログラムと同じようにエラー検出してくれますから、その方がいいです。コーディングのペースを維持できます。</p>
-<p>とはいえ、最初から全部書くのはたいへんなので、まず、上記のページの手順で一度コードを生成します。その際、サンプルとしてパラメータの埋め込みがあるようなデータも入れておきます。</p>
-<p>生成したコードは <code>.dart_tool/flutter_gen/gen_l10n</code> に出力されるので、それを
-<code>lib</code> の下の自分の好きな場所にコピーします。ファイル名も変えたければ変えていいです。</p>
-<p>そして、 <code>import 'package:flutter_gen/gen_l10n/app_localizations.dart';</code>
-をその場所に変更して、コード生成のために作成した
-<code>*.arb</code> ファイルや　<code>l10n.yaml</code> や <code>pubspec.yaml</code> の <code>generate: true</code>
-の設定を消します。これでビルドが通れば OK.</p>
-<p>Tag: flutter dart</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,35 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Python の Google App Engine で favicon.ico</h1>
+<p>Update: unknown</p>
+<p>Google App Engine の管理コンソールにたくさん出てくる favicon.ico 。。。じゃまです。</p>
+<p>でも、 Python の場合どうやって置くのかがよくわかりません。 <code>app.yaml</code> で静的なコンテンツを置くディレクトリを指定することはできるのですが、トップにこうやって <code>/favicon.ico</code> 置くにはどうしたらいいの？</p>
+<p>なかったので調べてみました。</p>
+<p>How do you generate the list of URIs showing the most errors in my application's admin console?</p>
+<p><a href="https://developers.google.com/appengine/kb/general#erroruris">https://developers.google.com/appengine/kb/general#erroruris</a></p>
+<p>Static File Handlers</p>
+<p><a href="https://developers.google.com/appengine/docs/python/config/appconfig#Static_File_Handlers">https://developers.google.com/appengine/docs/python/config/appconfig#Static_File_Handlers</a></p>
+<p>ようするに <code>app.yaml</code> にこんな感じで設定しろということです。</p>
+<pre class="highlight"><code>- url: /favicon\.ico
+  static_files: static/favicon.ico
+  upload: static/favicon\.ico
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p><code>static_files</code> とは別に upload を指定していますが、 Google さんのサンプルを見た限りではありがたみを感じませんでした。</p>
+<pre class="highlight"><code>  static_files: archives/\2/items/\1
+</code></pre>
+
+<p>のような形があるので、この値を正規表現として使ってファイルを特定することはできないということのようです。作った人の気持ちはなんとなくわかります。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,43 +96,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Python の Google App Engine で favicon.ico</h1>
-<p>Update: unknown</p>
-<p>Google App Engine の管理コンソールにたくさん出てくる favicon.ico 。。。じゃまです。</p>
-<p>でも、 Python の場合どうやって置くのかがよくわかりません。 <code>app.yaml</code> で静的なコンテンツを置くディレクトリを指定することはできるのですが、トップにこうやって <code>/favicon.ico</code> 置くにはどうしたらいいの？</p>
-<p>なかったので調べてみました。</p>
-<p>How do you generate the list of URIs showing the most errors in my application's admin console?</p>
-<p><a href="https://developers.google.com/appengine/kb/general#erroruris">https://developers.google.com/appengine/kb/general#erroruris</a></p>
-<p>Static File Handlers</p>
-<p><a href="https://developers.google.com/appengine/docs/python/config/appconfig#Static_File_Handlers">https://developers.google.com/appengine/docs/python/config/appconfig#Static_File_Handlers</a></p>
-<p>ようするに <code>app.yaml</code> にこんな感じで設定しろということです。</p>
-<pre class="highlight"><code>- url: /favicon\.ico
-  static_files: static/favicon.ico
-  upload: static/favicon\.ico
-</code></pre>
-
-<p><code>static_files</code> とは別に upload を指定していますが、 Google さんのサンプルを見た限りではありがたみを感じませんでした。</p>
-<pre class="highlight"><code>  static_files: archives/\2/items/\1
-</code></pre>
-
-<p>のような形があるので、この値を正規表現として使ってファイルを特定することはできないということのようです。作った人の気持ちはなんとなくわかります。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

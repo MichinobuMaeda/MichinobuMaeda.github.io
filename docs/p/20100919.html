@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,46 +46,9 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
-
-    <footer>
-      <ul class="social">
-        <li>
-          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
-        </li>
-        <li>
-          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
-              alt="Mastodon" /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
-              alt="Facebook" /></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
-              alt="Instagram" /></a>
-        </li>
-        <li>
-          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
-              alt="mixi" /></a>
-        </li>
-      </ul>
-
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
-      </div>
-    </footer>
-  </div>
-
-
-  <div class="content"><h1>原子力発電所の廃熱量</h1>
+  </header>
+  <div id="main">
+    <div class="content"><h1>原子力発電所の廃熱量</h1>
 <p>Update: 2010-09-19</p>
 <p>原子力発電所の熱効率、つまり、熱として放出される核分裂のエネルギーが電気に変換される割合は、単純に、定格電気出力を定格熱出力で割ればいいそうです。</p>
 <p><a href="http://questionbox.jp.msn.com/qa3061250.html">原子力発電の熱効率の算出方法</a></p>
@@ -111,7 +71,50 @@
 <p>利根川で考えるとたいへんなことのように見えますが、黒潮の流量、数千万立方メートルと比べると桁違いに小さいのでさすがに猛暑の原因ってわけではなさそうです。しかし、原子力発電所ができるってことは、一級河川が一個できるくらいのインパクトがあったりしないかな？</p>
 <p>ちなみに、日本の火力発電所の熱効率は近年もがんばって上げていて東京電力のページ <a href="http://www.tepco.co.jp/eco/report/glb/05-j.html">火力発電効率の向上</a> によると 46.9% だとのことです。つまり無駄になる熱出力は原子力発電の  35 ÷ 46.9 × (100 - 46.9) / (100 - 35)  = 61 ( % ) くらいです。上記の計算が合っているとして、同じ発電量なら利根川あたり 3℃ くらいの温度上昇ということになります。ただし、二酸化炭素の放出による温室効果の話は別です。</p></div>
 
-  <script src="/js/site.js"></script>
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,46 +46,9 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
-
-    <footer>
-      <ul class="social">
-        <li>
-          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
-        </li>
-        <li>
-          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
-              alt="Mastodon" /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
-              alt="Facebook" /></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
-              alt="Instagram" /></a>
-        </li>
-        <li>
-          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
-              alt="mixi" /></a>
-        </li>
-      </ul>
-
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
-      </div>
-    </footer>
-  </div>
-
-
-  <div class="content"><h1>整理中：jQuery 日記</h1>
+  </header>
+  <div id="main">
+    <div class="content"><h1>整理中：jQuery 日記</h1>
 <p>Update: 2011-01-24</p>
 <h2>2010-07-03 ちょいと試す</h2>
 <p>参考にした本は「JavaScript + jQuery ベーシックマスター」 ISBN978-4-7678-0956-4 です。何はともあれ <a href="http://jquery.com/"><a href="http://jquery.com/">http://jquery.com/</a></a> から jquery-1.4.2.min.js をダウンロードして試してみます。練習の課題にするのは、以前 prototype.js で作った 郵便番号データを利用する機能 と同じようなもの。要素のイベントを設定したり、受信した JSON データで選択リストを作ってみたりします。とりあえず、都道府県のリストだけ生成する簡単なプログラムを。素の機能の使い勝手を比べてみたかんじ prototype.js より簡単そうです。</p>
@@ -210,7 +170,50 @@
 <p>サンプルはこちらに移動しました。</p>
 <p><a href="http://code.google.com/p/zippyzipjp/"><a href="http://code.google.com/p/zippyzipjp/">http://code.google.com/p/zippyzipjp/</a></a></p></div>
 
-  <script src="/js/site.js"></script>
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

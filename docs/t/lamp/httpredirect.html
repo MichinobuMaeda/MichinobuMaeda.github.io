@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,21 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>HTTP で Redirect しよう</h1>
+<p>Update: 2011-01-29</p>
+<p>こちらの記事 <a href="http://www.stevenhargrove.com/redirect-web-pages/">"How To Redirect A Web Page, The Smart Way"</a> によると、 Web サイトの引っ越しをする場合、 HTML で <code>&lt;meta http-equiv="refresh" ...</code> とかしてリダイレクトしちゃだめなのだそうです。この方法は SPAM のために使われてきたので、サーチエンジンに嫌われるとのこと。 HTML ファイルに直接書かず JavaScript でどうにかしたとしても、そのくらいのものはサーチエンジンが容易に検出してしまうのでダメ。そのかわりに、 HTTP のステータス 301 でリダイレクトしましょうとのことです。</p>
+<p>Apache の場合についてはこちらのページ <a href="http://httpd.apache.org/docs/2.0/mod/mod_alias.html"><a href="http://httpd.apache.org/docs/2.0/mod/mod_alias.html"><a href="http://httpd.apache.org/docs/2.0/mod/mod_alias.html">http://httpd.apache.org/docs/2.0/mod/mod_alias.html</a></a></a> に <code>http.conf</code> や <code>.htaccess</code> に記述する構文と例が出ています。 <code>"Redirect"</code> ディレクティブです。 <code>"``Redirect"</code> ディレクティブのデフォルトはステータス 302  ( 一時的な移動という意味 ) になるので、引数 <code>"permanent"</code> を設定するか、 <code>"RedirectPermanent"</code> ディレクティブを使うかどちらかにします。日本語 ( というか UTF-8 ) のパス名もでだいじょうぶなようです。</p>
+<p>それ以外の様々な環境や言語の場合の例が <a href="http://www.stevenhargrove.com/redirect-web-pages/">"How To Redirect A Web Page, The Smart Way"</a> に載っています。</p>
+<p>それから、 <a href="http://www.mattcutts.com/blog/canonical-link-tag/">Canonical Link</a> についても記しています。これは、サブドメイン間で使うことはできるのですが、異なるドメインの間では使えないとのことです。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,29 +82,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>HTTP で Redirect しよう</h1>
-<p>Update: 2011-01-29</p>
-<p>こちらの記事 <a href="http://www.stevenhargrove.com/redirect-web-pages/">"How To Redirect A Web Page, The Smart Way"</a> によると、 Web サイトの引っ越しをする場合、 HTML で <code>&lt;meta http-equiv="refresh" ...</code> とかしてリダイレクトしちゃだめなのだそうです。この方法は SPAM のために使われてきたので、サーチエンジンに嫌われるとのこと。 HTML ファイルに直接書かず JavaScript でどうにかしたとしても、そのくらいのものはサーチエンジンが容易に検出してしまうのでダメ。そのかわりに、 HTTP のステータス 301 でリダイレクトしましょうとのことです。</p>
-<p>Apache の場合についてはこちらのページ <a href="http://httpd.apache.org/docs/2.0/mod/mod_alias.html"><a href="http://httpd.apache.org/docs/2.0/mod/mod_alias.html"><a href="http://httpd.apache.org/docs/2.0/mod/mod_alias.html">http://httpd.apache.org/docs/2.0/mod/mod_alias.html</a></a></a> に <code>http.conf</code> や <code>.htaccess</code> に記述する構文と例が出ています。 <code>"Redirect"</code> ディレクティブです。 <code>"``Redirect"</code> ディレクティブのデフォルトはステータス 302  ( 一時的な移動という意味 ) になるので、引数 <code>"permanent"</code> を設定するか、 <code>"RedirectPermanent"</code> ディレクティブを使うかどちらかにします。日本語 ( というか UTF-8 ) のパス名もでだいじょうぶなようです。</p>
-<p>それ以外の様々な環境や言語の場合の例が <a href="http://www.stevenhargrove.com/redirect-web-pages/">"How To Redirect A Web Page, The Smart Way"</a> に載っています。</p>
-<p>それから、 <a href="http://www.mattcutts.com/blog/canonical-link-tag/">Canonical Link</a> についても記しています。これは、サブドメイン間で使うことはできるのですが、異なるドメインの間では使えないとのことです。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

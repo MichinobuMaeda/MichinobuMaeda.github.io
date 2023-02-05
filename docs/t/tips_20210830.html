@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,31 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Tips</h1>
+<p>Update: 2021-09-09</p>
+<h2>キーボード無しで Windows の設定</h2>
+<p>Bluetooth キーボードしかないときに Windows をインストールするにはスクリーンキーボードを使えばよい。</p>
+<h2>Windows のマウスホイールを逆にする</h2>
+<p>Windows　コンピュータ管理 »　コンピューターの管理 » デバイス マネージャー » マウスとそのほかのポインティング デバイス</p>
+<p>から該当するマウスのプロパティを開く。複数のマウスが表示されていて該当するマウスがどれかわからないときは、マウスを抜き差ししてみる。プロパティの「詳細」の「デバイス インスタンス パス」を選択する。</p>
+<p>レジストリエディタ( <code>regedit</code> ) で <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enue\HID</code> を開く。その下に、「デバイス インスタンス パス」の先頭の <code>HID\</code> を除いた部分に一致するキーを探す。そのサブキー <code>Device Parameters</code> の値 <code>FlipFlopWheel</code> を 1 に変更する。</p>
+<p>レジストリエディタとコンピュータの管理を閉じて、変更を反映するためにマウスを抜き差しする。</p>
+<p><a href="https://answers.microsoft.com/en-us/windows/forum/all/reverse-the-scroll-of-mouse/334669c3-8a45-4600-830a-8df628d7415e?auth=1">Reverse the scroll of mouse</a></p>
+<h2>Mac OS のコンピュータ名の変更</h2>
+<p>Mac OS のコンピュータ名の変更は「システム環境設定」→「共有」</p>
+<h2>Chromebook の空き容量</h2>
+<p>Chromebook の空き容量を調べるには「ファイル」の「ダウンロード」の右上の詳細メニューを開く。</p>
+<p><a href="https://beebom.com/how-check-storage-space-chromebook/">https://beebom.com/how-check-storage-space-chromebook/</a></p>
+<p>Tag: Windows ChromeOS Chromebook</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,39 +92,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Tips</h1>
-<p>Update: 2021-09-09</p>
-<h2>キーボード無しで Windows の設定</h2>
-<p>Bluetooth キーボードしかないときに Windows をインストールするにはスクリーンキーボードを使えばよい。</p>
-<h2>Windows のマウスホイールを逆にする</h2>
-<p>Windows　コンピュータ管理 »　コンピューターの管理 » デバイス マネージャー » マウスとそのほかのポインティング デバイス</p>
-<p>から該当するマウスのプロパティを開く。複数のマウスが表示されていて該当するマウスがどれかわからないときは、マウスを抜き差ししてみる。プロパティの「詳細」の「デバイス インスタンス パス」を選択する。</p>
-<p>レジストリエディタ( <code>regedit</code> ) で <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enue\HID</code> を開く。その下に、「デバイス インスタンス パス」の先頭の <code>HID\</code> を除いた部分に一致するキーを探す。そのサブキー <code>Device Parameters</code> の値 <code>FlipFlopWheel</code> を 1 に変更する。</p>
-<p>レジストリエディタとコンピュータの管理を閉じて、変更を反映するためにマウスを抜き差しする。</p>
-<p><a href="https://answers.microsoft.com/en-us/windows/forum/all/reverse-the-scroll-of-mouse/334669c3-8a45-4600-830a-8df628d7415e?auth=1">Reverse the scroll of mouse</a></p>
-<h2>Mac OS のコンピュータ名の変更</h2>
-<p>Mac OS のコンピュータ名の変更は「システム環境設定」→「共有」</p>
-<h2>Chromebook の空き容量</h2>
-<p>Chromebook の空き容量を調べるには「ファイル」の「ダウンロード」の右上の詳細メニューを開く。</p>
-<p><a href="https://beebom.com/how-check-storage-space-chromebook/">https://beebom.com/how-check-storage-space-chromebook/</a></p>
-<p>Tag: Windows ChromeOS Chromebook</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

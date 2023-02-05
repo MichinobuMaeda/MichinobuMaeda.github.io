@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,25 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>本気でパスワード v2.0</h1>
+<p>Update: 2019-06-16</p>
+<p>追記: 2021-05-23 最新版はこちら <a href="https://pages.michinobu.jp/t/20210522honkipass.html">https://pages.michinobu.jp/t/20210522honkipass.html</a></p>
+<p>13年ぶりのリニューアルです。スマホでの使い勝手を改善しました。</p>
+<p><a href="https://michinobu.jp/honkipass/"><img alt="" src="honkipass.png" /></a></p>
+<p>Windows の Internet Explorer の場合は Ctrlキーを押しながら Sキー、 Mac の Safari の場合はメニュー「ファイル」「別名で保存」(⌘S) でフォーマット「Webアーカイブ」を選択して保存するとオフラインでも利用できます。</p>
+<p>Windows の Edge でタスクバーかスタートにピン止めした場合やスマホでホーム画面に追加した場合は「本」アイコンになります。</p>
+<p>実物はこちらです。 <a href="https://michinobu.jp/honkipass/">https://michinobu.jp/honkipass/</a></p>
+<p>ソースはこちらです。 <a href="https://github.com/MichinobuMaeda/honkipass">https://github.com/MichinobuMaeda/honkipass</a></p>
+<p>Tag: JavaScript security password</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,33 +86,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>本気でパスワード v2.0</h1>
-<p>Update: 2019-06-16</p>
-<p>追記: 2021-05-23 最新版はこちら <a href="https://pages.michinobu.jp/t/20210522honkipass.html">https://pages.michinobu.jp/t/20210522honkipass.html</a></p>
-<p>13年ぶりのリニューアルです。スマホでの使い勝手を改善しました。</p>
-<p><a href="https://michinobu.jp/honkipass/"><img alt="" src="honkipass.png" /></a></p>
-<p>Windows の Internet Explorer の場合は Ctrlキーを押しながら Sキー、 Mac の Safari の場合はメニュー「ファイル」「別名で保存」(⌘S) でフォーマット「Webアーカイブ」を選択して保存するとオフラインでも利用できます。</p>
-<p>Windows の Edge でタスクバーかスタートにピン止めした場合やスマホでホーム画面に追加した場合は「本」アイコンになります。</p>
-<p>実物はこちらです。 <a href="https://michinobu.jp/honkipass/">https://michinobu.jp/honkipass/</a></p>
-<p>ソースはこちらです。 <a href="https://github.com/MichinobuMaeda/honkipass">https://github.com/MichinobuMaeda/honkipass</a></p>
-<p>Tag: JavaScript security password</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

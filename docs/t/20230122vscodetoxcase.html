@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,31 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>VS Code で大文字・小文字変換</h1>
+<p>Update: 2023-01-22</p>
+<p>VS Code のメニューには大文字・小文字変換のような項目がありません。どうすればいいの？と検索すると、ショートカットキーの設定の例が出てます。
+<a href="Make selected block of text uppercase"><a href="https://stackoverflow.com/questions/35184509/make-selected-block-of-text-uppercase">https://stackoverflow.com/questions/35184509/make-selected-block-of-text-uppercase</a></a></p>
+<p>でも、ショートカットを覚えておくほど頻繁に使うわけではないです。
+vi どころか emacs でもキー・アサインを覚えるのが嫌で利用をやめてしまった私に、そんなことを言われても、ねぇ。。。</p>
+<p>とりあえず、変換したい文字列を選択して <code>⌘ + Shift + P</code> ( Windows は <code>Ctrl + Shift + P</code> ) を押して、
+"case" と入力すると、おぉ、いい感じです。 Lowercase と Uppercase だけでなく Kebab Case や Snake Case も候補に出ています。</p>
+<p><img alt="Ctrl+Shift+P case" src="20230122vscodetoxcase.png" /></p>
+<p>元: <code>vs code to x case</code></p>
+<p>Uppercase: <code>VS CODE TO X CASE</code></p>
+<p>Title case: <code>Vs Code To X Case</code></p>
+<p>元: <code>VsCodeToXCase</code></p>
+<p>Kebab case: <code>vs-code-to-x-case</code></p>
+<p>Snake case: <code>vs_code_to_x_case</code></p>
+<p>Tag: vscode</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,39 +92,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>VS Code で大文字・小文字変換</h1>
-<p>Update: 2023-01-22</p>
-<p>VS Code のメニューには大文字・小文字変換のような項目がありません。どうすればいいの？と検索すると、ショートカットキーの設定の例が出てます。
-<a href="Make selected block of text uppercase"><a href="https://stackoverflow.com/questions/35184509/make-selected-block-of-text-uppercase">https://stackoverflow.com/questions/35184509/make-selected-block-of-text-uppercase</a></a></p>
-<p>でも、ショートカットを覚えておくほど頻繁に使うわけではないです。
-vi どころか emacs でもキー・アサインを覚えるのが嫌で利用をやめてしまった私に、そんなことを言われても、ねぇ。。。</p>
-<p>とりあえず、変換したい文字列を選択して <code>⌘ + Shift + P</code> ( Windows は <code>Ctrl + Shift + P</code> ) を押して、
-"case" と入力すると、おぉ、いい感じです。 Lowercase と Uppercase だけでなく Kebab Case や Snake Case も候補に出ています。</p>
-<p><img alt="Ctrl+Shift+P case" src="20230122vscodetoxcase.png" /></p>
-<p>元: <code>vs code to x case</code></p>
-<p>Uppercase: <code>VS CODE TO X CASE</code></p>
-<p>Title case: <code>Vs Code To X Case</code></p>
-<p>元: <code>VsCodeToXCase</code></p>
-<p>Kebab case: <code>vs-code-to-x-case</code></p>
-<p>Snake case: <code>vs_code_to_x_case</code></p>
-<p>Tag: vscode</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

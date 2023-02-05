@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,27 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>127.0.1.1 って？</h1>
+<p>Update: 2012-07-28</p>
+<p>Ubuntu 12.04 Server の <code>/etc/hosts</code> を見ると</p>
+<pre class="highlight"><code>127.0.1.1      myhostname
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>という行がありました。インストール時に自動で生成されたようです。 <code>localhost</code> は <code>127.0.0.1</code> です。実在しない IP アドレスだし、いらないと思うんだけど、いったいなに？と調べてみました。</p>
+<p>Debian Reference 5.1.2. The hostname resolution</p>
+<p><a href="http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution"><a href="http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution"><a href="http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution">http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution</a></a></a></p>
+<p>Debian Bug report logs - #316099</p>
+<p><a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099"><a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099">http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099</a></a></p>
+<p><code>/etc/hosts</code> の中に <code>hostname</code> があった方がいい場合があるのでとりあえず入れといた、ってことのようです。固定の IP アドレスがない場合が云々と書いてますが、 DHCP 使わずに固定 IP 割り当てる場合は、普通にそのアドレスにしておけばいいってことですね。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,35 +88,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>127.0.1.1 って？</h1>
-<p>Update: 2012-07-28</p>
-<p>Ubuntu 12.04 Server の <code>/etc/hosts</code> を見ると</p>
-<pre class="highlight"><code>127.0.1.1      myhostname
-</code></pre>
-
-<p>という行がありました。インストール時に自動で生成されたようです。 <code>localhost</code> は <code>127.0.0.1</code> です。実在しない IP アドレスだし、いらないと思うんだけど、いったいなに？と調べてみました。</p>
-<p>Debian Reference 5.1.2. The hostname resolution</p>
-<p><a href="http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution"><a href="http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution"><a href="http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution">http://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution</a></a></a></p>
-<p>Debian Bug report logs - #316099</p>
-<p><a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099"><a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099">http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099</a></a></p>
-<p><code>/etc/hosts</code> の中に <code>hostname</code> があった方がいい場合があるのでとりあえず入れといた、ってことのようです。固定の IP アドレスがない場合が云々と書いてますが、 DHCP 使わずに固定 IP 割り当てる場合は、普通にそのアドレスにしておけばいいってことですね。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

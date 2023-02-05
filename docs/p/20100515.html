@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,29 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>日米と主要国の貿易額</h1>
+<p>Update: 2010-05-15</p>
+<p>JETRO 貿易統計データベース <a href="http://www.jetro.go.jp/cgi-bin/nats/cgi-bin/top.cgi?PGID=000&amp;REP_CNT=0">http://www.jetro.go.jp/cgi-bin/nats/cgi-bin/top.cgi?PGID=000&amp;REP_CNT=0</a> を基に、日米の貿易額のグラフを作ってみました。</p>
+<p><a href="shushi19992009.pdf">shushi19992009.pdf</a></p>
+<p>米国の数値がある1999年から2009年まで、日米いずれかについて貿易額の大きな28カ国を選んでいます。20カ国にするつもりだったのですが、気になる国を追加して増えてしまいました。</p>
+<h2>中国との貿易の増加</h2>
+<p>日米とも中国との貿易が増えています。2009年の場合、日本は輸出入とも中国がトップ、米国は輸出についてはカナダ・メキシコに及びませんが輸入はトップで、また、輸出入とも日米間を上回ります。</p>
+<h2>米国の輸出入の不均衡</h2>
+<p>グラフにしてみると、米国の輸出総額に対する輸入総額の超過が目立ちます。1980年代後半にはドル安を誘導しました。また、現在は中国の元をどうにかしようとしています。しかし、それでどうにかなるのかというと、対中国の貿易収支を為替レートで調整したくらいではどうにもなりそうにない感じです。総額の差が大きすぎます。米国内の産業の空洞化など、内政の根本的な改善が必要なのではないかと思います。</p>
+<h2>イスラエルと産油国</h2>
+<p>日米の中東の各国の貿易額を比べてみると、国毎の差が大きいです。米国はイスラエルとの貿易が多く、日本は産油国からの輸入が多いです。不況に入る前のドバイのバブルの原資は日本への石油の輸出なのかもしれません。</p>
+<p>イラクは、米国による輸入が順調に増えていますが、日本は一桁下の金額です。イランは逆に、日本との貿易が多く、米国は少ないです。イラクとイランについては、米国の外交政策との関係が気になります。</p>
+<h2>日本の対露輸出</h2>
+<p>日本からロシアへの輸出額の変動の激しさが目立ちます。ロシアは日本から贅沢品ばかり買ってくれているのでしょうか。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,37 +90,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>日米と主要国の貿易額</h1>
-<p>Update: 2010-05-15</p>
-<p>JETRO 貿易統計データベース <a href="http://www.jetro.go.jp/cgi-bin/nats/cgi-bin/top.cgi?PGID=000&amp;REP_CNT=0">http://www.jetro.go.jp/cgi-bin/nats/cgi-bin/top.cgi?PGID=000&amp;REP_CNT=0</a> を基に、日米の貿易額のグラフを作ってみました。</p>
-<p><a href="shushi19992009.pdf">shushi19992009.pdf</a></p>
-<p>米国の数値がある1999年から2009年まで、日米いずれかについて貿易額の大きな28カ国を選んでいます。20カ国にするつもりだったのですが、気になる国を追加して増えてしまいました。</p>
-<h2>中国との貿易の増加</h2>
-<p>日米とも中国との貿易が増えています。2009年の場合、日本は輸出入とも中国がトップ、米国は輸出についてはカナダ・メキシコに及びませんが輸入はトップで、また、輸出入とも日米間を上回ります。</p>
-<h2>米国の輸出入の不均衡</h2>
-<p>グラフにしてみると、米国の輸出総額に対する輸入総額の超過が目立ちます。1980年代後半にはドル安を誘導しました。また、現在は中国の元をどうにかしようとしています。しかし、それでどうにかなるのかというと、対中国の貿易収支を為替レートで調整したくらいではどうにもなりそうにない感じです。総額の差が大きすぎます。米国内の産業の空洞化など、内政の根本的な改善が必要なのではないかと思います。</p>
-<h2>イスラエルと産油国</h2>
-<p>日米の中東の各国の貿易額を比べてみると、国毎の差が大きいです。米国はイスラエルとの貿易が多く、日本は産油国からの輸入が多いです。不況に入る前のドバイのバブルの原資は日本への石油の輸出なのかもしれません。</p>
-<p>イラクは、米国による輸入が順調に増えていますが、日本は一桁下の金額です。イランは逆に、日本との貿易が多く、米国は少ないです。イラクとイランについては、米国の外交政策との関係が気になります。</p>
-<h2>日本の対露輸出</h2>
-<p>日本からロシアへの輸出額の変動の激しさが目立ちます。ロシアは日本から贅沢品ばかり買ってくれているのでしょうか。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

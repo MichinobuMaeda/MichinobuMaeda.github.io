@@ -523,14 +523,8 @@ body, div, span, p, h1, h2, h3, h4, h5, th, td, li, dt, dt, header, nav, footer 
 }
 
 body {
-  display: flex;
-  flex-direction: row;
   --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-}
-
-.menu {
-  flex-basis: 25%;
+  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
 }
 
 header {
@@ -548,54 +542,209 @@ header img {
   vertical-align: text-bottom;
 }
 
-nav ul,
-footer ul {
-  padding-left: 0.25rem;
+nav, nav ul li {
+  display: inline-block;
 }
 
-nav ul li,
-footer ul li {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
+nav ul li a {
   display: inline-block;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
-  vertical-align: middle;
 }
 
-footer ul.social li a img {
-  height: 1rem;
+#main {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  #main {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  #main {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #main {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  #main {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  #main {
+    max-width: 1536px;
+  }
+}
+
+#main {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+  display: grid;
+  max-width: 48rem;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
+@media (min-width: 1024px) {
+  #main {
+    max-width: 72rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.content {
+  grid-column: span 1 / span 1;
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .content {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    grid-column: span 2 / span 2;
+  }
+}
+
+@media (min-width: 1280px) {
+  .content {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
 }
 
 footer {
+  grid-column: span 1 / span 1;
+}
+
+footer h2 {
+  margin-top: 0px;
+  margin-bottom: 0.5rem;
+  display: block;
+  --tw-bg-opacity: 1;
+  background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+  text-align: center;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+footer ul {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#social-media {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+#social-media li {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#social-media li a {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+#social-media li a img {
+  display: inline-block;
+  height: 1rem;
+}
+
+#license {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-footer .copyright,
-footer .license-logo,
-footer .license-desc {
-  margin-top: 0.5rem;
+#license .copyright,
+#license .license-logo,
+#license .license-desc {
   margin-bottom: 0.5rem;
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-.content {
-  margin-bottom: 1rem;
-  max-width: 48rem;
-  flex-basis: 75%;
+.content a,
+footer a,
+ul#updates li a {
+  --tw-text-opacity: 1;
+  color: rgb(14 116 144 / var(--tw-text-opacity));
+  text-decoration-line: underline;
+}
+
+code {
   --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  background-color: rgb(255 241 242 / var(--tw-bg-opacity));
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(136 19 55 / var(--tw-text-opacity));
+}
+
+pre code:not(.mermaid) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  border-radius: 0.5rem;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 h1 {
@@ -661,6 +810,7 @@ ol, ul {
   padding-left: 1rem;
 }
 
+ul#updates,
 ul#toc,
 ul#tag-cloud {
   padding-left: 0px;
@@ -674,10 +824,21 @@ ul#tag-cloud {
   margin-bottom: 0px;
 }
 
+ul#updates li,
 ul#toc li,
 ul#tag-cloud li {
   margin-left: 0px;
   list-style-type: none;
+}
+
+ul#updates {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+ul#updates li {
+  margin-bottom: 0.25rem;
+  line-height: 1.5rem;
 }
 
 #tag-ALL {
@@ -731,34 +892,4 @@ ul#tag-cloud li a.tag-8 {
 
 ul#tag-cloud li a.tag-9 {
   font-size: 2.0em;
-}
-
-.content a,
-footer a {
-  --tw-text-opacity: 1;
-  color: rgb(14 116 144 / var(--tw-text-opacity));
-  text-decoration-line: underline;
-}
-
-code {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 241 242 / var(--tw-bg-opacity));
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(136 19 55 / var(--tw-text-opacity));
-}
-
-pre code:not(.mermaid) {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  display: block;
-  border-radius: 0.5rem;
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(226 232 240 / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }

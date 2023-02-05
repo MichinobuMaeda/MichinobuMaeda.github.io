@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,46 +46,9 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
-
-    <footer>
-      <ul class="social">
-        <li>
-          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
-        </li>
-        <li>
-          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
-              alt="Mastodon" /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
-              alt="Facebook" /></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
-              alt="Instagram" /></a>
-        </li>
-        <li>
-          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
-              alt="mixi" /></a>
-        </li>
-      </ul>
-
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
-      </div>
-    </footer>
-  </div>
-
-
-  <div class="content"><h1>DokuWiki 日記</h1>
+  </header>
+  <div id="main">
+    <div class="content"><h1>DokuWiki 日記</h1>
 <p>Update: 2016-09-22</p>
 <h2>2010/02/10 使用開始</h2>
 <p>このサイト <a href="http://wiki.michinobu.jp/">http://wiki.michinobu.jp/</a> ( 閉鎖 ) では <a href="https://www.dokuwiki.org/">dokuwiki</a> を使っています。 日本語サイトでよく使われる wiki パッケージは PukiWiki です。なぜそれを使わずに dokuwiki を使うのかというと、使ってみたかったから。文句のあるやつはかかってこい!! じゃなくて。。。</p>
@@ -181,7 +141,50 @@ define('DOKU_CONF','/home/yourname/conf/');
 <p>続きは新しいサイト <a href="https://www.michinobu.jp/tek/">https://www.michinobu.jp/tek/</a> で 。</p>
 <p>Tag: dokuwiki</p></div>
 
-  <script src="/js/site.js"></script>
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

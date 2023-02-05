@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,46 +46,9 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
-
-    <footer>
-      <ul class="social">
-        <li>
-          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
-        </li>
-        <li>
-          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
-              alt="Mastodon" /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
-              alt="Facebook" /></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
-              alt="Instagram" /></a>
-        </li>
-        <li>
-          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
-              alt="mixi" /></a>
-        </li>
-      </ul>
-
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
-      </div>
-    </footer>
-  </div>
-
-
-  <div class="content"><h1>PHPのデバッグができる環境</h1>
+  </header>
+  <div id="main">
+    <div class="content"><h1>PHPのデバッグができる環境</h1>
 <p>Update: 2010-05-16</p>
 <h2>今回の制約</h2>
 <p>開発をしている人の場合、今でもまだ Windows XP を使い続けている人が多いと思いますが、私の MacBook に入っている Windows 7 をそのまま使いました。 Zend Debugger をセットアップするには Zend Server を入れるのが一番手っ取り早いのですが Windows 7 にはうまく入りませんでした ( 注：この記事を書いた時点のバージョンの話です ) 。それで、 XAMPP を使うことにしました。</p>
@@ -231,7 +191,50 @@ Java HotSpot(TM) Client VM (build 16.3-b01, mixed mode, sharing)`
 <li>「 PHP 統合開発環境 PDT2 入門 」 岸本忠士 ISBN978-4-7980-2257-4</li>
 </ul></div>
 
-  <script src="/js/site.js"></script>
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

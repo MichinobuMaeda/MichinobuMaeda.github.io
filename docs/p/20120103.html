@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,25 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>2011年の支持政党無しは40%超をキープ</h1>
+<p>Update: 2012-01-03</p>
+<p>NHKの <a href="http://www.nhk.or.jp/bunken/yoron/political/index.html">政治意識月例調査</a> の結果をグラフにしたものを更新しました。昨年2011年の支持政党無しは40%超をキープしていました。民主から社民までの主要政党の支持率をすべて足すと、支持無しと同じ 45.5% になります。</p>
+<p><a href="http://docs.google.com/spreadsheet/ccc?key=0AlF9Q0eVcd6HdDZyWkc1QzFtNVRaSUNQM3piUVUzOVE">Google Documents で作成したグラフ</a></p>
+<p>首相が替わると内閣の支持率だけでなく与党の支持率も上がるのがこれまでの傾向なのですが、2011年9月は民主党の支持率下がってます ^^; 政権に就いたら官僚の言いなりって、そりゃ、収支報告見たら収入の大半が国からもらったおカネですから。</p>
+<p><a href="http://www.soumu.go.jp/senkyo/seiji_s/seijishikin/contents/111130/0000900065.pdf">平成22年分 定期公表 民主党 収支報告書</a></p>
+<p>平成22年 ( 2010年 ) の収入約207億円のうち政党交付金が約171億円、他にも、参院と衆院の立法事務費というのがあるようです。党費？会費？は 350,554人が 1,000円ずつ払って 350,554,000円、全体の 2%にも満たない金額です。もう一桁出せば10%は超えるのに。それでも新聞代より安いんだけどなあ - -;)</p>
+<p>国が出す金に色がついていないとしても、支持者が支える基本的な財政の基盤が弱すぎです。企業団体等が出すことのできる金額に比べても少ない。聖人君子でなければおカネになびくこともあるだろうし、法規に触れないことについては天才的な官僚などがそのお膳立てをすることもあるわけで、おカネのことはあまり軽く扱わない方がいいと思います。私が民主党を支持しているわけではないとはいえ、政治が劣化するのはうれしくないです。</p>
+<p>ちなみに議員定数減らしても、政党交付金の総額は減らない、つまり、議員一人あたりの金額は増える制度になっています ( 直近の国勢調査人口に1人当たり250円を乗じて算定 ) 。</p>
+<p>それからついでに、私は、官僚が諸悪の根源だとは思っていません。官僚にささやかなプラス・アルファを与えて余計な仕事をさせる人たちがいろいろな分野にいます。省庁の官僚だけでなく、大学の先生までそんなことに使われている様子が、原発の事故の後で広く知られるようになりました。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,33 +86,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>2011年の支持政党無しは40%超をキープ</h1>
-<p>Update: 2012-01-03</p>
-<p>NHKの <a href="http://www.nhk.or.jp/bunken/yoron/political/index.html">政治意識月例調査</a> の結果をグラフにしたものを更新しました。昨年2011年の支持政党無しは40%超をキープしていました。民主から社民までの主要政党の支持率をすべて足すと、支持無しと同じ 45.5% になります。</p>
-<p><a href="http://docs.google.com/spreadsheet/ccc?key=0AlF9Q0eVcd6HdDZyWkc1QzFtNVRaSUNQM3piUVUzOVE">Google Documents で作成したグラフ</a></p>
-<p>首相が替わると内閣の支持率だけでなく与党の支持率も上がるのがこれまでの傾向なのですが、2011年9月は民主党の支持率下がってます ^^; 政権に就いたら官僚の言いなりって、そりゃ、収支報告見たら収入の大半が国からもらったおカネですから。</p>
-<p><a href="http://www.soumu.go.jp/senkyo/seiji_s/seijishikin/contents/111130/0000900065.pdf">平成22年分 定期公表 民主党 収支報告書</a></p>
-<p>平成22年 ( 2010年 ) の収入約207億円のうち政党交付金が約171億円、他にも、参院と衆院の立法事務費というのがあるようです。党費？会費？は 350,554人が 1,000円ずつ払って 350,554,000円、全体の 2%にも満たない金額です。もう一桁出せば10%は超えるのに。それでも新聞代より安いんだけどなあ - -;)</p>
-<p>国が出す金に色がついていないとしても、支持者が支える基本的な財政の基盤が弱すぎです。企業団体等が出すことのできる金額に比べても少ない。聖人君子でなければおカネになびくこともあるだろうし、法規に触れないことについては天才的な官僚などがそのお膳立てをすることもあるわけで、おカネのことはあまり軽く扱わない方がいいと思います。私が民主党を支持しているわけではないとはいえ、政治が劣化するのはうれしくないです。</p>
-<p>ちなみに議員定数減らしても、政党交付金の総額は減らない、つまり、議員一人あたりの金額は増える制度になっています ( 直近の国勢調査人口に1人当たり250円を乗じて算定 ) 。</p>
-<p>それからついでに、私は、官僚が諸悪の根源だとは思っていません。官僚にささやかなプラス・アルファを与えて余計な仕事をさせる人たちがいろいろな分野にいます。省庁の官僚だけでなく、大学の先生までそんなことに使われている様子が、原発の事故の後で広く知られるようになりました。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

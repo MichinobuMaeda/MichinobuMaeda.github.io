@@ -1,6 +1,7 @@
 function onBodyLoading() {
   filterByTag();
   setTagLink();
+  showUpdates(5);
 }
 
 function filterByTag() {
@@ -47,4 +48,23 @@ function setTagLink() {
     .map(item => item.toLowerCase())
     .map(item => `<a href="/${location.pathname.replace(/^\//, '').replace(/\/.*/, '')}/?tag=${item}">${item}</a>`)
     .join(' ');
+}
+
+function showUpdates(count) {
+  const http = new XMLHttpRequest();
+  http.overrideMimeType("application/json");
+  http.open("GET", '/meta.json', true);
+  http.onreadystatechange = () => {
+    if (http.readyState === 4 && http.status == "200") {
+      meta = JSON.parse(http.responseText);
+      pages = meta.pages.filter(page => page.updated_at.match(/^2/));
+      pages.sort((a, b) => a.updated_at === b.updated_at ? 0 : a.updated_at < b.updated_at ? 1 : -1);
+      li = '';
+      for (i = 0; i < count && i < pages.length; ++i) {
+        li += '<li>' + pages[i].updated_at + '<br><a href="/' + pages[i].path + '">' + pages[i].title + '</a></li>'
+      }
+      document.getElementById('updates').innerHTML = li;
+    }
+  }
+  http.send(null);
 }

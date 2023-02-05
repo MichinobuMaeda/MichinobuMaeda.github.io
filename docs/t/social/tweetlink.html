@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,25 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Movable Type に Twitter 投稿リンクを追加</h1>
+<p>Update: 2010-09-28</p>
+<p>みちのぶのねぐら B面 に Twitter で感想など投稿してもらうためのリンクを追加しました。やることは簡単。「ブログ記事」に次のコードを追加しただけ。</p>
+<pre class="highlight"><code class="language-html">&lt;div&gt;&lt;a href=&quot;javascript:location.href='http://twitter.com/home?status='+`encodeURIComponent(document.title)+'%20'+encodeURIComponent(location.href);&quot;&gt;ご感想を Twitter で&lt;/a&gt;&lt;/div&gt;`
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>ん？ もしかして、こっちにも同じように入れたらいい？ ということで、ここで使っているテンプレートはフッタの編集ができるので、ページの一番下に入れました。</p>
+<p>追記 : 2011-01-24</p>
+<p>引っ越し先のA面、B面、C面ではこのリンクはやめました。</p>
+<p>Tag: html twitter</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,33 +86,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Movable Type に Twitter 投稿リンクを追加</h1>
-<p>Update: 2010-09-28</p>
-<p>みちのぶのねぐら B面 に Twitter で感想など投稿してもらうためのリンクを追加しました。やることは簡単。「ブログ記事」に次のコードを追加しただけ。</p>
-<pre class="highlight"><code class="language-html">&lt;div&gt;&lt;a href=&quot;javascript:location.href='http://twitter.com/home?status='+`encodeURIComponent(document.title)+'%20'+encodeURIComponent(location.href);&quot;&gt;ご感想を Twitter で&lt;/a&gt;&lt;/div&gt;`
-</code></pre>
-
-<p>ん？ もしかして、こっちにも同じように入れたらいい？ ということで、ここで使っているテンプレートはフッタの編集ができるので、ページの一番下に入れました。</p>
-<p>追記 : 2011-01-24</p>
-<p>引っ越し先のA面、B面、C面ではこのリンクはやめました。</p>
-<p>Tag: html twitter</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

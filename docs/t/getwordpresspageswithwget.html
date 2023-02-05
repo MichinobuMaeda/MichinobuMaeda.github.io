@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,35 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>wget で Wordpress のサイトを丸ごとコピーする</h1>
+<p>Update: 2020-09-05</p>
+<p>Wordpress で作られたサイトは特に手を加えなければ URL の末尾に <code>?p=82</code> みたいなものが付きます。これは Wordpress に限った話ではなくて Blog や Wiki 等であればたいていそうなっています。で、そんなサイトを一つ閉じることになって、その前に掲示している内容をコピーしようとしたのですが、そのサイトのアカウント情報がよくわかんなくなっていたので <code>wget</code> でコピーしておこうかと思ったのですが、 <code>wget -m</code> とすると <code>?p=82</code> みたいファイル名で保存されてしまいます。これではローカルで参照するのが面倒です。</p>
+<p>いつものように「同じことで困った人はいるはず」と探してみるといました。</p>
+<p><a href="https://superuser.com/questions/721854/mirroring-a-wordpress-website-with-wget">Mirroring a wordpress website with wget</a></p>
+<pre class="highlight"><code>wget \
+      --recursive \
+      --no-clobber \
+      --page-requisites \
+      --html-extension \
+      --convert-links \
+      --restrict-file-names=windows $url-of-site
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>だそうです。なるほど <code>--html-extension</code> ですか。そんなオプションあったっけ？
+と <code>wget --help</code> やってみたのですが、無いような。。。なぜ？
+手もとにあるバージョンの wget で本当に動くのかな？
+と心配になりつつ <code>$url-of-site</code> に URL 入れてやってみたらバッチリできましたよ。</p>
+<p>というわけで、私が再度 <code>wget --help</code> やってもわからないし思い出せないことなので、ここにメモしておきます。</p>
+<p>Tag: wget wordpress</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,43 +96,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>wget で Wordpress のサイトを丸ごとコピーする</h1>
-<p>Update: 2020-09-05</p>
-<p>Wordpress で作られたサイトは特に手を加えなければ URL の末尾に <code>?p=82</code> みたいなものが付きます。これは Wordpress に限った話ではなくて Blog や Wiki 等であればたいていそうなっています。で、そんなサイトを一つ閉じることになって、その前に掲示している内容をコピーしようとしたのですが、そのサイトのアカウント情報がよくわかんなくなっていたので <code>wget</code> でコピーしておこうかと思ったのですが、 <code>wget -m</code> とすると <code>?p=82</code> みたいファイル名で保存されてしまいます。これではローカルで参照するのが面倒です。</p>
-<p>いつものように「同じことで困った人はいるはず」と探してみるといました。</p>
-<p><a href="https://superuser.com/questions/721854/mirroring-a-wordpress-website-with-wget">Mirroring a wordpress website with wget</a></p>
-<pre class="highlight"><code>wget \
-      --recursive \
-      --no-clobber \
-      --page-requisites \
-      --html-extension \
-      --convert-links \
-      --restrict-file-names=windows $url-of-site
-</code></pre>
-
-<p>だそうです。なるほど <code>--html-extension</code> ですか。そんなオプションあったっけ？
-と <code>wget --help</code> やってみたのですが、無いような。。。なぜ？
-手もとにあるバージョンの wget で本当に動くのかな？
-と心配になりつつ <code>$url-of-site</code> に URL 入れてやってみたらバッチリできましたよ。</p>
-<p>というわけで、私が再度 <code>wget --help</code> やってもわからないし思い出せないことなので、ここにメモしておきます。</p>
-<p>Tag: wget wordpress</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

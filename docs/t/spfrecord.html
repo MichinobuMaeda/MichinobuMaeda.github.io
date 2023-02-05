@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,34 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>SPFレコードの設定</h1>
+<p>Update: 2017-12-03</p>
+<p>新設したメールサーバのテストのために Gmail 宛にメールを送ったら迷惑メールにされてしまいました。
+DNSの逆引き設定はしてるし他になんかあったっけ？
+と、過去を振り返ること数分。ああ、なんだか呪文をDNSに追加してたわ、これだ。</p>
+<p>送信ドメイン認証SPFレコードについて au</p>
+<p><a href="https://www.au.com/mobile/service/mail/attention/spf-record/">https://www.au.com/mobile/service/mail/attention/spf-record/</a></p>
+<p>日本語の説明としては、この au のページが分かりやすいです。</p>
+<p>SPFポークではありません。
+「このドメインのメールは、このIPアドレスからしか送信されないはずです」というようなことの宣言です。
+この条件に合わないメールが来たら怪しいということになります。</p>
+<p>SPFレコード追加後に受信したメールのヘッダを見ると以下のような行があって、
+Gmail さんがチェックしてくれているのがわかります。</p>
+<pre class="highlight"><code>Received-SPF: pass (google.com: domain of user@domain
+  designates 123.45.67.89 as permitted sender)
+  client-ip=123.45.67.89;
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>Tag: SPF spam email DNS</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,42 +95,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>SPFレコードの設定</h1>
-<p>Update: 2017-12-03</p>
-<p>新設したメールサーバのテストのために Gmail 宛にメールを送ったら迷惑メールにされてしまいました。
-DNSの逆引き設定はしてるし他になんかあったっけ？
-と、過去を振り返ること数分。ああ、なんだか呪文をDNSに追加してたわ、これだ。</p>
-<p>送信ドメイン認証SPFレコードについて au</p>
-<p><a href="https://www.au.com/mobile/service/mail/attention/spf-record/">https://www.au.com/mobile/service/mail/attention/spf-record/</a></p>
-<p>日本語の説明としては、この au のページが分かりやすいです。</p>
-<p>SPFポークではありません。
-「このドメインのメールは、このIPアドレスからしか送信されないはずです」というようなことの宣言です。
-この条件に合わないメールが来たら怪しいということになります。</p>
-<p>SPFレコード追加後に受信したメールのヘッダを見ると以下のような行があって、
-Gmail さんがチェックしてくれているのがわかります。</p>
-<pre class="highlight"><code>Received-SPF: pass (google.com: domain of user@domain
-  designates 123.45.67.89 as permitted sender)
-  client-ip=123.45.67.89;
-</code></pre>
-
-<p>Tag: SPF spam email DNS</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

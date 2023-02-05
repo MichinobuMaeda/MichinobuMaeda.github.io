@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,29 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Togetter の使い方</h1>
+<p>Update: 2010-03-21</p>
+<p>togetter というのは、つぶやきをリストにまとめて保存するサービスです。例えば私がつくったのはこんなもの <a href="http://togetter.com/li/10274"><a href="http://togetter.com/li/10274">http://togetter.com/li/10274</a></a></p>
+<p>まず <a href="http://togetter.com/"><a href="http://togetter.com/">http://togetter.com/</a></a> を開いてログインします。</p>
+<p>ログインに使うユーザ名とパスワードは twitter.com のものです。「Twitter経由でサイトにログインします。」と案内に書いてありますが、これは OAuth という仕組みです。 <a href="http://togetter.com/"><a href="http://togetter.com/">http://togetter.com/</a></a> には認証情報を直接渡さず、 twitter.com で認証を代理させるというかなり安全な方法なので怖がらずにつかってください。</p>
+<p>ログインしたら、右上のリンク「リスト作成」をクリックします。すると、リスト作成のページになります。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5vj3y9-I/AAAAAAAABro/83OWhwHGm90/s1600/togetter1.png" /></p>
+<p>最初の状態では、リスト作成のページの左側に自分の TL が表示されます。</p>
+<p>右側はこれからつくるリストで、最初は空っぽです。</p>
+<p>TL 以外のところからつぶやきを探したい場合は、左下の入力欄（２個あるうちの上の方、「検索」ボタンの左側）にキーワードを入力してください。ハッシュタグなどを入れるといいでしょう。そして、「検索」ボタンを押します。</p>
+<p>左側のつぶやきのうち、リストに入れたいものをマウスでせっせと右側に移動します。順番は考えなくていいです。まちがって右側に入れてしまったつぶやきは、逆に左側に戻すことができます。</p>
+<p>つぶやきの移動が終わったら「時間順に並べ替え」ボタンを押します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5x1RUduI/AAAAAAAABrs/2ICg9zoU8jM/s1600/togetter2.png" /></p>
+<p>最後に、「リストを投稿する」ボタンを押します。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,37 +90,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Togetter の使い方</h1>
-<p>Update: 2010-03-21</p>
-<p>togetter というのは、つぶやきをリストにまとめて保存するサービスです。例えば私がつくったのはこんなもの <a href="http://togetter.com/li/10274"><a href="http://togetter.com/li/10274">http://togetter.com/li/10274</a></a></p>
-<p>まず <a href="http://togetter.com/"><a href="http://togetter.com/">http://togetter.com/</a></a> を開いてログインします。</p>
-<p>ログインに使うユーザ名とパスワードは twitter.com のものです。「Twitter経由でサイトにログインします。」と案内に書いてありますが、これは OAuth という仕組みです。 <a href="http://togetter.com/"><a href="http://togetter.com/">http://togetter.com/</a></a> には認証情報を直接渡さず、 twitter.com で認証を代理させるというかなり安全な方法なので怖がらずにつかってください。</p>
-<p>ログインしたら、右上のリンク「リスト作成」をクリックします。すると、リスト作成のページになります。</p>
-<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5vj3y9-I/AAAAAAAABro/83OWhwHGm90/s1600/togetter1.png" /></p>
-<p>最初の状態では、リスト作成のページの左側に自分の TL が表示されます。</p>
-<p>右側はこれからつくるリストで、最初は空っぽです。</p>
-<p>TL 以外のところからつぶやきを探したい場合は、左下の入力欄（２個あるうちの上の方、「検索」ボタンの左側）にキーワードを入力してください。ハッシュタグなどを入れるといいでしょう。そして、「検索」ボタンを押します。</p>
-<p>左側のつぶやきのうち、リストに入れたいものをマウスでせっせと右側に移動します。順番は考えなくていいです。まちがって右側に入れてしまったつぶやきは、逆に左側に戻すことができます。</p>
-<p>つぶやきの移動が終わったら「時間順に並べ替え」ボタンを押します。</p>
-<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5x1RUduI/AAAAAAAABrs/2ICg9zoU8jM/s1600/togetter2.png" /></p>
-<p>最後に、「リストを投稿する」ボタンを押します。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,35 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Geeklogのページをwgetで静的ページに</h1>
+<p>Update: 2010-03-07</p>
+<p>このサイトを DokuWiki と Movable Type に移動して ( 2011-01 にまた Google sites と Blogger に引っ越し ) 後に残された Geeklog のページを、 wget 使って静的ページに移行しました。これで MySQL がいらなくなります。単純に「ダウンロードしてアップロードして終わり」というわけにはいかないのですが、今回の手順をスクリプトで自動化すれば、サーバの負荷の低減のために Blog系CMS や Wiki のページを静的コンテンツとして公開することも難しくなさそうです。</p>
+<h2>wget でダウンロード</h2>
+<p><code>wget -m -k -p -E www.michinobu.jp</code></p>
+<p>でダウンロードしました。それぞれのパラメータの意味は</p>
+<p><code>wget --help</code></p>
+<p>など参照してください。ダウンロードした後、仮想ディレクトリなど、不要なものをを削除します。</p>
+<h2>アップロード</h2>
+<p>テスト用のディレクトリを作成してアップロードしました。私の環境の場合、仮想ホストの設定などは自由にできるので、テスト用のディレクトリを test.michinobu.jp としました。自分の PC の hosts に test.michinobu.jp を追加して、ブラウザで表示できることを確認します。</p>
+<h2>足りないものを追加</h2>
+<p>wget は CSS の中の URL までは追いかけてくれないようです。インクルードしている CSS ファイルや background-image に指定している画像ファイルなどを所定の場所に追加します。私の場合、元のサイトのディレクトリからサブディレクトリごとまとめてコピーで済みました。次のディレクトリです。</p>
+<ul>
+<li>images</li>
+<li>layout</li>
+</ul>
+<p>これで、見た目は OK。</p>
+<h2>その他の微調整</h2>
+<p>お問い合わせページは、 Movable Type のサイトに作ったものにリダイレクトするように修正。 <a href="http://blog.michinobu.jp/mail.php">http://blog.michinobu.jp/mail.php</a> これは、 Movable Type で問い合わせページ と同じもの。</p>
+<p>外部リンクがなぜか相対パスになっているのを修正。これは wget のパラメータが不適切だったのが原因ではないだろうか。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,43 +96,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Geeklogのページをwgetで静的ページに</h1>
-<p>Update: 2010-03-07</p>
-<p>このサイトを DokuWiki と Movable Type に移動して ( 2011-01 にまた Google sites と Blogger に引っ越し ) 後に残された Geeklog のページを、 wget 使って静的ページに移行しました。これで MySQL がいらなくなります。単純に「ダウンロードしてアップロードして終わり」というわけにはいかないのですが、今回の手順をスクリプトで自動化すれば、サーバの負荷の低減のために Blog系CMS や Wiki のページを静的コンテンツとして公開することも難しくなさそうです。</p>
-<h2>wget でダウンロード</h2>
-<p><code>wget -m -k -p -E www.michinobu.jp</code></p>
-<p>でダウンロードしました。それぞれのパラメータの意味は</p>
-<p><code>wget --help</code></p>
-<p>など参照してください。ダウンロードした後、仮想ディレクトリなど、不要なものをを削除します。</p>
-<h2>アップロード</h2>
-<p>テスト用のディレクトリを作成してアップロードしました。私の環境の場合、仮想ホストの設定などは自由にできるので、テスト用のディレクトリを test.michinobu.jp としました。自分の PC の hosts に test.michinobu.jp を追加して、ブラウザで表示できることを確認します。</p>
-<h2>足りないものを追加</h2>
-<p>wget は CSS の中の URL までは追いかけてくれないようです。インクルードしている CSS ファイルや background-image に指定している画像ファイルなどを所定の場所に追加します。私の場合、元のサイトのディレクトリからサブディレクトリごとまとめてコピーで済みました。次のディレクトリです。</p>
-<ul>
-<li>images</li>
-<li>layout</li>
-</ul>
-<p>これで、見た目は OK。</p>
-<h2>その他の微調整</h2>
-<p>お問い合わせページは、 Movable Type のサイトに作ったものにリダイレクトするように修正。 <a href="http://blog.michinobu.jp/mail.php">http://blog.michinobu.jp/mail.php</a> これは、 Movable Type で問い合わせページ と同じもの。</p>
-<p>外部リンクがなぜか相対パスになっているのを修正。これは wget のパラメータが不適切だったのが原因ではないだろうか。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

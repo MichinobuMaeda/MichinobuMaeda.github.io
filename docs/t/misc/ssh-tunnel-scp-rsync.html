@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,35 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>ssh tunnel で scp と rsync</h1>
+<p>Update: 2016-07-29</p>
+<p>local ( Mac ) -- remote1 -- remote2 で scp と rsync する手順、Stack Overflow で見つけました。</p>
+<p>まず、簡単な方、 rsync は</p>
+<p>rsync through ssh tunnel</p>
+<p><a href="http://stackoverflow.com/questions/16654751/rsync-through-ssh-tunnel"><a href="http://stackoverflow.com/questions/16654751/rsync-through-ssh-tunnel">http://stackoverflow.com/questions/16654751/rsync-through-ssh-tunnel</a></a></p>
+<p>の 20 がよいです。</p>
+<pre class="highlight"><code>rsync -av -e &quot;ssh -A user1@remote1 ssh&quot; ./src user2@remote2:/dst
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>scp については</p>
+<p>How to scp with a second remote host</p>
+<p><a href="http://stackoverflow.com/questions/9139417/how-to-scp-with-a-second-remote-host"><a href="http://stackoverflow.com/questions/9139417/how-to-scp-with-a-second-remote-host">http://stackoverflow.com/questions/9139417/how-to-scp-with-a-second-remote-host</a></a></p>
+<p>に一般的な ssh tunnel の手順も載っているのですが、よく使う経路の場合 17 のオプションの設定を <code>~/.ssh/config</code> に入れておくのが楽です。以下のような感じで。</p>
+<pre class="highlight"><code>Host remote2
+    User user2
+    ProxyCommand ssh user1@remote1 nc %h %p
+</code></pre>
+
+<p>remote1 に nc が入ってなければ入れてください。ところで、これは ssh tunnel とは違うものになるのかな？ ま、動けばいいです ^^;</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,43 +96,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>ssh tunnel で scp と rsync</h1>
-<p>Update: 2016-07-29</p>
-<p>local ( Mac ) -- remote1 -- remote2 で scp と rsync する手順、Stack Overflow で見つけました。</p>
-<p>まず、簡単な方、 rsync は</p>
-<p>rsync through ssh tunnel</p>
-<p><a href="http://stackoverflow.com/questions/16654751/rsync-through-ssh-tunnel"><a href="http://stackoverflow.com/questions/16654751/rsync-through-ssh-tunnel">http://stackoverflow.com/questions/16654751/rsync-through-ssh-tunnel</a></a></p>
-<p>の 20 がよいです。</p>
-<pre class="highlight"><code>rsync -av -e &quot;ssh -A user1@remote1 ssh&quot; ./src user2@remote2:/dst
-</code></pre>
-
-<p>scp については</p>
-<p>How to scp with a second remote host</p>
-<p><a href="http://stackoverflow.com/questions/9139417/how-to-scp-with-a-second-remote-host"><a href="http://stackoverflow.com/questions/9139417/how-to-scp-with-a-second-remote-host">http://stackoverflow.com/questions/9139417/how-to-scp-with-a-second-remote-host</a></a></p>
-<p>に一般的な ssh tunnel の手順も載っているのですが、よく使う経路の場合 17 のオプションの設定を <code>~/.ssh/config</code> に入れておくのが楽です。以下のような感じで。</p>
-<pre class="highlight"><code>Host remote2
-    User user2
-    ProxyCommand ssh user1@remote1 nc %h %p
-</code></pre>
-
-<p>remote1 に nc が入ってなければ入れてください。ところで、これは ssh tunnel とは違うものになるのかな？ ま、動けばいいです ^^;</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,24 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>企業には税より社会保障負担の方が重荷なのでは？</h1>
+<p>Update: 2010-05-23</p>
+<p>ここのところ日本の法人税率のことが話題になっているようです。参院選の各政党のマニフェストにも触れられることでしょう。これについて、私にはとても納得いかない点があります。それは、「企業にとって税より社会保障負担の方が重荷なんじゃないの？」ということです。どちらが多いかということだけではありません。社会保障負担は、企業の決算が赤字であろうが黒字であろうが関係なく果たされるという点で重要です。特に、私が属しているIT業界は、経費に占める人の割合が高い分影響が大きいです。</p>
+<p>少し古い資料ですが、経済産業省の「経済社会の持続的発展のための企業税制改革に関する研究会」の <a href="http://www.meti.go.jp/press/20050823001/20050823001.html">「中間論点整理」</a> ( 2005年 ) の中の <a href="http://www.meti.go.jp/press/20050823001/4-zeisei-set.pdf">「参考資料」</a>  にわかりやすいグラフが載っていました。</p>
+<p><img alt="" src="ShakaihosyoKigyohutan.png" /></p>
+<p>社会保障の負担の程度は国によって大きく異なります。税より差が大きいです。したがって、まず、国際競争力の確保などのためにということで法人税率だけを取り上げるのは、きわめて恣意的な議論だと考えます。ここでなぜ、あえて、「恣意的」という言葉を使うのかというと、政策や経済の分析に携わる人が、社会保障負担のことを知らないわけがないからです。また、普通のサラリーマンであれば、自分の給与明細に厚生年金や健康保険の金額があって、それが、事業主との折半になっていることは当然知ってますよね？ もし、知らなければ、今、知ってくださいな。</p>
+<p>上のグラフを見ると、米国や英国に比べると日本の企業の負担が多いことがわかるのですが、ドイツ・イタリア・フランスと比べると全然まったく。「法人税は○○％が国際標準」みたいな文章をあちこちで見るのですが、私にしてみると「それがどうかしたの？」ってことになってしまうのです。</p>
+<p>補足</p>
+<p>上記の資料を探すのに <a href="http://www.jcp.or.jp/akahata/aik4/2005-08-26/2005082601_01_1.html">日本企業の税・社会保障負担 欧州諸国の５～８割</a> のお世話になりました。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,32 +85,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>企業には税より社会保障負担の方が重荷なのでは？</h1>
-<p>Update: 2010-05-23</p>
-<p>ここのところ日本の法人税率のことが話題になっているようです。参院選の各政党のマニフェストにも触れられることでしょう。これについて、私にはとても納得いかない点があります。それは、「企業にとって税より社会保障負担の方が重荷なんじゃないの？」ということです。どちらが多いかということだけではありません。社会保障負担は、企業の決算が赤字であろうが黒字であろうが関係なく果たされるという点で重要です。特に、私が属しているIT業界は、経費に占める人の割合が高い分影響が大きいです。</p>
-<p>少し古い資料ですが、経済産業省の「経済社会の持続的発展のための企業税制改革に関する研究会」の <a href="http://www.meti.go.jp/press/20050823001/20050823001.html">「中間論点整理」</a> ( 2005年 ) の中の <a href="http://www.meti.go.jp/press/20050823001/4-zeisei-set.pdf">「参考資料」</a>  にわかりやすいグラフが載っていました。</p>
-<p><img alt="" src="ShakaihosyoKigyohutan.png" /></p>
-<p>社会保障の負担の程度は国によって大きく異なります。税より差が大きいです。したがって、まず、国際競争力の確保などのためにということで法人税率だけを取り上げるのは、きわめて恣意的な議論だと考えます。ここでなぜ、あえて、「恣意的」という言葉を使うのかというと、政策や経済の分析に携わる人が、社会保障負担のことを知らないわけがないからです。また、普通のサラリーマンであれば、自分の給与明細に厚生年金や健康保険の金額があって、それが、事業主との折半になっていることは当然知ってますよね？ もし、知らなければ、今、知ってくださいな。</p>
-<p>上のグラフを見ると、米国や英国に比べると日本の企業の負担が多いことがわかるのですが、ドイツ・イタリア・フランスと比べると全然まったく。「法人税は○○％が国際標準」みたいな文章をあちこちで見るのですが、私にしてみると「それがどうかしたの？」ってことになってしまうのです。</p>
-<p>補足</p>
-<p>上記の資料を探すのに <a href="http://www.jcp.or.jp/akahata/aik4/2005-08-26/2005082601_01_1.html">日本企業の税・社会保障負担 欧州諸国の５～８割</a> のお世話になりました。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

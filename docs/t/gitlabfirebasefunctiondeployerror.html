@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,33 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>GitLab で Firebase の Functions のデプロイがうまくいかない</h1>
+<p>Update: 2020-07-11</p>
+<p>GitLab で Firebase のデプロイをしていたら Functions でうまくいきません。
+Scheduler をトリガーにする function がエラーになります。
+HTTP 400 とか言われます。
+権限の問題かなぁと調べましたがよくわかりません。
+で、</p>
+<p>Deploying a scheduler cloud function (function Failed to create function “function_name”— HTTP Error: 400, The request has errors) \
+<a href="https://stackoverflow.com/questions/57255101/deploying-a-scheduler-cloud-function-function-failed-to-create-function-functi">https://stackoverflow.com/questions/57255101/deploying-a-scheduler-cloud-function-function-failed-to-create-function-functi</a></p>
+<p>を見て Functions のデプロイの前に</p>
+<pre class="highlight"><code> - npm install -g firebase-tools@latest
+ - npm install -g firebase-functions@latest
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>を入れたらあっさり直りました。ベースになる Docker イメージが少し古かったんですね。
+まあ、そういうことはありそうだなぁ。</p>
+<p>追記： 自分用の Docker Image を作りました → <a href="gitlabcicddockernodefirebase.html">Firebase の CI/CD 用の Docker を作る</a></p>
+<p>Tag: git firebase devops</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,41 +94,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>GitLab で Firebase の Functions のデプロイがうまくいかない</h1>
-<p>Update: 2020-07-11</p>
-<p>GitLab で Firebase のデプロイをしていたら Functions でうまくいきません。
-Scheduler をトリガーにする function がエラーになります。
-HTTP 400 とか言われます。
-権限の問題かなぁと調べましたがよくわかりません。
-で、</p>
-<p>Deploying a scheduler cloud function (function Failed to create function “function_name”— HTTP Error: 400, The request has errors) \
-<a href="https://stackoverflow.com/questions/57255101/deploying-a-scheduler-cloud-function-function-failed-to-create-function-functi">https://stackoverflow.com/questions/57255101/deploying-a-scheduler-cloud-function-function-failed-to-create-function-functi</a></p>
-<p>を見て Functions のデプロイの前に</p>
-<pre class="highlight"><code> - npm install -g firebase-tools@latest
- - npm install -g firebase-functions@latest
-</code></pre>
-
-<p>を入れたらあっさり直りました。ベースになる Docker イメージが少し古かったんですね。
-まあ、そういうことはありそうだなぁ。</p>
-<p>追記： 自分用の Docker Image を作りました → <a href="gitlabcicddockernodefirebase.html">Firebase の CI/CD 用の Docker を作る</a></p>
-<p>Tag: git firebase devops</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

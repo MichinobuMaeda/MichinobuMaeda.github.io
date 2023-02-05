@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,33 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Geeklog</h1>
+<p>Update: 2008-01-22</p>
+<p>このサイトを以前 Geeklog で構築したときの記録です。</p>
+<h2>使用開始</h2>
+<p>なんでいろいろある中で Geeklog をってところから説明しますね。</p>
+<p>昨日から Geeklog というフリーの CMS ( Content Management System ) を使ってこの Webサイトを作り直しております。以前だいたい同じ範囲の機能を持つ Xoops を使ってみたことがあるのですが、なんでやめたかというと面倒だから。高度にモジュール化されて高機能で細かく管理できるのですが、仕事モードならともかくプライベート・モードの私にはそれを理解するのはたいへんです。このサイトから Xoops を撤去した後も Web Computer Union (既に閉鎖) 用にPC/携帯対応モジュールなど作ってみたりしたのですが、まるごと携帯対応は私の力ではとても無理、そして Xoops の日本の(?)分家 Cube はなんとなく多難な前途を抱えているような気がするし（ほんとうに「なんとなくです」関係者のみなさんごめんなさい、と謝るくらいなら書くなという内容ですが）で、他のものを探しているうちに日本語版で携帯主要３事業者対応やってしまっている Geeklog にたどりついたわけです。</p>
+<p>いまのところ極力避けたいと考えているのですが、もし、カスタマイズなどやるとして、ソースは Geeklog の方がきれいですね、というか、 Xoops のがきたないですね。これについては謝る気はありません。だって本当にすごいコードだから。</p>
+<h2>テーマ入れ替え</h2>
+<p>2008-05-18</p>
+<p>CMS の使用をやめて静的なページにした時期もあったのですが、テーマを入れ替えて Geeklog の利用を再開しました。</p>
+<p>Geeklog のテーマの入れ替えの作業は Xoops と同じくらい簡単です。テーマエディタのリストに追加したテーマが出てこないのは… <code>geeklog/plugins/themedit/config.php</code> に設定追加すると選択できるようになりました。</p>
+<p>CSS 、テンプレート、コンフィギュレーションなどを変更しましたが、今のところ Hack は無しです。 <a href="http://wiki.geeklog.jp/index.php/Lib_custom">カスタム関数</a> という仕組みもあるのですがこれもまだ使っていません。カスタマイズの手段は Xoops より細かく用意されているようです。私の場合ついついソースから追っかけてしまうのですが、ソースは見たくない人、英語は苦手でない人は先に本家サイト英語版 <a href="http://www.geeklog.net/docs/">Documentation</a> を見ておくといいでしょう。</p>
+<p>この文章を書いている最中に気がついたのですが、アドバンストエディタで Webブラウザ上のリンクをコピペすると自動でリンクになります。この機能は Mac の Firefox のページから Firefox へのコピーでは有効、 Safari から Firefox ではうまくいかずテキストとして貼付けられました。</p>
+<h2>サイトマップ・プラグイン導入</h2>
+<p>2009-05-06</p>
+<p><a href="http://www.geeklog.jp/">Geeklog 日本公式サイト</a> で使われているのと同じものです。</p>
+<p><a href="http://mystral-kk.net/">Geeklog増殖計画</a> から入手しました。 <a href="http://mystral-kk.net/filemgmt/index.php?id=18">サイトマッププラグイン(Sitemap plugin)</a> の説明のページに書かれているように、このプラグインを導入する前に <a href="http://mystral-kk.net/filemgmt/index.php?id=17">Dataproxyプラグイン(Dataproxy plugin)</a> を導入する必要があります。インストールの手順は、それぞれのパッケージの <code>/admin/install_ja.html</code> に書いてあるとおりです。</p>
+<p>あわせて、このページの上のメニューバーの 過去記事 ( 閉鎖 ) を サイトマップ ( 閉鎖 ) に変更しました。あまり手をかけずに設置できて、機能も十分で、いいかんじです。</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,41 +94,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Geeklog</h1>
-<p>Update: 2008-01-22</p>
-<p>このサイトを以前 Geeklog で構築したときの記録です。</p>
-<h2>使用開始</h2>
-<p>なんでいろいろある中で Geeklog をってところから説明しますね。</p>
-<p>昨日から Geeklog というフリーの CMS ( Content Management System ) を使ってこの Webサイトを作り直しております。以前だいたい同じ範囲の機能を持つ Xoops を使ってみたことがあるのですが、なんでやめたかというと面倒だから。高度にモジュール化されて高機能で細かく管理できるのですが、仕事モードならともかくプライベート・モードの私にはそれを理解するのはたいへんです。このサイトから Xoops を撤去した後も Web Computer Union (既に閉鎖) 用にPC/携帯対応モジュールなど作ってみたりしたのですが、まるごと携帯対応は私の力ではとても無理、そして Xoops の日本の(?)分家 Cube はなんとなく多難な前途を抱えているような気がするし（ほんとうに「なんとなくです」関係者のみなさんごめんなさい、と謝るくらいなら書くなという内容ですが）で、他のものを探しているうちに日本語版で携帯主要３事業者対応やってしまっている Geeklog にたどりついたわけです。</p>
-<p>いまのところ極力避けたいと考えているのですが、もし、カスタマイズなどやるとして、ソースは Geeklog の方がきれいですね、というか、 Xoops のがきたないですね。これについては謝る気はありません。だって本当にすごいコードだから。</p>
-<h2>テーマ入れ替え</h2>
-<p>2008-05-18</p>
-<p>CMS の使用をやめて静的なページにした時期もあったのですが、テーマを入れ替えて Geeklog の利用を再開しました。</p>
-<p>Geeklog のテーマの入れ替えの作業は Xoops と同じくらい簡単です。テーマエディタのリストに追加したテーマが出てこないのは… <code>geeklog/plugins/themedit/config.php</code> に設定追加すると選択できるようになりました。</p>
-<p>CSS 、テンプレート、コンフィギュレーションなどを変更しましたが、今のところ Hack は無しです。 <a href="http://wiki.geeklog.jp/index.php/Lib_custom">カスタム関数</a> という仕組みもあるのですがこれもまだ使っていません。カスタマイズの手段は Xoops より細かく用意されているようです。私の場合ついついソースから追っかけてしまうのですが、ソースは見たくない人、英語は苦手でない人は先に本家サイト英語版 <a href="http://www.geeklog.net/docs/">Documentation</a> を見ておくといいでしょう。</p>
-<p>この文章を書いている最中に気がついたのですが、アドバンストエディタで Webブラウザ上のリンクをコピペすると自動でリンクになります。この機能は Mac の Firefox のページから Firefox へのコピーでは有効、 Safari から Firefox ではうまくいかずテキストとして貼付けられました。</p>
-<h2>サイトマップ・プラグイン導入</h2>
-<p>2009-05-06</p>
-<p><a href="http://www.geeklog.jp/">Geeklog 日本公式サイト</a> で使われているのと同じものです。</p>
-<p><a href="http://mystral-kk.net/">Geeklog増殖計画</a> から入手しました。 <a href="http://mystral-kk.net/filemgmt/index.php?id=18">サイトマッププラグイン(Sitemap plugin)</a> の説明のページに書かれているように、このプラグインを導入する前に <a href="http://mystral-kk.net/filemgmt/index.php?id=17">Dataproxyプラグイン(Dataproxy plugin)</a> を導入する必要があります。インストールの手順は、それぞれのパッケージの <code>/admin/install_ja.html</code> に書いてあるとおりです。</p>
-<p>あわせて、このページの上のメニューバーの 過去記事 ( 閉鎖 ) を サイトマップ ( 閉鎖 ) に変更しました。あまり手をかけずに設置できて、機能も十分で、いいかんじです。</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

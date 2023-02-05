@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,30 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>MacBook が Wi-Fi にうまくつながらないとき</h1>
+<p>Update: 2022-10-23</p>
+<p>私の MacBook Air がコーヒー屋さんの Wi-Fi にうまくつながらないことがあります。
+MacBook を再起動すればよいという記事も見かけたのですが、今日は再起動してもだめでした。
+Wi-Fi の接続の表示はだいじょうぶなのに、
+Webブラウザで何か表示しようとするとだめです。どうも
+DHCP で IPアドレスが取得できていないような、、、</p>
+<p>というわけでターミナルを開いて「前にもやったことあるけど、コマンドはなんだったっけ？
+Mac のこのへんのコマンドってときどき変わってしまうんだよな。」とぐぐってみます。ぐぐってみると、ターミナルは開かなくていいです。コマンドは覚えてなくていいです。マウスで数回クリックするだけです。</p>
+<p>画面の右上の Wi-Fi のマークか、「システム環境設定」のどちらかからネットワークの環境設定を開いて、左側にいろいろ並んでいる中から
+Wi-Fi を選択して、右下の「詳細...」ボタンを押します。次に「TCP/IP」を選択して「DHCPリースを更新」ボタンを押します。</p>
+<p><img alt="ネットワーク詳細設定" src="20221023macdhcprenew01.png" /></p>
+<p>ターミナルからでないとはいえ、ネットワークの知識がない人にこれはわからないよな。。。</p>
+<p>で、これ、次の Mac OS のアップデートで変わったりしないよね？</p>
+<p>Tag: macos</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,38 +91,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>MacBook が Wi-Fi にうまくつながらないとき</h1>
-<p>Update: 2022-10-23</p>
-<p>私の MacBook Air がコーヒー屋さんの Wi-Fi にうまくつながらないことがあります。
-MacBook を再起動すればよいという記事も見かけたのですが、今日は再起動してもだめでした。
-Wi-Fi の接続の表示はだいじょうぶなのに、
-Webブラウザで何か表示しようとするとだめです。どうも
-DHCP で IPアドレスが取得できていないような、、、</p>
-<p>というわけでターミナルを開いて「前にもやったことあるけど、コマンドはなんだったっけ？
-Mac のこのへんのコマンドってときどき変わってしまうんだよな。」とぐぐってみます。ぐぐってみると、ターミナルは開かなくていいです。コマンドは覚えてなくていいです。マウスで数回クリックするだけです。</p>
-<p>画面の右上の Wi-Fi のマークか、「システム環境設定」のどちらかからネットワークの環境設定を開いて、左側にいろいろ並んでいる中から
-Wi-Fi を選択して、右下の「詳細...」ボタンを押します。次に「TCP/IP」を選択して「DHCPリースを更新」ボタンを押します。</p>
-<p><img alt="ネットワーク詳細設定" src="20221023macdhcprenew01.png" /></p>
-<p>ターミナルからでないとはいえ、ネットワークの知識がない人にこれはわからないよな。。。</p>
-<p>で、これ、次の Mac OS のアップデートで変わったりしないよね？</p>
-<p>Tag: macos</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

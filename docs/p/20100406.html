@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,46 +46,9 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
-
-    <footer>
-      <ul class="social">
-        <li>
-          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
-        </li>
-        <li>
-          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
-              alt="Mastodon" /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
-              alt="Facebook" /></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
-              alt="Instagram" /></a>
-        </li>
-        <li>
-          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
-              alt="mixi" /></a>
-        </li>
-      </ul>
-
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
-      </div>
-    </footer>
-  </div>
-
-
-  <div class="content"><h1>小沢一郎「日本改造計画」を読み直す</h1>
+  </header>
+  <div id="main">
+    <div class="content"><h1>小沢一郎「日本改造計画」を読み直す</h1>
 <p>Update: 2010-04-06</p>
 <p>田中角栄の「日本列島改造論」を彷彿とさせる表題のこの本で、著者はさまざまな具体的な構想を提示しています。その中で、少なくとも政治制度改革については、今もおおむね変わらぬ姿で民主党政権において実現されようとしています。もっとも、世の人が評するとおり著者が「ぶれない人」であるとすると、現状 (2010年4月) の民主党政権はまだまだ不十分なものだということになります。</p>
 <p>著者にとって政治制度改革は、それ自体が目的となるものではありません。日本の政治の最も重要な課題を達成するための手段です。</p>
@@ -198,7 +158,50 @@
 <p>だということです。</p>
 <p>以上終わり。</p></div>
 
-  <script src="/js/site.js"></script>
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,30 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>本気でパスワード v3</h1>
+<p>Update: 2021-05-26</p>
+<p>ランダムなパスワードを生成します。</p>
+<p>v3 で文字種のお任せ指定をできるようにしました。通常の用途でしたらデフォルトの設定のままでたいていだいじょうぶです。</p>
+<ul>
+<li>設置場所: <a href="https://michinobu.jp/honkipass">https://michinobu.jp/honkipass</a></li>
+<li>ソース: <a href="https://github.com/MichinobuMaeda/honkipass">https://github.com/MichinobuMaeda/honkipass</a></li>
+<li>ZIP: <a href="https://github.com/MichinobuMaeda/honkipass/archive/refs/heads/main.zip">https://github.com/MichinobuMaeda/honkipass/archive/refs/heads/main.zip</a></li>
+</ul>
+<p>たまにパスワードで使用できる文字種の制約が厳しいサイトがありますね。その場合は条件に合う物が出るまで繰り返して生成するか、「詳細設定」で「使用しない文字」に条件に合わない文字を追加していただくかどちらかでお願いします。</p>
+<p><del>UIのフレームワークには <a href="https://materializecss.com/">Materialize</a> を使いました。コンポーネント等は少ないですが、簡単でいいです。</del></p>
+<p>UIのフレームワークには <a href="https://mdbootstrap.com/">MDB: Material Design for Bootstrap</a> を使いました。使いやすいです。ただ、テキストフィールドが Outline だけです。ベースが Bootstrap だからでしょうか。アイコンは <a href="https://fontawesome.com/">Font Awesome</a> ではなく <a href="https://fonts.google.com/icons">Material Icons</a> を使いました。</p>
+<p>Google の <a href="https://github.com/material-components/material-components-web">Material Components for the web</a> はテキストフィールド１個だけでもたいへんです。</p>
+<p><a href="../honkipass"><img alt="" src="20210522honkipass.png" /></a></p>
+<p>Tag: javascript material</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,38 +91,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>本気でパスワード v3</h1>
-<p>Update: 2021-05-26</p>
-<p>ランダムなパスワードを生成します。</p>
-<p>v3 で文字種のお任せ指定をできるようにしました。通常の用途でしたらデフォルトの設定のままでたいていだいじょうぶです。</p>
-<ul>
-<li>設置場所: <a href="https://michinobu.jp/honkipass">https://michinobu.jp/honkipass</a></li>
-<li>ソース: <a href="https://github.com/MichinobuMaeda/honkipass">https://github.com/MichinobuMaeda/honkipass</a></li>
-<li>ZIP: <a href="https://github.com/MichinobuMaeda/honkipass/archive/refs/heads/main.zip">https://github.com/MichinobuMaeda/honkipass/archive/refs/heads/main.zip</a></li>
-</ul>
-<p>たまにパスワードで使用できる文字種の制約が厳しいサイトがありますね。その場合は条件に合う物が出るまで繰り返して生成するか、「詳細設定」で「使用しない文字」に条件に合わない文字を追加していただくかどちらかでお願いします。</p>
-<p><del>UIのフレームワークには <a href="https://materializecss.com/">Materialize</a> を使いました。コンポーネント等は少ないですが、簡単でいいです。</del></p>
-<p>UIのフレームワークには <a href="https://mdbootstrap.com/">MDB: Material Design for Bootstrap</a> を使いました。使いやすいです。ただ、テキストフィールドが Outline だけです。ベースが Bootstrap だからでしょうか。アイコンは <a href="https://fontawesome.com/">Font Awesome</a> ではなく <a href="https://fonts.google.com/icons">Material Icons</a> を使いました。</p>
-<p>Google の <a href="https://github.com/material-components/material-components-web">Material Components for the web</a> はテキストフィールド１個だけでもたいへんです。</p>
-<p><a href="../honkipass"><img alt="" src="20210522honkipass.png" /></a></p>
-<p>Tag: javascript material</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

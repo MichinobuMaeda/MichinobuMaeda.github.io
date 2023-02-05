@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,46 +46,9 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
-
-    <footer>
-      <ul class="social">
-        <li>
-          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
-        </li>
-        <li>
-          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
-              alt="Mastodon" /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
-              alt="Facebook" /></a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
-              alt="Instagram" /></a>
-        </li>
-        <li>
-          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
-              alt="mixi" /></a>
-        </li>
-      </ul>
-
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
-      </div>
-    </footer>
-  </div>
-
-
-  <div class="content"><h1>RAID規格の概要</h1>
+  </header>
+  <div id="main">
+    <div class="content"><h1>RAID規格の概要</h1>
 <p>Update: 2009-03-27</p>
 <p>私が所属する組合 ( <a href="http://www.union-net.or.jp/densanro/">コンピュータ・ユニオン</a> ) のミーティングで RAID についての話になったのですが、私が覚えているのと違う定義があるようです。パリティが１個のディスクに書き込まれるのは私の記憶だと RAID 3 、別の人が言うにはそれは RAID 2 だとのことでした。よく使われる 0, 1, 5 で認識のずれがなければ困ることはないのですが、気になって調べてみました。私が覚えていたつもりの RAID 2, 4 のことなどもうすっかり忘れていましたし。</p>
 <p>もともと RAID は厳格ではない規格です。世の中の製品のバラエティが増えるにつれて RAID 0 などが追加されてきました。４、５年以上前なら「 正式な RAID の Level は 1 〜 5 だけ」みたいな記述も見られましたが、今ではそんな堅いことを言う人はいません。</p>
@@ -121,7 +81,50 @@
 <h2>RAID 1 は何個か？</h2>
 <p>ミーティングのとき「RAID 1 は普通２個だよね」「３個は効果が薄いという検討結果になったことがあった」「通常２個、あったとしても偶数個のはず」と話をしていたのですが、リンクをたどるとありました。奇数で構成できるミラーリング製品。 IBM 社が RAID 1E というのを出していて奇数個可、つまり、ディスクを１個ずつ追加可、なのだそうです。 Wikipedia の <a href="http://en.wikipedia.org/wiki/Non-standard_RAID_levels">Non-standard RAID levels</a> の図 <a href="http://en.wikipedia.org/wiki/File:RAID_1E.png">RAID_1E.png</a> がわかりやすいのですが、奇数個でも 1/2台分の容量になります。で、普通は、つまり “E” が付かなければ偶数個ということになります。</p></div>
 
-  <script src="/js/site.js"></script>
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

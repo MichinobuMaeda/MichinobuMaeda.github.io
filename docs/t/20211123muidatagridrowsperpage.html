@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,34 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>MUI の DataGrid の "Rows per page" をローカライズする</h1>
+<p>Update: 2021-11-23</p>
+<p><a href="https://mui.com/">MUI</a> の <code>DataGrid</code> のフッタに表示される "Rows per page" を日本語にしようとしたのですが、
+<a href="https://github.com/mui-org/material-ui-x/blob/HEAD/packages/grid/_modules_/grid/constants/localeTextConstants.ts">https://github.com/mui-org/material-ui-x/blob/HEAD/packages/grid/_modules_/grid/constants/localeTextConstants.ts</a>
+には無いようです。</p>
+<p><a href="https://github.com/mui-org/material-ui-x/issues/1854#issuecomment-856885588">とりあえずの回避策</a>
+はうまくいきました。</p>
+<p>私の場合、こんな感じで。
+<code>t('Rows per page')</code> のところはローカライズの仕組みに合わせて。</p>
+<pre class="highlight"><code>&lt;DataGrid
+  componentsProps={ {
+    pagination: {
+      labelRowsPerPage: t('Rows per page')
+    }
+  }}
+/&gt;
+</code></pre>
 
-    <footer>
-      <ul class="social">
+<p>Tag: nodejs react mui</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,42 +95,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>MUI の DataGrid の "Rows per page" をローカライズする</h1>
-<p>Update: 2021-11-23</p>
-<p><a href="https://mui.com/">MUI</a> の <code>DataGrid</code> のフッタに表示される "Rows per page" を日本語にしようとしたのですが、
-<a href="https://github.com/mui-org/material-ui-x/blob/HEAD/packages/grid/_modules_/grid/constants/localeTextConstants.ts">https://github.com/mui-org/material-ui-x/blob/HEAD/packages/grid/_modules_/grid/constants/localeTextConstants.ts</a>
-には無いようです。</p>
-<p><a href="https://github.com/mui-org/material-ui-x/issues/1854#issuecomment-856885588">とりあえずの回避策</a>
-はうまくいきました。</p>
-<p>私の場合、こんな感じで。
-<code>t('Rows per page')</code> のところはローカライズの仕組みに合わせて。</p>
-<pre class="highlight"><code>&lt;DataGrid
-  componentsProps={ {
-    pagination: {
-      labelRowsPerPage: t('Rows per page')
-    }
-  }}
-/&gt;
-</code></pre>
-
-<p>Tag: nodejs react mui</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>

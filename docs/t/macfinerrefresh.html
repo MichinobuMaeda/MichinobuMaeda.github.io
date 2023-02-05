@@ -36,12 +36,9 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 
-  <div class="menu">
-    <header>
-      <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
-        みちのぶのねぐら</a>
-    </header>
-
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
     <nav>
       <ul class="categories">
         <li><a href="/t">工作室</a></li>
@@ -49,9 +46,28 @@
         <li><a href="/p">政治局</a></li>
       </ul>
     </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Mac の Finder の表示を更新するには</h1>
+<p>Update: 2021-02-27</p>
+<p>私の MacBook で最近になって発生し始めた困った現象なのですが、
+Chrome でファイルをダウンロードして既定の「ダウンロード」フォルダに保存しても、
+Finder に表示されません。また、ターミナルで「ダウンロード」フォルダから他のフォルダに移動したファイルが表示され続けてしまいます。
+Windows のエクスプローラーであればマウス右クリックで「最新の情報に更新」すればいいのですが Finder で同様の機能が見つけられません。他のフォルダを表示して戻ってきてもダメ。困ったなと調べて見つけたのがこの記事。たぶん Apple社のドキュメントにも書かれているのでしょう。</p>
+<p>How to Refresh a Finder Window in Mac OS X \
+<a href="https://www.heatware.net/mac/how-to-refresh-finder-window">https://www.heatware.net/mac/how-to-refresh-finder-window</a></p>
+<p>Optionキーを押しながら Dock の Finder のアイコンを右クリックすると、
+Optionキー無しでは表示されないメニュー項目「再度開く」が出てきます。これを実行します。すると
+Finder が消えて 2秒くらいで再び表示されて、フォルダの表示が最新になってくれました。</p>
+<p>Optionキーを押しながら右クリックするのと、右クリックしてから Option キーを押すのとでは表示されるメニューが違うんですね。長年 Mac を使っていたけど全然知りませんでした。</p>
+<p>Tag: macos</p></div>
 
-    <footer>
-      <ul class="social">
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
         <li>
           <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
         </li>
@@ -73,36 +89,23 @@
         </li>
       </ul>
 
-      <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
-      <div class="license-logo">
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
-            style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
-      </div>
-      <div class="license-desc">
-        This work is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
-          International
-          License</a>.
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
       </div>
     </footer>
-  </div>
 
-
-  <div class="content"><h1>Mac の Finder の表示を更新するには</h1>
-<p>Update: 2021-02-27</p>
-<p>私の MacBook で最近になって発生し始めた困った現象なのですが、
-Chrome でファイルをダウンロードして既定の「ダウンロード」フォルダに保存しても、
-Finder に表示されません。また、ターミナルで「ダウンロード」フォルダから他のフォルダに移動したファイルが表示され続けてしまいます。
-Windows のエクスプローラーであればマウス右クリックで「最新の情報に更新」すればいいのですが Finder で同様の機能が見つけられません。他のフォルダを表示して戻ってきてもダメ。困ったなと調べて見つけたのがこの記事。たぶん Apple社のドキュメントにも書かれているのでしょう。</p>
-<p>How to Refresh a Finder Window in Mac OS X \
-<a href="https://www.heatware.net/mac/how-to-refresh-finder-window">https://www.heatware.net/mac/how-to-refresh-finder-window</a></p>
-<p>Optionキーを押しながら Dock の Finder のアイコンを右クリックすると、
-Optionキー無しでは表示されないメニュー項目「再度開く」が出てきます。これを実行します。すると
-Finder が消えて 2秒くらいで再び表示されて、フォルダの表示が最新になってくれました。</p>
-<p>Optionキーを押しながら右クリックするのと、右クリックしてから Option キーを押すのとでは表示されるメニューが違うんですね。長年 Mac を使っていたけど全然知りませんでした。</p>
-<p>Tag: macos</p></div>
-
-  <script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </body>
 
 </html>
