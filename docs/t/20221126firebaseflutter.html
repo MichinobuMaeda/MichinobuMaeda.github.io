@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>FirebaseとFlutterでクロスプラットフォーム開発 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>FirebaseとFlutterでクロスプラットフォーム開発</h1>
+<p>Update: 2022-11-26</p>
+<p><a href="https://cu-kansai-it.org/">コンピュータ・ユニオン関西IT支部</a> IT技術者・クリエイターカフェ 2022年11月 資料</p>
+<p>このページの URL は <a href="https://pages.michinobu.jp/t/20221126firebaseflutter.html">https://pages.michinobu.jp/t/20221126firebaseflutter.html</a> です。
+<a href="https://pages.michinobu.jp/t/githubpagesminimal.html">GitHub Pages で作成</a>しました。</p>
+<p>サンプルコード
+<a href="https://github.com/MichinobuMaeda/cuflutter20221126">https://github.com/MichinobuMaeda/cuflutter20221126</a>
+は BSD ライセンスで公開しています。商用を含めてコピペ・流用可ですが、クラウド環境のキー等は書き換えてください。利用方法は <code>README.md</code> 「A. 開発環境」をご参照ください。</p>
+<p>時間の制約により
+<a href="https://www.docker.com/">Docker</a>,
+<a href="https://git-scm.com/">Git</a>,
+<a href="https://nodejs.org/">Node.js</a>,
+<a href="https://m3.material.io/">Material Design</a>,
+<a href="https://code.visualstudio.com/">VS Code</a>
+などの説明は省きます。</p>
+<h2>A. 概要</h2>
+<h3>Firebase</h3>
+<p><a href="https://firebase.google.com/">https://firebase.google.com/</a></p>
+<p>GCP: Google Cloud Platform のサービスで、以下のようなものがセットになった Serverless のシステム基盤です。</p>
+<ul>
+<li>Authentication: 認証基盤</li>
+<li>Firestore: トランザクションをサポートした NoSQL のデータベース</li>
+<li>Cloud Storage: 画像や文書などのファイルを格納するストレージ</li>
+<li>Cloud Functions: 単発の処理の実行環境（プロセスの常駐は不可で処理時間の制限有り）</li>
+<li>Hosting: 静的なファイルだけを置くことができる Webサーバ</li>
+<li>その他、メッセージ配信、メール送信（メールサーバは別途必要）、アクセス解析など</li>
+</ul>
+<p>また、多数の言語向けのライブラリやローカルのテストのためのエミューレータが用意されています。対応している言語は JavaScript ( Web, Node.js ), Java ( Android, Server side ), Swift, Objective-C, Kotolin, Phthon, Unity, Go, PHP, C#, Ruby, Dart ( Flutter ) です。</p>
+<p>Firestore と Cloud Storage は Authentication と組み合わせたアクセス制御が可能です。
+Firestore はデータの内容に基づく動的な制御が可能で、アカウントやアカウントの権限・グループ等に紐付ける形で、読み書きそれぞれのアクセス権を定義できます。</p>
+<p>Cloud Storage は AWS の S3 、 Cloud Functions は AWS の Lambda と同様のサービスです。</p>
+<p>Firestore の RDB との違いは、</p>
+<ul>
+<li>スキーマの定義が不要</li>
+<li>更新データのプッシュ配信が可能</li>
+</ul>
+<p>で、チャットなどのアプリが容易に構築できます。</p>
+<h3>Flutter</h3>
+<p><a href="https://flutter.dev/">https://flutter.dev/</a></p>
+<p>Google が作ったモバイルアプリ用のフレームワークです。
+JavaScript に似た Dart という言語を使います。 JavaScript と違って型の定義が必要なので Java にも似ています。
+Flutter は一つのコードから以下の OS向けの実行モジュールを生成できます。</p>
+<ul>
+<li>Android</li>
+<li>iOS/iPadOS</li>
+<li>Web ( SPA / PWA: Progressiv Web Apps )</li>
+<li>Windows</li>
+<li>Mac OS</li>
+<li>Linux</li>
+</ul>
+<p>サンプル: <a href="https://pages.michinobu.jp/honkipass/">https://pages.michinobu.jp/honkipass/</a></p>
+<p>SPA ( Single-Page Application ) は Gmail や Google Maps のようにほとんどの機能を JavaScript で実装し、HTMLのページの遷移は無しで動作する Web アプリケーションです。
+<a href="https://github.com/MichinobuMaeda/cuflutter20221126/blob/main/web/index.html">サンプルコードの HTML</a></p>
+<p>PWA は SPA をモバイルアプリのように動作させる仕組みです。
+SPA との違いは以下のようになります。</p>
+<ul>
+<li>ホーム画面にショートカットではなくアプリとしてのアイコンを置くことができる。</li>
+<li>ブラウザのアドレスバーが表示されない。</li>
+<li>Android ではアプリを閉じていても通知メッセージの受信が可能。</li>
+</ul>
+<p><img alt="PWAのインストール" src="20221126firebaseflutterpwa.png" /></p>
+<p>Flutter の見た目の雰囲気は、次のどちらかを選択できます。</p>
+<ul>
+<li>Material ( Android 風 )</li>
+<li>Cupertino ( iOS 風 )</li>
+</ul>
+<p>Flutter は OS やブラウザの UI部品を使わず、すべて自前で描画するので、
+異なる OS でもほとんど同じ見た目になります。</p>
+<h4>参考: React Native との違い</h4>
+<p>Facebook ( Meta ) の React Native は OS の UI部品を使います。したがって、特に意識しなくても動作している OS の標準的な見た目になります。
+対応する OS は Android と iOS/iPadOS だけで、デスクトップ OS には対応していません。
+Web向けの React とロジックは共有できますが、プレゼンテーション層は完全には共有できないようです。</p>
+<h2>B. 環境の準備</h2>
+<p>以下は Linux や Mac OS 上で環境を準備する手順です。
+Windows の場合は
+<a href="https://learn.microsoft.com/ja-jp/windows/wsl/">WSL: Windows Subsystem for Linux</a>
+の利用をお勧めします。</p>
+<ol>
+<li>GCP のアカウントの作成（無い場合）</li>
+<li>Firebase プロジェクトの作成（他人と重複しないプロジェクト名が必要）</li>
+<li>必要なパッケージのインストール</li>
+<li>Flutter のプロジェクトの作成</li>
+<li>GitHub のアカウントの作成（無い場合）</li>
+<li>GitHub のリポジトリの作成</li>
+<li>Firebase の設定の追加</li>
+</ol>
+<h3>1. GCP のアカウントの作成</h3>
+<ul>
+<li>Gmail のアドレスが無ければ作成します。<ul>
+<li>Android スマホ購入時に作成したものでもいいですが、仕事で使う場合は 2要素認証の設定がお勧めです。</li>
+</ul>
+</li>
+<li><a href="https://cloud.google.com/">https://cloud.google.com/</a> から GCP のアカウントを登録します。</li>
+<li>Functions など Firebase の一部の機能のために支払の設定が必要です。<ul>
+<li>手順: <a href="https://cloud.google.com/billing/docs/how-to/payment-methods">支払い方法の追加、削除、更新</a></li>
+<li>各プロジェクトの支払いの有無と支払いを担当するアカウントは個別に設定できて、変更も可能です。</li>
+<li>必ず予算の設定をしてください。 GCP 全体とプロジェクト毎の上限を決めることができます。</li>
+</ul>
+</li>
+</ul>
+<h3>2. Firebase プロジェクトの作成</h3>
+<p>まず <a href="https://console.firebase.google.com/">Firebase のコンソール</a> からプロジェクトを作成します。</p>
+<p>Firebase のプロジェクトを作成すると自動で同じIDの GCP のプロジェクトができます。
+プロジェクトID を Flutter のパッケージ名と同じにする場合は、英小文字と数字だけにしてください。
+本番環境とは別にテスト用のプロジェクトを作る場合は、「プロジェクトID-test」のようなIDにするとわかりやすいです。
+Webを利用する場合はプロジェクトIDがそのままURLの一部になるので、ランダムな文字列などのてきとーなIDは後悔することになります。</p>
+<p>今回は <code>cuflutter20221126</code> としました。</p>
+<p>次に以下の項目を設定します。</p>
+<ul>
+<li>Project settings<ul>
+<li>Default GCP resource location: asia-northeast2 (大阪)</li>
+<li>Your apps:  ボタンから Web app: "CU Flutter20221126" を作成します。<ul>
+<li>作成後に表示されるキーは後で使用します。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Usage and billing<ul>
+<li>Details &amp; settings<ul>
+<li>Functions を利用する場合は Spark (支払い無し)を Blaze (従量制課金) に変更します。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Build<ul>
+<li>Firestore Database を作成します。とりあえず試用したい場合はアクセス制御無しの "test mode" でいいです。</li>
+<li>Readtime Database は使いません。旧バージョンのサービスとの互換性のためのもので、これを使う利点は無いです。</li>
+</ul>
+</li>
+</ul>
+<h3>3. 必要なパッケージのインストール</h3>
+<p>以下は Mac OS でよく使われているパッケージマネージャの <a href="https://brew.sh/">Homebrew</a> を使った手順です。
+Linux でも利用できます。
+<code>yum</code> や <code>apt</code> などの Linux の標準のパッケージマネージャと違って、インストールする言語のバージョンの選択ができるのが便利です。</p>
+<p>Flutter はバージョンアップが速いので、 <a href="https://fvm.app/">FVM</a>: Flutter Version Management を使います。</p>
+<p>Firebase Tools のために Node.js が必要です。
+Firebase Emulator のための Java は OS に入っている 17 がそのまま使えます。</p>
+<pre class="highlight"><code class="language-bash">##### 注 ##### Homebrew のインストールは必ず Homebrew の https://brew.sh/ サイトに掲載された最新の手順に従うこと。
+$ /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre>
+
+<p>Linux の場合は環境変数や <code>build-essential</code> の導入など追加の設定をしてください。手順は Homebrew のインストール時に表示されます。</p>
+<pre class="highlight"><code class="language-bash">##### 注 ##### Homebrew のインストール時に表示される案内に従って設定する。
+##### 注 ##### build-essential は後続のパッケージのインストール時に必要（たぶん）。
+$ echo '# Set PATH, MANPATH, etc., for Homebrew.' &gt;&gt; /home/user/.profile
+$ echo 'eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;' &gt;&gt; /home/user/.profile
+$ eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;
+$ . .profile
+$ sudo sudo apt-get install build-essential
+</code></pre>
+
+<p>Linux の場合は <code>.profile</code> に以下の行を追加します。
+Mac OS の場合はパスが異なりますので、表示された手順に従ってください。</p>
+<pre class="highlight"><code class="language-bash">export NVM_DIR=&quot;$HOME/.nvm&quot;
+[ -s &quot;/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh&quot; ] &amp;&amp; \. &quot;/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh&quot;  # This loads nvm
+[ -s &quot;/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm&quot; ] &amp;&amp; \. &quot;/home/linuxbrew/.linuxbrew/opt/nvm/etc/bash_completion.d/nvm&quot;  # This loads nvm bash_completion
+</code></pre>
+
+<pre class="highlight"><code class="language-bash">##### 注 ##### .profile を反映
+$ . ~/.profile
+
+##### 注 ##### Homebrew で必要なパッケージをインストール
+$ brew tap leoafarias/fvm
+$ brew install fvm
+$ brew install nvm
+
+##### 注 ##### nvm インストール時に表示される案内に従って設定する。
+$ mkdir ~/.nvm
+$ nvm --version
+0.39.2
+
+##### 注 ##### Cloud Functions の現在(2022-11-03)の推奨の Node.js 16 をインストールする。
+$ nvm install 16
+
+##### 注 ##### Flutter の現時点(2022-11-03)の最新 3.3.7 をインストールする。
+$ fvm install 3.3.7
+$ fvm global 3.3.7
+</code></pre>
+
+<h3>4. Flutter のプロジェクトの作成</h3>
+<p>Web だけ対応のプロジェクトを作成します。他のプラットフォームは後から追加できます。</p>
+<p>参照: <a href="https://github.com/MichinobuMaeda/cuflutter20221126/">サンプルコード</a> <code>README.md</code> B.1. Flutter のプロジェクトの作成</p>
+<p>プロジェクトの作成後、</p>
+<pre class="highlight"><code class="language-bash">cd cuflutter20221126
+fvm flutter run -d chrome
+</code></pre>
+
+<p>とすると Webブラウザが自動で起動し、サンプルのアプリが表示されます。
+初回は Flutter の Web SDK のダウンロードに時間がかかります。</p>
+<p><img alt="Flutter Sample App" src="20221126firebaseflutterpreview.png" /></p>
+<h3>5. GitHub のアカウントの作成</h3>
+<p>私の場合は <a href="http://github.com/MichinobuMaeda/&gt;">MichinobuMaeda</a></p>
+<p>Workstations の環境に GitHub で使う氏名、メールアドレスを設定し、 SSH鍵を生成します。原則として SSH鍵のパスフレーズは設定してください。</p>
+<pre class="highlight"><code class="language-bash">git config --global user.name &quot;氏名&quot;
+git config --global user.email &quot;メールアドレス&quot;
+ssh-keygen
+cat ~/.ssh/id_rsa.pub
+</code></pre>
+
+<p>SSH鍵 ( <code>id_rsa.pub</code> の内容 ) を GitHub のアカウント設定に追加します。</p>
+<p>SSH鍵は作業環境ごとに作成して GitHub に登録してください。秘密鍵をコピーして使いまわすのは漏洩の事故の元になりますので、やらないでください。</p>
+<p>コマンドラインから GitHub を操作する場合は</p>
+<pre class="highlight"><code class="language-bash">eval `ssh-agent`
+ssh-add
+</code></pre>
+
+<p>とするか、毎回パスフレーズを入力するかどちらかしてください。
+Mac OS の場合は</p>
+<pre class="highlight"><code class="language-bash">ssh-add
+</code></pre>
+
+<p>だけでだいじょうぶです。</p>
+<h3>6. GitHub のリポジトリの作成</h3>
+<p>Firebase のプロジェクト名や Flutter のパッケージ名と同じにしておくといいです。
+リポジトリのURLは <code>https://github.com/アカウント名/リポジトリ名</code> です。</p>
+<p>リポジトリを作成すると設定の案内が表示されるので、それに従って</p>
+<pre class="highlight"><code class="language-bash">echo &quot;# cuflutter20221126&quot; &gt;&gt; README.md
+git init
+git add README.md
+git commit -m &quot;first commit&quot;
+git branch -M main
+git remote add origin git@github.com:MichinobuMaeda/cuflutter20221126.git
+git push -u origin main
+</code></pre>
+
+<h3>7. Firebase の設定の追加</h3>
+<p>参照: <a href="https://github.com/MichinobuMaeda/cuflutter20221126/">サンプルコード</a> <code>README.md</code> B.2. Firebase の設定の追加</p>
+<p>Tag: firebase flutter github</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

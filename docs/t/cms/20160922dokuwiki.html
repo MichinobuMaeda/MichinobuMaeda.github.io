@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>DokuWiki 日記 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>DokuWiki 日記</h1>
+<p>Update: 2016-09-22</p>
+<h2>2010/02/10 使用開始</h2>
+<p>このサイト <a href="http://wiki.michinobu.jp/">http://wiki.michinobu.jp/</a> ( 閉鎖 ) では <a href="https://www.dokuwiki.org/">dokuwiki</a> を使っています。 日本語サイトでよく使われる wiki パッケージは PukiWiki です。なぜそれを使わずに dokuwiki を使うのかというと、使ってみたかったから。文句のあるやつはかかってこい!! じゃなくて。。。</p>
+<p>dokuwiki についての日本語の文献は見事に無いですね。 amazon.co.jp の「和書」カテゴリでキーワード「dokuwiki」を検索しても見つかりません。 PukiWiki よりこっちの方が高機能で使いやすそうな気がするんだけどなぁ、今のところ。まぁ、これから試してみます。</p>
+<p>追記 ( 2010/02/13 ) : DokuWiki日本ユーザーグループ <a href="http://www.dwug-jp.org/doku.php">http://www.dwug-jp.org/doku.php</a> ( 閉鎖 )</p>
+<p>インストールは簡単 ( <a href="https://www.dokuwiki.org/install">install</a> 参照 ) 。要するに、ドキュメントルートの下、もしくは、そのサブディレクトリに解凍して、 install.php を実行（ブラウザで表示）して所定の項目を設定するだけです。</p>
+<p>ログインしたら "Admin" の "Configuration Settings" で言語 ja を選択すると表示が日本語になります。いったん設定のページから抜けて表示し直せばこのページも日本語になります。タイトルは「サイト設定」。</p>
+<h3>セキュリティの向上</h3>
+<p><a href="https://www.dokuwiki.org/security">security</a> ページの説明に従って data/ と conf/ をドキュメントルートの外に放り出しました。</p>
+<p>移動した data/ の位置は conf/local.php に次のように記述します。</p>
+<p>$conf['savedir'] = '/home/yourname/data/';</p>
+<p>移動した conf/ の位置は inc/preload.php ファイルを新規に作成して次のように記述します。</p>
+<pre class="highlight"><code>&lt;?php
+define('DOKU_CONF','/home/yourname/conf/');
+</code></pre>
+
+<p>bin/ と install.php は不要です。</p>
+<h3>テンプレート</h3>
+<p><a href="https://www.dokuwiki.org/Template">template</a> ページからダウンロードした minimal テンプレートを入れました。解凍して lib/tpl/ の下にコピーすればOK。「サイト設定」のテンプレートの選択リストに表示されるようになります。このテンプレートは真っ白なので背景などを少しだけカスタマイズ。 CSS は lib/tpl/minimal/h6e.css をいじればいいようです。</p>
+<h3>サイト内のリンク</h3>
+<p>URL Rewrite の設定は、 .htaccess.dist の内容をそのまま使ったのですが、「実在するディレクトリやファイルはどうなるんだろう？」と思って static/index.html というファイルをつくって表示してみたところ <a href="http://wiki.michinobu.jp/static/index.html">http://wiki.michinobu.jp/static/index.html</a> で問題なく表示されました。実在しないファイルの場合だけ URL Rewrite が効くようです。</p>
+<p>このページのタイトルには日本語を使っていて、 <a href="http://wiki.michinobu.jp/dokuwiki日記">http://wiki.michinobu.jp/dokuwiki日記</a> という URL になります。そのリンク元のソースは href="/dokuwiki%E6%97%A5%E8%A8%98" となっていて、自動でエンコードしてくれています。なかなかよろし。</p>
+<p>今日はもう寝る時間なのでここまでですが、当面のこととして Google Analytics をうまく導入したい。ページを表示しているときも編集しているときも URL は同じになるようなので、単純に Google Analytics のコードを入れてしまうと私が編集したときのアクセスが集計に入ってしまいます。アクセス数の少ないサイトなので、これは避けたいです。</p>
+<p>で、ここまで書いて保存して、やっと気がついたのですが、このページの目次が自動で作られている。なかなかよろし。</p>
+<h2>2010/02/11 Interwiki などを試してみる</h2>
+<p>昨日 2010/02/11 の文章の中の <a href="http://dokuwiki.org/">http://dokuwiki.org/</a> の中のページへのリンクを <a href="https://www.dokuwiki.org/Interwiki">Interwiki</a> を使って書き直してみました。それから URL だけどリンクにしたくない箇所で nowiki タグを使ってみました。</p>
+<p>CSSをもう少し修正 <a href="h6e.css">h6e.css</a> 。</p>
+<h2>2010/02/13 Twitter</h2>
+<p>Twitterでdokuwikiについてつぶやいたら <a href="https://twitter.com/dwug_jp">dokuwiki日本ユーザーグループ</a> さんがフォローしてくれました。</p>
+<h2>2010/02/14</h2>
+<h3>Flash</h3>
+<p>Flashの .swf ファイルを表示してみました Flash やってみた 。簡単です。サイズ指定すればきれいに表示できます。次の環境で表示確認しました。</p>
+<ul>
+<li>Windows 7<ul>
+<li>IE</li>
+<li>Firefox</li>
+<li>Chrome</li>
+</ul>
+</li>
+<li>Mac Snow Leopard<ul>
+<li>Safari</li>
+<li>Firefox</li>
+</ul>
+</li>
+</ul>
+<h3>HTML</h3>
+<p>以前作成した「本気でパスワード Web版」を丸ごとページに埋め込んでみました。全く問題なく動いています。</p>
+<h2>2010/02/20 Google Analytics</h2>
+<p>プラグイン見つけた。 <a href="http://www.dokuwiki.org/plugin:googleanalytics">http://www.dokuwiki.org/plugin:googleanalytics</a></p>
+<p>ダウンロードして、 lib/plugins/googleanalytics に解凍します。メニュー「管理」「プラグイン管理」を開いてみると、インストール済みになっています。メニュー「管理」「サイト設定」を開くと、「Googleanalytics プラグイン設定」というセクションができています。設定できるのは次のパラメータ。</p>
+<ul>
+<li>Google Analitycs ID</li>
+<li>Don't count admin/superuser</li>
+<li>Don't count logged in users</li>
+</ul>
+<p>このサイトの場合、1番目の ID を入力して、2番目の「管理者は勘定に入れない」を On にすればよいようです。</p>
+<p>設定を保存した後、ログインした状態としてない状態と、それぞれトップページを表示して、ソースを比べてみます。ログインしてない場合だけ ID を含む JavaScript が現れます。夜下げです、ちがいます ATOK さん、「よさげ」です。</p>
+<h2>2010/02/21 ページ名の設定</h2>
+<p>「サイト設定の」「最初の見出しをページ名とする」を「常に使用する」に変更した。併せて CSS を修正して、 h2.h6e-entry-title の文字サイズを小さくして右寄せするようにした。このサイトの場合はこんな設定の方がいいな。仕事で使うんだったら細かなことは気にせずデフォルトのままがいいだろうな。</p>
+<h2>2010/02/23</h2>
+<h3>Google Analytics その後</h3>
+<p>先日プラグインを入れた Google Analytics は、集計画面にこのサイトの数値が入り始めました。問題なさそうです。</p>
+<h3>DokuWikiFCK</h3>
+<p><a href="https://www.openlaszlo-ason.com/">ason</a> さんお勧めの DokuWikiFCK を試してみることにします。</p>
+<p>まず、 Perl モジュールの追加が不要な fckgLite を入れてみます。 <a href="http://www.mturner.org/dwfck/fckgLite/">http://www.mturner.org/dwfck/fckgLite/</a> からダウンロードしたファイルを lib/plugins/fckg に解凍するだけ。これで即 Wysiwyg エディタが使えるようになります。ただし、利用できる Syntax は標準の Wiki 構文の範囲です。</p>
+<p>次に Lite じゃない方を試してみます。。。が、依存する Perl モジュール CSS のエラーを取り除くことができず今日は断念。</p>
+<h2>2010/02/24</h2>
+<h3>wysiwyg プラグイン各種</h3>
+<p><a href="http://www.dokuwiki.org/plugins?plugintag=wysiwyg">http://www.dokuwiki.org/plugins?plugintag=wysiwyg</a> で一番 Popularity が高い wysiwyg プラグインは、独自のタグを入れるとそこだけ編集できるという仕様でした。 HTML の埋め込みを拡張した感じです。 fckgLite のように既存の文章を wysiwyg で編集できたりはしません。</p>
+<p>wysiwyg_nicedit プラグインは、スクリーンショットなど見た感じよさそうなのですが、 DokuWiki のソースを直接修正するというインストール手順なのでパス。</p>
+<p>fckw は fckg と同様の Perl モジュールが必要。</p>
+<p>grensladawritezor は使い方がわからない。 FCKEditor って書いてるから、 Perl モジュールが必要なんじゃないかなぁ。</p>
+<h3>cloud プラグイン</h3>
+<p>この日本語サイトで cloud プラグインを使うとこんな結果になりました。ダメだこりゃ。そもそも日本語の文章で単語を切り出すのはたいへんなこと。使うとしたら tag プラグインですね。</p>
+<pre class="highlight"><code>code http あ い う え か が き く け こ さ し す せ そ た だ っ て で と ど な に の は ま も よ ら り る れ を ん イ ク ス タ ト ド プ ラ リ ル ン 使 定
+</code></pre>
+
+<h3>署名の書式の設定を変更</h3>
+<p>メニュー「管理」「サイト設定」で署名の書式を変えました。こんな感じ</p>
+<p><em>--- 2010-02-24 みちのぶ</em></p>
+<p>そのリンク先になる自己紹介ページもつくりました。</p>
+<h2>2010-03-14</h2>
+<p>Syntax Cheat Sheet [ja] Version 1.00</p>
+<p><a href="http://dwug-jp.org/lib/exe/fetch.php?media=wiki:dokuwiki_syntax_cheat_sheet_ja_.pdf">http://dwug-jp.org/lib/exe/fetch.php?media=wiki:dokuwiki_syntax_cheat_sheet_ja_.pdf</a></p>
+<h2>2016-09-22</h2>
+<p>最新版の DokuWiki で再開 <a href="https://www.michinobu.jp/tek/">https://www.michinobu.jp/tek/</a> しました。 Debian で apt-get install dokuwiki してみたのですが、 <a href="https://www.dokuwiki.org/template:bootstrap3">Bootstrap3 Template</a> がうまく動かなかったので公式サイトからダウンロードしたパッケージを入れ直しました。</p>
+<p>記事の投稿日を意識して管理したいので <a href="https://www.dokuwiki.org/tips:blogging">tips:blogging [DokuWiki]</a> を参考に Blog プラグインを導入します。</p>
+<p>まず、「管理者メニュー」の「拡張機能管理」の「検索とインストール」で Blog Plugin の Requires になっている <a href="https://www.dokuwiki.org/plugin:include">Include Plugin</a> と <a href="https://www.dokuwiki.org/plugin:pagelist">Pagelist Plugin</a> を入れます。それから <a href="https://www.dokuwiki.org/plugin:blog">Blog Plugin</a> を入れます。ちなみに "blog" で検索すると２番目に出てくる BlogTNG はもうメンテされていないそうです。</p>
+<p>次に「管理者メニュー」の「サイト設定」のプラグイン Blog ですが、、、、デフォルトでいいや。</p>
+<p>続きは新しいサイト <a href="https://www.michinobu.jp/tek/">https://www.michinobu.jp/tek/</a> で 。</p>
+<p>Tag: dokuwiki</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

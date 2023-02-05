@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Flutter で見出し行・列固定のスクロール - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Flutter で見出し行・列固定のスクロール</h1>
+<p>Update: 2021-10-03</p>
+<p>追記: 2021-10-06</p>
+<p>環境によって横スクロールが遅い問題などを解決するために <a href="https://github.com/AlexBacich/sticky-headers-table">sticky-headers-table</a> を参考にして改善したものを <a href="https://github.com/MichinobuMaeda/fixedtitlesview">https://github.com/MichinobuMaeda/fixedtitlesview</a> に置きました。</p>
+<hr />
+<p>Flutter で Excel の「ウィンドウ枠の固定」と同じように見出し行・列固定のスクロールするサンプルを作ってみました。たかだか数十行のプログラムでこんなに簡単にできるとは・・・</p>
+<p>このサンプルには Excel　のようなセルが並んでいますけれど、表示するものは画像でもなんでもだいじょうぶです。</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ioyb_S5W4pU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<p>見出し列だけ、もしくは、見出し行だけ固定ならスクロールする部品を使ってプログラム無しでできます。でも、両方をやろうとすると縦か横のどちらかの見出しと本体がバラバラに動くことになります。それを <code>ScrollController</code> を使って同期させます。</p>
+<p><a href="https://stackoverflow.com/questions/60487509/is-it-possible-to-detect-source-of-scrollnotification-in-notificationlistener">Is it possible to detect source of ScrollNotification in NotificationListener</a>
+を参考にしました。</p>
+<p>作ったもの</p>
+<pre class="highlight"><code>class DataSheet extends Widget {
+  final double height;
+  final double width;
+  final double fixedHeight;
+  final double fixedWidth;
+  final Widget origin;
+  final Widget colTitles;
+  final Widget rowTitles;
+  final Widget data;
+  final ScrollController _titleScrollController = ScrollController();
+  final ScrollController _dataScrollController = ScrollController();
+
+  DataSheet({
+    Key? key,
+    required this.height,
+    required this.width,
+    required this.fixedHeight,
+    required this.fixedWidth,
+    required this.origin,
+    required this.colTitles,
+    required this.rowTitles,
+    required this.data,
+  }) : super(key: key);
+
+  @override
+  Element createElement() {
+    return Container(
+      width: width,
+      height: height,
+      alignment: Alignment.topLeft,
+      decoration: const BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.blueGrey, width: 1.0),
+          left: BorderSide(color: Colors.blueGrey, width: 1.0),
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              origin,
+              SizedBox(
+                width: width - fixedWidth - 1.0,
+                child: NotificationListener&lt;ScrollNotification&gt;(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    _dataScrollController.jumpTo(_titleScrollController.offset);
+                    return false;
+                  },
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    controller: _titleScrollController,
+                    child: colTitles,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: height - fixedHeight - 1.0,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: fontSizeBody * 4,
+                    child: rowTitles,
+                  ),
+                  SizedBox(
+                    width: width - fixedWidth - 1.0,
+                    child: NotificationListener&lt;ScrollNotification&gt;(
+                      onNotification: (ScrollNotification scrollInfo) {
+                        _titleScrollController
+                            .jumpTo(_dataScrollController.offset);
+                        return false;
+                      },
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        controller: _dataScrollController,
+                        child: data,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ).createElement();
+  }
+}
+</code></pre>
+
+<p>呼び出し元</p>
+<pre class="highlight"><code>    Widget build(BuildContext context) {
+      return ...
+         ... ...
+        DataSheet(
+          height: constraints.maxHeight - 96.0 - fontSizeBody * 2,
+          width: constraints.maxWidth - fontSizeBody * 2,
+          fixedHeight: fontSizeBody * 4,
+          fixedWidth: fontSizeBody * 4,
+          origin: origin,
+          colTitles: colTitles,
+          rowTitles: rowTitles,
+          data: data,
+        )
+         ... ...
+    }
+</code></pre>
+
+<p>中身</p>
+<pre class="highlight"><code>class DataCell extends Widget {
+  final double height;
+  final double width;
+  final Widget child;
+  final Color? color;
+
+  const DataCell({
+    Key? key,
+    required this.height,
+    required this.width,
+    required this.child,
+    this.color,
+  }) : super(key: key);
+
+  @override
+  Element createElement() {
+    return Container(
+      color: color,
+      height: height,
+      width: width,
+      decoration: const BoxDecoration(
+        border: Border(
+          right: BorderSide(color: Colors.blueGrey, width: 1.0),
+          bottom: BorderSide(color: Colors.blueGrey, width: 1.0),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: fontSizeBody / 4,
+          horizontal: fontSizeBody / 4,
+        ),
+        child: child,
+      ),
+    ).createElement();
+  }
+}
+DataCell origin = const DataCell(
+  height: fontSizeBody * 4,
+  width: fontSizeBody * 4,
+  child: Text(''),
+);
+
+Row colTitles = Row(
+  children: dataCols
+      .map&lt;Widget&gt;(
+        (value) =&gt; value == 'D'
+            ? Column(
+                children: [
+                  DataCell(
+                    height: fontSizeBody * 2,
+                    width: fontSizeBody * 7,
+                    child: Text(
+                      value,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Row(
+                    children: const [
+                      DataCell(
+                        height: fontSizeBody * 2,
+                        width: fontSizeBody * 3.5,
+                        child: Text(
+                          'x',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      DataCell(
+                        height: fontSizeBody * 2,
+                        width: fontSizeBody * 3.5,
+                        child: Text(
+                          'y',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              )
+            : DataCell(
+                height: fontSizeBody * 4,
+                width: fontSizeBody * 4,
+                child: Text(
+                  value,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+      )
+      .toList(),
+);
+
+Column rowTitles = Column(
+  children: dataRows
+      .map&lt;Widget&gt;(
+        (value) =&gt; DataCell(
+          height: fontSizeBody * (value == '5' ? 4 : 2),
+          width: fontSizeBody * 4,
+          child: Text(
+            value,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      )
+      .toList(),
+);
+
+Column data = Column(
+  children: dataRows
+      .map&lt;Widget&gt;(
+        (value1) =&gt; Row(
+          children: dataCols
+              .map&lt;Widget&gt;(
+                (value2) =&gt; value2 == 'D'
+                    ? Row(
+                        children: [
+                          DataCell(
+                            height: fontSizeBody * (value1 == '5' ? 4 : 2),
+                            width: fontSizeBody * 3.5,
+                            child: Text(
+                              value2 + value1 + 'x',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          DataCell(
+                            height: fontSizeBody * (value1 == '5' ? 4 : 2),
+                            width: fontSizeBody * 3.5,
+                            child: Text(
+                              value2 + value1 + 'y',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      )
+                    : (value1 == '5' &amp;&amp; value2 == 'B')
+                        ? const DataCell(
+                            height: fontSizeBody * 4,
+                            width: fontSizeBody * 4,
+                            child: Icon(Icons.comment, size: fontSizeBody * 2),
+                          )
+                        : DataCell(
+                            height: fontSizeBody * (value1 == '5' ? 4 : 2),
+                            width: fontSizeBody * 4,
+                            child: Text(
+                              value2 + value1,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+              )
+              .toList(),
+        ),
+      )
+      .toList(),
+);
+
+List&lt;String&gt; dataCols = [
+  'A',
+  'B',
+  'C',
+   ... ...
+  'Z',
+];
+List&lt;String&gt; dataRows = [
+  '1',
+  '2',
+  '3',
+   ... ...
+  '50',
+];
+</code></pre>
+
+<p>追記</p>
+<p>Mac上ではこれでそこそこ快適に動いていたのですが、
+Android では横スクロールが遅い、
+Windows では横スクロールができない（一番下までスクロールしないと横スクロールバーが見えない）、
+という問題が出ました。標準の横スクロールバーではどうにも解決できなかったので、以下のようなボタンを下に追加しました。
+これで、左端、表示幅の1/4左、右、右端に移動できます。</p>
+<pre class="highlight"><code>    Row(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.first_page),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              0,
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+        const Spacer(flex: 1),
+        IconButton(
+          icon: const Icon(Icons.keyboard_arrow_left),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              max(
+                  0,
+                  _dataScrollController.position.pixels -
+                      (width - fixedWidth) / 4),
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+        const Spacer(flex: 4),
+        IconButton(
+          icon: const Icon(Icons.keyboard_arrow_right),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              min(
+                  _dataScrollController.position.pixels +
+                      (width - fixedWidth) / 4,
+                  _dataScrollController.position.maxScrollExtent),
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+        const Spacer(flex: 1),
+        IconButton(
+          icon: const Icon(Icons.last_page),
+          onPressed: () {
+            _dataScrollController.animateTo(
+              _dataScrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 10),
+              curve: Curves.ease,
+            );
+          },
+        ),
+      ],
+    ),
+</code></pre>
+
+<p>Tag: flutter dart</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

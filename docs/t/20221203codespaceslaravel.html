@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>GitHub Codespaces で Laravel を使った開発 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>GitHub Codespaces で Laravel を使った開発</h1>
+<p>Update: 2022-12-03</p>
+<p>レンタルサーバ上で動くツールを作成することになりました。
+最近の共用型レンタルサーバでは Composer が動くので Laravel を使います。
+公開して困るような内容ではないのでソースはとりあえず GitHub の私のところに Public で置きます。</p>
+<p>まず GitHub でリポジトリを新規作成します。</p>
+<ul>
+<li>README は追加する。</li>
+<li><code>.gitignore</code> は不要。 Laravel プロジェクト作成時に生成される。</li>
+<li>ライセンスは Laravel と同じ MIT とする。</li>
+</ul>
+<p>main ブランチで Codespace を作成します。</p>
+<p><img alt="Crate a codespace on main" src="20221203codespaceslaravel01.png" /></p>
+<p>すると少し待たされて VS Code が表示されます。</p>
+<p><img alt="VS code on web" src="20221203codespaceslaravel02.png" /></p>
+<p>ターミナルで環境を見るとこんな感じで必要なものはそろっているようです。テスト用のDBをSQLiteにすればテストもできますね。</p>
+<pre class="highlight"><code>$ cat /etc/debian_version 
+bullseye/sid
+
+$ php --version
+PHP 8.1.4 ... ... ...
+
+$ composer --version
+ ... ... ...
+Composer version 2.4.4 2022-10-27 14:39:29
+
+$ node --version
+v16.18.1
+</code></pre>
+
+<p>composer でプロジェクトを作成します。</p>
+<pre class="highlight"><code>$ cd ..
+$ mv squirrelwheel squirrelwheel_org
+$ composer create-project laravel/laravel squirrelwheel
+$ cd squirrelwheel
+$ mv ../squirrelwheel_org/.git ./
+$ mv ../squirrelwheel_org/LICENSE ./
+$ mv ../squirrelwheel_org/README.md ./
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+ ... ... ...
+</code></pre>
+
+<p>ここまででとりあえず commit &amp; push しておきます。</p>
+<p>次に <code>php artisan serve</code> で開発用サーバを起動すると「ポート転送するか？」と聞かれるます。</p>
+<p><img alt="Open in Browser" src="20221203codespaceslaravel03.png" /></p>
+<p>ボタン "Open in Browser" をクリックするとプロジェクト作成時に生成されたページが表示されました。</p>
+<p><img alt="Laravel demo page" src="20221203codespaceslaravel04.png" /></p>
+<p>この後の作業もすべて Codespace 内でできそうです。</p>
+<p>VS Code の拡張は "PHP Extension Pack" と "Laravel Extension Pack"  と "SQLite Viewer" を入れました。</p>
+<p>作業が終わったら Codespace を止めます。</p>
+<p><img alt="Stop codespace" src="20221203codespaceslaravel05.png" /></p>
+<p>Tag: codespaces laravel</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

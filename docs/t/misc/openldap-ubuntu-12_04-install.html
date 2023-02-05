@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>OpenLDAP を Ubuntu 12.04 にインストール - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>OpenLDAP を Ubuntu 12.04 にインストール</h1>
+<p>Update: 2012-12-23</p>
+<p>OpenLDAP を Ubuntu 12.04 にインストールしました。</p>
+<ul>
+<li>できるだけデフォルトのまま手をかけずにセットアップする。</li>
+<li>ディレクトリは公開しない。</li>
+<li>管理者は複数いて、管理用のアカウントは共有しなくて済むようにする。</li>
+</ul>
+<p>ということで、以下、その手順です。私自身は <code>uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp</code> になります。内容は <a href="misc/openldap-mirror.html">OpenLDAP でミラーリング</a> と一部重複します。</p>
+<p>日本語の入門書としては <a href="http://www.amazon.co.jp/%E5%85%A5%E9%96%80LDAP-OpenLDAP%E2%80%95%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E5%B0%8E%E5%85%A5%E3%83%BB%E9%81%8B%E7%94%A8%E3%82%AC%E3%82%A4%E3%83%89-%E3%83%87%E3%83%BC%E3%82%B8%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88/dp/4798033499/ref=pd_sim_sbs_b_1">『入門LDAP/OpenLDAP―ディレクトリサービス導入・運用ガイド』</a> がありますが、私は旧版しか読んでいません。 <a href="http://www.openldap.org/doc/admin24/slapdconfig.html"><a href="http://www.openldap.org/doc/admin24/slapdconfig.html">http://www.openldap.org/doc/admin24/slapdconfig.html</a></a> によると <code>slapd.conf</code> は deprecated になってしまったということで旧版の手順はそのまま使えなかったのですが、概念の理解と応用については十分参考になります。</p>
+<h2>OSの設定</h2>
+<p>Ubuntu の slapd のパッケージは、インストール時にホスト名を基に初期データベースをセットアップしてくれます。そのまま使うことができるととても楽なのですが、そうでない場合はかなり面倒です。初期データベースの設定が予定と違う場合、どう直したらいいのか私にはわかりませんでした。データベースを追加することはできるのですが、消すことができないとゴミが残ります。私のテスト環境の場合、インストール開始前に以下のようにしました。</p>
+<p><code>/etc/hostname</code></p>
+<pre class="highlight"><code>u1204s2.home.michinobu.jp
+</code></pre>
+
+<p><code>/etc/hosts</code></p>
+<pre class="highlight"><code>127.0.0.1    localhost
+127.0.1.1    u1204s2.home.michinobu.jp    u1204s2
+</code></pre>
+
+<p>「127.0.1.1 てなんやねん？」という人は <a href="https://sites.google.com/site/michinobumaeda/hardware-os/whats127-0-1-1">127.0.1.1 って？</a> をご参照ください。で、「そのやり方はどないやねん」という人は Ubuntu コミュニティに突っ込んであげてください ( 英語で ) 。たぶんきれいに解決する方法はありません。</p>
+<h2>パッケージのインストール</h2>
+<p>参考にしたのは <a href="https://help.ubuntu.com/10.04/serverguide/openldap-server.html"><a href="https://help.ubuntu.com/10.04/serverguide/openldap-server.html">https://help.ubuntu.com/10.04/serverguide/openldap-server.html</a></a> です。インストールするものはこれだけです。</p>
+<pre class="highlight"><code>$ sudo apt-get install slapd ldap-utils
+</code></pre>
+
+<p>インストールした結果を見てみます。 <code>dc=home,dc=michinobu,dc=jp</code> の箱になる <code>olcDatabase={1}hdb,cn=config</code> が既にできあがっています。アクセス権を定義した <code>olcDatabase={1}hdb,cn=config</code> の <code>olcAccess</code> の 3行は後で修正します。</p>
+<pre class="highlight"><code>$ sudo ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b cn=config dn
+dn: cn=config
+
+dn: cn=module{0},cn=config
+
+dn: cn=schema,cn=config
+
+dn: cn={0}core,cn=schema,cn=config
+
+dn: cn={1}cosine,cn=schema,cn=config
+
+dn: cn={2}nis,cn=schema,cn=config
+
+dn: cn={3}inetorgperson,cn=schema,cn=config
+
+dn: olcBackend={0}hdb,cn=config
+
+dn: olcDatabase={-1}frontend,cn=config
+
+dn: olcDatabase={0}config,cn=config
+
+dn: olcDatabase={1}hdb,cn=config
+
+$ sudo slapcat -n 0
+dn: cn=config
+objectClass: olcGlobal
+cn: config
+olcArgsFile: /var/run/slapd/slapd.args
+olcLogLevel: none
+olcPidFile: /var/run/slapd/slapd.pid
+olcToolThreads: 1
+...
+dn: olcDatabase={1}hdb,cn=config
+objectClass: olcDatabaseConfig
+objectClass: olcHdbConfig
+olcDatabase: {1}hdb
+olcDbDirectory: /var/lib/ldap
+olcSuffix: dc=home,dc=michinobu,dc=jp
+olcAccess: {0}to attrs=userPassword,shadowLastChange by self write by anonymou
+ s auth by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by * none
+olcAccess: {1}to dn.base=&quot;&quot; by * read
+olcAccess: {2}to * by self write by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; w
+ rite by * read
+olcLastMod: TRUE
+olcRootDN: cn=admin,dc=home,dc=michinobu,dc=jp
+olcRootPW:: ...
+...
+
+$ sudo slapcat -n 1
+dn: dc=home,dc=michinobu,dc=jp
+objectClass: top
+objectClass: dcObject
+objectClass: organization
+o: home.michinobu.jp
+dc: home
+structuralObjectClass: organization
+...
+dn: cn=admin,dc=home,dc=michinobu,dc=jp
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+userPassword:: ...
+structuralObjectClass: organizationalRole
+...
+
+$ ldapsearch -x -LLL -H ldap:/// -b dc=home,dc=michinobu,dc=jp dn
+dn: dc=home,dc=michinobu,dc=jp
+
+dn: cn=admin,dc=home,dc=michinobu,dc=jp
+
+$ ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b cn=admin,dc=home,dc=michinobu,dc=jp
+dn: cn=admin,dc=home,dc=michinobu,dc=jp
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+</code></pre>
+
+<h2>スキーマ定義の追加</h2>
+<p>後で使うかもしれない <code>misc.ldif</code> を追加します。</p>
+<pre class="highlight"><code>$ sudo ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/misc.ldif
+
+$ sudo ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b cn=config dn
+dn: cn=config
+
+dn: cn=module{0},cn=config
+
+dn: cn=schema,cn=config
+
+dn: cn={0}core,cn=schema,cn=config
+
+dn: cn={1}cosine,cn=schema,cn=config
+
+dn: cn={2}nis,cn=schema,cn=config
+
+dn: cn={3}inetorgperson,cn=schema,cn=config
+
+dn: cn={4}misc,cn=schema,cn=config
+
+dn: olcBackend={0}hdb,cn=config
+
+dn: olcDatabase={-1}frontend,cn=config
+
+dn: olcDatabase={0}config,cn=config
+
+dn: olcDatabase={1}hdb,cn=config
+</code></pre>
+
+<p>LDIF 形式ではないスキーマ定義を追加する場合は、少々面倒ですが <a href="https://help.ubuntu.com/10.04/serverguide/openldap-server.html"><a href="https://help.ubuntu.com/10.04/serverguide/openldap-server.html">https://help.ubuntu.com/10.04/serverguide/openldap-server.html</a></a> の "Further Configuration" の手順を参考にしてください。</p>
+<h2>基本構造の作成</h2>
+<p>お約束の <code>People</code> と <code>Groups</code> を追加します。</p>
+<pre class="highlight"><code>$ vi base.ldif
+dn: ou=People,dc=home,dc=michinobu,dc=jp
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=home,dc=michinobu,dc=jp
+objectClass: organizationalUnit
+ou: Groups
+
+$ ldapadd -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -f base.ldif
+Enter LDAP Password:
+adding new entry &quot;ou=People,dc=home,dc=michinobu,dc=jp&quot;
+
+adding new entry &quot;ou=Groups,dc=home,dc=michinobu,dc=jp&quot;
+
+$ ldapsearch -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -LLL -b dc=home,dc=michinobu,dc=jp dn
+dn: dc=home,dc=michinobu,dc=jp
+
+dn: cn=admin,dc=home,dc=michinobu,dc=jp
+
+dn: ou=People,dc=home,dc=michinobu,dc=jp
+
+dn: ou=Groups,dc=home,dc=michinobu,dc=jp
+</code></pre>
+
+<h2>ユーザの追加</h2>
+<p>私自身のエントリを追加して結果を見ます。パスワードは後で <code>ldappasswd</code> コマンドで設定します。</p>
+<pre class="highlight"><code>$ vi michinobu.ldif
+dn: uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: michinobu
+sn: Maeda
+givenName: Michinobu
+cn: Michinobu Maeda
+displayName: Michinobu Maeda
+uidNumber: 1000
+gidNumber: 100
+loginShell: /bin/bash
+homeDirectory: /home/michinobu
+
+$ ldapadd -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -f michinobu.ldif
+
+$ ldapsearch -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -LLL -b uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+Enter LDAP Password:
+dn: uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: michinobu
+sn: Maeda
+givenName: Michinobu
+cn: Michinobu Maeda
+displayName: Michinobu Maeda
+uidNumber: 1001
+gidNumber: 100
+loginShell: /bin/bash
+homeDirectory: /home/michinobu
+userPassword:: ...
+
+$ ldappasswd -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -S uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+</code></pre>
+
+<p>テスト用のユーザを追加します。</p>
+<pre class="highlight"><code>$ vi test.ldif
+dn: uid=test,ou=People,dc=home,dc=michinobu,dc=jp
+objectClass: inetOrgPerson
+objectClass: posixAccount
+uid: test
+sn: Maeda
+givenName: Test
+cn: Test Maeda
+displayName: Test Maeda
+uidNumber: 1002
+gidNumber: 100
+loginShell: /bin/bash
+homeDirectory: /home/test
+
+$ ldapadd -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -f test.ldif
+</code></pre>
+
+<h2>アクセス権の変更</h2>
+<p>各ユーザがどのユーザのパスワードを変更できるか試してみます。</p>
+<pre class="highlight"><code>$ ldappasswd -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -S uid=test,ou=People,dc=home,dc=michinobu,dc=jp
+
+  --&gt; OK
+
+$ ldappasswd -x -D uid=test,ou=People,dc=home,dc=michinobu,dc=jp -W -S uid=test,ou=People,dc=home,dc=michinobu,dc=jp
+
+  --&gt; OK
+
+$ ldappasswd -x -D uid=test,ou=People,dc=home,dc=michinobu,dc=jp -W -S uid= michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+
+  --&gt; NG
+</code></pre>
+
+<p>Ubuntu のパッケージのデフォルトで、一般的に使える設定になっています。</p>
+<ul>
+<li>admin は test のパスワードを変更できます。</li>
+<li>test は test 自身のパスワードを変更できます。</li>
+<li>test は michinobu のパスワードを変更できません。</li>
+</ul>
+<p>前述の <code>sudo slapcat -n 0</code> の出力の、アクセス制御の部分を読みやすく改行すると以下のようになります。</p>
+<pre class="highlight"><code>olcAccess: {0}to attrs=userPassword,shadowLastChange
+ by self write
+ by anonymous auth
+ by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write
+ by * none
+olcAccess: {1}to dn.base=&quot;&quot;
+ by * read
+olcAccess: {2}to *
+ by self write
+ by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write
+ by * read
+</code></pre>
+
+<p>先ほど試したパスワードが変更する権限があるかどうかなどのことはここで定義されているのですが、参照権限がどうなっているか、実際に動かして試してみます。</p>
+<pre class="highlight"><code>$ ldapsearch -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -LLL -b uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+...
+homeDirectory: /home/michinobu
+userPassword:: ...
+
+$ ldapsearch -x -D uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp -W -LLL -b uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+...
+homeDirectory: /home/michinobu
+userPassword:: ...
+
+$ ldapsearch -x -D uid=test,ou=People,dc=home,dc=michinobu,dc=jp -W -LLL -b uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+...
+homeDirectory: /home/michinobu
+
+$ ldapsearch -x -LLL -b uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+...
+homeDirectory: /home/michinobu
+</code></pre>
+
+<ul>
+<li>admin と自分自身は、パスワードを含めて全て参照することができます。</li>
+<li>他のユーザはパスワード以外の情報を参照することができます。</li>
+<li>匿名ユーザはパスワード以外の情報を参照することができます。</li>
+</ul>
+<p><a href="http://www.openldap.org/doc/admin24/access-control.html"><a href="http://www.openldap.org/doc/admin24/access-control.html">http://www.openldap.org/doc/admin24/access-control.html</a></a> の "8.3.5. Access Control Examples" を参考に、このアクセス制御の設定を変更します。</p>
+<p>まず、匿名ユーザによる参照権限を削除します。</p>
+<pre class="highlight"><code>$ vi olcAccess.ldif
+dn: olcDatabase={1}hdb,cn=config
+changetype: modify
+delete: olcAccess
+-
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by self write by anonymous auth by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by * none
+-
+add: olcAccess
+olcAccess: {1}to dn.base=&quot;&quot; by * read
+-
+add: olcAccess
+olcAccess: {2}to * by self write by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by anonymous auth by * read
+
+$ sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f olcAccess.ldif
+
+$ sudo ldapsearch -Y EXTERNAL -H ldapi:/// -LLL -b olcDatabase={1}hdb,cn=config olcAccess
+dn: olcDatabase={1}hdb,cn=config
+olcAccess: {0}to attrs=userPassword,shadowLastChange by self write by anonymou
+ s auth by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by * none
+olcAccess: {1}to dn.base=&quot;&quot; by * read
+olcAccess: {2}to * by self write by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; w
+ rite by anonymous auth by * read
+</code></pre>
+
+<p>追加したのは <code>olcAccess: {2}to * ...</code> の行の <code>by anonymous auth</code> だけです。これで、匿名ユーザは認証を試みることができるけれど、認証に成功しなければ何も参照できない、という設定になります。</p>
+<p>次に、 admin 以外のユーザに管理者の権限を与えます。 <a href="http://www.openldap.org/doc/admin24/access-control.html"><a href="http://www.openldap.org/doc/admin24/access-control.html">http://www.openldap.org/doc/admin24/access-control.html</a></a> の "8.4.4. Managing access with Groups" で紹介されている手順のうち、直感的にわかりやすい <code>groupOfNames</code> による実現方法を使います。</p>
+<p>まず <code>useradmin</code> グループを作成し、私をメンバーにします。</p>
+<pre class="highlight"><code>$ vi useradmin.ldif
+dn: cn=useradmin,ou=Groups,dc=home,dc=michinobu,dc=jp
+cn: Administrators of user accounts
+objectclass: groupOfNames
+member: uid=michinobu,ou=People,dc=home,dc=michinobu,dc=jp
+member: ...
+
+$ ldapadd -x -D cn=admin,dc=home,dc=michinobu,dc=jp -W -f useradmin.ldif
+</code></pre>
+
+<p>次に、<code>useradmin</code> グループに任意のユーザのパスワードを変更する権限と、任意のオブジェクトの変更の権限を与えます。</p>
+<pre class="highlight"><code>$ vi olcAccess.ldif
+dn: olcDatabase={1}hdb,cn=config
+changetype: modify
+delete: olcAccess
+-
+add: olcAccess
+olcAccess: {0}to attrs=userPassword,shadowLastChange by self write by anonymous auth by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by group.exact=&quot;cn=useradmin,ou=Groups,dc=home,dc=michinobu,dc=jp&quot; write by * none
+-
+add: olcAccess
+olcAccess: {1}to dn.base=&quot;&quot; by * read
+-
+add: olcAccess
+olcAccess: {2}to * by self write by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by group.exact=&quot;cn=useradmin,ou=Groups,dc=home,dc=michinobu,dc=jp&quot; write by anonymous auth by * read
+
+$ sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f olcAccess.ldif
+
+$ sudo ldapsearch -Y EXTERNAL -H ldapi:/// -LLL -b olcDatabase={1}hdb,cn=config olcAccess
+dn: olcDatabase={1}hdb,cn=config
+olcAccess: {0}to attrs=userPassword,shadowLastChange by self write by anonymou
+ s auth by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; write by group.exact=&quot;cn=u
+ seradmin,ou=Groups,dc=home,dc=michinobu,dc=jp&quot; write by * none
+olcAccess: {1}to dn.base=&quot;&quot; by * read
+olcAccess: {2}to * by self write by dn=&quot;cn=admin,dc=home,dc=michinobu,dc=jp&quot; w
+ rite by group.exact=&quot;cn=useradmin,ou=Groups,dc=home,dc=michinobu,dc=jp&quot; write
+  by anonymous auth by * read
+</code></pre>
+
+<p>これで、私が <code>test</code> ユーザのパスワードを変更したり、 <code>test</code> ユーザを削除したり、新しいユーザを作成したりできるようになります。</p>
+<h2>OSのユーザ認証の設定</h2>
+<p>次に <a href="https://help.ubuntu.com/community/LDAPClientAuthentication"><a href="https://help.ubuntu.com/community/LDAPClientAuthentication">https://help.ubuntu.com/community/LDAPClientAuthentication</a></a> を参考に、LDAP で OS のユーザを認証するよう設定します。</p>
+<p>インストールするものはこれだけです。途中でパラメータの入力を求められますが、ドメイン名や管理者以外はデフォルトを受け入れます。</p>
+<pre class="highlight"><code>$ sudo apt-get install libnss-ldap
+</code></pre>
+
+<p>設定を間違えてやり直す場合は以下のコマンドで。</p>
+<pre class="highlight"><code>$ sudo dpkg-reconfigure ldap-auth-config
+</code></pre>
+
+<p>LDAPによる認証を有効にします。</p>
+<pre class="highlight"><code>$ sudo auth-client-config -t nss -p lac_ldap
+$ sudo pam-auth-update
+</code></pre>
+
+<p>途中で以下の入力を求められますが、 LDAPが止まると全員ログインできなくなる事態を避けるために、 "Unix authentication" のチェックは外さないでください。</p>
+<pre class="highlight"><code>[*] Unix authentication
+[*] LDAP Authentication
+</code></pre>
+
+<p>たまたま私自身の <code>gid</code> が <code>/etc/passwd</code> の設定で <code>1000</code> になっていたので、ログインし直して <code>gid</code> が変わるかどうか確かめてみます。 <code>/etc/passwd</code> の設定が優先なので、<code>gid</code> は LDAP の設定の <code>100</code> にならず <code>1000</code> のままです。また、デーモン <code>slapd</code> を止めてもログインできます。</p>
+<p>test ユーザは LDAP の設定通りにログインできます。</p>
+<blockquote>
+<p>追記 : 2012-12-27</p>
+<p>OS の認証をする場合は nscd も入れた方がいいそうです。 <a href="https://help.ubuntu.com/community/LDAPClientAuthentication"><a href="https://help.ubuntu.com/community/LDAPClientAuthentication">https://help.ubuntu.com/community/LDAPClientAuthentication</a></a> などご参照ください。</p>
+<p>ユーザのホームディレクトリを自動作成するには以下のように。</p>
+</blockquote>
+<pre class="highlight"><code>$ sudo vi /usr/share/pam-configs/my_mkhomedir
+Name: activate mkhomedir
+Default: yes
+Priority: 900
+Session-Type: Additional
+Session:
+        required                        pam_mkhomedir.so umask=0022 skel=/etc/skel
+$ sudo pam-auth-update
+$ sudo /etc/init.d/nscd restart
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

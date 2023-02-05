@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>iPod touch で音声をちょっと繰り返す - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>iPod touch で音声をちょっと繰り返す</h1>
+<p>Update: 2011-02-05</p>
+<p>英語のお勉強を再開しようと思うのですが、iPod touch で困るのが「今聞いたところ、数秒分だけ繰り返して聞き直したい」ってのが難しいことです。ICレコーダーなら「ワンタッチリピート」とか「イージーリピート」とか「ちょっと前再生」という機能が付いていることが多いそうですが、 iPod touch の素のミュージックプレーヤはそれができません。プログレスバーをちょっと戻すことはできなくはないのですが、ねらったところから大きく外れてしまいます。うまくいったとしても再度同じことを繰り返すのは至難の業です。</p>
+<p><img alt="" src="20110205_0.png" /></p>
+<p>しかしながら、音声データの一部だけ再生するプログラムはさほど難しくないはず。そのくらいのことができるアプリなら誰かつくっているだろうと、誰も作ってないなら自分で作って iPhone App 初挑戦してみようかと、あ、いやいや、そっちに行くんじゃなくて、まずは探してみました。すぐに <a href="<a href="http://okwave.jp/qa/q6344513.html">http://okwave.jp/qa/q6344513.html</a>">iphoneのアプリでワンタッチリピート</a>&amp; という記事が見つかりました。この記事載っている LinguaJacket のフリー版を試してみることにします。</p>
+<p>iPod touch に入れて、起動すると「まずミュージックプレーヤを立ち上げてね」とのこと。ミュージックプレーヤで再生中のものを制御する仕組みのようです。ちなみに、後からミュージックプレーヤを立ち上げてもだいじょうぶでした。</p>
+<p>繰り返す間隔は、 1.8秒、4.0秒、7.0秒の3種類。それぞれボタンを押すだけ。やめるボタンを押すまで何度でも針が跳んだレコードみたいに（って若い人にはわからないか？）繰り返してくれます。いいです。ばっちりです。この LinguaJacket の有償版はたった 115円なのですが、ここまでで満足してしまったので今のところ買わない予定です。ごめんなさい。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

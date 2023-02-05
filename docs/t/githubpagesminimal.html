@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>このサイトを GitHub Pages に引っ越し - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>このサイトを GitHub Pages に引っ越し</h1>
+<p>Update: 2021-05-18</p>
+<p>レンタルサーバ上の DokuWiki と Blogger 2個と Google Sites にバラバラにページを置いていたのが面倒になったので集約しました。</p>
+<p>Markdown が使えるといいんだけど、あと、静的なページでいいんだけどと
+<a href="https://w3techs.com/technologies/overview/content_management">Usage statistics of content management systems</a>
+を見ていたら GitHub Pages が上の方にいます。上の方といっても WordPress が圧倒的なので 10位より下は 1.0% 未満です。
+WordPress がいいものだとは思わないんだけどな。まあ、他人のことはいいです。</p>
+<p>GitHub Pages なら GitHub のオンラインの編集機能も利用できます。</p>
+<h2>サブディレクトリ無しにするためのお約束</h2>
+<p>GitHub にリポジトリを作れば Markdown でも HTML でもとにかく Pages で公開できることは知っていました。 <code>https://username.github.io/repositoryname</code> の形になります。でも、そのリポジトリ名のサブディレクトリは無しにしたいんだけどと調べてみたらリポジトリ名を <code>username.github.io</code> にしろとのこと。そうするとサブディレクトリ無しの <code>https://username.github.io/</code> で公開してくれます。</p>
+<h2>独自ドメインの利用</h2>
+<p>独自ドメインでも無料でSSL設定できますね。</p>
+<p>手順は
+<a href="https://docs.github.com/ja/pages/configuring-a-custom-domain-for-your-github-pages-site">GitHub Pages サイトのカスタムドメインを設定する</a>
+に詳しく載っています。</p>
+<p>設定にはDNSのレコードの管理についての基本的な知識が必要です。例えば <code>CNAME</code> の値の末尾に <code>.</code> が必要だとか。その前に「CNAMEって何？」とか。設定が終わるとリポジトリのトップに <code>CNAME</code> というファイルが自動でコミットされます。ファイルの中身はドメイン名だけです。</p>
+<h2>テーマの選択</h2>
+<p>自分で Markdown を HTML に変換してアップロードすればどんな形にでもできるのですが、あらかじめ用意してあるテーマがよさそうなので、少しだけカスタマイズして利用することにします。
+GitHub Pages に用意されているテーマは <a href="https://jekyllrb.com/">Jekyll</a> を使っています。 GitHub の設定ページでテーマを選択すると <code>_config.yaml</code> に自動で記載されます。ローカルで記入して <code>push</code> してもいいです。今回は <a href="https://github.com/pages-themes/minimal">Minimal</a> を選択しました。</p>
+<h2>テーマのカスタマイズ</h2>
+<p>テーマをカスタマイズしてローカルでプレビューなどするには Ruby が必要です。そんなわけでずいぶん久しぶりに Ruby の環境を用意します。</p>
+<p>Ruby は複数のバージョンを入れられるようにします。昔は RVM を使った記憶があります。使ったという記憶だけで、使い方は忘れてしまいました。今回は <a href="computer-union.jp">rbenv</a> を使ってみます。 Mac の場合、インストールは簡単です。</p>
+<pre class="highlight"><code>$ brew install rbenv
+</code></pre>
+
+<p>次に</p>
+<pre class="highlight"><code>$ rbenv init
+</code></pre>
+
+<p>とすると <code>.profile</code> か <code>.bash_profile</code> に以下のものを入れておけとメッセージが出るので素直にそれに従います。</p>
+<pre class="highlight"><code>eval &quot;$(rbenv init -)&quot;
+</code></pre>
+
+<p>それから OpenSSL についての警告が出るので以下の行も入れておきました。これは無くてもとりあえず動くと思います。</p>
+<pre class="highlight"><code>export RUBY_CONFIGURE_OPTS=&quot;--with-openssl-dir=$(brew --prefix openssl@1.1)&quot;
+</code></pre>
+
+<p>利用可能なステーブル・バージョンを調べてどれかをインストールします。</p>
+<pre class="highlight"><code>$ rbenv install -l
+2.6.7
+2.7.3
+3.0.1
+jruby-9.2.17.0
+ ... ... ...
+
+$ rbenv install 2.7.3
+</code></pre>
+
+<p><code>.ruby-version</code> ファイルを作成して Ruby のバージョンを書きます。</p>
+<p>余談ですが JRuby まだあるんだ。 JRuby は Java VM の上で動く Ruby です。メンテナンス大変だろうな。</p>
+<p><code>Gemfile</code> は以下のように。</p>
+<pre class="highlight"><code>source &quot;https://rubygems.org&quot;
+
+gem &quot;github-pages&quot;, group: :jekyll_plugins
+</code></pre>
+
+<p>必要なパッケージをインストールしてプレビューするには以下のように。</p>
+<pre class="highlight"><code>$ bundle install
+$ bundle exec jekyll serve
+</code></pre>
+
+<p><a href="http://127.0.0.1:4000">http://127.0.0.1:4000</a> でプレビューを参照できます。 出力先の <code>_site</code> ディレクトリは <code>.gitignore</code> に追加しておきます。</p>
+<p>カスタマイズで利用したファイルは以下のようになります。</p>
+<pre class="highlight"><code>+---_layouts
+|       default.html
++---_sass
+|       custom.scss
++---assets
+    +---css
+            style.scss
+    _config.yaml
+</code></pre>
+
+<p>詳細は <a href="https://github.com/pages-themes/minimal">Minimal</a> か <a href="https://github.com/MichinobuMaeda/MichinobuMaeda.github.io">私のサイトの設定</a> を見てください。</p>
+<p>Tag: github ruby jekyll</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

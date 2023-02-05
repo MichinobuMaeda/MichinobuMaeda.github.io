@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>私のサーバに毎日来る攻撃 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>私のサーバに毎日来る攻撃</h1>
+<p>Update: 2012-10-06</p>
+<p>毎日飽きもせず、こんなのが来ます。自動巡回かな？ phpMyAdmin を本番環境で直接解凍するのはやめた方がよさそうです。確率は低いですが、パスワードなど設定する前のわずかな時間に来られると面倒なことになると思います。</p>
+<pre class="highlight"><code>Requests with error response codes
+ 404 Not Found
+ //admin/index.php: 2 Time(s)
+ //admin/phpmyadmin/index.php: 2 Time(s)
+ //admin/pma/index.php: 2 Time(s)
+ //db/index.php: 2 Time(s)
+ //dbadmin/index.php: 2 Time(s)
+ //index.php: 2 Time(s)
+ //myadmin/index.php: 2 Time(s)
+ //mysql/index.php: 2 Time(s)
+ //mysqladmin/index.php: 2 Time(s)
+ //php-my-admin/index.php: 4 Time(s)
+ //phpMyAdmin-2.2.3/index.php: 2 Time(s)
+ //phpMyAdmin-2.2.6/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.1/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.4/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.5-pl1/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.5-rc1/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.5-rc2/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.5/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.6-rc1/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.6-rc2/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.6/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.7-pl1/index.php: 2 Time(s)
+ //phpMyAdmin-2.5.7/index.php: 2 Time(s)
+ //phpMyAdmin-2/index.php: 2 Time(s)
+ //phpMyAdmin/index.php: 4 Time(s)
+ //phpadmin/index.php: 2 Time(s)
+ //phpmyadmin/index.php: 4 Time(s)
+ //phpmyadmin1/index.php: 2 Time(s)
+ //phpmyadmin2/index.php: 2 Time(s)
+ //pma/index.php: 2 Time(s)
+ //typo3/phpmyadmin/index.php: 2 Time(s)
+ //web/index.php: 2 Time(s)
+ //web/phpMyAdmin/index.php: 2 Time(s)
+ //websql/index.php: 2 Time(s)
+ //xampp/phpmyadmin/index.php: 2 Time(s)
+ /manager/html: 2 Time(s)
+ /muieblackcat: 2 Time(s)
+ /user/soapCaller.bs: 2 Time(s)
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

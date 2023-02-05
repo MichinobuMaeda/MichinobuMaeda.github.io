@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>リレーショナルデータベースは遅い - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>リレーショナルデータベースは遅い</h1>
+<p>Update: 2013-03-10</p>
+<p>もう10年以上前のことになりますが、昔々米国からコンピュータというものが日本にやってきたときに、カタカナ（たぶん、いわゆる半角の）を使えるようにしたという大先輩のお話を聞く機会がありました。その中で「リレーショナルデータベースはなぜこんなに遅いのか。アーキテクチャを間違っているとしか思えない。」とおっしゃっていました。</p>
+<p>その通り、遅いです。今でも遅いです。今はやりの NoSQL と比べての話ではありません ( ちなみに NoSQL の中には、使い方によっては MySQL より遅いものものあるようです ) 。普通に遅いです。世の中のリレーショナルデータベースを使ったシステムの大半は、インデックスをしっかり効かせた OLTP 用途なのだろうと思いますが、それとは少し違うことをすればすぐに性能上の問題が出るはずです。なにしろ、普通にベタファイルを読み書きするより遅いのですから。</p>
+<p>どのくらい遅いか自分の MacBook Pro で改めて試してみました。 SSD じゃない遅いマシンです。測定には以前 <a href="index-insert-time-mysql.html">インデックスの有無と INSERT の所要時間 ( MySQL )</a> で使った MySQL のデータを利用します。</p>
+<p>まず、 <code>INSERT ... SELECT...</code> で 100万行をまるごとテーブルからテーブルにコピーしてみます。一行ずつ <code>INSERT</code> してないので、 SQL のパースなどのオーバーヘッドはほとんどない状態だと思います。</p>
+<pre class="highlight"><code>date +%s ; echo &quot;insert into t3 select * from t1&quot; | mysql -uroot -pxxxxxxxx test  ; date +%s
+</code></pre>
+
+<p>79秒です。</p>
+<p>次に、同じデータをファイルに書き出してみます。</p>
+<pre class="highlight"><code>date +%s ; echo &quot;select * from t1&quot; | mysql -uroot -``pxxxxxxxx` `test &gt; t1.txt ; date +%s
+</code></pre>
+
+<p>76秒です。ファイルサイズは 1GB くらいになりました。</p>
+<p>ファイルからファイルにコピーしてみます。</p>
+<pre class="highlight"><code>date +%s ; cat t1.txt &gt; t2.txt ; date +%s
+</code></pre>
+
+<p>57秒です。</p>
+<p>出力先を <code>/dev/null</code> にしてみます。まず、 MySQL から。少しでもオーバーヘッドを減らすために、全くヒットしない WHERE 条件を付けます。テーブルフルスキャンするだけ、なにも結果を返さない、という処理になるはずです。</p>
+<p>date +%s ; echo "select * from t3 where c6 = 'x'" | mysql -uroot -pxxxxxxxx test &gt; /dev/null ; date +%s</p>
+<p>23秒です。何度か繰り返すと、キャッシュが効くのか 3秒くらいになります。終わってから気がついたのですが、何も出力しないから <code>/dev/null</code> にする必要はなかったな。</p>
+<p>ファイルから。</p>
+<pre class="highlight"><code>date +%s ; cat t2.txt &gt; /dev/null ; date +%s
+</code></pre>
+
+<p>24秒です。こちらも繰り返してみましたが 1秒以内になるようです。</p>
+<p>OS が管理するファイルシステムのキャッシュの恩恵は、 MySQL も平等に受けてますよね？</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

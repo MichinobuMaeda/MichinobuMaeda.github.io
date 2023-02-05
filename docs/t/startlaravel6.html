@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Laraval 5 による開発の手順 #6 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Laraval 5 による開発の手順 #6</h1>
+<p>Update: 2018-12-22</p>
+<p><a href="startlaravel5.html">Laraval 5 による開発の手順 #5</a> の続きです。</p>
+<h2>パスワードの複雑さのチェックを厳しくする</h2>
+<p>Laravel 5 が用意してくれている認証機能のパスワードの制限は「 6文字以上」だけです。
+私が作成しようとしているシステムとしては弱すぎるので、厳しくして、また、エラーメッセージも変更します。</p>
+<h3>最小の文字数を増やす</h3>
+<p>まず、文字数は「 8文字以上」にします。これは簡単で、
+<code>app/Http/Controllers/Auth/ResetPasswordController.php</code> の
+<code>min:6</code> を <code>min:8</code> に変更するだけです。</p>
+<p>メッセージの日本語化は <code>/resources/lang/ja/validation.php</code> の</p>
+<pre class="highlight"><code>    'min'                  =&gt; [
+        ...
+        'string'  =&gt; 'The :attribute must be at least :min characters.',
+</code></pre>
+
+<p>を</p>
+<pre class="highlight"><code>    'min'                  =&gt; [
+        ...
+        'string'  =&gt; ':attribute は :min文字以上にしてください。',
+</code></pre>
+
+<p>に書き換えて、</p>
+<pre class="highlight"><code>    'attributes' =&gt; [
+        'password' =&gt; 'パスワード',
+    ],
+</code></pre>
+
+<p>を追加します。</p>
+<h3>３種類の文字種の使用を強制する</h3>
+<p>次に、アルファベット大文字、アルファベット小文字、数字の３種類の文字種の使用を求める設定を作成します。これは
+validation の既存のセットでは足りないので自分で作ります。</p>
+<pre class="highlight"><code>php artisan make:rule Password
+</code></pre>
+
+<p>で作成した <code>app/Rules/Password.php</code> に定義を書いて、
+<code>app/Http/Controllers/Auth/ResetPasswordController.php</code> に</p>
+<pre class="highlight"><code>            'password' =&gt; ['required', 'confirmed', 'min:8', new Password()],
+</code></pre>
+
+<p>と追加します。</p>
+<h2>パスワードリセットをやり直すボタン</h2>
+<p>パスワードリセットでタイムアウトした場合や、メールアドレスが違っていた場合は最初からやり直す必要があるのですが、
+Larval 5 が用意してくれている UI ではわかりにくいです。
+最初からやり直すことになるのは概ね E-mail 欄でエラーが出る場合なので、
+その条件で表示するボタンを <code>reset.blade.php</code> 追加します。</p>
+<pre class="highlight"><code>      &lt;div class=&quot;col-md-6 offset-md-4 form-inline&quot;&gt;
+        &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;
+          {%raw%}{{ __('Save') }}{%endraw%}
+        &lt;/button&gt;
+        @if ($errors-&gt;has('email'))
+        &amp;nbsp;
+        &lt;a class=&quot;btn btn-danger&quot; href=&quot;{%raw%}{{ route('password.request') }}{%endraw%}&quot;&gt;
+          {%raw%}{{ __('Retry') }}{%endraw%}
+        &lt;/a&gt;
+        @endif
+      &lt;/div&gt;
+</code></pre>
+
+<p>上位の <code>div</code> の <code>class</code> に <code>form-inline</code> を追加するとボタンが横に並んでくれます。
+見た目はこんな感じになります。</p>
+<p><img alt="" src="retry_reset_password.png" /></p>
+<p>この後に作成する管理者からの招待メールを受けた場合でも、これで良さそうです。</p>
+<h2>招待メール送信機能を追加する</h2>
+<p>招待メールを送信すると言っても処理内容はパスワードリセットとほとんど変わりません。
+本人ではなく管理者がパスワードリセットメール送信を代行するだけです。
+しかしながら実用のためには以下のことをしたいです。</p>
+<ul>
+<li>タイムアウトはパスワードリセットより長くする。</li>
+<li>管理者としてログイン中に利用者の一覧からボタン一つで送信する。</li>
+</ul>
+<p>まず、パスワードリセットのタイムアウトは <code>config/auth.php</code> に</p>
+<pre class="highlight"><code>    'passwords' =&gt; [
+        'users' =&gt; [
+            'provider' =&gt; 'users',
+            'table' =&gt; 'password_resets',
+            'expire' =&gt; 60
+        ],
+    ],
+</code></pre>
+
+<p>と設定されています。単位は分で、つまり 1時間です。
+これは、本人がパスワードリセットするには長すぎるくらいですが、
+招待メールでは短すぎます。</p>
+<p>それから <code>ResetPasswordController</code>　は</p>
+<pre class="highlight"><code>    public function __construct()
+    {
+        $this-&gt;middleware('guest');
+    }
+</code></pre>
+
+<p>となっていて、管理者がログインしたままだと利用できません。
+この設置を変えて何かセキュリティの穴ができてもイヤなので、
+管理者用の機能を追加することにします。</p>
+<p>追記 2018-12-23: 上記のタイムアウト値の処理は無くして、
+招待メールを受け取ったら既存のパスワードリセットのページを開いてもらう形に変更しました。</p>
+<h2>招待メールのタイムアウトを変更する</h2>
+<p><code>vendor/laravel/framework</code> の下を見たところ、パスワードリセットのタイムアウトの判定は
+<code>password_resets</code> テーブルの <code>created_at</code>
+に上記の <code>expire</code> の値を足して現在の日時と比較しているだけのようです。
+きれいなやり方ではありませんが、既存の処理を生かすため、
+<code>created_at</code> に未来の日時を設定してタイムアウトを延長してもらうことにします。</p>
+<p>その前に、ついでに local のテストで利用するタイムアウトを短くしたいです。
+<code>config/auth.php</code> を書き換えて、</p>
+<pre class="highlight"><code>            'expire' =&gt; intval(env('APP_PASSWORD_RESET_EXPIRE', 60))
+</code></pre>
+
+<p><code>.env</code> で</p>
+<pre class="highlight"><code>APP_PASSWORD_RESET_EXPIRE=1
+</code></pre>
+
+<p>という形で設定できるようにしました。</p>
+<p>招待メールのタイムアウトも <code>.env</code> に</p>
+<pre class="highlight"><code>APP_INVITATION_EXPIRE=1
+</code></pre>
+
+<p>のように設定します。この値は、次の項の
+<code>app/Services/UsersService.php</code> で使います。</p>
+<h2>管理者専用のページを追加する</h2>
+<p>以下、たくさんのソースファイルを追加編集するのですが、すべてを載せるとたいへんなのでかいつまんで。</p>
+<p>Laravel 5 の Authorization は Controller に設定することもできますが、
+私の好みで Route の設定に入れることにします。
+システムの入り口の姿形が Route の一覧として把握できるからです。</p>
+<p>まず User モデルの操作についての Policy を作成します。</p>
+<pre class="highlight"><code>php artisan make:policy UserPolicy --model=User
+</code></pre>
+
+<p>で app/Policies/UserPolicy.php に Policy
+<code>view</code>, <code>create</code>, <code>update</code>, <code>delete</code>, <code>restore</code>, <code>forceDelete</code>
+ができます。 <code>restore</code> と <code>forceDelete</code> は使わない、というかよくわからないので削除します。
+そこにポリシー <code>list</code> と <code>invite</code> を追加します。</p>
+<p>私が作成しようとしているシステムでは、管理者でない利用者はいずれかのグループに所属するユーザの一覧
+( <code>GET /groups/{group_id}/users</code> ) を参照しますが、すべてのユーザの一覧
+( <code>GET /users</code> ) は必要はありません。そんなにたくさん表示されても困るだろうと思います。
+また、ユーザの出入りがほとんど無いシステムなので、以下のように権限を設定します。</p>
+<ul>
+<li><code>view</code> : ログインしている人全員</li>
+<li><code>create</code> : 全体の管理者</li>
+<li><code>update</code> : 本人、本人が所属するグループの管理者、全体の管理者</li>
+<li><code>delete</code> : 全体の管理者</li>
+<li><code>list</code> : 本人が所属するグループの管理者、全体の管理者</li>
+<li><code>invite</code> : 本人が所属するグループの管理者、全体の管理者</li>
+</ul>
+<p><code>app/Providers/AuthServiceProvider.php</code> に以下のように設定を追加すると、
+<code>app/Policies/UserPolicy.php</code> を使ってもらえるようになります。</p>
+<pre class="highlight"><code>    public function boot()
+    {
+        $this-&gt;registerPolicies();
+
+        Gate::resource('users', 'App\Policies\UserPolicy', [
+            'view' =&gt; 'view',
+            'create' =&gt; 'create',
+            'update' =&gt; 'update',
+            'delete' =&gt; 'delete',
+            'list' =&gt; 'list',
+            'invite' =&gt; 'invite',
+        ]);
+    }
+</code></pre>
+
+<p>次に <code>/users/{user}...</code> のような Route で該当する
+User モデルを取得して Policy や Controller に引数で渡してもらうため、
+<code>app/Providers/RouteServiceProvider.php</code> に次のように設定します。</p>
+<pre class="highlight"><code>    public function boot()
+    {
+        parent::boot();
+
+        Route::model('user', User::class);
+    }
+</code></pre>
+
+<p>便利な世の中になったものです。</p>
+<p>これで routes/web.php にアクセス制限を設定できるようになります。</p>
+<pre class="highlight"><code>Route::post(
+  '/users/{user}/invite',
+  'UsersController@invite'
+)-&gt;name('users.invite')-&gt;middleware('can:users.invite,user');
+</code></pre>
+
+<p>処理や UI は以下のファイルに定義しました。</p>
+<ul>
+<li><code>app/Http/Controllers/UsersController.php</code></li>
+<li><code>app/Services/UsersService.php</code></li>
+<li><code>app/Notifications/InvitationMailNotification.php</code></li>
+<li><code>resources/views/users_list.blade.php</code></li>
+<li><code>resources/views/users_invite_email.blade.php</code></li>
+</ul>
+<hr />
+<p>ここまで作ったものは <a href="https://github.com/MichinobuMaeda/tamuro.git">https://github.com/MichinobuMaeda/tamuro.git</a>
+のタグ <code>startlaravel6</code> です。チェックアウトの手順は
+<a href="startlaravel2.html">Laraval 5 による開発の手順 #2</a> の末尾をご参照ください。
+チェックアウト済みであれば</p>
+<pre class="highlight"><code>git pull
+git checkout tags/startlaravel6
+</code></pre>
+
+<p>としていただければいいです。</p>
+<hr />
+<p>このシリーズはいったんここまでとします。</p>
+<p>Tag: PHP Laravel</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

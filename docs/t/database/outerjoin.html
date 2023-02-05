@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>外部結合の結果をイメージするのは難しい - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>外部結合の結果をイメージするのは難しい</h1>
+<p>Update: 2013-05-08</p>
+<p>今、私が基盤の担当として関わっているシステムでは、外部結合 ( Outer Join ) を使った SQL を多用しています。でも、それらの内容をよく見ると、外部結合を使わなくていいものがあるような。。。最近は Java でも Rails でも ORM ( Object-relational Mapping ) が当たり前のように使われています。若いエンジニアさんたちは SQL を直接扱うことが少なくなりました。でも RDB の側は SQL で処理しています。ですから基本的なことは理解しておいてもらった方がいいだろうと考えて、以下のようのなクイズを作ってみました。難しいだろうと思うのですが、実際にシステムの中で使われている SQL に比べればずいぶん単純なものです。</p>
+<p>問題：a. 〜 z. の <code>SELECT</code>文について、同じ結果を返す組み合わせをすべて挙げてください。 <code>ORDER BY</code> を付けていないのですが、結果の行の順番は考慮しなくてかまいません。</p>
+<p>テーブルの定義：</p>
+<pre class="highlight"><code>CREATE TABLE T1 (PK INT NOT NULL, C1 INT, PRIMARY KEY (PK));
+CREATE TABLE T2 (PK INT NOT NULL, C2 INT, PRIMARY KEY (PK));
+</code></pre>
+
+<p>SELECT文：</p>
+<pre class="highlight"><code>a. SELECT C1, C2 FROM T1 NATURAL JOIN     T2;
+b. SELECT C1, C2 FROM T1 JOIN             T2 ON T1.PK = T2.PK;
+c. SELECT C1, C2 FROM T1 INNER JOIN       T2 ON T1.PK = T2.PK;
+d. SELECT C1, C2 FROM T1 LEFT JOIN        T2 ON T1.PK = T2.PK;
+e. SELECT C1, C2 FROM T1 RIGHT JOIN       T2 ON T1.PK = T2.PK;
+f. SELECT C1, C2 FROM T1 FULL JOIN        T2 ON T1.PK = T2.PK;
+g. SELECT C1, C2 FROM T1 LEFT OUTER JOIN  T2 ON T1.PK = T2.PK;
+h. SELECT C1, C2 FROM T1 RIGHT OUTER JOIN T2 ON T1.PK = T2.PK;
+i. SELECT C1, C2 FROM T1 FULL OUTER JOIN  T2 ON T1.PK = T2.PK;
+j. SELECT C1, C2 FROM T2 NATURAL JOIN     T1;
+k. SELECT C1, C2 FROM T2 JOIN T1 ON       T1.PK = T2.PK;
+l. SELECT C1, C2 FROM T2 INNER JOIN       T1 ON T1.PK = T2.PK;
+m. SELECT C1, C2 FROM T2 LEFT JOIN        T1 ON T1.PK = T2.PK;
+n. SELECT C1, C2 FROM T2 RIGHT JOIN       T1 ON T1.PK = T2.PK;
+o. SELECT C1, C2 FROM T2 FULL JOIN        T1 ON T1.PK = T2.PK;
+p. SELECT C1, C2 FROM T2 LEFT OUTER JOIN  T1 ON T1.PK = T2.PK;
+q. SELECT C1, C2 FROM T2 RIGHT OUTER JOIN T1 ON T1.PK = T2.PK;
+r. SELECT C1, C2 FROM T2 FULL OUTER JOIN  T1 ON T1.PK = T2.PK;
+s. SELECT C1, C2 FROM T1 INNER JOIN       T2 ON T1.PK = T2.PK WHERE C2 = 1;
+t. SELECT C1, C2 FROM T1 LEFT JOIN        T2 ON T1.PK = T2.PK WHERE C2 = 1;
+u. SELECT C1, C2 FROM T1 RIGHT JOIN       T2 ON T1.PK = T2.PK WHERE C2 = 1;
+v. SELECT C1, C2 FROM T1 FULL JOIN        T2 ON T1.PK = T2.PK WHERE C2 = 1;
+w. SELECT C1, C2 FROM T1 INNER JOIN       T2 ON T1.PK = T2.PK WHERE C2 IS NULL;
+x. SELECT C1, C2 FROM T1 LEFT JOIN        T2 ON T1.PK = T2.PK WHERE C2 IS NULL;
+y. SELECT C1, C2 FROM T1 RIGHT JOIN       T2 ON T1.PK = T2.PK WHERE C2 IS NULL;
+z. SELECT C1, C2 FROM T1 FULL JOIN        T2 ON T1.PK = T2.PK WHERE C2 IS NULL;
+</code></pre>
+
+<p>回答としてありうる組み合わせは天文学的な数になるので、適当に選んで正解になった人は、人生の残りの運をすべて使い果たすことになります。「データによって違う」と思った人は、正しいですが、情報処理試験のDBになかなか合格できないタイプです。</p>
+<blockquote>
+<p>追記: 「天文学的」は間違い。そんなに多くない。でも、人生の残りの運を使い果たすには十分。</p>
+</blockquote>
+<p>具体例で考えたい場合は、どのようなデータがあり得るか自分で考えてください。とはいえ、考え方のポイントを理解していないと、条件を網羅するデータをつくることはできないと思います。実際に RDB 上で動かしてみてもかまいませんが、世の中の RDB 製品は必ずしも SQL の規格を満たしていません。例えば、今、みなさんが使っている MySQL は <code>FULL</code> をサポートしていません。私はつい先ほど知りました。 PostgreSQL は基本的に規格通りにつくっているそうです。</p>
+<p>まず、最初の <code>NATURAL JOIN</code> は、見たことない人が多いと思います。 SQL の理論と規格を作った人たちは、これこそが自然な結合の形であると考えたようなのですが、なぜか実務で使われることが少ないです。 Rails の場合も <code>ActiveRecord</code> の命名の方式との関係でうまく使えません。そのような次第で <code>NATURAL JOIN</code> についての説明は省略するので詳細についてはぐぐってください。</p>
+<p>次に <code>INNER JOIN</code> と <code>JOIN</code> ですが、これらは同じものです。 <code>JOIN</code> は <code>INNER</code> を省略した表現です。 <code>ON</code> の右側に書いた条件に合う行を結合します。</p>
+<pre class="highlight"><code>T1         T2
+----+----  ----+----
+ C1 | C2    C3 | C4
+----+----  ----+----
+  1 | A      1 | X
+  2 | B      3 | Y
+  3 | C      4 | Z
+
+SELECT C1, C2, C3, C4 FROM T1 INNER JOIN T2 ON T1.C1 = T2.C3;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+  3 | C  |  3 | Y
+</code></pre>
+
+<p><code>LEFT OUTER JOIN</code> と <code>LEFT JOIN</code> は同じものです。 <code>LEFT JOIN</code> は <code>OUTER</code> を省略した表現です。 <code>LEFT OUTER JOIN</code> の右側のテーブルに条件に合う行が無くても、左側のテーブルの行だけ返します。</p>
+<pre class="highlight"><code>T1         T2
+----+----  ----+----
+ C1 | C2    C3 | C4
+----+----  ----+----
+  1 | A      1 | X
+  2 | B      3 | Y
+  3 | C      4 | Z
+
+SELECT C1, C2, C3, C4 FROM T1 LEFT OUTER JOIN T2 ON T1.C1 = T2.C3;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+  2 | B  |NULL|NULL
+  3 | C  |  3 | Y
+</code></pre>
+
+<p><code>RIGHT OUTER JOIN</code> と "RIGHT JOIN" は同じものです。 <code>RIGHT JOIN</code> は <code>OUTER</code> を省略した表現です。 "RIGHT OUTER JOIN" の左側のテーブルに条件に合う行が無くても、右側のテーブルの行だけ返します。</p>
+<pre class="highlight"><code>T1         T2
+----+----  ----+----
+ C1 | C2    C3 | C4
+----+----  ----+----
+  1 | A      1 | X
+  2 | B      3 | Y
+  3 | C      4 | Z
+
+SELECT C1, C2, C3, C4 FROM T1 RIGHT OUTER JOIN T2 ON T1.C1 = T2.C3;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+  3 | C  |  3 | Y
+NULL|NULL|  4 | Z
+</code></pre>
+
+<p><code>RIGHT OUTER JOIN</code> の上記の例の <code>T1</code> と <code>T2</code> を入れ替えた場合、 <code>LEFT OUTER JOIN</code> と同じ結果になります。</p>
+<pre class="highlight"><code>T1         T2
+----+----  ----+----
+ C1 | C2    C3 | C4
+----+----  ----+----
+  1 | A      1 | X
+  2 | B      3 | Y
+  3 | C      4 | Z
+
+SELECT C1, C2, C3, C4 FROM T2 RIGHT OUTER JOIN T1 ON T1.C1 = T2.C3;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+  2 | B  |NULL|NULL
+  3 | C  |  3 | Y
+</code></pre>
+
+<p><code>FULL OUTER JOIN</code> と "FULL JOIN" は同じものです。 "FULL JOIN" は "OUTER" を省略した表現です。 "FULL OUTER JOIN" の左右のどちらかのテーブルに行があれば、とにかく全部返します。</p>
+<pre class="highlight"><code>T1         T2
+----+----  ----+----
+ C1 | C2    C3 | C4
+----+----  ----+----
+  1 | A      1 | X
+  2 | B      3 | Y
+  3 | C      4 | Z
+
+SELECT C1, C2, C3, C4 FROM T1 FULL OUTER JOIN T2 ON T1.C1 = T2.C3;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+  2 | B  |NULL|NULL
+  3 | C  |  3 | Y
+NULL|NULL|  4 | Z
+</code></pre>
+
+<p>では、以下のような</p>
+<ol>
+<li>結合に使う列 <code>(</code> <code>C1``,</code> <code>C3 )</code>の値が他方のテーブルに存在する / 存在しない。</li>
+<li>絞り込み条件に使う列 <code>(</code> <code>C4</code> <code>)</code>の値が <code>NULL</code> でない / NULL である。</li>
+</ol>
+<p>という条件を網羅するデータを <code>JOIN</code> して <code>WHERE</code> 条件で絞り込んだ結果について考えてみることにします。考える上で面倒なのは、外部結合した場合、もとのテーブルに該当する行がない場合も、該当する行があって値が <code>NULL</code> の場合も、結合した結果は <code>NULL</code> になるということです。</p>
+<pre class="highlight"><code>T1         T2
+----+----  ----+----
+ C1 | C2    C3 | C4
+----+----  ----+----
+  1 | A      1 | X
+  2 | A      2 |NULL
+  3 | A      4 | X
+             5 |NULL
+</code></pre>
+
+<p><code>"FULL OUTER JOIN"</code> の場合、 <code>WHERE</code> 条件無しなら次のようになります。</p>
+<pre class="highlight"><code>SELECT C1, C2, C3, C4 FROM T1 FULL OUTER JOIN T2 ON T1.C1 = T2.C3;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+  2 | A  |  2 |NULL
+  3 | A  |NULL|NULL
+NULL|NULL|  4 | X
+NULL|NULL|  5 |NULL
+</code></pre>
+
+<p><code>WHERE C4 = 'X'</code> を追加すると次のようになります。</p>
+<pre class="highlight"><code>SELECT C1, C2, C3, C4 FROM T1 FULL OUTER JOIN T2 ON T1.C1 = T2.C3 WHERE C4 = 'X';
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  1 | A  |  1 | X
+NULL|NULL|  4 | X
+</code></pre>
+
+<p>上の例の <code>FULL OUTER JOIN</code> を <code>INNER JOIN</code> / <code>LEFT OUTER JOIN</code> / <code>RIGHT OUTER JOIN</code> に置き換えるとどうなるかについても考えてみてください。</p>
+<p><code>WHERE C4 IS NULL</code> なら次のようになります。</p>
+<pre class="highlight"><code>SELECT C1, C2, C3, C4 FROM T1 FULL OUTER JOIN T2 ON T1.C1 = T2.C3 WHERE C4 IS NULL;
+----+----+----+----
+ C1 | C2 | C3 | C4
+----+----+----+----
+  2 | A  |  2 |NULL
+  3 | A  |NULL|NULL
+NULL|NULL|  5 |NULL
+</code></pre>
+
+<p>上の例の <code>FULL OUTER JOIN</code> を <code>INNER JOIN</code> / <code>LEFT OUTER JOIN</code> / <code>RIGHT OUTER JOIN</code> に置き換えるとどうなるかについても考えてみてください。</p>
+<p>さて、このあたりで外部結合のことは嫌いになっていただけたでしょうか？</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

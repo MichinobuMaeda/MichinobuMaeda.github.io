@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Google App Engine に大きなデータを入れる - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Google App Engine に大きなデータを入れる</h1>
+<p>Update: 2010-10-10</p>
+<blockquote>
+<p>追記 : 2012-12-23 今は無料コースでも BlogStore が使えるので、こんな面倒なことはしなくてだいじょうぶです。</p>
+</blockquote>
+<p>郵便番号データを加工するプログラムを Google App Engine 上で構築しようとしているのですが、無料でどうにかするためには一つ大きな問題があります。日本郵便が配布しているデータをどうやって保存するか。 LZH ファイルのサイズは全県データが 2MB 弱、事業所データが 1MB 弱です。 LZH 形式のアーカイブファイルをそのまま BLOB として保存できれば簡単なのですが、１日当たり 1$ 以上の有料コースとなるようです。 byte 型の配列で保存することはできません。 500を超えるサイズは拒否されます。 16進や base64 にして String で保存することもできません。これも 500 文字を超えるデータは拒否されます。そもそも１オブジェクト当たり 1MB の制限がありますから文字列に変換すると確実にオーバーしてしまいます。</p>
+<p>苦肉の策として、解凍て取り出した CSV ファイルを行毎にバラバラにして LinkedList にして保存することにしました。まず CSV ファイルを適当な行数で分割します。試しに、確実にサイズオーバーしそうにない 2,000行毎に１オブジェクトにして保存すると OK でした。分割したものには共通の識別と順序を付与しておけばいいです。</p>
+<p>JDO によるデータ取り扱いはめちゃめちゃ簡単です。 Using the Datastore with JDO に書いてあるとおりです。私が少しはまったのは PersistenceManagerFactory の取り扱いをこのページに書いてあるとおりにしなかったことだけ。なんで、 Spring Framework で Singleton 指定したインスタンスの変数の初期化が２回実行されたような現象が出るかなぁ。。。よくわからないけど、とにかくこのページに書いてあるとおりクラス変数にすると正常に動きました。</p>
+<p>2010-10-16 追記</p>
+<p>LZH を解凍してテキストファイルを取り出して入れる方法でも CPU 使用の制限に引っかかってしまいました。また、過去のデータまで全部入れようとするとディスク容量が足りなくなる可能性があります。</p>
+<p>そこで、 <a href="http://iharder.net/base64"><a href="http://iharder.net/base64">http://iharder.net/base64</a></a> が配布しているクラス（ファイル１個だけ配布している）を使って LZH を base64 エンコードして保存することにしました。 base64 encoder / decoder のライブラリとしては Apache Commons codec も試してみましたが、こちらのファイル１個だけの方が使い勝手がいいです。</p>
+<p>元のデータを 320byte ずつエンコードします。エンコード後のサイズはその 4/3 倍、つまり 480byte になるはずです。 これを String で保存すると 500文字の制限をクリアできます。</p>
+<p>訂正： 480byte の 3/4 は 360byte でした。既に本番環境に 320byte ごとに分割したデータを保存してしまったので、そのまま運用しています。</p>
+<p>1MB の制限についてですが、 Google App Engine のデータストアの内部の文字コードがなんなのかがよくわかりません。ローカルのテスト環境の WEB-INF/appengine-generated/local_db.bin をみたところ、アルファベットは ASCII と同じコード値で保存されているようです。 UTF-8 を使っているのかな？ いずれにしても、 base64 エンコード後の String は、単純に文字数と同じバイト数になるようです。であれば、 2048件は保存できそうです。</p>
+<p>これを LinkedList<String> にして保存してみたところ、テスト環境も本番環境も問題ありませんでした。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

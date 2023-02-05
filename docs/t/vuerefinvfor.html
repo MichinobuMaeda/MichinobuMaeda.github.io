@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Vue の v-for の中の要素に ref を設定する - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Vue の v-for の中の要素に ref を設定する</h1>
+<p>Update: 2020-06-24</p>
+<p>Vue の v-for でループしている要素に ref を設定する必要があって、</p>
+<pre class="highlight"><code>&lt;div v-for=&quot;item in list&quot; :key=&quot;item.id&quot;&gt;
+  &lt;div :ref=&quot;'element' + item.id&quot;&gt;...&lt;/div&gt;
+  ... $refs['element' + item.id] を参照する処理 ...
+&lt;/div&gt;
+</code></pre>
+
+<p>のように動的に設定してみたのですが、うまくいきません。エラーなどは出ないのですが、明らかに参照できていません。</p>
+<p>ループしてないところであればたいてい静的な値を設定すればいいのですが、ループの中はそれではダメだろう。
+でも、こんなこと、誰でも普通に必要になるよね？ と解決策を探してみたらありました。解決策というか、何もしなくても勝手に配列になってくれるそうな。
+たぶん、私が Vue のお勉強で基本的なことを端折って勝手にハマっただけです。</p>
+<p><a href="https://stackoverflow.com/questions/45563329/how-to-add-dynamic-ref-in-vue-js">How to add dynamic ref in vue.js?</a></p>
+<p>Answer 9. You have dynamic refs and have multiple elements. To target any single node just pass the index within method params</p>
+<pre class="highlight"><code>&lt;div v-for=&quot;(item, index) in list&quot; :key=&quot;item.id&quot;&gt;
+  &lt;div ref=&quot;element&quot;&gt;...&lt;/div&gt;
+  ... $refs.element[index] を参照する処理 ...
+&lt;/div&gt;
+</code></pre>
+
+<p>Tag: vue</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

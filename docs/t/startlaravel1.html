@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Laraval 5 による開発の手順 #1 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Laraval 5 による開発の手順 #1</h1>
+<p>Update: 2018-09-22</p>
+<p>追記 : Windows での各種開発ツールの導入については、後から書いた <a href="chocolatey.html">Chocolatey を使ってみる</a> もご参照ください。</p>
+<p><a href="https://www.slant.co/topics/2804/~best-full-stack-php-frameworks">"What are the best full-stack PHP frameworks?"</a>
+によると、 Larval 5 / Yii / Symfony / Phalcon / CodeIgniter の順で人気だそうです ( 2018年9月23日時点 ) 。 2番目の Yii については「初心者には難しいかも」と書いてる人がいます。 full-stack framework を利用する一般的なアプリの開発の場合はできる人ばかりでやるということはあまりないだろうと思うので、 1番目の Laravel 5 が無難でしょう。私が使ってみた感じ、 PHP の文法に郷愁を感じてしまうことを除いて Ruby on Rails より好きです。昔ながらの CGI や PHP モジュールを動かすタイプの共用型レンタルサーバに Node.js のフレームワークや Ruby on Rails を載せるのは不可能ですが、 Laravel ならできます ( <a href="laravelonsharedserver.html">共用型レンタルサーバで Laravel</a> ) 。</p>
+<p>full-stack はいらない、 API だけ作りたいという場合は Laravel をベースにした
+<a href="https://lumen.laravel.com">Lumen</a> というマイクロフレームワークもあります。
+これは同種の PHP のフレームワーク Slim より少し速いそうです。</p>
+<h2>PHP の開発環境を準備する</h2>
+<p>ひと昔前であれば PHP で開発するというと Apache / MySQL / PHP のセットを用意したものです。でも、特別な用途のシステムの開発でなければ Apache は不要です。例えば、Laravel のようにテスト環境まで用意したフレームワークを使わない場合でも</p>
+<pre class="highlight"><code>php -S localhost:8000
+</code></pre>
+
+<p>とすればテスト用の HTTP サーバを起動できます。ポート番号の 8000 のところは好きな値で。
+<code>.htaccess</code> でいろいろ設定する必要がある場合はダメですが、しかし、あんまり難しいことするのはやめましょうよ。</p>
+<p>それから MySQL は本当に必要でしょうか？</p>
+<p>SQLite の開発元のサイトは動的ページのデータの管理のために他の RDBMS 製品は使わず SQLite を使っています。
+当然と言えば当然ですが。
+それで毎日数10万のページビューを問題なく処理しているとのことです
+( <a href="https://www.sqlite.org/whentouse.html">Appropriate Uses For SQLite</a> ) 。
+これは世間に名の知れたサイトならともかく、世の中に星の数ほどある Web サイトの大半には無縁なアクセス数だと思います。
+また read 主体であれば数GBのデータ量で問題なく稼働している例もあるそうです。
+write の並行が激しい場合は無理ですが、しかし、個人商店や1000人以下の企業がいまどきのコンピュータの性能で write の処理が追いつかなくなるほどの量の商品やサービスの注文をリアルの世界でさばけるわけがないですよね。
+10年前か20年前までは電話とFAXで、その後も E-mail で受付してたりするわけでしょ？
+ちなみに、 MySQL や Oracle を使っていていてもたかだか数万／日、ひどいのだと数千／日のアクセスで落ちるサイトがありましたが、それは作り方が悪いからなので悔い改めること。</p>
+<p>そうはいっても「上の人」が MySQL や Oracle じゃないとダメとか言うことはあるでしょうけど、
+full-stack framework について来る ORM を利用する場合はもちろん、
+素の PHP でも PDO を使えば開発は SQLite 、本番は MySQL ということはできるはずです。
+はい？「RDBMS 製品によって使える構文が違う」って？</p>
+<p>だ〜か〜ら〜 むずかしいことをするのはやめましょう。</p>
+<p>というわけで、ほとんどの場合は PHP と SQLite があれば十分だと思います。</p>
+<p>Linux の場合 PHP と sqlite3 は yum や apt などのパッケージマネージャを使って入れてください。
+Larval 5.7 の場合 PHP は 7.1.3 より新しいバージョンが必要です。
+ディストリビューションによっては PHP の新しいバージョンが入らないかもしれません。
+Debian 8 / Debian 9 の場合は <a href="debian9php7_1.html">Debian 9 に PHP 7.1, 7.2 をインストールする</a> を参考にしてください。</p>
+<p>Mac は Homebrew などを使って入れてください。
+GUI の <a href="http://sqlitebrowser.org">DB Browser for SQLite</a> も使いやすいです。
+これは Windows 版もありますね。</p>
+<p>Windows の場合は <a href="https://windows.php.net/download/">https://windows.php.net/download/</a> からコンパイル済みのセットをダウンロードして、
+適当なフォルダに解凍して、そこに PATH を通してください。
+<code>x64</code> (64bit) か <code>x86</code> (32bit) かは自分のPCの OS に合せて。
+それから <code>Non Thread Safe</code> と <code>Thread Safe</code> があるのですが、
+Apache などを使わず PHP の HTTP サーバを建てる前提なので <code>Thread Safe</code> が無難です。
+それから <code>php.ini-development</code> を <code>php.ini</code> にリネームするかコピーしてください。
+そして <code>php.ini</code> のこのあたりのコメント（セミコロン）を外しておく必要があります。</p>
+<pre class="highlight"><code>;extension=mbstring
+;extension=openssl
+;extension=pdo_sqlite
+</code></pre>
+
+<p>でも、これ、コメントアウトを外すだけでいいんだっけ？
+<code>extension=php_mbstring.dll</code> みたいに書き換えたことがあったような。。。あ〜 忘れた orz</p>
+<p>それから、 Windows で本家のコマンドライン版の sqlite3 が欲しい場合は
+<a href="https://www.sqlite.org/download.html">https://www.sqlite.org/download.html</a> から
+"Precompiled Binaries for Windows" の sqlite-tools を取得してください。</p>
+<h2>IDE またはテキストエディタ</h2>
+<p>使い慣れたテキストエディタがあって、それが PHP の syntax hilighting に対応してくれているのであればそれでいいです。
+私は昔は Eclipse PDT を使っていましたが、最近はまったく Java に関わっていなくて
+Visual Studio Code に乗り換えました。自動インデントの仕様が若干気に入りませんが、それ以外は良いです。
+NetBeans の PHP 対応も良いようです。</p>
+<p>ブレークポイントを使ったデバッグは。。。設定めんどくさそうだし私は debug レベルのログ出力で済ませています。
+behavior driven とか test first な ruby の開発をやってたような人達が
+vi でブレークポイントを使ってたわけはないので、まあ、いいでしょう。</p>
+<p>昔 UNIX で開発をしたときは gdb のコマンドを打ちながら「ああ VC++ はこれをあの画面上に表示しているのね」と感心したものですけど。</p>
+<h2>composer の導入</h2>
+<p>PHP の composer は Ruby の bundler とか Node.js の npm のようなパッケージマネージャです。
+Laravel 5 を使う場合は必要ですし、最近の PHP の開発ではよく使われるようになっているそうです。
+Ruby や Node.js でこのようなパッケージマネージャ無しの開発をやるのはもはや想像できなくて、
+PHP もようやくモダンになったということだと思います。</p>
+<h3>Linux と Mac の場合</h3>
+<p>Linux と Mac は <a href="https://getcomposer.org/download/">Download Composer</a>
+の手順でインストールできます。
+Windows もこれでだいじょうぶそうな気がするけど。。。
+そのページに書かれている手順は「再配布するな（意訳：コピペして自分のサイトに貼るな）」ということになっていますので、
+<a href="https://getcomposer.org/download/">Download Composer</a>
+に掲載されている最新の手順に従ってください。
+ダウンロードしたファイルをチェックするためのハッシュ値がそこにベタ書きされているのですが、バージョンアップすると変わってしまうんだな。。。</p>
+<p>どのディレクトリ（フォルダ）からでもコマンド <code>composer</code> が使えるようにするには、
+<a href="https://getcomposer.org/doc/00-intro.md">Getting Started</a>
+の "Globally" に記載されているように、
+インストールしたファイル ( デフォルトのファイル名は <code>composer.phar</code> ) を
+<code>/usr/local/bin/composer</code> などの PATH が通っているところに移動してください。</p>
+<h3>Windows の場合</h3>
+<p><a href="https://getcomposer.org/doc/00-intro.md">Getting Started</a>
+の "Installation - Windows" に記載されているように、
+<code>Composer-Setup.exe</code> をダウンロードして使ってください。
+そして、その下に書かれている手順で <code>composer.bat</code> を作成してください。</p>
+<hr />
+<p><a href="startlaravel2.html">Laraval 5 による開発の手順 #2</a> に続く。</p>
+<p>Tag: PHP composer Laravel SQLite</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

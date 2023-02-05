@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Google Firebase のプロジェクトの設定 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Google Firebase のプロジェクトの設定</h1>
+<p>Update: 2020-07-11</p>
+<p><a href="https://firebase.google.com/">Firebase</a> というのは Google 社が2014年に買い取ったモバイルアプリ、Webアプリ向けのデータ ＆ 認証の
+BaaS ( backend-as-a-service ) です。
+データベースは NoSQL のドキュメント型で、認証と連携したアクセス権の設定が細かくできます。
+認証はメアドとパスワードの他、メールでログイン用のリンクを取得する手順、OAuth ( 「○○でログイン」 ) などが用意されています。
+アプリの案内や、 SPA （ Single-page application ） や PWA ( Progressive web application )
+のアプリを置くための Webホスティングもできます。
+単純なアプリでしたらサーバ側のプログラムは無しでもいけます。
+ストレージや IoT などの <a href="https://cloud.google.com/">Google Cloud</a> の他のサービスとの連携もできます。</p>
+<p>以下、この Firebase の新規プロジェクトの作成手順です。</p>
+<h2>アカウントと支払い</h2>
+<p>Firebase のプロジェクトは Google Cloud のプロジェクトなので、
+Google Cloud のアカウントが無ければ作成してください。
+使用料の支払いも Google Cloud のプロジェクトとしての請求になるので、
+Google Cloud のコンソールで支払い方法の設定をしてください。</p>
+<p>手順は Google Cloud のページの案内の通りなので説明は省略します。</p>
+<p>なお、基本機能だけを試用する場合は、支払いの設定は無しでだいじょうぶです。</p>
+<h2>Node.js</h2>
+<p>後述の Firebase CLI のために必要です。 8.x 以降であればよいと思います ( 2020年 4月 時点 )。</p>
+<p>Linux の場合、 Windows 10 で <a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">WSL ( Windows Subsystem for Linux )</a>
+を利用する場合は <code>yum</code> とか <code>apt</code> で入れてください。
+Mac は <a href="https://brew.sh/">Homebrew</a> 、
+Windows で WSL を使わない場合は <a href="https://chocolatey.org/">Chocolatey</a> が無難です。</p>
+<h2>プロジェクトの設定</h2>
+<p>特に独自ドメイン名の設定などしない限り、プロジェクト名は Webホスティングのサブドメイン名になります。</p>
+<ul>
+<li><a href="https://project-name.firebaseapp.com/">https://project-name.firebaseapp.com/</a></li>
+<li><a href="https://project-name.web.app/">https://project-name.web.app/</a></li>
+</ul>
+<p>テスト用にプロジェクト名に "-test" を追加した名称のプロジェクトも作っておくとよいです。</p>
+<p>プロジェクト名が既に使われている場合は、数字をてきと〜に追加した名称を自動生成してくれます。</p>
+<ul>
+<li><a href="https://console.firebase.google.com/">コンソール</a> にログインする。</li>
+<li>"+ Add project"<ul>
+<li>"Project name" にプロジェクト名を入力して、もし、数字付きの名称が自動生成されたらそれでいいかどうか考える。いやならがんばって別の名称を考える。</li>
+<li>Google Analytics を使うか？ と聞かれるので要不要を選択する。</li>
+<li>"Create project"</li>
+</ul>
+</li>
+<li>プロジェクトのページの左側メニュー "Settings"<ul>
+<li>"Project settings"</li>
+<li>"Google Cloud Platform (GCP) resource location" を選択する。 ( やり直し不可!! )<ul>
+<li>asia-northeast1 : 東京</li>
+<li>asia-northeast2 : 大阪</li>
+<li>asia-northeast2 : ソウル</li>
+</ul>
+</li>
+<li>"Public-facing name" はプロジェクト名と同じでいいんじゃないかな。</li>
+<li>"Support email" はとりあえず自分のメアド。</li>
+<li>"Select a platform to get started" で今回は SPA にするので Web （） を選択する。<ul>
+<li>"App nickname" はプロジェクト名と同じでいいんじゃないかな。</li>
+<li>"Also set up Firebase Hosting for ..." は On にする。</li>
+<li>"Register App"</li>
+<li>HTMLの <head> に記載するコード・スニペットが表示されるが、後でも出てくるのでとりあえず先に進む。</li>
+<li>"Next"</li>
+<li><code>firebase-tools</code> のインストール手順が表示されるので、まだなら実行する。 Node.js が必要。</li>
+<li>"Next"</li>
+<li>"Deploy to Firebase Hosting" の手順は後ほど。</li>
+<li>"Continue to console"</li>
+<li>"Firebase SDK snippet" に数種類表示されますが、必要なものを選んで使ってください。なお <code>apiKey</code> をソースにそのまま入れて GitHub の Public プロジェクトに Push すると「危ないことするな」とおこられます。</li>
+</ul>
+</li>
+<li>"Users and permissions" にプロジェクトメンバーを追加する。</li>
+</ul>
+</li>
+<li>プロジェクトのページの左側メニュー "Authentication"<ul>
+<li>"Sign-in method" で必要なものを有効にする。</li>
+<li>"Templates"</li>
+<li>"Template language" : Japanese</li>
+</ul>
+</li>
+<li>プロジェクトのページの左側メニュー "Database"<ul>
+<li>"Go to Cloud Platform"</li>
+<li>Firebase のリアルタイム更新機能を使う場合は "SWITCH TO NATIVE MODE" ( やり直し不可!! )</li>
+<li>Go to Cloud Platform のページを閉じて Firebase の Database のページを更新すると "Data", "Rules" などのメニューが表示される。設定はアプリの作成の中で。</li>
+</ul>
+</li>
+<li>プロジェクトのページの左側メニュー "Storage" は必要であれば "Get started" で有効化する。</li>
+<li>プロジェクトのページの左側メニュー "Hosting" は特に設定は上記の "Settings" で設定済み。あとはコンテンツ作成後にデプロイすればよい。</li>
+<li>プロジェクトのページの左側メニュー "Storage" は必要であれば "Get started" で有効化する。</li>
+</ul>
+<h2>プロジェクトの作成</h2>
+<p><a href="https://quasar.dev/">Quasar Framework</a> の場合</p>
+<pre class="highlight"><code>$ quasar create project-name
+$ cd project-name
+$ firebase login
+$ firebase init
+$ firebase use project-name
+$ firebase projects:list
+</code></pre>
+
+<p>Tag:</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

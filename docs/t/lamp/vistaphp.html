@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>整理中：Windows VistaでPHPの開発 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>整理中：Windows VistaでPHPの開発</h1>
+<p>Update: 2009-06-05</p>
+<blockquote>
+<p>この記事を書いた後に <a href="http://www.zend.com/en/products/server-ce/">Zend Server</a> や <a href="http://www.apachefriends.org/jp/xampp.html">XAMPP</a> などを知りました。この記事のように個別に入れるよりこれらのパッケージを利用する方が楽です。 ( 参照 : <a href="zendservercezendframework.html">Zend Server CE / Zend Framework</a> / <a href="phpdebugger.html">PHPのデバッグができる環境</a> )</p>
+</blockquote>
+<p>以前 Windows で PHP の開発 に Apache, MySQL, PHP のインストール手順を書いたのですが、 Vista でうまくいかないという話を聞いて自分でも試してみました。 今回は PHP のソースや MySQL の文字コードを EUC-JP にします。</p>
+<p>手順の中で Webブラウザで確認するところがありますが、必ず表示を最新にしてください。 IE の場合 <code>[F5]</code> キー、 FireFox の場合 <code>[Ctrl]</code> を押しながら <code>[R]</code> です。</p>
+<h2>Apache のインストール</h2>
+<p><a href="http://httpd.apache.org/download.cgi"><a href="http://httpd.apache.org/download.cgi">http://httpd.apache.org/download.cgi</a></a> から Windows 用のインストーラ <code>apache_2.2.11-win32-x86-openssl-0.9.8i.msi</code> をダウンロードしました。インストーラの指示に従ってインストールすればいいのですが、設定をデフォルトから変えた箇所は次の通りです。</p>
+<p>ドメイン、ホスト名、管理者パスワードに適当な値を入れます。本番環境ではないので、てきとーです。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5hXS5GkI/AAAAAAAABrA/cUBGe8Z-miU/s1600/phpvista_1.png" /></p>
+<p>インストール先を <code>C:¥site¥Apache2.2</code> にしました。 <code>C:¥Program Files</code> の下だと何かと面倒だからです。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5kJ9o3kI/AAAAAAAABrI/YWNFqHnhiU0/s1600/phpvista_2.png" /></p>
+<p>インストールが完了したら、 <code>http://localhost/</code> で “It works!” と表示されるのを確認します。また、画面の右下にサービスアイコンが表示されるので、サービスの停止や開始が正常にできることを確認します。 Apache の古いバージョンでは、 Visita でこのアイコンによるサービスの制御ができないことがありました。その場合は、「コントロールパネル」-「管理ツール」-「サービス」を使ってください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5lf6ftBI/AAAAAAAABrM/jewyNIjgKwc/phpvista_3.png" /></p>
+<h2>PHP のインストール</h2>
+<p><a href="http://www.php.net/downloads.php#v5"><a href="http://www.php.net/downloads.php#v5">http://www.php.net/downloads.php#v5</a></a> の "Windows Binaries" から、 "PHP 5.2.9-2 installer" をダウンロードします。</p>
+<p>インストール先は <code>C:¥site¥PHP</code> にしました。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5mVu9oQI/AAAAAAAABrQ/CAvLhPUxcRE/s1600/phpvista_4.png" /></p>
+<p>Web サーバは Apache2.2 を選択します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5nyWH2jI/AAAAAAAABrU/q8VY1f14BG8/s1600/phpvista_5.png" /></p>
+<p>Apache の設定ファイルのフォルダは <code>C:¥site¥Apache2.2¥conf</code> です。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5pKyrG8I/AAAAAAAABrY/332ooM1yyCk/s1600/phpvista_6.png" /></p>
+<p>すべてのオプションを選択します。選択肢が灰色ではな白になっていることをよく確認してください。マルチバイト文字列 ( mbstring ) 対応などをインストールしないと、日本人でなくても困ります。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5qSnWgMI/AAAAAAAABrc/ntxRG0jY91s/s1600/phpvista_7.png" /></p>
+<p>インストールが完了したらファイル <code>C:¥site¥Apache2.2¥conf¥httpd.conf</code> の</p>
+<p><code>#BEGIN PHP INSTALLER EDITS - REMOVE ONLY ON UNINSTALL</code></p>
+<p><code>ScriptAlias /php/ "C:/site/PHP/"</code></p>
+<p><code>Action application/x-httpd-php "C:/site/PHP/php-cgi.exe"</code></p>
+<p><code>PHPIniDir "C:/site/PHP/"</code></p>
+<p><code>LoadModule php5_module "C:/site/PHP/php5apache2_2.dll"</code></p>
+<p><code>PHPIniDir "C:/site/PHP/"</code></p>
+<p><code>LoadModule php5_module "C:/site/PHP/php5apache2.dll"</code></p>
+<p><code>PHPIniDir "C:/site/PHP/"</code></p>
+<p><code>LoadModule php5_module "C:/site/PHP/php5apache.dll"</code></p>
+<p><code>#END PHP INSTALLER EDITS - REMOVE ONLY ON UNINSTALL</code></p>
+<p>を、次のように変更します。</p>
+<p><code>#BEGIN PHP INSTALLER EDITS - REMOVE ONLY ON UNINSTALL</code></p>
+<p><code>PHPIniDir "C:/site/PHP/"</code></p>
+<p><code>LoadModule php5_module "C:/site/PHP/php5apache2_2.dll"</code></p>
+<p><code>#END PHP INSTALLER EDITS - REMOVE ONLY ON UNINSTALL</code></p>
+<p>このように変更して余計な設定を削除しないと、 Apache 再起動時にエラーが発生して起動できなくなります。</p>
+<p>次に、ファイル名無しの URL 指定で <code>index.php</code> を表示するよう設定変更します 。<code>C:¥site¥Apache2.2¥htdocs¥index.html</code> のファイル名を <code>C:¥site¥Apache2.2¥htdocs¥index.php</code> に変えます。その後 <code>http://localhost/</code> を表示します。設定変更前は次のように表示されるか、エラーになるかどちらかです。</p>
+<p><code>Index of /</code></p>
+<p><code>index.php</code></p>
+<p>ファイル <code>C:¥site¥Apache2.2¥conf¥httpd.conf</code> の</p>
+<p><code>&lt;IfModule dir_module&gt;</code></p>
+<p><code>DirectoryIndex index.html</code></p>
+<p><code>&lt;/IfModule&gt;</code></p>
+<p>を、次のように変更します。</p>
+<p><code>&lt;IfModule dir_module&gt;</code></p>
+<p><code>DirectoryIndex index.php index.html</code></p>
+<p><code>&lt;/IfModule&gt;</code></p>
+<p>Apache を再起動したら、 <code>http://localhost/</code> で “It works!” と表示されるのを確認します。</p>
+<p>最後に、PHPで文字コード EUC-JP を使うための設定をします。 <code>C:¥site¥PHP¥php.ini</code> の <code>[mbstring]</code> の設定内容を次のようにしてください。インストールしたままの状態では、たぶん、これらの行はコメントアウトされていると思います。</p>
+<p><code>mbstring.language = Japanese</code></p>
+<p><code>mbstring.internal_encoding = EUC-JP</code></p>
+<p><code>mbstring.http_input = auto</code></p>
+<p><code>mbstring.http_output = EUC-JP</code></p>
+<p><code>mbstring.encoding_translation = Off</code></p>
+<p><code>mbstring.detect_order = auto</code></p>
+<p><code>mbstring.substitute_character = none</code></p>
+<h2>MySQL のインストール</h2>
+<p><a href="http://dev.mysql.com/downloads/"><a href="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</a></a> の "MySQL Community Server | Download » " から Windows MSI Installer (x86) をダウンロードしました。 MySQL のプログラムのインストールの完了時に次の画面が出ます。チェックを On にしたまま Finish ボタンを押すと、データベースを設定するウィザードが起動します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5smClE2I/AAAAAAAABrg/qEFthMhb-jM/s1600/phpvista_8.png" /></p>
+<p>文字コードは ujis を選択してください。これが EUC-JP です。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5uOVqkGI/AAAAAAAABrk/sRzPVHskV_A/s1600/phpvista_9.png" /></p>
+<p>ユーザ <code>root</code> のパスワードを設定してください。本番環境では強いパスワードにしてください。開発環境でも、「パスワード無しはあり得ない」という前提で作られたツールがあると思うので、必ず設定してください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5jKhd5gI/AAAAAAAABrE/RDVwfPY63dk/s1600/phpvista_10.png" /></p>
+<h2>phpMyAdmin のインストール</h2>
+<p><a href="http://www.phpmyadmin.net/home_page/downloads.php"><a href="http://www.phpmyadmin.net/home_page/downloads.php"><a href="http://www.phpmyadmin.net/home_page/downloads.php">http://www.phpmyadmin.net/home_page/downloads.php</a></a></a> から <code>phpMyAdmin-3.1.5-all-languages.zip</code> をダウンロードしました。それを解凍して <code>C:¥site¥Apache2.2¥htdocs¥phpMyAdmin</code> に置きました。</p>
+<p>設定ファイルのサンプルは <code>C:¥site¥Apache2.2¥htdocs¥phpMyAdmin¥config.sample.inc.php</code> です。これをコピーして <code>C:¥site¥Apache2.2¥htdocs¥phpMyAdmin¥config.sample.inc.php</code> を作ります。</p>
+<p>設定ファイルの次の値に適当な、本当にてきとーな値を入れます。</p>
+<p><code>$cfg['blowfish_secret'] = 'slkfak2ok0lajsdfnwidlv';</code></p>
+<p>サーバの名称は通常 <code>localhost</code> でいいのですが、レンタルサーバ等の場合、違う名称にしなければならないことがあります。そのときは次の値を変更してください。</p>
+<p><code>$cfg['Servers'][$i]['host'] = 'localhost';</code></p>
+<p><code>http://localhost/phpMyAdmin/</code> を表示して、ユーザ <code>root</code> で正常にログインできれば確認完了です。パスワードは MySQL のインストール時に設定したパスワードです。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

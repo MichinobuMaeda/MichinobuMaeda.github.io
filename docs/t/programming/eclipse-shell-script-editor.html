@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Eclipse の Shell Script エディタ - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Eclipse の Shell Script エディタ</h1>
+<p>Update: 2013-04-25</p>
+<p>追記 ( 2013-04-25 )：</p>
+<blockquote>
+<p>Eclipse 4.2 ( Juno ) の場合はこちらのURLを使ってください。</p>
+<p><code>https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.2/update</code></p>
+</blockquote>
+<p>追記 ( 2012-04-21 )：</p>
+<blockquote>
+<p>下の文章を書いたときとは別の環境で同じ手順を試すとダメでした。</p>
+<p><code>http://download.eclipse.org/technology/linuxtools/update</code></p>
+<p>から Man Page Viewer を入れるとうまくいきました。</p>
+</blockquote>
+<p>Eclipse で Shell Script をちょっと書きたいというとき、 Text Editor でもいいのですが、せめて色つけくらいしてくれるものはないかと探してみました。 ShellEd というのがあります。 <a href="http://marketplace.eclipse.org/content/shelled">Eclipse Marketplace</a> の案内に従って Zip ファイルダウンロードしてインストールしたらうまくいきません。 man の表示もしてくれるというすぐれものらしいのでもう少し粘って探してみたら <a href="http://sourceforge.net/apps/trac/shelled/wiki/Documentation/InstallGuide">Installation Guide</a> に Update サイトの案内がありました。</p>
+<p><a href="https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.1/update"></a></p>
+<p><code>https://downloads.sourceforge.net/project/shelled/shelled/ShellEd%202.0.1/update</code></p>
+<p>私の環境が Java 6 なのを確認して、このアップデートサイトからインストールするとエラー無しで完了。拡張子 <code>.sh</code> のファイルを開いてみると、色付いてます。 Eclipse の環境設定の Shell Script &gt; Interpreters に <code>/bin/bash</code> を追加すると Mac OS X でも man の表示ができました。 Windows はだめじゃないかな。。。</p>
+<p><img alt="スクリプトの中のコマンドのを選択すると man ページが表示される" src="eclipse-shell-script-editor/shelled.png" /></p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

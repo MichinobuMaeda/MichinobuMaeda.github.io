@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>vim の基本的なコマンド - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>vim の基本的なコマンド</h1>
+<p>Update: 2013-01-03</p>
+<p>私が普段使っている編集用のコマンドです。 vim の拡張機能はほとんど使っていません。運用管理の仕事であればこのくらいの最小限のものと、「 ^z でコンソールに戻って fg で復帰」くらいできればだいじょうぶでしょう。人によってよく使うコマンドは違うだろうと思います。主にプログラミングしている人は 0 (ゼロ)じゃなくて ^ で行の先頭に移動したり、タグ機能を使ったりするでしょう。ここに挙げたものは vim じゃない vi でも u の動作が異なることを除くと、そのまま使えるのではないかと思います。正規表現で利用できる表記も違っていたかな？ Ubuntu や Redhat系で vim に慣れてしまうと vi が使えなくなるんじゃないかという不安があって、カーソルキーはできるだけ使わないよう心がけていますが、そうすると bash のコンソールで h とか l とか打ってしまうんだなあ ^^;</p>
+<pre class="highlight"><code>h       左
+j       下
+k       上
+l       右
+G       最後の行に移動する
+(n)G    先頭から(n)行目に移動する
+^g      現在の行数を表示する
+w       1語右(文字クラス基準?)
+W       1語右(ホワイトスペース基準?)
+b       1語左(文字クラス基準?)
+B       1語左(ホワイトスペース基準?)
+0       (ゼロ)行頭に移動
+$       行末に移動
+i       カーソルの前に挿入
+I       行頭に挿入
+a       カーソルの後に挿入
+A       行末に挿入
+J       次の行と連結
+o       次の行に挿入
+O       (大文字のオー)前の行に挿入
+yw      1語コピー
+yy      1行コピー
+(n)yy   (n)行コピー
+x       1文字カット
+(n)x    (n)文字カット
+dw      1語カット
+(n)dw   (n)語カット
+D       行末までカット
+dd      1行カット
+(n)dd   (n)行カット
+p       カーソルの後にコピー
+P       カーソルの前にコピー
+cw      &quot;dwa&quot;
+(n)cw   &quot;(n)dwa&quot;
+C       &quot;Da&quot;
+cc      &quot;0Da&quot; かな? &quot;ddo&quot; かな?
+(n)cc   &quot;(n)0Da&quot; かな? &quot;(n)ddo&quot; かな?
+u       Undo
+^r      Redo
+/(re)   (re)を下向きに検索
+/       下向きに繰り返し検索
+?(re)   (re)を上向きに検索
+?       上向きに繰り返し検索
+:%s/(re)/(rpl)/
+ 全行を対象に置換、各行で最初に一致したものだけ
+:%s/(re)/(rpl)/g
+ 全行を対象に置換、一致したもの全て
+:(m),(n)s/(re)/(rpl)/
+ (m)行目から(n)行目を対象に置換、各行で最初に一致したものだけ
+:(m),(n)s/(re)/(rpl)/g
+ (m)行目から(n)行目を対象に置換、一致したもの全て
+:set cin
+ cindent モード
+ .vimrc ファイルに書いておいてもいい`。
+
+:set nocin
+ cindent モード解除
+;set sw=2
+ インデント幅の設定
+ 編集モードの ^t に影響する。タブ幅には影響しない。
+ .vimrc ファイルに書いておいてもいい。
+</code></pre>
+
+<p>編集モード用</p>
+<pre class="highlight"><code>^t      インデント右
+^d      インデント左
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

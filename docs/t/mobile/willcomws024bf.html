@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Willcom どこでもWi-Fi 体験記 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Willcom どこでもWi-Fi 体験記</h1>
+<p>Update: 2010-03-18</p>
+<p>Willcom の「どこでもWi-Fi」 ( バッファロー製 WS024BF ) を買いました。今、電波状態のよい都内の喫茶店で試しています。以下、レポートです。</p>
+<h2>なぜ Willcom ?</h2>
+<p>都市部で使用する場合 EM の Pocket WiFi ( D25HW ) の方が小さくて、スペックもよくて、定額の場合の通信料金も大きくは変わらなくてお得だと思います。私が Willcom を使い続けているのは、</p>
+<ul>
+<li>前回の買い換えのときはまだ実家のある松山で EM のサービスが提供されてなかった。</li>
+<li>現在も、帰省の行程で圏外になるところが多い。</li>
+<li>割引にかかわるしばりがいろいろ。</li>
+<li>今使っている携帯 au Sportio ( 重量86g ) が気に入っていて、スマートフォンを買う気がない。</li>
+<li>主要な用途がメール、Twitter や Mixi などのソーシャル、ニュースで、自分のサイトの管理ももっぱら ssh 経由で、ナローでもあまり困らない（と思う）。</li>
+</ul>
+<p>という理由です。</p>
+<h2>WS024BF のスペック</h2>
+<p>でかくて重いです。 eneloop 単3形が 4本入ってます。</p>
+<p>x4 で高速化技術 W-OAM 対応です。電波状態がよければ 204kbps だそうです。このページの更新は、少しもたつく感じです。 scp で 11MB ほどのファイルをダウンロードしてみたところ 10 - 15KB/s で所要時間は 20分くらい。</p>
+<p>連続稼働時間は約2時間50分だから、実家に帰るときなどはスペアの電池がいるなぁ。</p>
+<p>その他、ゲーム機器の対応など詳しいことは <a href="http://www.willcom-inc.com/"><a href="http://www.willcom-inc.com/">http://www.willcom-inc.com/</a></a> 見てください。</p>
+<h2>セットアップ</h2>
+<p>今まで使っていた W-SIM カードを挿して電源入れたら動きました。何はともあれ最初に管理用のパスワードを変更します。管理機能の表示は Mac の Safari でも問題ありませんでした。</p>
+<p>で、いきなり問題がありです。 Twitter につながりません。 Echofon Mac OS X 版でダメ、 Safari で <a href="http://twitter.com/"><a href="http://twitter.com/">http://twitter.com/</a></a> を開くと <a href="http://menu.clubh.ne.jp/notaccess.html"><a href="http://menu.clubh.ne.jp/notaccess.html">http://menu.clubh.ne.jp/notaccess.html</a></a> にリダイレクトされて</p>
+<pre class="highlight"><code>Network Error
+TCP Error
+</code></pre>
+
+<p>だそうです。管理画面でプロバイダを PRIN に変更します。これで問題解決。</p>
+<h2>追記</h2>
+<p>つぶやき at 2010-03-18 16:51:57</p>
+<p>いろいろ追記：Willcom どこでもWi-Fi 体験記 <a href="http://bit.ly/djnDkb">http://bit.ly/djnDkb</a> 30分前はまだTwitterの接続でエラーが出てたのに、なんでつぶやきが保存されたんだろう？デフォルトのアクセス制限が不完全なのかなぁ</p>
+<p>ソフトバンク</p>
+<p>こんな記事書いている最中に「ソフトバンクからも Pocket WiFi 登場、3月下旬発売」だそうです。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

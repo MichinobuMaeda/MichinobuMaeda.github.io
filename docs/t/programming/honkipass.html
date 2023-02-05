@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>本気でパスワード - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>本気でパスワード</h1>
+<p>Update: 2006-04-30</p>
+<p>追記: 2021-05-23 最新版はこちら <a href="https://pages.michinobu.jp/t/20210522honkipass.html">https://pages.michinobu.jp/t/20210522honkipass.html</a></p>
+<p>ランダムにパスワードを生成するツールです。 JavaScript のお勉強を兼ねて作成しました。</p>
+<p>Windows の場合ダウンロードして、適当なフォルダに拡張子 .hta で保存してください。</p>
+<p>それ以外の OS の場合は、拡張子 .html で保存してください。</p>
+<ul>
+<li><a href="honkipass/honkipass.html">honkipass.html</a></li>
+</ul>
+<p>ソース</p>
+<pre class="highlight"><code>&lt;!--
+/*
+ * $Id: honkipass.hta 131 2006-04-30 15:23:12Z michinobu $
+ *
+ * Copyright 2006 Michinobu Maeda.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+--&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=UTF-8&quot;/&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    body {
+        margin: 0px;
+        padding: 12px;
+        background: #F0F0E0;
+    }
+    h1 {
+        text-align: center;
+        font-size: 150%;
+        font-family: sans-serif;
+        font-weight: 400;
+        line-height: 150%;
+        margin: 12px 0px;
+        border-top: solid 2px black0;
+        border-bottom: solid 2px black;
+    }
+    p, div, input {
+        font-size: 100%;
+        font-family: sans-serif;
+        line-height: 120%;
+        margin: 2px 0px;
+        padding: 2px 0px;
+    }
+    div {
+        margin: 0px;
+        padding: 0px;
+    }
+    form {
+        margin: 0px;
+    }
+    #ver {
+        font-size: 67%;
+        font-family: sans-serif;
+    }
+    #rst, #btn {
+        margin-left: 24pt;
+    }
+    #btn {
+        padding-left: 8pt;
+        padding-right: 8pt;
+    }
+    #len, #chr, #pwd {
+        padding: 1px 8px;
+        font-family: monospace;
+        line-height: 100%;
+    }
+    #chr, #pwd {
+        width: 50%;
+    }
+    #len {
+        text-align: right;
+    }
+    #cr {
+        text-align: center;
+        border-top: solid 2px black;
+    }
+    &lt;/style&gt;
+    &lt;script language=&quot;JavaScript&quot;&gt;
+
+    var limit = 1000;   // 計算回数の限界
+    var type = &quot;&quot;;      // 一般／数値4桁
+    var gen = null;     // ラジオボタン「一般」
+    var n4c = null;     // ラジオボタン「数値4桁」
+    var rst = null;     // ボタン「リセット」
+    var prm = null;     // 一般パラメータ領域
+    var num = null;     // チェックボックス「数字」
+    var lwc = null;     // チェックボックス「小文字」
+    var upc = null;     // チェックボックス「大文字」
+    var sin = null;     // チェックボックス「記号」
+    var chr = null;     // テキストボックス「記号として使用する文字」
+    var mix = null;     // チェックボックス「すべての文字種を使用」
+    var ndc = null;     // チェックボックス「同一文字使用禁止」
+    var len = null;     // テキストボックス「文字数」
+    var btn = null;     // ボタン「作詞」
+    var pwd = null;     // テキストボックス「パスワード」
+
+    /* ウィンドウサイズを設定する. */
+    if (location.protocol.toString().match(/file/)) {
+        window.resizeTo(620, 460);
+        window.moveTo(
+            (screen.availWidth - 620) / 2,
+            (screen.availHeight - 480) / 2);
+    }
+
+    /* ウィンドウ初期化時のイベントハンドラを登録する. */
+    regEvent(window, &quot;load&quot;, false, function () {
+        gen = document.getElementById(&quot;gen&quot;);
+        n4c = document.getElementById(&quot;n4c&quot;);
+        rst = document.getElementById(&quot;rst&quot;);
+        prm = document.getElementById(&quot;prm&quot;);
+        num = document.getElementById(&quot;num&quot;);
+        lwc = document.getElementById(&quot;lwc&quot;);
+        upc = document.getElementById(&quot;upc&quot;);
+        sin = document.getElementById(&quot;sin&quot;);
+        chr = document.getElementById(&quot;chr&quot;);
+        mix = document.getElementById(&quot;mix&quot;);
+        ndc = document.getElementById(&quot;ndc&quot;);
+        len = document.getElementById(&quot;len&quot;);
+        btn = document.getElementById(&quot;btn&quot;);
+        pwd = document.getElementById(&quot;pwd&quot;);
+
+        setDefault ();
+
+        regEvent(gen, &quot;click&quot;, false, function () {
+            onTypeSelected(&quot;gen&quot;);
+        });
+
+        regEvent(n4c, &quot;click&quot;, false, function () {
+            onTypeSelected(&quot;n4c&quot;);
+        });
+
+        regEvent(rst, &quot;click&quot;, false, setDefault);
+
+        regEvent(btn, &quot;click&quot;, true, function () {
+            btn.disabled = true;
+            createPassword();
+            btn.disabled = false;
+        });
+    });
+
+    /**
+     * 要素にイベントを登録する.
+     * @param element 要素
+     * @param name イベント名
+     * @param flg イベント伝播の方向
+     * @param handle ハンドラ
+     */
+    function regEvent(element, name, flg, handle) {
+        if (element.addEventListener) {
+            element.addEventListener(name, handle, flg);
+        } else if (element.attachEvent) {
+            element.attachEvent(&quot;on&quot; + name, handle);
+        }
+    }
+
+    /**
+     * 一般／数値4桁選択変更時の処理.
+     * @param sel 選択内容
+     */
+    function onTypeSelected(sel) {
+        if (sel == type) { return; }
+        pwd.value = &quot;&quot;;
+        type = sel;
+        if (type == &quot;gen&quot;) {
+            gen.checked = true;
+            n4c.checked = false;
+            prm.style.display = &quot;block&quot;;
+        } else {
+            gen.checked = false;
+            n4c.checked = true;
+            prm.style.display = &quot;none&quot;;
+        }
+    }
+
+    /** デフォルト値を設定する. */
+    function setDefault() {
+        onTypeSelected (&quot;gen&quot;);
+        num.checked = true;
+        lwc.checked = true;
+        upc.checked = true;
+        mix.checked = true;
+        ndc.checked = true;
+        sin.checked = false;
+        chr.value = &quot;@#$%^&amp;*-_=+&quot;;
+        len.value = &quot;8&quot;;
+        pwd.value = &quot;&quot;;
+    }
+
+    /** パスワードを作成する. */
+    function createPassword() {
+        var vals = (n4c.checked ? &quot;0123456789&quot;
+            : (num.checked ? &quot;0123456789&quot; : &quot;&quot;)
+            + (lwc.checked ? &quot;abcdefghijklmnopqrstuvwxyz&quot; : &quot;&quot;)
+            + (upc.checked ? &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot; : &quot;&quot;)
+            + (sin.checked ? chr.value : &quot;&quot;));
+        var cnt = n4c.checked ? 4 : new Number(len.value);
+        var tcnt = (num.checked ? 1 : 0)
+            + (lwc.checked ? 1 : 0)
+            + (upc.checked ? 1 : 0)
+            + (sin.checked ? 1 : 0);
+        var isNum = true;           // 数字を使用する
+        var isLwc = true;           // 小文字を使用する
+        var isUpc = true;           // 大文字を使用する
+        var isSin = true;           // 記号を使用する
+        var n = 0;                  // 計算回数
+        var ret = &quot;&quot;;               // 計算結果
+
+        if (isNaN(cnt)) {
+            alert(&quot;文字数には半角で数値を設定してください。&quot;);
+            return;
+        }
+
+        if (cnt &lt; 1) {
+            alert(&quot;文字数には正の数値を設定してください。&quot;);
+            return;
+        }
+
+        if(mix.checked &amp;&amp; (cnt &lt; tcnt)) {
+            alert(&quot;すべての文字数を使用するには &quot; + tcnt + &quot; 文字以上必要です。&quot;);
+            return;
+        }
+
+        if (tcnt &lt; 1) {
+            alert(&quot;1個以上の文字種を選択してください。&quot;);
+            return;
+        }
+
+        if (sin.checked) {
+            if (chr.value.length == 0) {
+                alert(&quot;使用する記号を指定してください。&quot;);
+                return;
+            }
+
+            for (i = 0; i &lt; chr.value.length; ++i) {
+                var c = chr.value.charAt(i);
+                if (c == &quot; &quot;) {
+                    alert(&quot;記号にスペースは指定できません。&quot;);
+                    return;
+                }
+            }
+        }
+
+        for (; n &lt; limit; ++n) {
+
+            ret = &quot;&quot;;
+
+            if(mix.checked) {
+                isNum = !num.checked;
+                isLwc = !lwc.checked;
+                isUpc = !upc.checked;
+                isSin = !sin.checked;
+            }
+
+            for (i = 0; i &lt; cnt; ++i) {
+
+                var c = vals.charAt(Math.floor(Math.random() * vals.length));
+
+                if (ndc.checked) {
+                    if (ret.indexOf(c) &gt;= 0) { break; }
+                }
+
+                if (c.match(/[0-9]/)) {
+                    isNum = true;
+                } else if (c.match(/[a-z]/)) {
+                    isLwc = true;
+                } else if (c.match(/[A-Z]/)) {
+                    isUpc = true;
+                } else {
+                    isSin = true;
+                }
+
+                ret = ret + c;
+            }
+
+            if (ret.length == cnt) {
+                if (n4c.checked) { break; }
+                if (isNum &amp;&amp; isLwc &amp;&amp; isUpc &amp;&amp; isSin) { break; }
+            }
+        }
+
+        if (n &gt;= limit) {
+            alert(&quot;計算回数が &quot; + limit + &quot; を超えました。条件を満たすパスワードを作成するのは困難です。&quot;);
+            return;
+        }
+        pwd.value = ret;
+        return false;
+    }
+    &lt;/script&gt;
+    &lt;title&gt;本気でパスワード Ver. 1.0&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;本気でパスワード &lt;span id=&quot;ver&quot;&gt;Ver. 1.0&lt;/span&gt;&lt;/h1&gt;
+    &lt;form action=&quot;javascript:return false;&quot;&gt;
+      &lt;p&gt;
+        &lt;input type=&quot;text&quot; id=&quot;pwd&quot; readonly/&gt;
+        &lt;button id=&quot;btn&quot;&gt;パスワード作成&lt;/button&gt;
+      &lt;/p&gt;
+      &lt;p&gt;
+        &lt;input type=&quot;radio&quot; id=&quot;gen&quot; name=&quot;type&quot;/&gt; 一般用
+        &lt;input type=&quot;radio&quot; id=&quot;n4c&quot; name=&quot;type&quot;/&gt; 数字4桁
+        &lt;button id=&quot;rst&quot;&gt;設定をすべて初期値に戻す&lt;/button&gt;
+      &lt;/p&gt;
+      &lt;div id=&quot;prm&quot;&gt;
+        &lt;p&gt;
+          &lt;input type=&quot;checkbox&quot; id=&quot;num&quot;/&gt; 数字を使う。
+        &lt;/p&gt;
+        &lt;p&gt;
+          &lt;input type=&quot;checkbox&quot; id=&quot;lwc&quot;/&gt; アルファベット小文字を使う。
+        &lt;/p&gt;
+        &lt;p&gt;
+          &lt;input type=&quot;checkbox&quot; id=&quot;upc&quot;/&gt; アルファベット大文字を使う。
+        &lt;/p&gt;
+        &lt;p&gt;
+          &lt;input type=&quot;checkbox&quot; id=&quot;sin&quot;/&gt; 右の欄の記号を使用する。
+          &lt;input type=&quot;text&quot; id=&quot;chr&quot;/&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+          &lt;input type=&quot;checkbox&quot; id=&quot;mix&quot;/&gt; それぞれの文字種を1文字以上使う。
+        &lt;/p&gt;
+        &lt;p&gt;文字数
+          &lt;input type=&quot;text&quot; id=&quot;len&quot; size=&quot;3&quot;/&gt;
+          ← 半角数字で 1以上の値を記入してください。
+        &lt;/p&gt;
+        &lt;p&gt;パスワードは 6文字以上で3種類以上の文字種を使用することをおすすめします。&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;p&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;ndc&quot;/&gt; 同じ文字を2回以上使用しない。
+      &lt;/p&gt;
+    &lt;/form&gt;
+    &lt;p id=&quot;cr&quot;&gt;Copyright 2006 Michinobu Maeda.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

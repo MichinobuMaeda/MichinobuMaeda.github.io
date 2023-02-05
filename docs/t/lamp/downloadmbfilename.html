@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Webから日本語ファイル名でダウンロード - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Webから日本語ファイル名でダウンロード</h1>
+<p>Update: 2009-07-13</p>
+<p>「Webから日本語ファイル名でダウンロードさせたいんだけどどうすればいい？」と <a href="http://eibun.com/">eubun さん</a> から質問が。こんなかんじでいいようです。</p>
+<pre class="highlight"><code>&lt;?php
+// ブラウザの種類がIEかどうかを判別する。
+$isIE = (preg_match('/IE/', $_SERVER['HTTP_USER_AGENT']) == 0) ? FALSE : TRUE;
+// GETパラメータでファイルのサーバ上のパス名とユーザから見えるファイル名を受け取る。
+$path = $_GET[&quot;path&quot;];
+$name = $_GET[&quot;name&quot;];
+// ファイルの拡張子から、Content-typeを確定する。
+if (preg_match('/.pdf$/i', $name) == 1) {
+ $type = &quot;application/pdf&quot;;
+} elseif (preg_match('/.doc$/i', $name) == 1) {
+ $type = &quot;application/vnd.ms-word&quot;;
+} elseif (preg_match('/.xls$/i', $name) == 1) {
+ $type = &quot;application/vnd.ms-exce&quot;;
+} elseif (preg_match('/.ppt$/i', $name) == 1) {
+ $type = &quot;application/vnd.ms-powerpoint&quot;;
+} else {
+ $type = &quot;application/binary&quot;;
+}
+// HTTPレスポンスヘッダを出力する。
+header(&quot;Content-Transfer-Encoding: binary&quot;);
+header(&quot;Content-Type: &quot;.$type);
+header(&quot;Content-Length: &quot; . filesize($path));
+if ($isIE) {
+ header(&quot;Content-Disposition: inline; filename=&quot;.$name);
+ header(&quot;Pragma: public&quot;);
+ header(&quot;Cache-Control: must-revalidate, post-check=0, pre-check=0&quot;);
+} else {
+ header('Content-Disposition: attachment; filename=&quot;' . $name . '&quot;');
+ header(&quot;Pragma: no-cache&quot;);
+}
+// ファイルを返す。
+readfile($path);
+?&gt;
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

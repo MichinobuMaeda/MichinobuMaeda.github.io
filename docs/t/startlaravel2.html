@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Laraval 5 による開発の手順 #2 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Laraval 5 による開発の手順 #2</h1>
+<p>Update: 2018-09-24</p>
+<p><a href="startlaravel1.html">Laraval 5 による開発の手順 #1</a> の続きです。</p>
+<h2>インストールする</h2>
+<p>2018年9月23日時点で最新の Laravel 5.7 のインストール手順は
+<a href="https://laravel.com/docs/5.7">https://laravel.com/docs/5.7</a> の "Installation" の通りです。</p>
+<h3>PHP の Extension を確認する</h3>
+<p>上記のページの "Server Requirements" に必要な PHP のバージョンと
+Extension について記載されています。</p>
+<pre class="highlight"><code>&lt;?php phpinfo(); ?&gt;
+</code></pre>
+
+<p>のようなファイルをどこかに置いて。</p>
+<pre class="highlight"><code>php -S localhost:8000
+</code></pre>
+
+<p>として表示してみるか、</p>
+<pre class="highlight"><code>php -r &quot;phpinfo();&quot;
+</code></pre>
+
+<p>としてみるかすれば調べられます。</p>
+<p><code>phpinfo()</code> は昔 UTF-8 が一般的でなかった時代には
+mbstring の設定を確認するのによく使っていましたが、最近は気にすることも少ないかと思います。
+共用タイプのレンタルサーバだったらたいていのものが最初から入っていますし。
+でも、一度くらいは見ておいてください。</p>
+<p>足りないものがあったら Linux で yum や apt で PHP を導入している場合はパッケージを追加してください。
+Mac の Homebrew で導入した場合はひととおり全部入っているんじゃないかな。
+Windows の場合は <code>php.ini</code> の <code>extension</code> の行のコメントアウトを外してください。</p>
+<h3>とりあえず動かす</h3>
+<p>上記のページに書いている通りなのですが、
+以下のコマンドを実行すると最新版の Laravel がインストールされて、
+Laravel のプロジェクト ( この例ではプロジェクト名 <code>blog</code> ) が作成されて、テスト用の HTTP サーバが起動します。</p>
+<pre class="highlight"><code>composer global require &quot;laravel/installer&quot;
+composer create-project --prefer-dist laravel/laravel blog
+php artisan serve
+</code></pre>
+
+<p>プロジェクトを作成するコマンドとして <code>laravel new ...</code> と <code>composer create-project ...</code>
+が併記されています。どちらでもいいのですが、
+Windows の場合は <code>laravel</code> とコマンドを打っても動かないかもしれません。</p>
+<h2>プロジェクトの設定を少し変える</h2>
+<p>プロジェクトの設定は <code>.env</code> と <code>config</code> の下の各ファイルです。
+<code>.env</code> は <code>.gitignore</code> に入っています。
+開発用 ( local, staging ) と本番用 ( production ) をそれぞれ作成して使い分けてください。</p>
+<h3>SQLite のデータファイルの場所を決める</h3>
+<p>SQLite のデータファイルの場所ですが、 <code>public</code> は絶対にダメです。
+特別セキュリティに気を使うシステムでなければ、キャッシュやログなどが入っている
+<code>storage</code> でいいと思います。書き込み可のものはそこに全部集めるということで。
+特別セキュリティに気を使うシステムの場合は、私からはなんとも言えないのでがんばって考えてください。</p>
+<p>Linux や Mac の場合は</p>
+<pre class="highlight"><code>touch storage/blog.sqlite
+</code></pre>
+
+<p>のようにして空のファイルを置いてください。</p>
+<p>Windows の場合は <a href="http://sqlitebrowser.org/">DB Browser for SQLite</a> で新規作成するか、
+sqlite3 のコマンドシェルで <code>.open blog.sqlite</code> とするか、
+PowerShell で <code>New-Item -ItemType File ...</code> としてください。</p>
+<p>データファイルの場所は <code>config/database.php</code> に次のように書いておけばよいです。</p>
+<pre class="highlight"><code>        'sqlite' =&gt; [
+            'driver' =&gt; 'sqlite',
+            'database' =&gt; env('DB_DATABASE', storage_path('blog.sqlite')),
+            'prefix' =&gt; '',
+        ],
+</code></pre>
+
+<p>この場合 <code>.gitignore</code> に <code>/storage/blog.sqlite</code> を追加しておいてください。</p>
+<p>それから <code>.env</code> に sqlite を使う旨を記載してください。</p>
+<pre class="highlight"><code>DB_CONNECTION=sqlite
+</code></pre>
+
+<p><code>.env</code> を書き換えれば、他の RDBMS 製品に置き換えることもできます。</p>
+<h3>環境毎のログの形式を設定する</h3>
+<p>Laravel 5 は out-of-the-box で（最初から全部入ってる形で）単純なファイル、日毎のファイル、
+Slack, Syslog などログの出力先の形を選べるようになっています。</p>
+<p>local は single ( 単純なファイル ) 、 staging や production は日毎のファイル、というような設定にしておけばよいでしょう。</p>
+<p>環境毎の出力先の選択は <code>.env</code> に以下のような形で、</p>
+<pre class="highlight"><code>LOG_CHANNEL=single
+</code></pre>
+
+<p>それぞれの出力先の詳細は <code>config/logging.php</code> と <code>.env</code> を組み合わせて設定してください。</p>
+<h2>メアドとパスワードでログインできるようにする</h2>
+<p>Laravel 5.7 のドキュメントの <a href="https://laravel.com/docs/5.7/authentication">Authentication</a>
+に</p>
+<pre class="highlight"><code>php artisan make:auth
+php artisan migrate
+</code></pre>
+
+<p>とすればとりあえず動くぞと書いてあります。その通りにすると、ログイン、サインアップ、登録、パスワードを忘れた場合のパスワードリセットの各機能とログイン後のページができて、データベーステーブルもできます。サインアップすれば誰でも使えるサービスを作るのであればこれでいいです。</p>
+<p>プロジェクト作成時に生成された <code>.env</code> を見るとメールサーバは <code>smtp.mailtrap.io</code> になっています。
+<a href="https://mailtrap.io">Mailtrap.io</a> はテスト用のメールサーバのサービスですね。
+アカウントを作って発行されたユーザ名とパスワードを <code>.env</code> に設定してやると、パスワードリセットのメールは
+Mailtrap.io の Demo inbox に溜まるようになります。とても便利です。
+自前のテスト用のメールサーバを建てようとすると、それ自体面倒ですし、
+インターネットにつながっている場合はセキュリティの確保が必要ですし、
+こういうものがあると助かります。</p>
+<p>それから Laravel 5.7 のドキュメントの
+<a href="https://laravel.com/docs/5.6/encryption">Encryption</a>
+に記載されている次のコマンドを実行すると <code>.env</code> の <code>APP_KEY</code> に値が設定されます。</p>
+<pre class="highlight"><code>php artisan key:generate
+</code></pre>
+
+<h2>ディクトリ構成</h2>
+<p>プロジェクトの初期構築の時点でできているディレクトリはこんな感じです。</p>
+<pre class="highlight"><code>app/
+  Console/
+  Exceptions/
+  Http/
+    Controllers/ &lt;-- Controller
+    Middleware/
+  Providers/
+  User.php  &lt;-- Model は app の直下
+bootstrap/
+config/
+database/
+  factories/
+  migrations/ &lt;-- データベーステーブルの定義
+    2014_10_12_000000_create_users_table.php
+    2014_10_12_100000_create_password_resets_table.php
+  seeds/      &lt;-- データベースの初期データ
+    DatabaseSeeder.php
+public/
+resources/
+  js/
+  lang/
+    en/   &lt;-- 英語のメッセージ
+  sass/
+  views/  &lt;-- Blade のテンプレート
+routes/
+  web.php &lt;-- Route の設定
+storage/
+  app/
+  framework/
+  logs/   &lt;-- simple や daily のログ
+tests/
+vendor/
+</code></pre>
+
+<p>これに、処理ロジックやビューヘルパーなどを置く <code>app/Services</code> と、日本語メッセージを置く
+<code>resources/lang/ja</code> くらいを追加すればよいです。</p>
+<p>ここまで作ったものは、以下の手順で入手して試していただくことができます。</p>
+<pre class="highlight"><code>git clone https://github.com/MichinobuMaeda/tamuro.git
+cd tamuro
+git checkout tags/startlaravel2
+composer install
+cp .env.local .env
+vi .env
+touch storage/tamuro.sqlite
+php artisan migrate
+php artisan serve
+</code></pre>
+
+<p>GUI版の Git ツールを使っている場合は
+<a href="https://github.com/MichinobuMaeda/tamuro.git">https://github.com/MichinobuMaeda/tamuro.git</a>
+のタグ <code>startlaravel2</code> をチェックアウトしてください。</p>
+<p><code>vi .env</code> は vi でなくていいけど、パスワードリセットを試す場合はメールサーバの設定が必要です。</p>
+<p>Windows で <code>touch</code> コマンドが使えない場合の代替手段は前述の通り。</p>
+<hr />
+<p><a href="startlaravel3.html">Laraval 5 による開発の手順 #3</a> に続く。</p>
+<p>Tag: PHP composer Laravel Mailtrap</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

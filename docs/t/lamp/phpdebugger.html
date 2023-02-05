@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>PHPのデバッグができる環境 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>PHPのデバッグができる環境</h1>
+<p>Update: 2010-05-16</p>
+<h2>今回の制約</h2>
+<p>開発をしている人の場合、今でもまだ Windows XP を使い続けている人が多いと思いますが、私の MacBook に入っている Windows 7 をそのまま使いました。 Zend Debugger をセットアップするには Zend Server を入れるのが一番手っ取り早いのですが Windows 7 にはうまく入りませんでした ( 注：この記事を書いた時点のバージョンの話です ) 。それで、 XAMPP を使うことにしました。</p>
+<p>それから、単体の Zend Debugger の PHP 5.3 用のものが入手できませんでした。したがって、 XAMPP は最新ではなく、 PHP 5.2 が入っている 1.6x を使うことにしました。</p>
+<p>以下の文章でバックスラッシュ "\"  ( ← 表示されていないかも？ ) が表示されているところは、半角の円マーク "￥" ( ← 表示されていないかも？ ) に読み替えてください。</p>
+<h2>XAMPP のインストール</h2>
+<p><a href="http://sourceforge.net/projects/xampp/files/"><a href="http://sourceforge.net/projects/xampp/files/">http://sourceforge.net/projects/xampp/files/</a></a> から <code>xampp-win32-1.6.8.exe</code> をダウンロードします。このファイルは自己解凍圧縮ファイルになっていて、実行するとフォルダ xampp ができます。そのフォルダを <code>C:\</code> の直下に移動しました。</p>
+<p>次に <code>c:\xampp\setup_xampp.bat</code> を実行します。数秒で完了します。</p>
+<p>サーバの起動は <code>c:\xampp\xampp_start.exe</code> 終了は <code>c:\xampp\xampp_stop.exe</code> です。</p>
+<p>サーバを起動すると、初回起動時は次のようなダイアログが表示されるので、 「 アクセスを許可する 」 を選択してください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5zK7VD3I/AAAAAAAABrw/CgClkw_VIE0/s1600/zend-debugger-000.png" /></p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw506ukVnI/AAAAAAAABr0/wiFSxxmZqw8/s1600/zend-debugger-001.png" /></p>
+<p>サーバを起動したら、ブラウザで <code>http://localhost/</code> を表示します。表示したら「日本語」を選択します。管理メニューが表示されるので、</p>
+<ul>
+<li>phpinfo()</li>
+<li>phpMyAdmin</li>
+</ul>
+<p>などが正常に表示できることを確認します。</p>
+<h2>Zend Debugger の設定（サーバ側）</h2>
+<p><a href="http://www.zend.com/community/pdt"><a href="http://www.zend.com/community/pdt">http://www.zend.com/community/pdt</a></a> のページのリンク “download the Zend Debugger extension binaries” をクリックして <a href="http://downloads.zend.com/pdt/server-debugger/"><a href="http://downloads.zend.com/pdt/server-debugger/">http://downloads.zend.com/pdt/server-debugger/</a></a> を開きます。そこから <code>ZendDebugger-5.2.15-cygwin_nt-i386.zip</code> をダウンロードして解凍します。</p>
+<p>インストールの手順は <code>ZendDebugger-5.2.15RC1-cygwin_nt-i386\README.txt</code> に書いてあります。</p>
+<p>まず <code>ZendDebugger-5.2.15RC1-cygwin_nt-i386\5_2_x_comp\ZendDebugger.dll</code> を <code>C:\xampp\php\ext\ZendDebugger.dll</code> にコピーします。</p>
+<p>次に <code>ZendDebugger-5.2.15RC1-cygwin_nt-i386\dummy.php</code> を <code>C:\xampp\htdocs\dummy.php</code> にコピーします。</p>
+<p>設定ファイル <code>C:\xampp\apache\bin\php.ini</code> ＜注意＞<code>C:\xampp\php\php.ini</code> ではない＜／注意＞ に</p>
+<pre class="highlight"><code>[Zend]
+zend_extension_ts = &quot;C:\xampp\php\zendOptimizer\lib\ZendExtensionManager.dll&quot;
+zend_extension_manager.optimizer_ts = &quot;C:\xampp\php\zendOptimizer\lib\Optimizer&quot;
+zend_optimizer.enable_loader = 0
+zend_optimizer.optimization_level=15
+;zend_optimizer.license_path =
+</code></pre>
+
+<p>という記述があるのですが、これを次のように修正します。セクションの先頭の行はセミコロン 「 ;　」 でコメントアウトしてください。</p>
+<pre class="highlight"><code>[Zend]
+;zend_extension_ts = &quot;C:\xampp\php\zendOptimizer\lib\ZendExtensionManager.dll&quot;
+zend_extension_ts= &quot;C:\xampp\php\ext\ZendDebugger.dll&quot;
+zend_debugger.allow_hosts=127.0.0.1
+zend_debugger.expose_remotely=always
+zend_extension_manager.optimizer_ts = &quot;C:\xampp\php\zendOptimizer\lib\Optimizer&quot;
+zend_optimizer.enable_loader = 0
+zend_optimizer.optimization_level=15
+;zend_optimizer.license_path =
+</code></pre>
+
+<p>ファイルを保存して閉じたら、 <code>c:\xampp\xampp_restart.exe</code> でサーバをリスタートします。その後、管理メニューの phpinfo() を再表示してください。セクション “Zend Debugger” が表示されていれば OK です。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw52e5_shI/AAAAAAAABr4/K9e67K-7BPU/s1600/zend-debugger-002.png" /></p>
+<h2>Eclipse のインストール</h2>
+<p>Eclipse は Java で動きます。まず最初に、 PC に Java が入ってるかどうかを確認してください。コマンドプロンプトで次のようになれば OK です。</p>
+<pre class="highlight"><code>C:\Users\michinobu&gt;java -version
+java version &quot;1.6.0_20&quot;
+Java(TM) SE Runtime Environment (build 1.6.0_20-b02)
+Java HotSpot(TM) Client VM (build 16.3-b01, mixed mode, sharing)`
+</code></pre>
+
+<p>Java が入っていない場合、および、上記のバージョンより古い場合は <a href="http://www.java.com/ja/"><a href="http://www.java.com/ja/">http://www.java.com/ja/</a></a> からダウンロードしてインストールしてください。</p>
+<p>今回は、 <a href="http://www.eclipse.org/"><a href="http://www.eclipse.org/">http://www.eclipse.org/</a></a> から配布されているものではなく、日本語化されていて、 PHP のためのプラグインも入っているものを利用します。</p>
+<p><a href="http://mergedoc.sourceforge.jp/"><a href="http://mergedoc.sourceforge.jp/">http://mergedoc.sourceforge.jp/</a></a> から 「 Eclipse 3.5.2 Galileo Windows 32bit ベース 」 を選択します。 Java などは関係ないので、 「 Pleiades All in One PHP 」 の 「 Standard All in One 」 をダウンロードします。ファイル名は <code>pleiades-e3.5-php_20100226.zip</code> でした。</p>
+<p>これを解凍すると中にたくさんのファイルが入ったフォルダ <code>eclipse</code> ができます。そのフォルダを <code>C:\</code> の直下に移動しました。 <code>C:\eclipse\eclipse.exe</code> を実行すると Eclipse が起動します。ショートカットなど作っておくといいでしょう。</p>
+<p>起動時に 「 ワークスペース 」 の場所を聞かれます。 PHP の開発のためだけに使うので、 <code>C:\xampp\htdocs</code> にしました。こうしておくと、編集したファイルをすぐそのままブラウザで確認できますし、デバッガの設定も楽です。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw53a3POjI/AAAAAAAABr8/m4iGcmlWpCw/s1600/zend-debugger-003.png" /></p>
+<p>また、次のようなダイアログが表示されるので、 「 アクセスを許可する 」 を選択してください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw54xZQYLI/AAAAAAAABsA/n9AuMPF3xUY/s1600/zend-debugger-004.png" /></p>
+<p>初回起動時には “Welcome” 画面が表示されますが、じゃまなだけなのでとりあえず消してください。</p>
+<h2>Eclipse の設定</h2>
+<p>Eclipse の基本的な設定はメニュー 「 ウィンドウ 」 「 設定 」 を使います。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw56DvYWUI/AAAAAAAABsE/ROXcmAGd-Kc/zend-debugger-005.png" /></p>
+<p>私の場合次のような個所をカスタマイズします。</p>
+<ul>
+<li>一般のファイルのエンコード</li>
+</ul>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw57sbrdAI/AAAAAAAABsI/RqBrzTkDvqQ/zend-debugger-006.png" /></p>
+<ul>
+<li>HTML ファイルのエンコード</li>
+</ul>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw58uqCJSI/AAAAAAAABsM/Qwryti30yxs/s400/zend-debugger-007.png" /></p>
+<ul>
+<li>HTML のタブとインデント</li>
+</ul>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5-l3GZ6I/AAAAAAAABsQ/riWaZMS0fSs/zend-debugger-008.png" /></p>
+<ul>
+<li>PHP のタブとインデント</li>
+</ul>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5_YcW_4I/AAAAAAAABsU/sacLF3WIME4/zend-debugger-009.png" /></p>
+<p>Eclipse のデフォルトの設定は一般的によくつかわれるものになっているので、これ以上細かくは変更せずに使っています。</p>
+<h2>デバッガの実行</h2>
+<p>テスト用のファイル <code>C:\xampp\htdocs\test\index.php</code> を以下の手順で作成します。</p>
+<p>まず、プロジェクト test を新規で作成します。メニュー 「 ファイル 」 「 新規 」 「 PHP プロジェクト 」 を選択します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6AZn_qFI/AAAAAAAABsY/L6n4zvb1pHI/s400/zend-debugger-010.png" /></p>
+<p>プロジェクト名に <code>test</code> と入力します。それから、同じダイアログの下の方 「 JavaScript サポート 」 を使用可能にします。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6B3MboII/AAAAAAAABsc/c6nCjDpRlHM/s1600/zend-debugger-012.png" /></p>
+<p>次に、ファイル index.php を新規で作成します。プロジェクト <code>test</code> を選択して、マウス右クリックします。ポップアップメニュー 「 新規 」 「 PHP ファイル 」 を選択します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6DSpmzZI/AAAAAAAABsg/FgzWTpum4xI/s1600/zend-debugger-013.png" /></p>
+<p>ファイル名に <code>index.php</code> を入力します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6EQQk1jI/AAAAAAAABsk/ce9cEmyLAHw/zend-debugger-014.png" /></p>
+<p>index.php のソースは次の通りです。</p>
+<pre class="highlight"><code>&lt;?php
+ $a = 1 + 1;
+ $b = $a + 1;
+?&gt;
+&lt;html&gt;
+ &lt;head&gt;
+ &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text /html; charset=UTF-8&quot; /&gt;
+ &lt;title&gt;Test&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+ &lt;h1&gt;Test&lt;/h1&gt;
+ &lt;p&gt;計算結果: &lt;?php echo $b; ?&gt;&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>ブラウザで <code>http://localhost/test/index.php</code> が表示できることを確認してください。</p>
+<p>デバッグ実行のためのブレークポイントを設定します。 Visual Basic などを使ったことがあれば、それとほとんど同じです。今回はソースの 2行目にブレークポイントを設定します。 2行目の行番号の左側をマウスでダブルクリックしてください。青い小さな丸印が付きます。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6FbvUjSI/AAAAAAAABso/qqINg4sw-No/zend-debugger-015.png" /></p>
+<p>ツールバーの虫の形のボタン 「 デバッグ 」 をクリックします。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6GY0XTEI/AAAAAAAABss/oij1ZP46w_k/zend-debugger-016.png" /></p>
+<p>「 PHP Web ページ 」 を選択します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6HhHMNCI/AAAAAAAABsw/AeXzeVHLiwY/zend-debugger-017.png" /></p>
+<p>URL はそのままで合っているはずです。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6IiuJ4VI/AAAAAAAABs0/Rdhre1OQ20w/s1600/zend-debugger-018.png" /></p>
+<p>「 パースペクティブ 」 というのは、その時の作業内容に応じた画面の構成のことです。 「 常にこの設定を使用する 」 のチェックを有効にしてください。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6J9z_XAI/AAAAAAAABs4/lg6oASopVsY/s1600/zend-debugger-019.png" /></p>
+<p>パースペクティブを手動で切り替えたい場合は、ウィンドウの右上のアイコンを使用してください 「 PHP デバッグ 」 と 「 PHP 」 が選択できます。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6RLWKdbI/AAAAAAAABtA/wrSFGKhmF38/zend-debugger-021.png" /></p>
+<p>PHP のデバッグ用のパースペクティブは次のような構成です。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6QDezcZI/AAAAAAAABs8/pgsHuuiCw4M/zend-debugger-020.png" /></p>
+<p>デバッグ実行直後、 2行目のブレークポイントで停止している状態です。左端の矢印が停止している行を示します。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6ST12IEI/AAAAAAAABtE/wZvZWv7tfcQ/zend-debugger-022.png" /></p>
+<p>ツールバーの2段目の 「 ステップオーバー 」 をクリックします。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6TZIk1rI/AAAAAAAABtI/oTZ_0hwB2CU/zend-debugger-023.png" /></p>
+<p>停止位置が 1行進んで 3行目になります。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6UQwUNeI/AAAAAAAABtM/gnRgV1dWwUk/zend-debugger-024.png" /></p>
+<p>中央上に変数の値の一覧があるのですが、変数 $a に、値 2 が入っていることがわかります。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6VgR9P2I/AAAAAAAABtQ/UrfoXuLnu7U/zend-debugger-025.png" /></p>
+<p>変数の値を無理やり変更することも可能です。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw6XQAEzSI/AAAAAAAABtU/P1OIB5XWZmY/zend-debugger-026.png" /></p>
+<h2>詳しい使い方は書籍で</h2>
+<p>この記事には Zend Debugger の使い方のほんのさわりしか書いていません。詳しい使い方は次の書籍などを参考にしてください。</p>
+<ul>
+<li>「 PHP 統合開発環境 PDT2 入門 」 岸本忠士 ISBN978-4-7980-2257-4</li>
+</ul></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

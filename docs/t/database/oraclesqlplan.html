@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Oracle の SQL の実行計画を調べる - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Oracle の SQL の実行計画を調べる</h1>
+<p>Update: 2008-11-25</p>
+<p>Oracle が SQL 文を実行するときに、内部で「実行計画」というのを使います。どのテーブルのどのインデックスを使ってどういう順番でデータを取得するのかという計画です。 9i までの「ルール・ベース」の場合 SQL 文の記述で決まります。「コスト・ベース」の場合、 SQL 文の記述内容と、各テーブル・インデックスの統計情報（データ量とか値のばらつきとか）で決まります。その「実行計画」を調べる方法について説明します。</p>
+<p>ここではとっかかりのことだけ。詳しい情報は Oracle の各バージョンの正規のドキュメントを見てください。 <a href="http://otn.oracle.co.jp/"><a href="http://otn.oracle.co.jp/">http://otn.oracle.co.jp/</a></a> のアカウントは無料ですぐに作成できます。</p>
+<h2>EXPLAIN PLAN の基本的な使い方</h2>
+<p>「ルール・ベース」の場合、テーブルとインデックスを本番環境と同じ状態にしてください。「コスト・ベース」の場合は、それに加えて統計情報も本番環境と同じ状態にしてください。それができない場合、あまりいい方法ではありませんが、本番環境で実施してください。</p>
+<p>例1</p>
+<pre class="highlight"><code>SET LINESIZE 140
+SET PAGESIZE 0
+SET ECHO ON
+SPOOL SQLファイル実行計画取得.log
+
+EXPLAIN PLAN FOR
+SELECT
+`COL1
+, COL2
+, COL3
+FROM TABLE1
+WHERE COL4 = :PARAM1
+;
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+SPOOL OFF
+</code></pre>
+
+<p>先頭の 3行は結果を見やすくするためのおまじないです。</p>
+<p>この 例1 の場合、 <code>SELECT COL1, COL2, COL3 FROM TABLE1 WHERE COL4 = :PARAM1</code> が測定したい SQL です。プログラム中でパラメータ値を使う箇所は <code>:param1</code> のような書式にしておいてください。パラメータ名は何でもいいです。</p>
+<p>「コスト・ベース」の環境の場合実行計画だけ、「ルール・ベース」の場合それに加えてコスト値が表示されます。コスト値は、 Oracle が内部で処理量を判断するために使う尺度です。統計情報が現実のデータの状態をそこそこ正確に反映している場合は、このコスト値を下げることで十中八九 SQL の実際の処理も早くなります。統計情報が現実の状態から乖離している場合は、当てになりません。</p>
+<p>「ルール・ベース」の場合も「コスト・ベース」の場合も <code>TABLE ACCESS FULL</code> が要注意です。行数の多いテーブルで <code>WHERE</code>句で検索対象を絞ったつもりなのになぜか <code>TABLE ACCESS FULL</code> していることがあれば、そもそも <code>WHERE</code>句で指定したカラムにインデックスが付いているか調べてみるとか、 SQL 文の書き方を変えてみるとかしてください。</p>
+<h2>本番と同じ統計情報を持つテスト環境の作成</h2>
+<p>「コスト・ベース」の場合、Oracle の統計情報は次の手順で他の DB にコピーできます。</p>
+<ol>
+<li>コピー元のDBで、所定の定義のテーブルに統計情報を格納する。</li>
+<li>そのテーブルをエクスポートする。</li>
+<li>コピー先の DB にインポートする。</li>
+<li>テーブルに格納された統計情報を適用する。</li>
+</ol>
+<p>詳しくは Oracle のドキュメントを見てください。10g R1 の場合「PL/SQL パッケージ・プロシージャおよびタイプ・リファレンス」の <code>DBMS_STATS</code> の項を見てください。</p>
+<p>この手順で統計情報をインポートしたテスト環境を使えば <code>EXPLAIN PLAN</code> で本番と同じ実行計画の取得ができます。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

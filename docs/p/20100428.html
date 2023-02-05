@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>西松建設についてのまとめ - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>西松建設についてのまとめ</h1>
+<p>Update: 2010-04-28</p>
+<p>小沢氏の事件について整理しようと思って資料を見始めたのですが、なぜか古い（ってほどでもないか）事件の方が気になってしまってまとめてみました。</p>
+<p><a href="nishimatsukensetsu.pdf"><img alt="" src="nishimatsukensetsu.png" /></a></p>
+<p>『(a) 小沢一郎「日本改造計画」（1993年）』以外の各資料の参照元URLは次の通りです。</p>
+<p>(b) 2008年12月21日(日)「しんぶん赤旗」裏金疑惑の西松建設　関連政治団体/政界に４億２０００万円 森・二階・小沢氏ら
+<a href="http://www.jcp.or.jp/akahata/aik07/2008-12-21/2008122115_01_0.html">http://www.jcp.or.jp/akahata/aik07/2008-12-21/2008122115_01_0.html</a></p>
+<p>(c) 2009年1月26日(月)「しんぶん赤旗」西松建設政治団体 資金提供 全容わかる
+<a href="http://www.jcp.or.jp/akahata/aik07/2009-01-26/2009012615_01_0.html">http://www.jcp.or.jp/akahata/aik07/2009-01-26/2009012615_01_0.html</a></p>
+<p>(d) 民主党 2009/03/04「問題はない」と小沢代表　政治献金問題で会見し「政治的にも法律的にも著しく不公正な捜査」と批判
+<a href="http://www.dpj.or.jp/news/?num=15370">http://www.dpj.or.jp/news/?num=15370</a></p>
+<p>(e) asahi.com 2009年3月4日13時43分「献金すべてオープンに」小沢代表会見一問一答
+<a href="http://www.asahi.com/special/09002/TKY200903040136.html">http://www.asahi.com/special/09002/TKY200903040136.html</a></p>
+<p>(f) （2009年3月6日03時09分 読売新聞）小沢代表政党支部、企業献金は小口ばかり...「西松」名なら突出
+<a href="http://www.yomiuri.co.jp/feature/20090304-527751/news/20090306-OYT1T00048.htm">http://www.yomiuri.co.jp/feature/20090304-527751/news/20090306-OYT1T00048.htm</a></p>
+<p>(g) 2009年3月15日(日)「しんぶん赤旗」「西松マネー」途切れなく小沢氏側に１．９億円 自民本部に１．８億円 ゼネコン汚職後も１２年間
+<a href="http://www.jcp.or.jp/akahata/aik07/2009-03-15/2009031501_01_0.html">http://www.jcp.or.jp/akahata/aik07/2009-03-15/2009031501_01_0.html</a></p>
+<p>ついでに一言：企業からの献金は政党に対してだけOKっつーことだが、選挙区単位の政党支部に献金したらほとんど政治家個人への献金と変わらんだろ。そこで選挙だとかするんだから</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

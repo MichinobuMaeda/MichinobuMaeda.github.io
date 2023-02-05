@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Windows に WordPress のテスト環境を作る - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Windows に WordPress のテスト環境を作る</h1>
+<p>Update: 2021-04-29</p>
+<p>Webサーバで Linux や BSD などを使っていても、開発やテストには Windows を使う人は多いです。
+Windows でも <a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">WSL</a> やその他の仮想マシンの製品を使えば Linux が動くので、基本的にはそちらの方をお勧めします。しかしながら Linux のコマンドを使い慣れていないとか、ハードウェア等の制約で WSL や仮想マシンを使えないといったこともあるでしょう。以下、 WSL や仮想マシンを使わずにできるだけ手間をかけずに Apache と PHP と MySQL をセットアップして WordPress を動かす環境を準備する手順です。</p>
+<h2>XAMPP のインストール</h2>
+<p>Windows に Apache, PHP, MySQL を個別にインストールするのはたいへんなので、
+それらをまとめてインストールできる XAMPP という製品を使います。</p>
+<p>この後の作業の中でファイアウォールの警告が出たら「アクセスを許可する」を選択してください。</p>
+<p>まず <a href="https://www.apachefriends.org/download.html">https://www.apachefriends.org/download.html</a> から "7.4.x / PHP 7.4.x" をダウンロードします。</p>
+<p>ダウンロードした <code>xampp-windows-x64-7.x.x-n-VC15-installer.exe</code> を実行します。インストールする機能のうち FTP Server, Mail Server, Tomcat, Webalizer は不要です。
+Perl も不要かもしれません。</p>
+<p><img alt="" src="xampp-options.png" /></p>
+<p>インストールが終わると Windows のスタートメニューに以下のような項目が追加されます。</p>
+<p><img alt="" src="xampp-windows-menu.png" /></p>
+<p>Apache と MySQL は "XAMPP Control Panel" から起動します。Windows のデフォルトの設定では HTTP のポート 80 がファイアウォールで拒否されています。この設定は変えない方がいいので、
+Apache のポートの方を変えます。まず、設定ファイルの編集のために <code>C:\xampp</code> フォルダにユーザのフルコントロール権限を追加してください。</p>
+<pre><code>- ``C:\xampp`` フォルダをマウスで右クリックする。
+- 「xammppのプロパティ」の「セキュリティ」を選択する。
+- 「編集...」ボタンを押す。
+- 「Users」を選択して「フルコントロール」の「許可」にチェックを入れる。
+- 「OK」ボタンを押して閉じる。
+</code></pre>
+<p>"XAMPP Control Panel" の Apache の Config ボタンを押して Apache (httpd.conf) を選択し、</p>
+<pre class="highlight"><code>Listen 80
+</code></pre>
+
+<p>を</p>
+<pre class="highlight"><code>Listen 8080
+</code></pre>
+
+<p>に変更してください。
+<code>8080</code> でなくても <code>8000</code> とか <code>8888</code> でもいいです。</p>
+<p>Apache の Start ボタンを押します。エラー無しで起動したらブラウザで <a href="http://localhost:8080/">http://localhost:8080/</a> を開いてください。 "Welcome to XAMPP for Windows 7.4.x" が表示されたらOKです。</p>
+<p>次に "XAMPP Control Panel" で MySQL の Start ボタンを押してください。エラー無しで起動したらブラウザで <a href="http://localhost:8080/phpmyadmin/">http://localhost:8080/phpmyadmin/</a> を開いてください。 phpMyAdmin が表示されたら OK です。</p>
+<h2>WordPress のインストール</h2>
+<p>phpMyAdmin で「ユーザアカウント」を選択し、「ユーザアカウントを追加する」リンクをクリックします。「ユーザ名」、「パスワード」、「再入力」を記入し、「同名のデータベースを作成してすべての権限を与える。」にチェックを入れ、「実行」ボタンを押します。これらのデータベース名、ユーザ名、パスワードを WordPress で使います。</p>
+<p><a href="https://ja.wordpress.org/download/">https://ja.wordpress.org/download/</a> の「WordPress 5.x.x をダウンロード」ボタンを押し、ダウンロードした wordpress-5.x.x-ja.zip を解凍して ''C:\xampp\htdocs'' の下に移動してください。今回は ''C:\xampp\htdocs\wordpress'' とします。</p>
+<p>ブラウザで <a href="http://localhost:8080/wordpress/">http://localhost:8080/wordpress/</a> を開くと、インストーラが表示されます。インストーラの指示に従い、「データベース名」、「ユーザー名」、「パスワード」を入力します。「データベースのホスト名」はデフォルトの "localhost" 、「テーブル接頭辞」はデフォルトの "wp_" のままでいいです。表示された指示に従ってインストーラの残りの手順も実行します。最後に WordPress にログインし、管理機能が表示できれば OK です。</p>
+<p>再度ブラウザで <a href="http://localhost:8080/wordpress/">http://localhost:8080/wordpress/</a> を開くと、今度はインストーラではなく WordPress のコンテンツが表示されます。サンプルの投稿記事が表示されていたら OK です。</p>
+<h2>サーバの停止</h2>
+<p>Apache と MySQL は "XAMPP Control Panel" の Stop ボタンで停止してください。</p>
+<p>Tag: Windows Apache MySQL WordPress</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

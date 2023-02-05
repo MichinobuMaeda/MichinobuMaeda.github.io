@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>パンと臭素酸カリウム - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>パンと臭素酸カリウム</h1>
+<p>Update: 2010-09-12</p>
+<p>リンク先を更新: 2021-05-12</p>
+<p>店で販売されているパンに臭素酸カリウムという添加物が使われていること、それに発がん性の疑いのあることを知ったのは Twitter で <a href="http://twitter.com/kawanaiseikatu/status/22659650528">http://twitter.com/kawanaiseikatu/status/22659650528</a> 。紹介されていたのはこの記事です。</p>
+<p><a href="http://www.mynewsjapan.com/reports/1117">山崎製パン ためらわずに添加物をガンガン使う会社</a></p>
+<p>まず概要を調べました。</p>
+<p><a href="http://jccu.coop/food-safety/qa/qa01_03.html">日本生協連 臭素酸カリウムについてのＱ＆Ａ</a></p>
+<p>FAO/WHOの合同食品添加物専門家委員会 ( JECFA ) は1992年の第39回会合では「遺伝子傷害性発がん性物質」であるとされ、「臭素酸カリウムの小麦粉処理剤としての使用は適切でない。パン製造用の小麦粉処理のための使用量を取り下げる。ビール製造への使用はデータ不足から検討できない。」ということになったそうです。</p>
+<p>同年、日本でもパンへの使用が禁止されています。</p>
+<p>しかし、その後、</p>
+<ul>
+<li>検出技術が向上した</li>
+<li>フタをして焼く角形食パンでは臭素酸カリウムが分解されてしまう</li>
+</ul>
+<p>等の理由で日本パン工業会の方針が変わり、使用を再開するパンメーカーが顕れます。</p>
+<p>店で良くかけるメーカーについて調べてみました。</p>
+<h3>使用</h3>
+<ul>
+<li>ヤマザキ <a href="https://www.yamazakipan.co.jp/oshirase/0225.html">小麦粉改良剤「臭素酸カリウム」による角型食パンの品質改良について</a></li>
+</ul>
+<h3>不使用</h3>
+<ul>
+<li>Pasco <a href="https://faq.pasconet.co.jp/faq/show/32?category_id=10&amp;site_domain=default">臭素酸カリウムを使用していますか？</a></li>
+<li>神戸屋 <a href="https://www.kobeya.co.jp/fresh_pure/kbro3">臭素酸カリウム不使用について</a></li>
+</ul></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Mac で Web開発するのだ - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Mac で Web開発するのだ</h1>
+<p>Update: 2008-01-27</p>
+<blockquote>
+<p>この記事を書いた後に <a href="http://www.zend.com/en/products/server-ce/">Zend Server</a> や <a href="http://www.apachefriends.org/jp/xampp.html">XAMPP</a> などを知りました。この記事のように個別に入れるよりこれらのパッケージを利用する方が楽です。 ( 参照 : <a href="https://sites.google.com/site/michinobumaeda/lamp/zendservercezendframework">Zend Server CE / Zend Framework</a> / <a href="https://sites.google.com/site/michinobumaeda/lamp/phpdebugger">PHPのデバッグができる環境</a> )</p>
+</blockquote>
+<p>いまどきの Mac は “Photoshop がうごく BSD Unix” ですからね。 Apache などいれてみます。</p>
+<p>Mac というか BSD のお約束がよくわからないので、こちらのページ <a href="http://blog.phpdoc.info/archives/83-php-5.2.5-on-Leopard.html"><a href="http://blog.phpdoc.info/archives/83-php-5.2.5-on-Leopard.html">http://blog.phpdoc.info/archives/83-php-5.2.5-on-Leopard.html</a></a> のおせわになることにします。</p>
+<p>まず Xcode をインストールします。 OS の DVD におまけで入ってます。</p>
+<p>Macports をダウンロードして入れます。で、次のコマンドを実行。</p>
+<pre class="highlight"><code>sudo port selfupdate
+sudo port sync
+</code></pre>
+
+<p>MySQL は MySQL のサイトからコミュニティ版 Mac OS X 10.4 用のものをダウンロードしてインストールします。私の Mac は OS X 10.5 だけど問題なく動きます。試しに OS 再起動してみましたが、 MySQL は自動で起動してくれました。この辺に設定が入っているようですね。</p>
+<pre class="highlight"><code>/Library/StartupItems/MySQLCOM
+</code></pre>
+
+<p>root@localhost` のパスワードは次のようにして設定します。</p>
+<pre class="highlight"><code>sudo mysql
+mysql&gt; set password for 'root'@'localhost = PASSWORD('パスワード');
+</code></pre>
+
+<p>設定したパスワードで接続できることを確認します。</p>
+<pre class="highlight"><code>mysql -u root -pパスワード
+</code></pre>
+
+<p>MySQL GUI Tools も Mac 用が出ているのでダウンロードしてインストールしました。</p>
+<p>PHP のため、今後のコンソール上での作業のために次のような設定をします。</p>
+<pre class="highlight"><code>sudo ln -s /usr/local/mysql/lib /usr/local/mysql/lib/mysql
+sudo mkdir /usr/local/bin
+sudo ln -s /usr/local/mysql/bin/my* /usr/local/bin
+</code></pre>
+
+<p>次のコマンドを2回実行して <code>f(^^</code> Apache をインストールします。</p>
+<pre class="highlight"><code>port install apache2
+</code></pre>
+
+<p>で、次のような設定を。</p>
+<pre class="highlight"><code>sudo w /Library/LaunchDaemons/org.macports.apache2.plist
+sudo cp /opt/local/apache2/conf/httpd.conf.sample /opt/local/apache2/conf/httpd.conf
+sudo mv /usr/sbin/apachectl /usr/sbin/apachectl-leopard
+sudo ln -s /opt/local/apache2/bin/apachectl /usr/local/bin/apachectl
+</code></pre>
+
+<p>それから <code>/opt/local/apache2/conf/httpd.conf</code> の次の行をコメントアウト。</p>
+<pre class="highlight"><code>LoadModule ssl_module modules/mod_ssl.so
+</code></pre>
+
+<p>次のコマンドで Apache が起動して動いていることを確認します。</p>
+<pre class="highlight"><code>sudo apachectl start
+</code></pre>
+
+<p>PHP が依存するものをたくさんインストール。</p>
+<pre class="highlight"><code>port install jpeg
+port install libpng
+port install freetype
+port install libmcrypt
+port install tidy
+</code></pre>
+
+<p><code>/tmp</code> あたりに PHP のソースを解凍してコンパイルしてインストールします。</p>
+<pre class="highlight"><code>'./configure' \
+'--prefix=/Users/sean/php' \
+'--with-apxs2=/opt/local/apache2/bin/apxs' \
+'--with-xsl=/usr' \
+'--with-tidy=/opt/local' \
+'--enable-mbstring' \
+'--with-gd' \
+'--with-jpeg-dir=/opt/local' \
+'--with-png-dir=/opt/local' \
+'--with-zlib-dir' \
+'--enable-sockets' \
+'--enable-exif' \
+'--with-mcrypt=/opt/local' \
+'--enable-soap' \
+'--with-mysql=/usr/local/mysql' \
+'--with-pdo-mysql=/usr/local/mysql/bin/mysql_config' \
+'--with-mysql-sock=/tmp/mysql.sock' \
+'--with-freetype-dir=/opt/local' \
+'--with-openssl=/opt/local' \
+'--without-iconv' \
+'--enable-cli'
+make
+sudo make install
+</code></pre>
+
+<p><code>/opt/local/apache2/conf/httpd.conf</code> に次の設定を追加して、</p>
+<pre class="highlight"><code>AddHandler application/x-httpd-php .php
+AddHandler application/x-httpd-php-source .phps
+</code></pre>
+
+<p>Apache をリスタートして、</p>
+<pre class="highlight"><code>&lt;?php phpinfo(); ?&gt;
+</code></pre>
+
+<p>と書いたページを表示して PHP が確かに動いていることを確認して終わりです。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

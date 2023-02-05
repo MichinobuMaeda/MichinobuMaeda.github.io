@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Laraval 5 による開発の手順 #4 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Laraval 5 による開発の手順 #4</h1>
+<p>Update: 2018-10-04</p>
+<p><a href="startlaravel3.html">Laraval 5 による開発の手順 #3</a> の続きです。</p>
+<h2>所属するグループに基づく権限の管理</h2>
+<p>これから私が Larval 5 で作ろうとしているアプリには
+LDAP のように組織を管理する機能が必要です。
+利用者からヒアリングしたところでは概ね以下のような特別な権限があればよさそうです。
+いずれの権限も、複数のメンバーが担当します。</p>
+<ul>
+<li>全体を管理する権限</li>
+<li>システムの管理をする権限</li>
+<li>それぞれのグループを管理する権限</li>
+</ul>
+<p>全体を管理する人は、権限とグループとユーザを追加、更新、削除します。</p>
+<p>システムを管理する人は、全体を管理する人から委任されて、アプリのメンテナンスをします。</p>
+<p>それぞれのグループを管理する人は、全体を管理する人から委任されて、担当するグループを更新し、グループに属するユーザーを更新します。</p>
+<p>グループとユーザの新規作成と削除、所属するグループの変更は全体を管理する人にしかできません。ユーザ本人も、自分が所属するグループを変更することはできません。グループメンバーの変更（ユーザが所属するグループの変更）の権限を制限するのは、セキュリティ上の理由ですが、詳細は省きます。</p>
+<h2>モデル</h2>
+<p>ユーザは Laravel 5 の User モデルをそのまま使います。ただし、後で、認証手段やプロファイルなどを追加します。</p>
+<p>グループは３種類用意します。それぞれ、複数の管理者とメンバーを設定できます。</p>
+<ul>
+<li>Primary group</li>
+<li>System administrators</li>
+<li>その他</li>
+</ul>
+<p>"Primary group" はすべてのグループとユーザが直接・間接に所属するトップレベルのグループです。
+Role ( 役割 ) 名 "primary" で表します。</p>
+<p>"System administrators" はシステム管理者が所属するグループです。
+Role ( 役割 ) 名 "sysadmin" で表します。</p>
+<p>それら以外に任意のグループを作ることができます。</p>
+<p>"Primary group" の管理者は、全体を管理する権限を持ちます。
+"Primary group" 以外のグループの管理者は、そのグループを管理する権限を持ちます。</p>
+<p>アプリの初期構築時には、 "Primary group" と "System administrators" だけを作成します。
+また、ユーザを一人だけ作成し、そのユーザは
+"Primary group" の管理者と、 "System administrators" のメンバーになります。</p>
+<p>"Primary group" が所属するグループはありません。</p>
+<p>"Primary group" 以外のグループはいずれかのグループに所属する必要があります。
+また、グループの所属の循環 ( グループ A がグループ B に所属し、グループ B がグループ A に所属する ) を避けて、
+すべてのグループは "Primary group" の直接・間接の下位のグループにならなければなりません。</p>
+<p>ユーザはいずれかのグループに所属しなければなりません。</p>
+<p>"Primary group" 以外のグループとユーザは、複数のグループに所属することができます。</p>
+<p>以上のような関係を、 User モデル、 Group モデル、 GroupRole モデルで表現します。</p>
+<h2>リレーション</h2>
+<p>前項のモデルの関係は多対多ばかりになります（涙）。だから LDAP のような組織を管理するための専用のものがあるわけですね。多対多の関係は、オーソドックスな方式に従って関係テーブルで表現することにします。
+以下のようなテーブルを作成します。</p>
+<ul>
+<li><code>users</code> : User モデル</li>
+<li><code>groups</code> : Group モデル</li>
+<li><code>group_roles</code> : GroupRole モデル、兼、GroupRole モデルとグループの関係</li>
+<li><code>sub_groups</code> : グループに対してグループが所属する関係</li>
+<li><code>members</code> : グループに対してユーザが所属する関係</li>
+<li><code>group_manager</code> : グループに対してユーザが管理者になる関係</li>
+</ul>
+<p><code>group_roles</code> テーブルは Group の ID と Role 名 ( "primary", "sysadmin" ) だけの小さなテーブルです。
+性能・負荷と将来の拡張性を考慮してこのような形にしています。</p>
+<p>本来は GroupRole モデルと Group モデルの関係テーブルを置くのが概念的に正しいと思うのですが、
+その通りにするとますます無用に複雑な実装になってしまうので、適当なところで妥協しました。</p>
+<h2>実装</h2>
+<p>データベースのテーブルは Laravel の migration を使って作成します。</p>
+<pre class="highlight"><code>php artisan make:migration CreateGroupTable
+</code></pre>
+
+<p>のようなコマンドで <code>database/migrations</code> の下に各テーブルの箱を作って、
+自動で作成されている <code>users</code> や Laravel 5.7 のドキュメントの
+<a href="https://laravel.com/docs/5.7/migrations">https://laravel.com/docs/5.7/migrations</a>
+を参考に中身を作ります。</p>
+<p>モデルも</p>
+<pre class="highlight"><code>php artisan make:model Group
+</code></pre>
+
+<p>のようなコマンドで箱を作ります。多対１、多対多の関係の表現については
+Laravel 5.7 のドキュメントの
+<a href="https://laravel.com/docs/5.7/eloquent-relationships">https://laravel.com/docs/5.7/eloquent-relationships</a>
+を見てください。</p>
+<p>User モデルには、「全体を管理する権限があるか？」、「システムの管理をする権限があるか？」、「引数で渡したグループまたはユーザの管理をする権限があるか？」を取得するメソッドを追加しました。</p>
+<p>これらのモデルのテストのために <code>tests/Unit/ModelsTest.php</code>
+を作成しましたが、後でモデルが増えることを考えるとこのファイル名はよくないかな。。。</p>
+<p>初期データは Laravel 5 の Seeding 機能を使います。</p>
+<pre class="highlight"><code>php artisan make:seeder GroupsTableSeeder
+</code></pre>
+
+<p>のようなコマンドで User と Group の Seeder を作成して、
+<code>database/seeds/DatabaseSeeder.php</code> から呼び出します。</p>
+<hr />
+<p>ここまで作ったものは <a href="https://github.com/MichinobuMaeda/tamuro.git">https://github.com/MichinobuMaeda/tamuro.git</a>
+のタグ startlaravel4 です。チェックアウトの手順は
+<a href="startlaravel2.html">Laraval 5 による開発の手順 #2</a>
+の末尾をご参照ください。チェックアウト済みであれば</p>
+<pre class="highlight"><code>git pull
+git checkout tags/startlaravel4
+</code></pre>
+
+<p>としていただければいいです。</p>
+<hr />
+<p><a href="startlaravel5.html">Laraval 5 による開発の手順 #5</a> に続く。</p>
+<p>Tag: PHP Laravel</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

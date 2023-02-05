@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Google App Engine で Spring Framework - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Google App Engine で Spring Framework</h1>
+<p>Update: 2010-10-05</p>
+<p>参考にした本は「新人プログラマのための Google App Engine クラウド・アプリケーション開発講座」（掌田津耶乃 ISBN978-4-89977-248-4）です。そこそこ分量のある本なのですが、 Java で Google 提供の Ajax フレームワークを使わずにとなると、実際に使うのはほんの一部です。この著者の文章は読みやすくて、応用の利く説明の仕方になっているので Python の入門書としても使えるんじゃないかと思うけど、それはまた後日。</p>
+<p>さて、この本の Java の章（の最初の方だけ）をざっと見て理解したのは Google App Engine の Java 向けの環境ってのは、要するに、標準の Servlet API が使える Web サーバ だということ。もしやと思いつつ Spring Framework 3.0 を突っ込んでみたら動きましたよ。 Struts あたりもだいじょうぶなんじゃないかな。</p>
+<p>そういうわけで、週末から先ほどまでの間に書いてみた、ほんの少しのプログラムは、</p>
+<ul>
+<li>Interceptor で、つまり、ビジネスロジックが動く前の処理として Google が提供するユーザ管理の仕組みで認証する。</li>
+<li>JSP のページを 1ページだけ表示する。</li>
+</ul>
+<p>という簡単なものです。とはいえ、簡単なことが簡単にできるっていうのはなかなかないことです。以下、そのあらまし。</p>
+<p>環境の準備については本やオンラインドキュメントを見ればわかるのでここには書きません。最新の情報を一つだけ。 Eclipse 3.6 Helios に対応したプラグインが出てます。 <a href="http://code.google.com/intl/en/appengine/downloads.html">http://code.google.com/intl/en/appengine/downloads.html</a></p>
+<p>Google が提供するユーザ管理の仕組みについてはこちら <a href="http://code.google.com/intl/en/appengine/docs/java/gettingstarted/usingusers.html">http://code.google.com/intl/en/appengine/docs/java/gettingstarted/usingusers.html</a> と、こちら <a href="http://code.google.com/intl/en/appengine/docs/java/users/">http://code.google.com/intl/en/appengine/docs/java/users/</a> をどうぞ。</p>
+<p>Spring Framework 3.0 の Interceptor の設定はリファレンスの “15.4 Handler mappings” をどうぞ。</p>
+<p>Eclipse から起動するテストサーバはこんなログイン画面を出してくれます。</p>
+<p><img alt="" src="https://lh3.googleusercontent.com/_8rt3l_eFSnQ/TTw5Ygl8ZkI/AAAAAAAABqg/C9zeSS9mFos/gae001.png" /></p>
+<p>アプリケーションの ID は zippyzipjp です。</p>
+<p>appengine-web.xml は次の行だけ書き換えます。</p>
+<pre class="highlight"><code>    &lt;application&gt;zippyzipjp&lt;/application&gt;
+</code></pre>
+
+<p>web.xml は基本的なことだけ。</p>
+<pre class="highlight"><code>  &lt;servlet&gt;
+    &lt;servlet-name&gt;zippyzipjp&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+  &lt;/servlet&gt;
+  &lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;zippyzipjp&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/zippyzipjp/*&lt;/url-pattern&gt;
+  &lt;/servlet-mapping&gt;
+  &lt;welcome-file-list&gt;
+    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;
+  &lt;/welcome-file-list&gt;`
+</code></pre>
+
+<p>zippyzipjp-servlet.xml には、</p>
+<ul>
+<li>Controller クラスの場所</li>
+<li>View の場所と拡張子</li>
+<li>Interceptor のクラス名</li>
+</ul>
+<p>を書きました。</p>
+<pre class="highlight"><code>&lt;!--
+  - The controllers are autodetected POJOs labeled with the @Controller annotation.
+--&gt;
+&lt;context:component-scan base-package=&quot;jp.zippyzip.web&quot;/&gt;
+  &lt;!--
+    - This bean configures the 'prefix' and 'suffix' properties of
+    - InternalResourceViewResolver, which resolves logical view names
+    - returned by Controllers. For example, a logical view name of &quot;vets&quot;
+    - will be mapped to &quot;/WEB-INF/jsp/vets.jsp&quot;.
+  --&gt;
+  &lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;
+    p:prefix=&quot;/WEB-INF/jsp/&quot; p:suffix=&quot;.jsp&quot; p:order=&quot;2&quot;/&gt;
+  &lt;bean id=&quot;handlerMapping&quot;
+    class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;&gt;
+    &lt;property name=&quot;interceptors&quot;&gt;
+      &lt;bean class=&quot;jp.zippyzip.web.GoogleUserAuthInterceptor&quot;/&gt;
+    &lt;/property&gt;
+  &lt;/bean&gt;
+</code></pre>
+
+<p>Java の実装はこんな感じで。</p>
+<pre class="highlight"><code>package jp.zippyzip.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+@RequestMapping(&quot;/&quot;)
+public class DefaultController {
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView welcomeHandler() {
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName(&quot;default&quot;);
+        return mav;
+    }
+}
+</code></pre>
+
+<pre class="highlight"><code>package jp.zippyzip.web;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
+
+public class GoogleUserAuthInterceptor extends HandlerInterceptorAdapter {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request,
+            HttpServletResponse response, Object handler) throws Exception {
+        UserService userService = UserServiceFactory.getUserService();
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect(userService.createLoginURL(
+            request.getRequestURI()));
+            return false;
+        }
+        return true;
+    }
+}
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

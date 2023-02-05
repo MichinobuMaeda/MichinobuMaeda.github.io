@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Firebase の API Key は隠さなくていいよね？ - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Firebase の API Key は隠さなくていいよね？</h1>
+<p>Update: 2020-07-11</p>
+<p>とあるイベントの申し込み受付を Firebase と Vue で作っていたのですが、
+GutHub にソースをコミットすると
+"Warning: GitGuardian detected an API key from Google"
+というメールが来ました。確かに入れてます。</p>
+<p>でもこれ、クライアントサイドに配置してしまうつもりなんだけどな。
+暗号化もせずに ^^)
+仮に暗号化しようとしたとしても、その暗号化のキーはどこに置くの？
+みたいなことになって、まあ、無理です。
+特にクローズドでないサービスの場合は。</p>
+<p>キーの発行時に Admin 向けのキーは「ちゃんとしまっとけ」と注意されたけど、
+こちらは何も言われていません。
+Firebase は主に不特定多数向けのクライアントサイドのアプリを想定しているわけで、
+そんな、隠さなければ困るようなものを
+Google さんが開発者に何も言わずに渡すわけないじゃないと調べてみました。</p>
+<p>stackoverflow ではこれですが、要するに必要ないしできない、ということのようです。</p>
+<p>"Is it safe to expose Firebase apiKey to the public?"
+<a href="https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public">https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public</a></p>
+<p>Google Groups などのやりとりを見てみましたが同様で、
+上記のページへのリンクを貼ってある記事もあります。</p>
+<p>Firebase のデータベースやストレージの場合、
+普通のサーバーサイドのアプリケーションが使う RDBMS 等と違って、
+個々のユーザに紐づく形で細かくアクセス権を設定できますから。
+いいんじゃないかな。</p>
+<p>がんばって CIツールに仕掛けを入れてデプロイ前に。。。
+みたいなことはできるかもしれませんが、
+世間の皆さんがやらないことをやって変な穴を開けてしまっても困るし。</p>
+<blockquote>
+<p>追記： 結局 CI / CD の仕組みを使って動的に設定することにしました。</p>
+</blockquote>
+<p>Tag: Firebase GitHub</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

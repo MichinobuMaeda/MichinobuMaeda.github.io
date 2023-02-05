@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Windows 10 で Laravel を開発する - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Windows 10 で Laravel を開発する</h1>
+<p>Update: 2020-07-11</p>
+<p>私自身は「おうちにかえってからは Windows なんか見たくない」と言って Mac を使っているのですが、
+世の中そんな人ばかりではないので Windwos 上で Laravel を使う開発の環境を準備する手順を確認してみました。</p>
+<h2>エディタ</h2>
+<p>エディタは Mac で使っているのと同じ Visual Studio Code にします。
+ダウンロードページを見ると User Installer というものがあるんですね。
+仮想デスクトップ等との関係かな。
+<a href="https://code.visualstudio.com/Download">https://code.visualstudio.com/Download</a>
+から <code>VSCodeUserSetup-x64-1.30.1.exe</code> をダウンロードしてインストールしました。
+オプションは自分の好みで下図の選択だけ、あとはデフォルトです。</p>
+<p><img alt="" src="vscode-01.png" /></p>
+<p>Windows 版の場合、コンソールの表示は <code>[Ctrl]+@</code> ですが、
+PowerShell がデフォルトですね。右下に</p>
+<p><img alt="" src="vscode-02.png" /></p>
+<p>のような表示が出るので、そこで設定を変更できます。また</p>
+<p>File --&gt; Preferences --&gt; Settings --&gt; Features --&gt; Terminal</p>
+<p>の <code>Integrated &gt; Shell: Windows</code> でも変更できます。
+コマンドプロンプトの場合は <code>C:\Windows\System32\cmd.exe</code>
+PowerShell の場合は <code>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</code>
+です。</p>
+<h2>PHP</h2>
+<p>PHP は <a href="https://windows.php.net/download#php-7.2">https://windows.php.net/download#php-7.2</a> から
+ZIP 圧縮されたバイナリをダウンロードして <code>C:\php</code> に解凍します。
+開発環境は Thread Safe 版でいいでしょう。今回は
+<code>php-7.2.13-Win32-VC15-x64.zip</code> を使いました。</p>
+<p>環境変数 PATH に <code>C:\php</code> を追加し、
+<code>C:\php\php.ini-development</code> をコピーして <code>C:\php\php.ini</code> を作ります。
+<code>C:\php\php.ini</code> の中を見ると拡張モジュールがすべて無効になっています。
+以下のようなものをコメント外して有効にすればよいと思います。</p>
+<pre class="highlight"><code>extension=bz2
+extension=curl
+extension=fileinfo
+extension=gd2
+extension=gettext
+extension=gmp
+extension=intl
+extension=ldap
+extension=mbstring
+extension=exif
+extension=openssl
+extension=pdo_mysql
+extension=pdo_pgsql
+extension=pdo_sqlite
+extension=shmop
+extension=xmlrpc
+extension=xsl
+</code></pre>
+
+<pre class="highlight"><code>&lt;?php phpinfo(); ?&gt;
+</code></pre>
+
+<p>のようなファイルを作ってそのフォルダに <code>CD</code> して</p>
+<pre class="highlight"><code>php -S localhost:8000
+</code></pre>
+
+<p>を実行して、ブラウザで <a href="http://localhost:8000">http://localhost:8000</a> が表示できれば OK です。</p>
+<p><code>phpunit</code> のために <code>xdebug</code> というモジュールが必要なので、
+<a href="https://qiita.com/f_uto/items/bd5b2309ea415a6de1ca">xdebugをwindowsのphpに設定する方法で悩んだ件</a>
+を参考に導入しました。
+<code>php -i</code> の実行結果を
+<a href="https://xdebug.org/wizard.php">https://xdebug.org/wizard.php</a>
+に貼り付けて分析してもらうと、</p>
+<pre class="highlight"><code>Instructions
+Download php_xdebug-2.6.1-7.2-vc15-x86_64.dll
+Move the downloaded file to C:\php\ext
+Edit C:\php\php.ini and add the line
+zend_extension = C:\php\ext\php_xdebug-2.6.1-7.2-vc15-x86_64.dll
+</code></pre>
+
+<p>と結果が出るのでその通りにします。
+<code>zend_extension</code> の設定の追加は、上記の <code>extension</code> の後が無難そうです。</p>
+<p>composer は <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a> から
+<code>Composer-Setup.exe</code> をダウンロードしてインストールします。
+<code>PATH</code> が通っているところにある <code>php.exe</code> を自動検出して設定してくれます。</p>
+<p>コマンドプロンプトで <code>composer</code> を実行して Version と Usage が正常に表示されることを確認します。</p>
+<h2>git</h2>
+<p>git の GUI ツールはたくさんありますが、どれがいいかよくわからないのでとりあえず本家サイト
+<a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a> から
+<code>Git-2.20.0-64-bit.exe</code> をダウンロードしてインストールしました。
+デフォルトの設定を変更したのは改行コードの扱いだけです。</p>
+<p><img alt="" src="git-01.png" /></p>
+<h2>その他</h2>
+<p>テスト用に SQLite を使うので、
+<a href="http://sqlitebrowser.org/">DB Browser for SQLite</a>
+をインストールしました。</p>
+<p>Windows 10 は標準の ssh クライアントがあるのですね (
+<a href="https://www.onebizlife.com/windows10-ssh-client-1980">Windows10標準のSSHクライアントを使ってみた</a>
+) 。ssh-keygen も入っていました。</p>
+<pre class="highlight"><code>C:\Users\michi&gt;ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\michi/.ssh/id_rsa):
+</code></pre>
+
+<p>ssh-agent はサービスとして常駐する形になります。
+サービス "OpenSSH Authentication Agent" ( ssh-agent )
+を自動実行するように設定して開始すれば
+<code>ssh-add</code> コマンドが使えるようになります。</p>
+<p>サービスの設定をデフォルトに戻す手順は
+<a href="http://batcmd.com/windows/10/services/ssh-agent/">http://batcmd.com/windows/10/services/ssh-agent/</a>
+です。</p>
+<h2>Laravel のプロジェクトを作ってみる</h2>
+<p>こんな感じで問題なくできました。</p>
+<pre class="highlight"><code>composer create-project --prefer-dist laravel/laravel blog
+cd blog
+php artisan serve
+</code></pre>
+
+<p><del></p>
+<h2>Tamuro のソースを入れてみる</h2>
+<p>こんな感じで問題なく動きました。</p>
+<p>PowerShell の場合</p>
+<pre class="highlight"><code>git clone https://github.com/MichinobuMaeda/tamuro
+cd tamuro
+composer install
+Copy-Item .env.local .env
+New-Item storage\tamuro.sqlite -ItemType File
+php artisan list
+php artisan migrate:refresh ; .\vendor\bin\phpunit --coverage-html coverage
+php artisan migrate:refresh --seed ; php artisan serve --host localhost --port 8000
+</code></pre>
+
+<p>CMD.exe の場合</p>
+<pre class="highlight"><code>git clone https://github.com/MichinobuMaeda/tamuro
+cd tamuro
+composer install
+copy .env.local .env
+どうにかして 0byte の storage\tamuro.sqlite を作る。
+php artisan list
+php artisan migrate:refresh &amp;&amp; .\vendor\bin\phpunit --coverage-html coverage
+php artisan migrate:refresh --seed &amp;&amp; php artisan serve --host localhost --port 8000
+</code></pre>
+
+<p></del>
+Tag: php phpunit powershell laravel windows git sqlite</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

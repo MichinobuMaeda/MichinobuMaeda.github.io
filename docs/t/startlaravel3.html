@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Laraval 5 による開発の手順 #3 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Laraval 5 による開発の手順 #3</h1>
+<p>Update: 2018-09-25</p>
+<p><a href="startlaravel2.html">Laraval 5 による開発の手順 #2</a> の続きです。</p>
+<h2>PHPUnit をインストールする</h2>
+<p><a href="startlaravel1.html">Laraval 5 による開発の手順 #1</a> に書いておけばよかったのですが、 unit test のために PHPUnit を使います。
+Java の JUnit と同じようなものです。</p>
+<p>私は Mac に Homebrew でインストールしました。
+Windows にも Chocolatey というものがあるのですね。私は使ったことがありません。
+オーソドックスなインストール手順は配布元の
+<a href="https://phpunit.readthedocs.io/ja/latest/installation.html">1. PHPUnit のインストール</a>
+を見てください。</p>
+<h2>メッセージを日本語化する</h2>
+<p>表示する言語を動的に変更して国際化するのであれば、
+HTTP Request のヘッダやユーザが選んだ設定などをみる必要がありますが、
+日本語だけに対応すればよいのであれば簡単です。</p>
+<p>まず <code>config/app.php</code> の以下の値を <code>ja</code> に変更してください。
+<code>JP</code> ではありません。 <code>JP</code> は国、言語は <code>ja</code> で、 <code>JA</code> は農協です。
+日本の場合、アイヌ語の言語コード <code>ain</code>
+が実際のところ使われていなくて知られていなくて（私も今知った）国と言語の区別が気になることはあまりないですが、
+例えばカナダの場合、国は <code>CA</code> で言語は英語 <code>en</code> とフランス語 <code>fr</code> です。</p>
+<pre class="highlight"><code>    'locale' =&gt; 'ja',
+    'fallback_locale' =&gt; 'ja',
+</code></pre>
+
+<p>プロジェクト作成直後の <code>resources/views/welcome.blade.php</code> は</p>
+<pre class="highlight"><code>&lt;html lang=&quot;{%raw%}{{ app()-&gt;getLocale() }}{%endraw%}&quot;&gt;
+</code></pre>
+
+<p>となっていますが、</p>
+<pre class="highlight"><code>&lt;html lang=&quot;ja&quot;&gt;
+</code></pre>
+
+<p>でいいです。</p>
+<p><code>resource/lang/en</code> をコピーするか移動するかして <code>resource/lang/ja</code> を作ってください。
+そして <code>resource/lang/ja</code> と <code>resources/views</code>
+の下の各ファイルをかんばって翻訳すると日本語で表示されるようなります。ただ、
+<code>resource/lang/ja</code> の下の量がすごくて。。。
+テスト中に英語が出てきたら都度翻訳するこということでご勘弁を。</p>
+<p>追記： <code>resource/lang/ja</code> の他に <code>resource/lang/ja.json</code> ファイルも必要です。</p>
+<h2>日時の表示を日本語化する</h2>
+<p>前回作ったところまでのサンプルにユーザを登録してデータベースに格納された値を見てみると、
+テーブル <code>users</code> の <code>created_at</code> と <code>updated_at</code> がどう見ても JST ではありません。
+<code>config/app.php</code> は次のようになっています。</p>
+<pre class="highlight"><code>    'timezone' =&gt; 'UTC',
+</code></pre>
+
+<p>ドメスティックなお仕事をカネもらってやってるならこれを</p>
+<pre class="highlight"><code>    'timezone' =&gt; 'Asia/Tokyo',
+</code></pre>
+
+<p>に変更して「できました〜！」と済ませるところですが、
+趣味やボランティアで真剣にやる場合はそういうわけにはいきません。
+東京オリンピックのために夏時間を導入するとかいう話がありますし、
+私がこれから作ろうとしているアプリは海外在住の人も使うんですよね。</p>
+<p>システムが内部に保持するデータは UTC のまま、
+表示だけ任意のタイムゾーンにすることにします。
+言語の国際化はしない日本語のみの対応の予定なので、
+フォーマットは日本式だけの対応ですませます。
+各ユーザが自分用に選択したタイムゾーンで表示するようにします。</p>
+<p>タイムゾーンはテーブル <code>users</code> のカラム <code>timezone</code> に格納します。
+Laravel 5 の migration の仕組みでは後からカラムを追加することもできるのですが、
+まだリリースしていないアプリなので <code>database/migrations</code> の <code>CreateUsersTable</code> を直接編集します。</p>
+<pre class="highlight"><code>            $table-&gt;string('password');
+            $table-&gt;string('timezone')-&gt;nullable();
+            $table-&gt;rememberToken();
+            $table-&gt;timestamps();
+</code></pre>
+
+<p><code>.env</code> に以下のような設定を追加します。これらの設定は <code>env()</code> で取得できます。</p>
+<pre class="highlight"><code>APP_DEFAULT_TIMEZONE=Asia/Tokyo
+APP_DATE_FORMAT=Y年n月j日
+APP_TIME_FORMAT=G:i
+APP_DATE_TIME_FORMAT='Y年n月j日 G:i'
+APP_TIMESTAMP_FORMAT='Y-m-d H:i:s'
+</code></pre>
+
+<p>日時の値の格納には <code>DateTime</code> オブジェクトを使います。
+Laravel 5 の Model はデフォルトの動作では timestamp 型のカラムの値を <code>DateTime</code> で返してくれないので、
+それぞれの Model について以下のように timestamp 型のカラム名を指定しておいてください。</p>
+<pre class="highlight"><code>    /**
+     * Get the attributes that should be converted to dates.
+     *
+     * @return array
+     */
+    public function getDates()
+    {
+        return array(
+            'birthday',
+            'created_at',
+            'updated_at'
+        );
+    }
+</code></pre>
+
+<p>ビューヘルパーとして <code>app/Services/ViewHelperService.php</code>
+を作成し、その unit test のために
+<code>tests/Unit/Services/ViewHelperServiceTest.php</code>
+を作成します。</p>
+<p>このビューヘルパーは Blade テンプレートの中で、例えば</p>
+<pre class="highlight"><code>@inject('vh', 'App\Services\ViewHelperService')
+</code></pre>
+
+<p>のように宣言してやると <code>$vh</code> として利用できます。</p>
+<p>unit test は <code>phpunit</code> コマンドを実行すればよいです。
+カバレッジを取得したい場合は、例えば</p>
+<pre class="highlight"><code>phpunit --coverage-html coverage
+</code></pre>
+
+<p>のようにすると <code>coverage</code> の下に HTML 形式のレポートが出力されます。この場合は
+<code>.gitignore</code> に <code>/coverage</code> を追加しておいてください。</p>
+<hr />
+<p>ここまで作ったものは <a href="https://github.com/MichinobuMaeda/tamuro.git">https://github.com/MichinobuMaeda/tamuro.git</a>
+のタグ <code>startlaravel3</code> です。チェックアウトの手順は
+<a href="startlaravel2.html">Laraval 5 による開発の手順 #2</a> の末尾をご参照ください。
+<code>startlaravel2</code> をチェックアウト済みであれば</p>
+<pre class="highlight"><code>git pull
+git checkout tags/startlaravel3
+</code></pre>
+
+<p>としていただければいいです。</p>
+<hr />
+<p><a href="startlaravel4.html">Laraval 5 による開発の手順 #4</a> に続く。</p>
+<p>Tag: PHP Laravel localization</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

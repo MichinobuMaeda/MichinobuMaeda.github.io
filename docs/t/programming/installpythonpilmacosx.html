@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Mac OS X の Python に PIL を入れる - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Mac OS X の Python に PIL を入れる</h1>
+<p>Update: 2012-01-07</p>
+<blockquote>
+<p>追記 ( 2012-01-07 ) : 下記の手順でエラーは消えましたが、GAE の BlobStore 周りなどはまだ正常に動いていないようです。</p>
+</blockquote>
+<p>Mac OS X 10.7 で Google App Engine の Python 2.7 の開発環境を準備している最中のこと、 PIL など追加のライブラリを入れて 
+<code>dev_appserver.py</code> を起動するとこんな警告が出るのです。</p>
+<pre class="highlight"><code>WARNING  2011-12-24 01:27:51,762 dev_appserver.py:3344] Could not initialize images API; you are likely missing the Python &quot;PIL&quot; module. ImportError: dlopen(/Library/Python/2.7/site-packages/PIL/_imaging.so, 2): Symbol not found: _jpeg_resync_to_restart
+
+    Referenced from: /Library/Python/2.7/site-packages/PIL/_imaging.so
+    Expected in: flat namespace
+    in /Library/Python/2.7/site-packages/PIL/_imaging.so
+</code></pre>
+
+<p>依存関係のどこかがうまくいっていません。世の中に同じ悩みを持つ人が世の中にいないかと探してみると、いました。</p>
+<p><a href="http://stackoverflow.com/questions/1518573/snow-leopard-python-2-6-problems-getting-pil-to-work">http://stackoverflow.com/questions/1518573/snow-leopard-python-2-6-problems-getting-pil-to-work</a></p>
+<p>試してみたところ shacker さんの回答が当たりで、 Lennart Regebro さんが紹介している</p>
+<p><a href="http://jetfar.com/libjpeg-and-python-imaging-pil-on-snow-leopard/">http://jetfar.com/libjpeg-and-python-imaging-pil-on-snow-leopard/</a></p>
+<p>と併せてインストールをやり直しました。 jpeg のソースからインストールした作業ディレクトリが残っている状態から</p>
+<pre class="highlight"><code>$ sudo rm /opt/local/lib/*jpeg*
+$ cd /tmp/jpeg-8
+$ sudo make clea
+$ cp /usr/share/ibtool/config/config.sub .
+$ cp /usr/share/libtool/config/config.gues .
+$ ./configure --enable-shared --enable-stati
+$ mak
+$ sud make install
+$ sudo pip uninstal PIL
+$ sudo pip install http//effbot.org/downloads/Imaging-1.1.7.tar.gz
+</code></pre>
+
+<p>として、 dev_appserver.py を再起動すると、警告消えました。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

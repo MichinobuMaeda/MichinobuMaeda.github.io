@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>原子力発電所の廃熱量 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>原子力発電所の廃熱量</h1>
+<p>Update: 2010-09-19</p>
+<p>原子力発電所の熱効率、つまり、熱として放出される核分裂のエネルギーが電気に変換される割合は、単純に、定格電気出力を定格熱出力で割ればいいそうです。</p>
+<p><a href="http://questionbox.jp.msn.com/qa3061250.html">原子力発電の熱効率の算出方法</a></p>
+<p>簡単に値がわかってびっくり。で、このページでも引用されている <a href="http://www.rikuden.co.jp/outline1/">北陸電力志賀原子力発電所</a> の場合、</p>
+<blockquote>
+<p>１号機 54万kW / 159万3千kW = 約34%<br/>
+２号機 135万8千kW / 392万6千kW = 約35%</p>
+</blockquote>
+<p>となります。したがって、発電している電力の約２倍のエネルギーが、温排水などのかたちで自然界に放出されています。それはどのくらいになるかというと、単純に引き算して、</p>
+<blockquote>
+<p>１号機 159万3千kW - 54万kW = 105万3千kW<br/>
+２号機 392万6千kW - 135万8千kW = 256万8千kW</p>
+</blockquote>
+<p>つまり、 1kW の電気ストーブ約 360万台分の熱を放出しています、と書いてはみたものの自分でもどういうことなのやらさっぱりわかりません。</p>
+<p>日本原子力産業協会のページ <a href="http://www.jaif.or.jp/ja/nuclear_world/data/f0301.html">日本の原子力発電所の立地点</a> によると「現在日本には、北は北海道から南は鹿児島県まで、１３道県に１７か所の原子力発電所があり、５５基・４９４６.７万kWの発電用原子炉が運転、日本の電力の約３割を賄っています。」だそうです。「都」と「府」はスルーしてるのね。中国では都市部にもあるらしいよ、という話は置いといて、どの原子力発電所も同じくらいの熱効率だと仮定し、この文章に書いてある数字は文脈から推測して熱出力じゃなく電力だろうから、この数字を２倍にすると 1kW の電気ストーブ約 1億台分の熱を放出していることになるようです。</p>
+<p>ますます数字が大きくなってわけわかんなくなるのかというと、そうでもありません、日本人が 800W くらいの電気ストーブを一人一台ずつつけっぱなしにしている状態です。こんな風に考えると、もしかして今年の猛暑は？とか勘ぐってみたりしたくもなるわけですが、もちろん話はそんなに簡単なことではありません。</p>
+<p>1W は 1J/s で 18℃ の水の比熱容量が 4.2 kJ/kg・K つまり、 1kg の水の温度を 18℃ から 19℃ に上げるために必要な熱は約 4.2 kJ で毎秒それだけの仕事をする熱出力が約 4.2kW ということで合ってるよね？ こんな計算したのは高校以来だよ。合ってるとして、毎秒約 2400万kg つまり 2.4万トンの水の温度を 1℃ 上げるだけの熱を放出していることになります。</p>
+<p>利根川の平均流量が毎秒 256立方メートルということなので、その 90倍くらいの水の温度を 1℃ 上げることになります。計算合ってるよね？ 国内に 17箇所の発電所があるんだから、平均すると利根川の 5倍くらいの水量を 1℃上げている、逆算して利根川程度の水量なら 5℃ くらい上げているということになります。</p>
+<p>ほんとに計算合ってるよな？</p>
+<p>利根川で考えるとたいへんなことのように見えますが、黒潮の流量、数千万立方メートルと比べると桁違いに小さいのでさすがに猛暑の原因ってわけではなさそうです。しかし、原子力発電所ができるってことは、一級河川が一個できるくらいのインパクトがあったりしないかな？</p>
+<p>ちなみに、日本の火力発電所の熱効率は近年もがんばって上げていて東京電力のページ <a href="http://www.tepco.co.jp/eco/report/glb/05-j.html">火力発電効率の向上</a> によると 46.9% だとのことです。つまり無駄になる熱出力は原子力発電の  35 ÷ 46.9 × (100 - 46.9) / (100 - 35)  = 61 ( % ) くらいです。上記の計算が合っているとして、同じ発電量なら利根川あたり 3℃ くらいの温度上昇ということになります。ただし、二酸化炭素の放出による温室効果の話は別です。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

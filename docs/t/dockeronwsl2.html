@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>WSL 2 に Docker を入れる - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>WSL 2 に Docker を入れる</h1>
+<p>Update: 2020-07-31</p>
+<p>私の Windows 10 PC にようやく WSL 2 が来ました。
+OneDrive がトラブっているのが原因で Windows のアップデートができないようだということまでわかったものの OneDrive のアンインストールなどの迂回策をとることができず、結局 OS をリセットしました。私の場合、メインのマシンが Mac で Windows のローカルに必要なデータはまったくないので、まあ、なんとか。</p>
+<p>WSL 2 の導入手順は「 <a href="https://docs.microsoft.com/ja-jp/windows/wsl/install-win10">Windows 10 用 Windows Subsystem for Linux のインストール ガイド</a> 」など見てください。</p>
+<p>ディストリビューションはどれでもいいです。私は Debian を入れました。</p>
+<pre class="highlight"><code>PS C:\WINDOWS\system32&gt; wsl --list --verbose
+  NAME      STATE           VERSION
+* Debian    Running         2
+</code></pre>
+
+<p>Docker Desktop は <a href="https://www.docker.com/products/docker-desktop">https://www.docker.com/products/docker-desktop</a> からインストーラをダウンロードして起動します。</p>
+<p><img alt="" src="dockerdesktop01.png" /></p>
+<p>"Enable WSL 2 Windows Features" というチェックボックスがありますね。 WSL 2 は自動で入れてくれるようです。私の場合はディストリビューションの指定があるので先に入れておく手順でやる必要があることにかわりにはなさそうです。</p>
+<p><img alt="" src="dockerdesktop02.png" /></p>
+<p>インストールが終わったらところで [Start] ボタンを押すと、実際に Docker コンテナを動かすテストが始まります。</p>
+<p><img alt="" src="dockerdesktop03.png" /></p>
+<p>でも、私は git をインストールしていなかったのでエラーになりました。気にせずテストを先に進めて真っ赤のまま終わらせます。</p>
+<p>終わったら WSL の bash を起動します。私の場合はスタートメニューの "Debian" です。そこで <code>docker</code> コマンドを実行すると使用方法が表示されます。</p>
+<pre class="highlight"><code>$ docker
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default &quot;/home/michinobu/.docker&quot;)
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and
+
+ ... ... ... 途中略 ... ... ...
+
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker COMMAND --help' for more information on a command.
+</code></pre>
+
+<p><code>id</code> コマンドを実行すると <code>docker</code> グループに入っています。
+<a href="https://docs.docker.com/engine/install/linux-postinstall/">Post-installation steps for Linux</a>
+の手順は自動で実行してくれていたようです。</p>
+<pre class="highlight"><code>$ id
+uid=1000(michinobu) gid=1000(michinobu) groups=1000(michinobu),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),1001(docker)
+</code></pre>
+
+<p>Hello World も問題なし。</p>
+<pre class="highlight"><code>$ docker run hello-world
+docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post http://%2Fvar%2Frun%2Fdocker.sock/v1.40/containers/create: dial unix /var/run/docker.sock: connect: permission denied.
+See 'docker run --help'.
+</code></pre>
+
+<p>以前「 gitlabcicddockernodefirebase 」で作成したイメージを最新にしてみます。やることは簡単で、作業用のディレクトリに ''Docker'' ファイルを置いて、そのディレクトリで</p>
+<pre class="highlight"><code>$ docker build -t michinobumaeda/firebase-tools .
+$ docker login
+$ docker push michinobumaeda/firebase-tools
+</code></pre>
+
+<p>とコマンドをたたくだけです。ただし "latest" だけでなく旧バージョンを残したい場合はタグを指定してください。</p>
+<p>Tag: windows docker wsl</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

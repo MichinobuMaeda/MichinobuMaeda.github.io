@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Windows 7 x64 でイベントログをコマンドラインで参照 - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Windows 7 x64 でイベントログをコマンドラインで参照</h1>
+<p>Update: 2009-12-17</p>
+<p>仕事で Windows のイベントログを監視するスクリプトを作ることになって、「たしか <code>eventlogquery</code> というコマンドがあったよなぁ」と自宅の Windows 7 x64 で試してみようとしたところ、ありません。おかしいなぁ。。。</p>
+<p>64bit OS だとなにかあったり、無かったり、するのでしょうか。VBScript で実装されたツールだから、自前でも何とかなるかなと調べていたら、ベースになりそうなものがありました。 <a href="http://msdn.microsoft.com/ja-jp/library/ms974579.aspx">WMI スクリプト入門</a> : 第 1 部 の「リスト 3. Windows イベント ログ レコードを読み取る」です。</p>
+<p>この WMI は ActivePerl などからでも呼び出せるそうです。今回はシステムのエラーをメール配信しようとしているのですが、メール送信は ActivePerl でつくったスクリプトが既にいい感じで動いています。それと組み合わせて使うことにしよう、と調べ始めたら今度は Win32::EventLog というのを見つけました。一覧を表示するにはとりあえずこんな感じかな？</p>
+<pre class="highlight"><code>use strict;
+use Win32::EventLog;
+my $handle=Win32::EventLog-&gt;new(&quot;Application&quot;);
+my $recs;
+my $base;
+my $hashRef;
+my $x = 0;
+$handle-&gt;GetNumber($recs);
+$handle-&gt;GetOldest($base);
+print &quot;base: $base recs: $recs\n&quot;;
+while ($x &lt; $recs) {
+ print &quot;\n&quot;;
+ $handle-&gt;Read(EVENTLOG_FORWARDS_READ|EVENTLOG_SEEK_READ, $base + $x, $hashRef);
+ Win32::EventLog::GetMessageText($hashRef);
+ foreach my $key (keys(%$hashRef)) {
+ next if ($key eq &quot;Message&quot;);
+ print &quot;$key:\t$hashRef-&gt;{$key}\n&quot;;
+ }
+ print &quot;Message:\n$hashRef-&gt;{Message}\n&quot;;
+ $x++;
+}
+</code></pre></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

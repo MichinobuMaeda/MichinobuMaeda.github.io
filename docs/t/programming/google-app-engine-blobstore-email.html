@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>Google App Engine の BlobStore やメールなど - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="/"><img class="site-image" src="/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="/t">工作室</a></li>
+        <li><a href="/l">厚生部</a></li>
+        <li><a href="/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>Google App Engine の BlobStore やメールなど</h1>
+<p>Update: 2012-01-22</p>
+<p>※ 後でわかったことを追記しました ( 2012-01-22 )</p>
+<p>昨年末、中学の同窓会の幹事さんから会員向けの写真置き場を何とかできないかとお願いされて Google App Engine で簡単なアプリを作ってみました。メールやバイナリデータの保存などいろいろな機能を使うことになったので、復習用に整理しておきます。作成したアプリのソースはそのままの形で公開できないので、興味のある人は以下の説明の中の断片をご参照ください。</p>
+<h2>Google App Engine の概要を説明するとしたら</h2>
+<p>Google社が提供するアプリケーションの実行環境です。 PaaS の一種だという理解でいいと思います。ストレージ、CPU、ネットワークなどの使用量に応じて無料または有料で提供されています。ストレージについては 1GB のデータストアと 5GB のバイナリデータ専用のストア ( Blobstore ) が無料で利用できます。金出せばもっと使えます。 CPU とネットワークのクオータについては、今回はたいした量使わないことがわかっていたので見てません。</p>
+<p>アプリケーションを呼び出すことができるのは HTTP Request だけです。定時実行のジョブのために Task Queue の API が提供されていますが、そこから例えば Python のスクリプトを直接呼び出すようなことはできません。 HTTP Request する必要があります。とはいえ、最初からそのつもりで設計すればさほど不便では無いと思います。</p>
+<p>アプリケーションは負荷に応じて複数のサーバで実行されます。利用者はその辺意識しなくていいようです。ただし、利用されなければそのサーバの数はすぐ ( 数秒？ ) に 0個になってしまいます。 Java でフレームワークやライブラリをたくさん積むと、サーバ起動のために大きなオーバーヘッドがかかってしまうので注意が必要です。お金を出せば 0個にならない設定にもできるようです。</p>
+<p>プロセス間で共有するデータは、データストアや memcache など提供された API を使って保存する必要があります。それ以外の手段でファイルなどを保存することはできません。とはいえ設定ファイルやテンプレートなど、アプリケーションの一部としてアップロードしたものを読むことはできます。例えば、 Java の Velocity などもだいじょうぶです。</p>
+<p>データストアは RDB ではありません。 RDB も提供するというようなニュースを見たのですが、 2011年12月時点のドキュメントではまだ触れられていないようです（全部読んでないけど）。 Non SQL というとなにか新しい面倒なもののように思われるかもしれませんが、そこそこ親切な API が提供されているので苦労することは無いと思います。 Java 向けには JDO と JPA のインターフェースが提供されています。キーの扱いやエンティティ間の親子関係などが独特ですが、 RDB 使った開発でむやみやたらと複雑な SQL を書くのが好きな人でなければだいじょうぶ。</p>
+<p>Blobstore はいまのところユーザがアップロードするもの専用です。プログラムで書き込む API は Java 用も Python 用も提供されていないようです（2011年12月の時点、全部読んでないけど）。根性で <code>multipart/form-data</code> を POST するプログラムを書けばなんとかなるかもしれません。Python の方のページには <code>from __future__ import ...</code> とかいうサンプルコードがあるけど、人柱になりそうなので見なかったことにします。</p>
+<blockquote>
+<p>追記 2012-01-22  <code>from __future__ import with_statement</code> は python 2.5 で必要だけど、それ以降はいらなくて、ソースにこの記述が残っていたら無視される、とのことでした。サンプルコードは dev_appserver 上で問題なく動きました。</p>
+</blockquote>
+<h2>Python 2.7 の環境</h2>
+<p>現在 Experimental として提供されている Python 2.7 のランタイムの開発環境は、 SDK を入れただけではすべての機能を使うことができません。 "Using Python 2.7" のページをよく見てください。私の Mac OS X 10.7 の環境の場合 PIL がうまく動かなくてあきらめました。 Python 2.5 のランタイムを使っていた人は "What's New in Python 2.7" のページの自分に関係ありそうなところを見ておいた方がいいです。</p>
+<h2>アップロードした画像のサムネイルを作成するには</h2>
+<p>Blobstore に格納した画像データのサムネイルを作成するために BlobKey を取得して <code>images.Image</code> のコンストラクタに渡して、とやってみたら、画像の縦横のサイズを取得する処理で「 BlobKey から生成した場合はできない」みたいなエラーが出てきます。作った人の気持ちは何となくわかります。代わりに <code>images.get_serving_url</code> で縮小画像を取得する URL を生成できます。それを使って URL Fetch して取得したものをそのまま使わせてもらうことにしました。</p>
+<pre class="highlight"><code>    url = images.get_serving_url(blob_key, size=240)
+    result = urlfetch.fetch(url)
+    if result.status_code == 200:
+        entity.thumbnail = db.Blob(result.content)
+        entity.put()
+</code></pre>
+
+<p>画像のヘッダだけ読み込んでそこから情報取得する方法もあるようです。今回は、あるサイズ以下の縮小画像ができさえすればよかったので、上記の簡単な処理で済ませました。</p>
+<p>それから、アップロードしたファイルの名称が日本語の場合化けます。  <code>=?UTF-8?...</code> みたいに。管理機能の Blob Viewer では化けてません。 MIME デコードすればいいのかな？次のようにしてみましたが、完全には直りません。メールに添付した画像のファイル名はこの手順で対処できたのですが。</p>
+<pre class="highlight"><code>from email.header import decode_header
+
+for decoded, enc in decode_header(filename):
+    ...
+</code></pre>
+
+<p><code>"abc 日本語のファイル名 def.jpg"</code> でアップロードしたものが <code>"abc 日本語のファ"</code> で切れてしまいます。おかしいです。さらに、テストプログラムを書いて、該当するデータの <code>BlobInfo</code> を取得して <code>filename</code> プロパティを見ると <code>"abc 日本語のファイル名 def.jpg"</code> です。なんだかとても変です。ファイルアップロードは <code>BlobstoreUploadHandler</code> を使って処理しているのですが、それを疑ってみます。ログ出力を追加してテストしてみると、そのハンドラの中で取得できている filename は <code>"=?ISO-2022-JP?B?YWJjIBskQkZ8S1w4bCROJVUlIRsoQg==?="</code> です。コマンドラインで python を起動してデコードしてみます。</p>
+<pre class="highlight"><code>&gt;&gt;&gt; from email.header import decode_header
+&gt;&gt;&gt; decode_header('=?ISO-2022-JP?B?YWJjIBskQkZ8S1w4bCROJVUlIRsoQg==?=')
+[('abc \x1b$BF|K\\8l$N%U%!\x1b(B', 'iso-2022-jp')]
+</code></pre>
+
+<p>短すぎます。そもそも <code>UTF-8</code> しか使っていないアプリなのになんで <code>ISO-2022-JP</code> が出てくるのか、さっぱりわかりません。 phthon 2.7 のランタイムの環境で、ここだけ <code>webapp2</code> ではなく <code>webapp</code> のライブラリを使うことになってるのが何となく不安だったのですが、深入りせず、別の方法で回避することにします。アップロードの処理が終わった後、最初にこの記事を表示する処理で <code>BlobInfo</code> を取得し直して、その filename プロパティを使うようにしました。</p>
+<p><a href="http://code.google.com/p/googleappengine/issues/detail?id=2749"><a href="http://code.google.com/p/googleappengine/issues/detail?id=2749">http://code.google.com/p/googleappengine/issues/detail?id=2749</a></a> にはファイル名以外のこともいろいろと。 JIS 2004 か、、、かかわりたくないなぁ。。。</p>
+<h2>マルチパートのメールの処理</h2>
+<p>メールの送受信の基本的なところは "Mail Python API Overview" を見てください。受信したメールは HTTP リクエストに変換される仕組みになっています。基本的に英語のことしか考えていない作りになっているので、日本語のメールを送信したい場合は Python Standard Liblary の email package あたりを使って何とかしてください。今回は、写メとして送られてきた画像を登録する必要がありました。デコメとか絵文字とか面倒なものは非対応ということにしましたが、メール本文になにか書いてくれていたら説明として載せたいので、平文に限り取得することにしました。</p>
+<pre class="highlight"><code>    for content_type, body in msg.bodies('text/plain'):
+         ...
+        text = body.decode()
+</code></pre>
+
+<p>という感じで。日本語は特に問題なしでした。ただ、その、テストに使った日本語のメールが、 UTF-8 だったのか ISO-2022-JP だったのかはよくわかりません。添付された画像ファイルについては、ほとんどの携帯はこれでなんとかなるでしょう。</p>
+<pre class="highlight"><code>    for filename, data in msg.attachments:
+        if filename.endswith('jpg') or filename.endswith('JPG'):
+             ...
+</code></pre>
+
+<h2>タイムスタンプ</h2>
+<p>画像を登録した日時などを記録するために、JST のタイムスタンプが欲しかったのですが、 Python のタイムゾーンの扱いがよくわからなかったので、以下のような反則で済ませてしまいました。</p>
+<pre class="highlight"><code>datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+</code></pre>
+
+<blockquote>
+<p>追記 2012-01-22 : 次のような datetime.tzinfo のサブクラスを作るといいようです。 <a href="http://timezones.appspot.com/"><a href="http://timezones.appspot.com/">http://timezones.appspot.com/</a></a> 参照。</p>
+</blockquote>
+<pre class="highlight"><code>    class UtcTzinfo(datetime.tzinfo):
+        def utcoffset(self, dt):`
+            return datetime.timedelta(0)`
+        def dst(self, dt):`
+            return datetime.timedelta(0)`
+        def tzname(self, dt):`
+            return 'UTC'`
+        def olsen_name(self):`
+            return 'UTC'`
+
+    class JstTzinfo(datetime.tzinfo):`
+        def utcoffset(self, dt):`
+            return datetime.timedelta(hours=9)`
+        def dst(self, dt):`
+            return datetime.timedelta(0)`
+        def tzname(self, dt):`
+            return 'JST'`
+        def olsen_name(self):`
+            return 'Asia/Tokyo'`
+</code></pre>
+
+<blockquote>
+<p>タイムゾーン無しの datetime.datetime オブジェクトを JST に変換しようとすると "native はダメ" みたいなメッセージが出てくるので、こんなふうにやってみたらうまくいきました。</p>
+</blockquote>
+<pre class="highlight"><code>native.replace(tzinfo=UtcTzinfo()).astimezone(JstTzinfo())
+</code></pre>
+
+<h2>永続データの使用量を見る</h2>
+<p>データストアの使用量は <code>stats.GlobalStat.all().get()</code> で統計情報のエンティティを取得して <code>bytes</code> プロパティの値を見ます。開発環境では統計情報のエンティティが取得できなかったのですが、本番環境ではうまくいきました。もしかすると、本番環境でも、アプリケーションを登録した直後などは統計情報のエンティティを取得できないかもしれません。</p>
+<blockquote>
+<p>追記 2012-01-22 : dev_appserver の管理画面に "Datastore Stats Generator" というものがありました。</p>
+</blockquote>
+<p>Blobstore に格納したデータのサイズの合計を見るのは簡単です。</p>
+<pre class="highlight"><code>    blob_size = 0
+    for blob_info in blobstore.BlobInfo.all():
+        blob_size = blob_size + blob_info.size
+</code></pre>
+
+<p>ただし、データ本体以外にメタデータなどのオーバーヘッドがあると思います。</p>
+<p>Blobsotre の統計情報を取得する API は見つけられませんでした（あまりまじめに探していないのですが）。</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="/js/site.js"></script>
+</body>
+
+</html>

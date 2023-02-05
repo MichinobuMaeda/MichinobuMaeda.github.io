@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="../docs/main.css" rel="stylesheet">
+
+  <!-- MathJax: https://www.mathjax.org/ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+
+  <title>ページの見出し - みちのぶのねぐら</title>
+</head>
+
+<body onload="onBodyLoading()">
+  <!-- Mermaid: https://mermaid.js.org/ -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <header>
+    <a href="../docs/"><img class="site-image" src="../docs/img/logo.png" alt="dragon image">
+      みちのぶのねぐら</a>
+    <nav>
+      <ul class="categories">
+        <li><a href="../docs/t">工作室</a></li>
+        <li><a href="../docs/l">厚生部</a></li>
+        <li><a href="../docs/p">政治局</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="main">
+    <div class="content"><h1>ページの見出し</h1>
+<p>Update: 2023-02-04</p>
+<h2>見出しレベル２</h2>
+<p>あいうえおかきくけこアイウエオカキクケコ０１２３４５６７８９0123456789〇一二三四五六七八九
+あいうえおかきくけこアイウエオカキクケコ０１２３４５６７８９0123456789〇一二三四五六七八九
+あいうえおかきくけこアイウエオカキクケコ０１２３４５６７８９0123456789〇一二三四五六七八九</p>
+<p>あいうえおかきくけこアイウエオカキクケコ０１２３４５６７８９0123456789〇一二三四五六七八九
+あいうえおかきくけこアイウエオカキクケコ０１２３４５６７８９0123456789〇一二三四五六七八九</p>
+<h3>見出しレベル３</h3>
+<p>The quick brown fox jumps over the lazy dog.
+The quick brown fox jumps over the lazy dog.
+The quick brown fox jumps over the lazy dog.</p>
+<p>The quick brown fox jumps over the lazy dog.
+The quick brown fox jumps over the lazy dog.</p>
+<pre class="highlight"><code class="language-python">import os
+import re
+import markdown
+from mdx_gfm import PartialGithubFlavoredMarkdownExtension
+
+def render_markdown(md):
+    return markdown.markdown(
+        md,
+        extensions=[PartialGithubFlavoredMarkdownExtension()]
+    ).replace(
+        'class=&quot;language-mermaid&quot;',
+        'class=&quot;mermaid nohighlight&quot;'
+    )
+</code></pre>
+
+<h4>見出しレベル４</h4>
+<ul>
+<li>番号無しリスト</li>
+<li>番号無しリスト<ul>
+<li>番号無しリスト</li>
+<li>番号無しリスト</li>
+<li>番号無しリスト</li>
+</ul>
+</li>
+<li>番号無しリスト</li>
+</ul>
+<ol>
+<li>番号付きリスト</li>
+<li>番号付きリスト<ul>
+<li>番号無しリスト</li>
+<li>番号無しリスト</li>
+<li>番号無しリスト</li>
+</ul>
+</li>
+<li>番号付きリスト</li>
+</ol>
+<h5>見出しレベル５</h5>
+<p>GitHub Flavored Markdown</p>
+<table>
+<thead>
+<tr>
+<th>First Header</th>
+<th>Second Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+<tr>
+<td>Content Cell</td>
+<td>Content Cell</td>
+</tr>
+</tbody>
+</table>
+<h6>Mermaid</h6>
+<pre class="highlight"><code class="mermaid nohighlight">graph TD
+X --&gt; A
+A --&gt; B
+A --&gt; C
+B --&gt; D
+C --&gt; D
+</code></pre>
+
+<h6>MathJax</h6>
+<p>When $a \ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$</p>
+<p>Tag: markdown tailwind</p></div>
+
+    <footer id="footer">
+      <h2>Latest Updates</h2>
+      <ul id="updates"></ul>
+
+      <h2>Contacts</h2>
+      <ul id="social-media">
+        <li>
+          <a href="https://twitter.com/mixnb"><img src="../docs/img/twitter.png" title="Twitter" alt="Twitter" /></a>
+        </li>
+        <li>
+          <a rel="me" href="https://toot.blue/@micmaeda"><img src="../docs/img/mastodon.png" title="Facebook"
+              alt="Mastodon" /></a>
+        </li>
+        <li>
+          <a href="https://www.facebook.com/michinobu.maeda"><img src="../docs/img/facebook.png" title="Facebook"
+              alt="Facebook" /></a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/michinobumaeda/"><img src="../docs/img/instagram.png" title="Instagram"
+              alt="Instagram" /></a>
+        </li>
+        <li>
+          <a href="http://mixi.jp/show_profile.pl?id=8734038"><img src="../docs/img/mixi.png" title="mixi"
+              alt="mixi" /></a>
+        </li>
+      </ul>
+
+      <h2>Legal Notices</h2>
+      <div id="license">
+        <div class="license-logo">
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License"
+              style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
+        </div>
+        <div class="license-desc">
+          This work is licensed under a
+          <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0
+            International
+            License</a>.
+        </div>
+        <div class="copyright">&copy; 2004-2023 Michinobu Maeda.</div>
+      </div>
+    </footer>
+
+    <script src="../docs/js/site.js"></script>
+</body>
+
+</html>
