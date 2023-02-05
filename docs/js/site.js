@@ -8,7 +8,10 @@ function filterByTag() {
     .filter(item => item.startsWith('tag='))
     .reduce((ret, cur) => ret || cur.replace('tag=', ''), null);
 
-    document.getElementById('tag-ALL').style.display = tag ? 'block' : 'none';
+  const tagAll = document.getElementById('tag-ALL')
+  if (tagAll) {
+    tagAll.style.display = tag ? 'block' : 'none';
+  }
 
   if (!tag) return;
 
