@@ -29,7 +29,7 @@
   <title>JavaScriptでスワイプ操作の検出 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -97,9 +97,9 @@
 <p>ほとんどこの記事の通りのコードを書いて要素の移動はうまくいったのですが、その要素はボタンで、クリックが効かなくなりました。なるよな〜〜 <code>e.preventDefault()</code> してるんだから。そこは <code>touchstart</code> から <code>touchend</code> まで 100msec. 以内ならクリック時の処理をする、としてみたところ、そこそこいい感じです。 100msec. 以内でスワイプしたつもりみたいなことができる超人は無視です。</p>
 <p>で、ここまでできたところで私が今回使っている Vuetify のドキュメントをよく見たら <code>v-touch</code> というのがありました（涙</p>
 <p>まあ、このやり方でマウスの操作と共通の処理にできたし、後でタイミングや移動距離などの感度を細かく調整できるから、これはこれでいいや。</p>
-<p>Tag: <a href="/t/?tag=javascript">javascript</a> <a href="/t/?tag=vue">vue</a></p>
-</div>
+<p>Tag: javascript vue</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

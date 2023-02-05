@@ -29,7 +29,7 @@
   <title>インデックスの有無と INSERT の所要時間 ( MySQL ) - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -162,6 +162,7 @@
 <p>インデックスが効いていなくて性能が落ちている SELECT, UPDATE, DELETE は、小さな場合でも 0.01秒、つまり 10ミリ秒くらいは損してますよね？ それどころか、100ミリ秒とか秒の単位の時間になってしまうこともありますよね？ そのような時間に比べて 0.025 ミリ秒というのは存在しないも同然の値です。</p>
 <p>バッチ処理等で大量の INSERT をする場合は、インデックスを無効にしておいて処理が終わった後でインデックスを再生成するなど、それぞれの製品に合った回避手段があるだろうと思います。とはいえ、私の遅い MacBook Pro の 1,000,000 行で 100秒前後しかかかっていませんから、本当に心配する必要が出てくるのは 10,000,000行くらいからではないかと思います。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

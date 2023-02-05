@@ -29,7 +29,7 @@
   <title>gollum をローカルで動かしてみた - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -119,6 +119,7 @@ sudo gem install redcarpet --version=1.17.2
 
 <p>です。日本語のファイル名でもだいじょうぶだし ( UTF-8 じゃない Windows はだめかも ) 、編集を保存するとローカルのリポジトリにコミットできているし、なかなか快適な環境です。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

@@ -29,7 +29,7 @@
   <title>DokuWiki のレイアウトを正しくカスタマイズする - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -98,9 +98,9 @@
 </ul>
 <p><code>conf/style.ini</code> は管理者メニューの「テンプレートのスタイル設定」で編集できます。</p>
 <p><code>conf/userstyle.css</code> または <code>conf/userstyle.less</code> は、デフォルトでは存在しないファイルなので新規作成します。詳細は <a href="https://www.dokuwiki.org/devel:css">https://www.dokuwiki.org/devel:css</a> を見てください。</p>
-<p>Tag: <a href="/t/?tag=dokuwiki">dokuwiki</a></p>
-</div>
+<p>Tag: dokuwiki</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

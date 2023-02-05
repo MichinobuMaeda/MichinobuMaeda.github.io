@@ -29,7 +29,7 @@
   <title>みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -166,6 +166,7 @@
 <p><code>$cfg['Servers'][$i]['host'] = 'localhost';</code></p>
 <p><code>http://localhost/phpMyAdmin/</code> を表示して、ユーザ <code>root</code> で正常にログインできれば確認完了です。パスワードは MySQL のインストール時に設定したパスワードです。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

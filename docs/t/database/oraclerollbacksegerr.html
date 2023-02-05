@@ -29,7 +29,7 @@
   <title>Oracle のロールバック表領域でブロックに障害が出たら - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -167,6 +167,7 @@ PCTINCREASE 増分の増加の割合 OPTIMAL 最適サイズK);
 
 <p>新しい方のロールバックセグメントを使うように切り替えるには、初期設定ファイル <code>init&lt;SID&gt;.ora</code> の <code>ROLLBACK_SEGMENTS</code> の値を変更して再起動するわけですが、再起動無しでできないかな…</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

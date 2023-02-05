@@ -29,7 +29,7 @@
   <title>PukiWiki で普通のサイトを作る - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -103,6 +103,7 @@
 <p>デザイナーなどがカスタマイズしてサイトを準備して、サイトのオーナーが自分で内容を更新するといった使い方ができると思います。</p>
 <p>Wiki パッケージとしては WikiPedia に使われている <a href="http://www.mediawiki.org/wiki/MediaWiki/ja">MediaWiki</a> もあります。こちらの方が高機能なようです。試してはいないのですが、カスタマイズして使う場合、高機能な方が手間がかかると思います。変更が影響を及ぼす範囲の確認の作業が増えるからです。 Wiki の本来の用途のために使う場合は好きな方でいいと思います。また、組織内の情報蓄積・整理の用途に特化した Enterprise Wiki というものもあります。フリーの <a href="http://twiki.org/">TWiki</a> などが有名です。。。とはいっても私も使ったことがないし、 Enterprise Wiki を知っている人の中では有名ということです。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

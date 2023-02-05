@@ -661,13 +661,76 @@ ol, ul {
   padding-left: 1rem;
 }
 
-ul.index {
+ul#toc,
+ul#tag-cloud {
   padding-left: 0px;
 }
 
-ul.index li {
+ul#toc {
+  margin-top: 0.5rem;
+}
+
+ul#tag-cloud {
+  margin-bottom: 0px;
+}
+
+ul#toc li,
+ul#tag-cloud li {
   margin-left: 0px;
   list-style-type: none;
+}
+
+#tag-ALL {
+  margin-top: 0.25rem;
+  display: block;
+  text-align: center;
+}
+
+ul#tag-cloud li {
+  display: inline-block;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  line-height: 1.5rem;
+}
+
+ul#tag-cloud li a {
+  text-decoration-line: none;
+}
+
+ul#tag-cloud li a.tag-1 {
+  font-size: 1.0em;
+}
+
+ul#tag-cloud li a.tag-2 {
+  font-size: 1.2em;
+}
+
+ul#tag-cloud li a.tag-3 {
+  font-size: 1.4em;
+}
+
+ul#tag-cloud li a.tag-4 {
+  font-size: 1.5em;
+}
+
+ul#tag-cloud li a.tag-5 {
+  font-size: 1.6em;
+}
+
+ul#tag-cloud li a.tag-6 {
+  font-size: 1.7em;
+}
+
+ul#tag-cloud li a.tag-7 {
+  font-size: 1.8em;
+}
+
+ul#tag-cloud li a.tag-8 {
+  font-size: 1.9em;
+}
+
+ul#tag-cloud li a.tag-9 {
+  font-size: 2.0em;
 }
 
 .content a,

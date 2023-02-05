@@ -29,7 +29,7 @@
   <title>Oracle の SQL の実行計画を調べる - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -129,6 +129,7 @@ SPOOL OFF
 <p>詳しくは Oracle のドキュメントを見てください。10g R1 の場合「PL/SQL パッケージ・プロシージャおよびタイプ・リファレンス」の <code>DBMS_STATS</code> の項を見てください。</p>
 <p>この手順で統計情報をインポートしたテスト環境を使えば <code>EXPLAIN PLAN</code> で本番と同じ実行計画の取得ができます。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

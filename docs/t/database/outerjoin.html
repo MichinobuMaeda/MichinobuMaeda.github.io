@@ -29,7 +29,7 @@
   <title>外部結合の結果をイメージするのは難しい - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -273,6 +273,7 @@ NULL|NULL|  5 |NULL
 <p>上の例の <code>FULL OUTER JOIN</code> を <code>INNER JOIN</code> / <code>LEFT OUTER JOIN</code> / <code>RIGHT OUTER JOIN</code> に置き換えるとどうなるかについても考えてみてください。</p>
 <p>さて、このあたりで外部結合のことは嫌いになっていただけたでしょうか？</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

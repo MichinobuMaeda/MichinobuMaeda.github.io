@@ -29,7 +29,7 @@
   <title>玄箱Proのリカバリ - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -111,6 +111,7 @@ Marvell&gt;&gt; boot`
 <p>DHCP で固定の IP アドレスを割り当てているので IP アドレスは同じ、 Samba も OK ということで「玄箱Proで遊ぼう!!」ISBN978-4-89977-202-6 の「[第3部] 応用編 2 Debian のインストール」の手順に従って OS を再インストールします。</p>
 <p>あとは諸々のパッケージを入れて、データを生きていた片方からコピーして、終わり。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

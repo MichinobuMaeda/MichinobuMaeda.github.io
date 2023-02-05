@@ -29,7 +29,7 @@
   <title>Google App Engine の BlobStore やメールなど - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -191,6 +191,7 @@ for decoded, enc in decode_header(filename):
 <p>ただし、データ本体以外にメタデータなどのオーバーヘッドがあると思います。</p>
 <p>Blobsotre の統計情報を取得する API は見つけられませんでした（あまりまじめに探していないのですが）。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

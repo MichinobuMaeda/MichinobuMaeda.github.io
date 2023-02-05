@@ -29,7 +29,7 @@
   <title>Oracle VM - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -331,6 +331,7 @@ Mac OS X の場合、次のコマンドで X を起動できます。
 <h3>Database のインストール</h3>
 <p>ドキュメントに書いてある通りにやったんですが、起動にすごい時間がかかるなぁ。各ノードに Enterprise Manager が入っていますね。ブラウザで開いてみると、いつまでたってもページが表示されません。 ASM をインストールした直後のバックアップに戻して、シンプルな構成で入れ直してみようと思います。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

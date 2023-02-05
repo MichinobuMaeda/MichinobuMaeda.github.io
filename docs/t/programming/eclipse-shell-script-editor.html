@@ -29,7 +29,7 @@
   <title>Eclipse の Shell Script エディタ - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -107,6 +107,7 @@
 <p>私の環境が Java 6 なのを確認して、このアップデートサイトからインストールするとエラー無しで完了。拡張子 <code>.sh</code> のファイルを開いてみると、色付いてます。 Eclipse の環境設定の Shell Script &gt; Interpreters に <code>/bin/bash</code> を追加すると Mac OS X でも man の表示ができました。 Windows はだめじゃないかな。。。</p>
 <p><img alt="スクリプトの中のコマンドのを選択すると man ページが表示される" src="eclipse-shell-script-editor/shelled.png" /></p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

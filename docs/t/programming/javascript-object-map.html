@@ -29,7 +29,7 @@
   <title>みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -137,6 +137,7 @@ document.write("<p>" + test2["47"] + "</p>");</p>
 <p><code>}</code></p>
 <p>余談ですが、ネットでこのあたりのサンプルコード調べていると、他の言語と同じように <code>.keys()</code> メソッドでキー値の一覧を取得できる形にするには、というようなものが出てましたが、処理量増えるだけだし <code>for ( in )</code> で取得できるのはキー値の方ということでいいんじゃないかな。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

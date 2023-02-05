@@ -456,13 +456,6 @@
             "tags": []
         },
         {
-            "cat": "l",
-            "path": "l/index.html",
-            "title": "厚生部",
-            "updated_at": "unknown",
-            "tags": []
-        },
-        {
             "cat": "p",
             "path": "p/20090416.html",
             "title": "ライフリンクDB",
@@ -677,13 +670,6 @@
             "path": "p/20171210.html",
             "title": "18歳人口は25年前の３分の２",
             "updated_at": "2017-12-10",
-            "tags": []
-        },
-        {
-            "cat": "p",
-            "path": "p/index.html",
-            "title": "政治局",
-            "updated_at": "unknown",
             "tags": []
         },
         {
@@ -1427,13 +1413,6 @@
                 "security",
                 "password"
             ]
-        },
-        {
-            "cat": "t",
-            "path": "t/index.html",
-            "title": "工作室",
-            "updated_at": "unknown",
-            "tags": []
         },
         {
             "cat": "t",

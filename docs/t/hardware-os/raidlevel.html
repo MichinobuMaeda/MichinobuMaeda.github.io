@@ -29,7 +29,7 @@
   <title>RAID規格の概要 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -121,6 +121,7 @@
 <h2>RAID 1 は何個か？</h2>
 <p>ミーティングのとき「RAID 1 は普通２個だよね」「３個は効果が薄いという検討結果になったことがあった」「通常２個、あったとしても偶数個のはず」と話をしていたのですが、リンクをたどるとありました。奇数で構成できるミラーリング製品。 IBM 社が RAID 1E というのを出していて奇数個可、つまり、ディスクを１個ずつ追加可、なのだそうです。 Wikipedia の <a href="http://en.wikipedia.org/wiki/Non-standard_RAID_levels">Non-standard RAID levels</a> の図 <a href="http://en.wikipedia.org/wiki/File:RAID_1E.png">RAID_1E.png</a> がわかりやすいのですが、奇数個でも 1/2台分の容量になります。で、普通は、つまり “E” が付かなければ偶数個ということになります。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

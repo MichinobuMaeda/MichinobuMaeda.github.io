@@ -29,7 +29,7 @@
   <title>Unicode 内のそれぞれの文字種の範囲 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -148,6 +148,7 @@
 <p>全角記号「￣」が <code>0xFFE3</code> 全角円マークが <code>0x818F</code> と、上記の全角記号より少し離れた場所にあります。</p>
 <p>Shift_JIS の <code>0xA1 - 0xDF</code> の範囲にある半角カナなどは、 <code>0xFF61 - 0xFF9F</code> になります。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

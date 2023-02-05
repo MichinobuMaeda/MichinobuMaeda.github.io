@@ -29,7 +29,7 @@
   <title>Firebase で Cloud Tasks - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -120,9 +120,9 @@ exports.job2 = functions.region(region)
     .onDispatch(async ({index}) =&gt; {...});
 </code></pre>
 
-<p>Tag: <a href="/t/?tag=firebase">firebase</a></p>
-</div>
+<p>Tag: firebase</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

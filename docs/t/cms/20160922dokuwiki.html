@@ -29,7 +29,7 @@
   <title>DokuWiki 日記 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -179,9 +179,9 @@ define('DOKU_CONF','/home/yourname/conf/');
 <p>まず、「管理者メニュー」の「拡張機能管理」の「検索とインストール」で Blog Plugin の Requires になっている <a href="https://www.dokuwiki.org/plugin:include">Include Plugin</a> と <a href="https://www.dokuwiki.org/plugin:pagelist">Pagelist Plugin</a> を入れます。それから <a href="https://www.dokuwiki.org/plugin:blog">Blog Plugin</a> を入れます。ちなみに "blog" で検索すると２番目に出てくる BlogTNG はもうメンテされていないそうです。</p>
 <p>次に「管理者メニュー」の「サイト設定」のプラグイン Blog ですが、、、、デフォルトでいいや。</p>
 <p>続きは新しいサイト <a href="https://www.michinobu.jp/tek/">https://www.michinobu.jp/tek/</a> で 。</p>
-<p>Tag: <a href="/t/?tag=dokuwiki">dokuwiki</a></p>
-</div>
+<p>Tag: dokuwiki</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

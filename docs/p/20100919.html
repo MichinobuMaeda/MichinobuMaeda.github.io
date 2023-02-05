@@ -29,7 +29,7 @@
   <title>原子力発電所の廃熱量 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -111,6 +111,7 @@
 <p>利根川で考えるとたいへんなことのように見えますが、黒潮の流量、数千万立方メートルと比べると桁違いに小さいのでさすがに猛暑の原因ってわけではなさそうです。しかし、原子力発電所ができるってことは、一級河川が一個できるくらいのインパクトがあったりしないかな？</p>
 <p>ちなみに、日本の火力発電所の熱効率は近年もがんばって上げていて東京電力のページ <a href="http://www.tepco.co.jp/eco/report/glb/05-j.html">火力発電効率の向上</a> によると 46.9% だとのことです。つまり無駄になる熱出力は原子力発電の  35 ÷ 46.9 × (100 - 46.9) / (100 - 35)  = 61 ( % ) くらいです。上記の計算が合っているとして、同じ発電量なら利根川あたり 3℃ くらいの温度上昇ということになります。ただし、二酸化炭素の放出による温室効果の話は別です。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

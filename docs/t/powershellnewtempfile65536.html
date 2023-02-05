@@ -29,7 +29,7 @@
   <title>PowerShell の一時ファイルを消さないと 65,536日目に死ぬ - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -139,9 +139,9 @@ tmpFFFF.tmp
 
 <p><code>New-TemporaryFile</code> は環境変数 <code>TEMP</code> の場所に <code>tmp1.tmp</code> から <code>tmpFFFF.tmp</code> までのファイルをランダムに（たぶん）生成します。
 16進数で 4桁だから 2の 16乗、つまり 65,536個までできるということです。</p>
-<p>Tag: <a href="/t/?tag=powershell">powershell</a></p>
-</div>
+<p>Tag: powershell</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

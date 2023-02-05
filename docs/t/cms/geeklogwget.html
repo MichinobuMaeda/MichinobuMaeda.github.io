@@ -29,7 +29,7 @@
   <title>Geeklogのページをwgetで静的ページに - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -109,6 +109,7 @@
 <p>お問い合わせページは、 Movable Type のサイトに作ったものにリダイレクトするように修正。 <a href="http://blog.michinobu.jp/mail.php">http://blog.michinobu.jp/mail.php</a> これは、 Movable Type で問い合わせページ と同じもの。</p>
 <p>外部リンクがなぜか相対パスになっているのを修正。これは wget のパラメータが不適切だったのが原因ではないだろうか。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

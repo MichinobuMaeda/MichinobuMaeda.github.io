@@ -94,12 +94,70 @@ ol, ul {
   @apply pl-4
 }
 
-ul.index {
+ul#toc,
+ul#tag-cloud {
   @apply pl-0
 }
 
-ul.index li {
+ul#toc {
+  @apply mt-2
+}
+
+ul#tag-cloud {
+  @apply mb-0
+}
+
+ul#toc li,
+ul#tag-cloud li {
   @apply list-none ml-0
+}
+
+#tag-ALL {
+  @apply block mt-1 text-center
+}
+
+ul#tag-cloud li {
+  @apply inline-block px-1 leading-6
+}
+
+ul#tag-cloud li a {
+  @apply no-underline
+}
+
+ul#tag-cloud li a.tag-1 {
+  font-size: 1.0em;
+}
+
+ul#tag-cloud li a.tag-2 {
+  font-size: 1.2em;
+}
+
+ul#tag-cloud li a.tag-3 {
+  font-size: 1.4em;
+}
+
+ul#tag-cloud li a.tag-4 {
+  font-size: 1.5em;
+}
+
+ul#tag-cloud li a.tag-5 {
+  font-size: 1.6em;
+}
+
+ul#tag-cloud li a.tag-6 {
+  font-size: 1.7em;
+}
+
+ul#tag-cloud li a.tag-7 {
+  font-size: 1.8em;
+}
+
+ul#tag-cloud li a.tag-8 {
+  font-size: 1.9em;
+}
+
+ul#tag-cloud li a.tag-9 {
+  font-size: 2.0em;
 }
 
 .content a,

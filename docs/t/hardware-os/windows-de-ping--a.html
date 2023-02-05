@@ -29,7 +29,7 @@
   <title>Windows で ping -a - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -98,6 +98,7 @@
 <p>ネットワークの管理者さんが、ネットワークにつながっている正体不明の PC を特定するのに使うようですね。とはいえ、 Windows 以外のコンピュータは反応しません。 Windows PC ばかりのところでも、プリンタなどがつながっている場合がありますよね。</p>
 <p>Unix/Linux の <code>ping</code> には <code>-a</code> みたいなオプションはありません。たまたま同じ <code>-a</code> というのがあったとしても別の機能です、たぶん。 DNS など参照するわけでもなく IP アドレスからホスト名がわかったりしたら、それってどんな Hack だよ？ということになります。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

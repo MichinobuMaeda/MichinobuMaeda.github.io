@@ -29,7 +29,7 @@
   <title>Dokuwiki でページをリダイレクトする - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -96,9 +96,9 @@
 <p>このプラグインを導入したら、リダイレクト元のページに <code>#REDIRECT namespace:page</code> の書式でリダイレクト先のページ名を記載します。それだけで、リダイレクト元のページにアクセスすると自動で設定したページにジャンプしてくれます。</p>
 <p>デフォルトではリダイレクトした先のページにリダイレクトした旨のメッセージが表示されます。それをやめるには管理者メニューのサイト設定で「リダイレクトされたことを表示する。」を Off にすればいいです。</p>
 <p>リダイレクト元のページを編集するにはどうしたらいいのだろう？ という疑問があるのですが、履歴機能を使えばいいのかな？</p>
-<p>Tag: <a href="/t/?tag=dokuwiki">dokuwiki</a></p>
-</div>
+<p>Tag: dokuwiki</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

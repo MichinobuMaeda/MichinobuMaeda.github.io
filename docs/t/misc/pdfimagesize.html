@@ -29,7 +29,7 @@
   <title>画像を埋め込んでもサイズが大きくならないPDF生成 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -148,6 +148,7 @@
 <p>画像サイズは 343,781 + 428,372 + 256,668 + 610,965 = 1,639,786 バイト、PDFのサイズは 1,634,738 バイトで小さくなっているような。。。なんで ^^)?</p>
 <p><a href="pdfimagesize.pdf">pdfimagesize.pdf</a></p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

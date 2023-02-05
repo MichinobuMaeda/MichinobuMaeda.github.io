@@ -29,7 +29,7 @@
   <title>CouchDBを始めてみようと思ったのですが。。。 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -201,6 +201,7 @@ $ curl -X DELETE http://`admin:password@127.0.0.1:5984/test\_suite\_reports
 <p>正常に処理すると <code>{"ok":true}</code> と出力されます。</p>
 <p>最後に、couchdb を停止して、管理者のユーザ名とパスワードを設定し直して、再起動して終わりです。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

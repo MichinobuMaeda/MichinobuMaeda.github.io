@@ -29,7 +29,7 @@
   <title>dokuwiki on Nginx - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -135,9 +135,9 @@ FastCGI の設定は初めてなので、不要な設定があるかもしれま
 <p><code>snippets/fastcgi-php.conf</code> は設定 <code>try_files</code> の競合が起きたので、それ以外の内容をコピーしました。
 dokuwiki のドキュメントには image medeia が云々と書かれていますが、最新版では何もしなくてだいじょうぶそうです。</p>
 <p>あとは、同様の設定を別のサブフォルダに入れて動くかどうかですね。</p>
-<p>Tag: <a href="/t/?tag=nginx">nginx</a> <a href="/t/?tag=dokuwiki">dokuwiki</a> <a href="/t/?tag=php">php</a> <a href="/t/?tag=fpm">fpm</a> <a href="/t/?tag=fastcgi">fastcgi</a> <a href="/t/?tag=debian">debian</a> <a href="/t/?tag=rewrite">rewrite</a></p>
-</div>
+<p>Tag: nginx dokuwiki php fpm fastcgi debian rewrite</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

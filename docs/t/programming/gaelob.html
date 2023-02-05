@@ -29,7 +29,7 @@
   <title>Google App Engine に大きなデータを入れる - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -104,6 +104,7 @@
 <p>1MB の制限についてですが、 Google App Engine のデータストアの内部の文字コードがなんなのかがよくわかりません。ローカルのテスト環境の WEB-INF/appengine-generated/local_db.bin をみたところ、アルファベットは ASCII と同じコード値で保存されているようです。 UTF-8 を使っているのかな？ いずれにしても、 base64 エンコード後の String は、単純に文字数と同じバイト数になるようです。であれば、 2048件は保存できそうです。</p>
 <p>これを LinkedList<String> にして保存してみたところ、テスト環境も本番環境も問題ありませんでした。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

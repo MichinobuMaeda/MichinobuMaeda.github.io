@@ -2,6 +2,7 @@ import os
 import re
 import datetime
 import json
+import math
 import pytz
 import markdown
 from mdx_gfm import PartialGithubFlavoredMarkdownExtension
@@ -34,20 +35,6 @@ def get_tags(html):
     return ret[-1][-1].lower().split() if len(ret) else []
 
 
-def set_tag_links(html, cat, tags):
-    el = '<p>Tag:'
-    for tag in tags:
-        el = f'{el} <a href="/{cat}/?tag={tag}">{tag}</a>'
-    el = f'{el}</p>\n'
-
-    ret = re.findall(
-        r"(<p(\s[^>]*)*>Tag:\s*(.*)\s*</p>)",
-        html,
-        flags=re.IGNORECASE
-    )
-    return html.replace(ret[-1][0], el) if cat and len(ret) else html
-
-
 def render_markdown(path):
     return markdown.markdown(
         open(
@@ -65,7 +52,6 @@ def save_html(tmpl, cat, path, content, sample=False):
     title = get_title(content)
     updated_at = get_updaed_at(content)
     tags = get_tags(content)
-    content = set_tag_links(content, cat, tags)
 
     open(
         path,
@@ -99,14 +85,37 @@ def sort_key_updated_at(el):
 
 def generate_cat_index(pages, cat, title):
     pages.sort(key=sort_key_updated_at, reverse=True)
+
     html = f'<h1>{title}</h1>\n'
-    html = f'{html}<ul class="index">\n'
+
+    html = f'{html}<ul id="tag-cloud">\n'
+    cloud = {}
+    for page in pages:
+        if page['cat'] == cat:
+            tags = page['tags']
+            for tag in tags:
+                if tag in cloud:
+                    cloud[tag] += 1
+                else:
+                    cloud[tag] = 1
+    tag_names = list(cloud.keys())
+    tag_names.sort()
+    for name in tag_names:
+        size = min(math.ceil(math.log(cloud[name], 2)) + 1, 9)
+        html = f'{html}<li id="tag-{name}"><a href="/{cat}/?tag={name}" class="tag-{size}">{name}</a></li>'
+    html = f'{html}</ul>\n'
+
+    if len(tag_names):
+        html = f'{html}<p id="tag-ALL"><a href="/{cat}/">フィルタ解除</a></p>\n'
+
+    html = f'{html}<ul id="toc">\n'
     for page in pages:
         if page['cat'] == cat:
             updated_at = page['updated_at']
             title = page['title']
             path = page['path']
-            html = f'{html}<li>{updated_at} <a href="/{path}">{title}</a></li>\n'
+            tags = ' '.join(page['tags'])
+            html = f'{html}<li>{updated_at} <a href="/{path}" title="{tags}">{title}</a></li>\n'
     html = f'{html}</ul>\n'
     return html
 

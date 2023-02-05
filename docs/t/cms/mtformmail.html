@@ -29,7 +29,7 @@
   <title>Movable Type で問い合わせページ - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -334,6 +334,7 @@ function send_mail($file, $sender, $name, $from, $to, $body, $site_name)
 }
 </code></pre></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

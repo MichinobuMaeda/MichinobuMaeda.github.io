@@ -29,7 +29,7 @@
   <title>Pure-FTPd の Google Compute Engine 向けの設定 - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -118,9 +118,9 @@ Passive 接続する FTP クライアントにその External IP
 というファイルを無ければ追加して External IP を記載すればいいです。
 設定の反映のために <code>sudo service pure-ftpd restart</code> してください。
 ( <a href="http://getasysadmin.com/2012/12/enable-passive-mode-for-pure-ftpd-on-aws/">Enable passive mode for Pure-ftpd on AWS</a> )</p>
-<p>Tag: <a href="/t/?tag=pure-ftpd">pure-ftpd</a> <a href="/t/?tag=cloud">cloud</a></p>
-</div>
+<p>Tag: Pure-FTPd Cloud</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>

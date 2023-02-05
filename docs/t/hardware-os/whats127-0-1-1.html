@@ -29,7 +29,7 @@
   <title>127.0.1.1 って？ - みちのぶのねぐら</title>
 </head>
 
-<body>
+<body onload="onBodyLoading()">
   <!-- Mermaid: https://mermaid.js.org/ -->
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
@@ -101,6 +101,7 @@
 <p><a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099"><a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099">http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=316099</a></a></p>
 <p><code>/etc/hosts</code> の中に <code>hostname</code> があった方がいい場合があるのでとりあえず入れといた、ってことのようです。固定の IP アドレスがない場合が云々と書いてますが、 DHCP 使わずに固定 IP 割り当てる場合は、普通にそのアドレスにしておけばいいってことですね。</p></div>
 
+  <script src="/js/site.js"></script>
 </body>
 
 </html>
