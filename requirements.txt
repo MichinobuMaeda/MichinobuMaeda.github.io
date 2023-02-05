@@ -1,0 +1,9 @@
+autopep8==2.0.1
+importlib-metadata==6.0.0
+Markdown==3.4.1
+md-mermaid==0.1.1
+py-gfm==2.0.0
+pycodestyle==2.10.0
+pytz==2022.7.1
+tomli==2.0.1
+zipp==3.12.0
