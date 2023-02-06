@@ -2,6 +2,17 @@
     "pages": [
         {
             "cat": "t",
+            "path": "t/20230206mermaid.html",
+            "title": "Markdown の Mermaid をプラグイン無しで",
+            "updated_at": "2023-02-06",
+            "tags": [
+                "markdown",
+                "python",
+                "mermaid"
+            ]
+        },
+        {
+            "cat": "t",
             "path": "t/20230122vscodetoxcase.html",
             "title": "VS Code で大文字・小文字変換",
             "updated_at": "2023-01-22",
