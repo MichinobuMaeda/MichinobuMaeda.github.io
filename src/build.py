@@ -3,6 +3,7 @@ import re
 import datetime
 import json
 import math
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 import pytz
 import markdown
 from mdx_gfm import PartialGithubFlavoredMarkdownExtension
@@ -17,14 +18,15 @@ class Category:
 class MdData:
     def __init__(self, path):
         self.path = path
-        self.md = open(self.path, encoding='utf8').read()
+        self.src = open(self.path, encoding='utf8').read()
         self.title = ''
         self.updated_at = ''
         self.tags = []
 
         first_line = ''
         second_line = ''
-        for line in self.md.split('\n'):
+
+        for line in self.src.split('\n'):
             if first_line == '':
                 first_line = line
             elif second_line == '':
@@ -51,46 +53,28 @@ class MdData:
         if self.title == '' and re.match(r"^=+$", second_line):
             self.title = first_line
 
-    def get_html(self):
-        return markdown.markdown(
-            self.md,
-            extensions=[PartialGithubFlavoredMarkdownExtension()]
-        ).replace(
-            'class="language-mermaid"',
-            'class="mermaid nohighlight"'
-        )
 
-    def get_html_path(self):
-        return re.sub(r"\.md$", '.html', self.path, flags=re.IGNORECASE)
-
-
-def save_html_from_md(tmpl, md, sample=False):
-    save_html(
-        tmpl,
-        md.get_html_path(),
-        md.get_html(),
-        md.title,
-        sample
+def render_markdown(md):
+    return markdown.markdown(
+        md,
+        extensions=[PartialGithubFlavoredMarkdownExtension()]
+    ).replace(
+        'class="language-mermaid"',
+        'class="mermaid nohighlight"'
     )
 
 
-def save_html(tmpl, path, content, title, sample=False):
-    open(
-        path,
-        'w',
-        encoding='utf-8'
-    ).write(
-        tmpl.replace(
-            '%%root%%',
-            '../docs/' if sample else '/'
-        ).replace(
-            '%%title%%',
-            f'{title} - ' if title else ''
-        ).replace(
-            '%%content%%',
-            content
-        )
-    )
+def get_html_path(md_path):
+    return re.sub(r"\.md$", '.html', md_path, flags=re.IGNORECASE)
+
+
+def save_html(path, html):
+    open(path, 'w', encoding='utf-8').write(html)
+
+
+def save_meta(meta):
+    with open(os.path.join(docs, 'meta.json'), 'w', encoding='utf-8') as f:
+        json.dump(meta, f, ensure_ascii=False, indent=4)
 
 
 def sort_key_updated_at(el):
@@ -103,7 +87,7 @@ def sort_key_updated_at(el):
 def generate_tag_cloud_data(pages, cat):
     cloud = {}
     for page in pages:
-        if page['cat'] == cat:
+        if page['cat'] == cat.id:
             tags = page['tags']
             for tag in tags:
                 if tag in cloud:
@@ -115,70 +99,54 @@ def generate_tag_cloud_data(pages, cat):
 
     ret = []
     for name in tag_names:
-       ret.append({
+        ret.append({
             'name': name,
             'size': min(math.ceil(math.log(cloud[name], 2)) + 1, 9),
         })
+
     return ret
-
-
-def generate_cat_index(pages, cat, title):
-    html = f'<h1>{title}</h1>\n'
-
-    tag_cloud = generate_tag_cloud_data(pages, cat)
-
-    if tag_cloud:
-        html = f'{html}<ul id="tag-cloud">\n'
-        for tag in tag_cloud:
-            name = tag['name']
-            size = tag['size']
-            html = f'{html}<li id="tag-{name}"><a href="/{cat}/?tag={name}" class="tag-{size}">{name}</a></li>'
-        html = f'{html}</ul>\n'
-        html = f'{html}<p id="tag-ALL"><a href="/{cat}/">フィルタ解除</a></p>\n'
-
-    html = f'{html}<ul id="toc">\n'
-    for page in pages:
-        if page['cat'] == cat:
-            updated_at = page['updated_at'] if page['updated_at'] else 'unknown'
-            title = page['title']
-            path = page['path']
-            tags = ' '.join(page['tags'])
-            html = f'{html}<li>{updated_at} <a href="/{path}" title="{tags}">{title}</a></li>\n'
-    html = f'{html}</ul>\n'
-    return html
 
 
 if __name__ == '__main__':
     src = os.path.dirname(__file__)
     docs = os.path.join(src, '..', 'docs')
-    meta_path = os.path.join(docs, 'meta.json')
-    ts = datetime.datetime.now(pytz.timezone('Asia/Tokyo')).isoformat()
-
+    year = str(datetime.datetime.now(pytz.timezone('Asia/Tokyo')).year)
     categories = [
         Category('t', '工作室'),
         Category('l', '厚生部'),
         Category('p', '政治局'),
     ]
+    meta = {'pages': []}
 
-    tmpl = open(
-        os.path.join(src, 'template.html'),
-        encoding='utf8'
-    ).read().replace(
-        '%%copyright_year%%',
-        ts[0:4]
+    jinja = Environment(
+        loader=FileSystemLoader(src),
+        autoescape=select_autoescape()
+    )
+    layout = jinja.get_template('template_layout.html')
+    cat_index = jinja.get_template('template_cat_index.html')
+
+    md = MdData(os.path.join(src, 'sample.md'))
+    save_html(
+        get_html_path(md.path),
+        layout.render({
+            'categories': categories,
+            'year': year,
+            'root': '../docs/',
+            'title': md.title,
+            'content': render_markdown(md.src),
+        })
     )
 
-    pages = []
-
-    save_html_from_md(
-        tmpl,
-        MdData(os.path.join(src, 'sample.md')),
-        sample=True
-    )
-
-    save_html_from_md(
-        tmpl,
-        MdData(os.path.join(docs, 'index.md')),
+    md = MdData(os.path.join(docs, 'index.md'))
+    save_html(
+        get_html_path(md.path),
+        layout.render({
+            'categories': categories,
+            'year': year,
+            'root': '/',
+            'title': md.title,
+            'content': render_markdown(md.src),
+        })
     )
 
     for cat in categories:
@@ -186,25 +154,41 @@ if __name__ == '__main__':
             for file in files:
                 if re.match(r".*\.md$", file, flags=re.IGNORECASE):
                     md = MdData(os.path.join(root, file))
-                    save_html_from_md(tmpl, md)
-                    pages.append({
+                    save_html(
+                        get_html_path(md.path),
+                        layout.render({
+                            'categories': categories,
+                            'year': year,
+                            'root': '/',
+                            'title': md.title,
+                            'content': render_markdown(md.src),
+                        })
+                    )
+                    meta['pages'].append({
                         'cat': cat.id,
-                        'path': os.path.relpath(md.get_html_path(), docs).replace('\\', '/'),
+                        'path': os.path.relpath(get_html_path(md.path), docs).replace('\\', '/'),
                         'title': md.title,
                         'updated_at': md.updated_at,
                         'tags': md.tags,
                     })
 
-    pages.sort(key=sort_key_updated_at, reverse=True)
+    meta['pages'].sort(key=sort_key_updated_at, reverse=True)
 
     for cat in categories:
         save_html(
-            tmpl,
             os.path.join(docs, cat.id, 'index.html'),
-            generate_cat_index(pages, cat.id, cat.name),
-            cat.name
+            layout.render({
+                'categories': categories,
+                'year': year,
+                'root': '/',
+                'title': cat.name,
+                'content': cat_index.render({
+                    'title': cat.name,
+                    'cat': cat.id,
+                    'tag_cloud': generate_tag_cloud_data(meta['pages'], cat),
+                    'pages': [page for page in meta['pages'] if page['cat'] == cat.id],
+                }),
+            })
         )
 
-    # pages.sort(key=sort_key_path)
-    with open(meta_path, 'w', encoding='utf-8') as f:
-        json.dump({'pages': pages}, f, ensure_ascii=False, indent=4)
+    save_meta(meta)
