@@ -48,7 +48,7 @@ def render_markdown(path):
     )
 
 
-def save_html(tmpl, cat, path, content, sample=False):
+def save_html(tmpl, path, content, sample=False):
     title = get_title(content)
     updated_at = get_updaed_at(content)
     tags = get_tags(content)
@@ -78,9 +78,10 @@ def sort_key_path(el):
 
 
 def sort_key_updated_at(el):
-    ts = el['updated_at']
+    ret = re.match(r"^2.*$", el['updated_at'])
+    ts = ret.group(0) if ret else ''
     path = el['path']
-    return ts if re.match(r"2.*", ts) else f' {path}'
+    return f'{ts} {path}'
 
 
 def generate_cat_index(pages, cat, title):
@@ -146,7 +147,6 @@ if __name__ == '__main__':
     md_path = os.path.join(src, 'sample.md')
     save_html(
         tmpl,
-        't',
         re.sub(r"\.md$", '.html', md_path, flags=re.IGNORECASE),
         render_markdown(md_path),
         sample=True
@@ -155,7 +155,6 @@ if __name__ == '__main__':
     md_path = os.path.join(docs, 'index.md')
     save_html(
         tmpl,
-        None,
         re.sub(r"\.md$", '.html', md_path, flags=re.IGNORECASE),
         render_markdown(md_path),
     )
@@ -167,7 +166,6 @@ if __name__ == '__main__':
                     md_path = os.path.join(root, file)
                     (title, updated_at, tags) = save_html(
                         tmpl,
-                        't',
                         re.sub(r"\.md$", '.html', md_path,
                                flags=re.IGNORECASE),
                         render_markdown(md_path),
@@ -185,7 +183,6 @@ if __name__ == '__main__':
     for cat in categories.keys():
         save_html(
             tmpl,
-            't',
             os.path.join(docs, cat, 'index.html'),
             generate_cat_index(pages, cat, categories[cat]),
         )

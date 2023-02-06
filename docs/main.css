@@ -593,6 +593,7 @@ nav ul li a {
   margin-right: auto;
   margin-bottom: 1rem;
   display: grid;
+  min-height: 100vh;
   max-width: 48rem;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   --tw-bg-opacity: 1;
