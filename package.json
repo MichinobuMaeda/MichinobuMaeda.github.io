@@ -4,7 +4,7 @@
   "description": "Static site generator for me",
   "scripts": {
     "build": "npm run build:css && npm run build:html",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./_site/main.css",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./docs/main.css",
     "build:html": "python ./src/build.py",
     "rebuild": "npm run clean && npm run build:css && npm run build:html",
     "clean": "rm -rf _site",
