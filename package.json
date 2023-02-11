@@ -4,9 +4,11 @@
   "description": "Static site generator for me",
   "scripts": {
     "build": "npm run build:css && npm run build:html",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./docs/main.css",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./_site/main.css",
     "build:html": "python ./src/build.py",
-    "preview": "python -m http.server 8000 --directory ./docs/",
+    "rebuild": "npm run clean && npm run build:css && npm run build:html",
+    "clean": "rm -rf _site",
+    "start": "python -m http.server 8000 --directory ./_site/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
