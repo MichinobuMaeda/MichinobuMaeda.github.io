@@ -2,7 +2,7 @@
 
 Update: 2024-10-25
 
-[Tailwind 用の Material 3 Color Theme](20241019md3colors.md) の続きです。
+[Tailwind 用の Material 3 Color Theme](20241019md3colors.html) の続きです。
 
 [Mamba UI](https://mambaui.com/) や [HyperUI](https://www.hyperui.dev/) を参考に、
 Material Design 3 にできるだけ近い形の Svelte のコンポーネントを作ってみました。
