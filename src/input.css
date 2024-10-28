@@ -68,7 +68,7 @@ footer ul {
 }
 
 #social-media li {
-  @apply m-0 inline-block align-middle;
+  @apply my-0 mx-1.5 inline-block align-middle;
 }
 
 #social-media li a {

@@ -739,7 +739,10 @@ footer ul {
 }
 
 #social-media li {
-  margin: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0.375rem;
+  margin-right: 0.375rem;
   display: inline-block;
   vertical-align: middle;
 }
