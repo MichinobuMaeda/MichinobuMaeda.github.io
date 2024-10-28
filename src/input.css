@@ -2,176 +2,194 @@
 @tailwind components;
 @tailwind utilities;
 
-body, div, span, p, h1, h2, h3, h4, h5, th, td, li, dt, dt, header, nav, footer {
-  @apply font-medium font-sans
+body,
+div,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+th,
+td,
+li,
+dt,
+dt,
+header,
+nav,
+footer {
+  @apply font-medium font-sans;
 }
 
 body {
-  @apply bg-slate-400
+  @apply bg-slate-400;
 }
 
 header {
-  @apply bg-slate-900 text-slate-50 text-xl pt-1
+  @apply bg-slate-900 text-slate-50 text-xl pt-1;
 }
 
 header img {
-  @apply inline-block align-text-bottom
+  @apply inline-block align-text-bottom;
 }
 
-nav, nav ul li {
-  @apply inline-block
+nav,
+nav ul li {
+  @apply inline-block;
 }
 
 nav ul li a {
-  @apply inline-block py-2 px-1
+  @apply inline-block py-2 px-1;
 }
 
 #main {
-  @apply bg-slate-200 container mx-auto grid grid-cols-1 lg:grid-cols-3 max-w-3xl lg:max-w-6xl mb-4 min-h-screen
+  @apply bg-slate-200 container mx-auto grid grid-cols-1 lg:grid-cols-3 max-w-3xl lg:max-w-6xl mb-4 min-h-screen;
 }
 
 .content {
-  @apply bg-zinc-50 col-span-1 lg:col-span-2 py-3 px-3 sm:py-5 sm:px-5 md:py-8 md:px-8 xl:py-8 xl:px-12
+  @apply bg-zinc-50 col-span-1 lg:col-span-2 py-3 px-3 sm:py-5 sm:px-5 md:py-8 md:px-8 xl:py-8 xl:px-12;
 }
 
 footer {
-  @apply col-span-1
+  @apply col-span-1;
 }
 
 footer h2 {
-  @apply bg-slate-600 text-white block mt-0 mb-2 text-center text-lg
+  @apply bg-slate-600 text-white block mt-0 mb-2 text-center text-lg;
 }
 
 footer ul {
-  @apply mx-1 px-0 mb-2
+  @apply mx-1 px-0 mb-2;
 }
 
 #social-media {
-  @apply text-center mb-2
+  @apply text-center mb-2;
 }
 
 #social-media li {
-  @apply inline-block align-middle mx-1
+  @apply m-0 inline-block align-middle;
 }
 
 #social-media li a {
-  @apply mx-1 px-0.5 my-0 py-1
+  @apply m-0 px-0.5 py-1;
 }
 
 #social-media li a img {
-  @apply inline-block h-4
+  @apply inline-block h-4;
 }
 
 #license {
-  @apply px-2 text-sm
+  @apply px-2 text-sm;
 }
 
 #license .copyright,
 #license .license-logo,
 #license .license-desc {
-  @apply mb-2 font-serif
+  @apply mb-2 font-serif;
 }
 
 .content a,
 footer a,
 ul#updates li a {
-  @apply underline text-cyan-700
+  @apply underline text-cyan-700;
 }
 
 code {
-  @apply text-rose-900 px-2 bg-rose-50
+  @apply text-rose-900 px-2 bg-rose-50;
 }
 
 pre code:not(.mermaid) {
-  @apply block bg-white text-black border-slate-200 border-2 my-2 rounded-lg
+  @apply block bg-white text-black border-slate-200 border-2 my-2 rounded-lg;
 }
 
 h1 {
-  @apply text-4xl mb-3
+  @apply text-4xl mb-3;
 }
 
 h2 {
-  @apply text-3xl mt-6 mb-3
+  @apply text-3xl mt-6 mb-3;
 }
 
 h3 {
-  @apply text-2xl mt-6 mb-3
+  @apply text-2xl mt-6 mb-3;
 }
 
 h4 {
-  @apply text-xl mt-6 mb-3
+  @apply text-xl mt-6 mb-3;
 }
 
 h5 {
-  @apply text-lg mt-6 mb-3
+  @apply text-lg mt-6 mb-3;
 }
 
 h6 {
-  @apply font-bold mt-6 mb-3
+  @apply font-bold mt-6 mb-3;
 }
 
 p {
-  @apply pt-1 pb-2 leading-7
+  @apply pt-1 pb-2 leading-7;
 }
 
 ol li {
-  @apply list-decimal
+  @apply list-decimal;
 }
 
 ul li {
-  @apply list-disc
+  @apply list-disc;
 }
 
 li {
-  @apply ml-4 leading-7
+  @apply ml-4 leading-7;
 }
 
-ol, ul {
-  @apply pl-4
+ol,
+ul {
+  @apply pl-4;
 }
 
 ul#updates,
 ul#toc,
 ul#tag-cloud {
-  @apply pl-0
+  @apply pl-0;
 }
 
 ul#toc {
-  @apply mt-2
+  @apply mt-2;
 }
 
 ul#tag-cloud {
-  @apply mb-0
+  @apply mb-0;
 }
 
 ul#updates li,
 ul#toc li,
 ul#tag-cloud li {
-  @apply list-none ml-0
+  @apply list-none ml-0;
 }
 
 ul#updates {
-  @apply mx-2
+  @apply mx-2;
 }
 
 ul#updates li {
-  @apply leading-6 mb-1
+  @apply leading-6 mb-1;
 }
 
 #tag-ALL {
-  @apply block mt-1 text-center
+  @apply block mt-1 text-center;
 }
 
 ul#tag-cloud li {
-  @apply inline-block px-1 leading-6
+  @apply inline-block px-1 leading-6;
 }
 
 ul#tag-cloud li a {
-  @apply no-underline
+  @apply no-underline;
 }
 
 ul#tag-cloud li a.tag-1 {
-  font-size: 1.0em;
+  font-size: 1em;
 }
 
 ul#tag-cloud li a.tag-2 {
@@ -203,5 +221,5 @@ ul#tag-cloud li a.tag-8 {
 }
 
 ul#tag-cloud li a.tag-9 {
-  font-size: 2.0em;
+  font-size: 2em;
 }
