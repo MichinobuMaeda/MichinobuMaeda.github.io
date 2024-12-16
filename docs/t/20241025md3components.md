@@ -14,6 +14,6 @@ Svelte のソースはほぼ HTML そのままなので Svelte 以外でも使�
 
 <https://github.com/MichinobuMaeda/coarse-paper>
 
-![Svelte 用の Material 3 風のコンポーネント](20241025md3components01.png)
+<img src="20241025md3components01.png" alt="Svelte 用の Material 3 風のコンポーネント" style="width:320px;"/>
 
 Tag: tailwind material

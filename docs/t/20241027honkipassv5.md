@@ -11,6 +11,6 @@ Flutter で作った [v4](https://github.com/MichinobuMaeda/honkipass) は起動
 
 実物: <https://honkipass.michinobu.jp/>
 
-![本気でパスワード v5](20241027honkipassv5.png)
+<img src="20241027honkipassv5.png" alt="本気でパスワード v5" style="width:320px;"/>
 
 Tag: tailwind material
