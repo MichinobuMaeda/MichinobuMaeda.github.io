@@ -1,4 +1,4 @@
-![drgon](img/dragon2013.jpg)
+![dragon](img/dragon2013.jpg)
 
 ## 前田道信
 

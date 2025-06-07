@@ -10,6 +10,7 @@ import pytz
 import markdown
 from mdx_gfm import PartialGithubFlavoredMarkdownExtension
 
+max_description_length = 80
 
 class Category:
     def __init__(self, id, name):
@@ -23,6 +24,7 @@ class MdData:
         self.src = open(self.path, encoding='utf8').read()
         self.title = ''
         self.updated_at = ''
+        self.description = ''
         self.tags = []
 
         first_line = ''
@@ -42,10 +44,19 @@ class MdData:
 
             # Get first 'Update: '
             if self.updated_at == '':
-                ret = re.match(r"^Update:\s*(?P<text>.+)\s*$",
-                               line, re.IGNORECASE)
+                ret = re.match(r"^Update:\s*(?P<text>.+)\s*$", line, re.IGNORECASE)
                 if ret and ret.group('text'):
                     self.updated_at = ret.group('text')
+
+            # Get first 'Description: '
+            if self.description == '':
+                if not re.match(r"^#", line, re.IGNORECASE):
+                    if not re.match(r"^Update:", line, re.IGNORECASE):
+                        text = line.strip()
+                        if len(text) > 0 and len(text) <= max_description_length:
+                            self.description = text
+                        elif len(text) > max_description_length:
+                            self.description = text[0:max_description_length] + '...'
 
             # Get last 'Tag: '
             ret = re.match(r"^Tag:\s*(?P<text>.+)\s*$", line, re.IGNORECASE)
@@ -144,6 +155,7 @@ if __name__ == '__main__':
             'year': year,
             'root': '../docs/',
             'title': md.title,
+            'description': md.description,
             'content': render_markdown(md.src),
         })
     )
@@ -156,6 +168,7 @@ if __name__ == '__main__':
             'year': year,
             'root': '/',
             'title': md.title,
+            'description': 'Home',
             'content': render_markdown(md.src),
         })
     )
@@ -178,6 +191,7 @@ if __name__ == '__main__':
                         'year': year,
                         'root': '/',
                         'title': md.title,
+                        'description': md.description,
                         'content': render_markdown(md.src),
                     })
                 )

@@ -1,13 +1,24 @@
 {
     "cSpell.words": [
+        "autopep",
+        "certifi",
+        "colorclass",
+        "docopt",
         "Firestore",
+        "idna",
         "Maeda",
         "Michinobu",
         "Misskey",
         "mixi",
         "mixnb",
         "nohighlight",
+        "pycodestyle",
         "pytz",
-        "tailwindcss"
+        "tailwindcss",
+        "terminaltables",
+        "tomli",
+        "upgrader",
+        "urllib",
+        "zipp"
     ]
 }
