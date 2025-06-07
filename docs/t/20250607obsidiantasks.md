@@ -8,36 +8,35 @@ Update: 2025-05-24
 
 まず、次のような内容のファイルを Obsidian のフォルダのトップなど開きやすい場所に置きます。このファイルには直接タスクは記入しません。表示専用です。
 
-<pre>
-## 期限超過
-```tasks
+<pre class="highlight"><code class="language-markdown"
+>## 期限超過
+&grave;&grave;&grave;tasks
 due on or before yesterday
 not done
-```
+&grave;&grave;&grave;
 
 ## 本日
-```tasks
+&grave;&grave;&grave;tasks
 due today
 not done
-```
+&grave;&grave;&grave;
 
 ## 明日
-```tasks
+&grave;&grave;&grave;tasks
 due tomorrow
 not done
-```
+&grave;&grave;&grave;
 
 ## 先の予定
-```tasks
+&grave;&grave;&grave;tasks
 due after tomorrow
 not done
-```
+&grave;&grave;&grave;
 
 ## 済
-```tasks
+&grave;&grave;&grave;tasks
 done
-```
-</pre>
+&grave;&grave;&grave;</code></pre>
 
 この設定内容は自分の好みで変えてください。
 
