@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 body,
 div,
@@ -19,7 +17,7 @@ dt,
 header,
 nav,
 footer {
-  @apply font-medium font-sans;
+  @apply font-normal font-sans;
 }
 
 body {
@@ -63,6 +61,10 @@ footer ul {
   @apply mx-1 px-0 mb-2;
 }
 
+.date {
+  @apply font-mono text-slate-500;
+}
+
 #social-media {
   @apply text-center mb-2;
 }
@@ -95,7 +97,7 @@ ul#updates li a {
   @apply underline text-cyan-700;
 }
 
-code {
+code:not(.nohighlight) {
   @apply text-rose-900 px-2 bg-rose-50;
 }
 

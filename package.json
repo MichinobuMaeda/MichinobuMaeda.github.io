@@ -2,13 +2,10 @@
   "name": "pages",
   "version": "1.0.0",
   "description": "Static site generator for me",
+  "type": "module",
   "scripts": {
-    "build": "npm run build:css && npm run build:html",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./docs/main.css",
-    "build:html": "python ./src/build.py",
-    "rebuild": "npm run clean && npm run build:css && npm run build:html",
-    "clean": "rm -rf _site",
-    "start": "python -m http.server 8000 --directory ./_site/",
+    "build": "node build.js",
+    "start": "npx http-server _site -p 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +18,14 @@
     "url": "https://github.com/MichinobuMaeda/MichinobuMaeda.github.io/issues"
   },
   "homepage": "https://michinobu.jp",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "marked": "^16.0.0",
+    "mustache": "^4.2.0",
+    "tailwindcss": "^4.1.11"
+  },
   "devDependencies": {
-    "tailwindcss": "^3.4.3"
+    "http-server": "^14.1.1",
+    "prettier": "3.6.2"
   }
 }

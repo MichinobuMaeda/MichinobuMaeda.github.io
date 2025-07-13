@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "github.vscode-github-actions",
+    "eamodio.gitlens",
+    "ms-ceintl.vscode-language-pack-ja",
+    "bierner.markdown-mermaid",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "tomoki1207.pdf"
+  ]
+}
