@@ -1,7 +1,6 @@
 function onBodyLoading() {
   filterByTag();
   setTagLink();
-  showUpdates(5);
 }
 
 function filterByTag() {
