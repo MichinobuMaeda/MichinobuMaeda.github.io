@@ -29,8 +29,6 @@ export class Generator {
     source,
     target,
     template,
-    inputCss,
-    outputCss,
     layout,
     descriptionLength,
     noTitle,
@@ -43,8 +41,6 @@ export class Generator {
     this.target = target || "./_site";
     this.source = source || "./docs";
     this.template = template || "./template";
-    this.inputCss = inputCss || "input.css";
-    this.outputCss = outputCss || "main.css";
     this.layout = layout || "layout.html";
     this.descriptionLength = descriptionLength || 160;
     this.noTitle = noTitle || "No Title";
@@ -69,7 +65,6 @@ export class Generator {
 
     await this.clean();
     await Promise.all([
-      this.generateCss(),
       this.getAllSourceFiles().then(({ md, media }) =>
         Promise.all([
           this.generateMetaData(md).then((metaData) =>
@@ -97,19 +92,6 @@ export class Generator {
       await rm(this.target, { recursive: true });
     }
     await mkdir(this.target, { recursive: true });
-  }
-
-  /**
-   * Generate css in target dir.
-   *
-   * @returns {Promise<void>}
-   */
-  async generateCss() {
-    console.info("Start: Generate css");
-    const inputCss = join(this.template, this.inputCss);
-    const outputCss = join(this.target, this.outputCss);
-    await execAsync(`npx tailwindcss -i ${inputCss} -o ${outputCss}`);
-    console.info("End  : Generate css");
   }
 
   /**
@@ -375,8 +357,16 @@ export class Generator {
       }
     }
 
+    const count2Class = (count) => {
+      if (count >= 16) return "tag-5";
+      if (count >= 8) return "tag-4";
+      if (count >= 4) return "tag-3";
+      if (count >= 2) return "tag-2";
+      return "tag-1";
+    };
+
     const tagList = Object.entries(tags)
-      .map(([name, count]) => ({ name, count }))
+      .map(([name, count]) => ({ name, class: count2Class(count) }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
     console.info("End  : Generate tag cloud data");

@@ -4,6 +4,7 @@
     "certifi",
     "colorclass",
     "docopt",
+    "esbenp",
     "Firestore",
     "idna",
     "Maeda",
@@ -21,6 +22,12 @@
     "upgrader",
     "urllib",
     "zipp"
+  ],
+  "cSpell.ignorePaths": [
+    "template/css/glassine-paper.min.css",
+    "_site/",
+    "docs/",
+    ".gitignore"
   ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"

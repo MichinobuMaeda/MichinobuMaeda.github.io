@@ -5,10 +5,6 @@ export default {
   target: "./_site",
   // Template directory for Mustache templates and Tailwind CSS. Default: "./template"
   template: "./template",
-  // Input CSS file for Tailwind CSS. Default: "input.css"
-  inputCss: "input.css",
-  // Output CSS file. Default: "main.css"
-  outputCss: "main.css",
   // Layout file of Mustache templates. Default: "layout.html"
   layout: "layout.html",
   // Description length. Default: 160
@@ -21,7 +17,7 @@ export default {
   lastUpdatesCount: 5,
   // Root path of the site. Default: "/"
   root: "/",
-  resources: ["img", "js", "favicon.ico"],
+  resources: ["img", "js", "css", "favicon.ico"],
   categories: [
     { path: "t", name: "工作室" },
     { path: "l", name: "厚生部" },

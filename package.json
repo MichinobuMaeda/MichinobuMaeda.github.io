@@ -19,13 +19,11 @@
   },
   "homepage": "https://michinobu.jp",
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.11",
-    "marked": "^16.0.0",
-    "mustache": "^4.2.0",
-    "tailwindcss": "^4.1.11"
+    "marked": "^16.4.2",
+    "mustache": "^4.2.0"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
-    "prettier": "3.6.2"
+    "prettier": "^3.7.4"
   }
 }
