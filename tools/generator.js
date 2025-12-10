@@ -1,4 +1,11 @@
-import { join, resolve, relative, dirname } from "node:path";
+import {
+  join,
+  resolve,
+  relative,
+  dirname,
+  isAbsolute,
+  normalize,
+} from "node:path";
 import { existsSync } from "node:fs";
 import {
   cp,
@@ -109,9 +116,7 @@ export class Generator {
       if ((await lstat(entry)).isFile()) {
         const dir = dirname(join(this.target, relative(this.source, entry)));
         if (!dirs.includes(dir)) {
-          if (!existsSync(dir)) {
-            await mkdir(dir, { recursive: true });
-          }
+          await mkdir(dir, { recursive: true });
           dirs.push(dir);
         }
         if (entry.endsWith(".md")) {
@@ -166,9 +171,7 @@ export class Generator {
     };
 
     const dir = dirname(relative(this.source, path));
-    if (!existsSync(join(this.target, dir))) {
-      await mkdir(join(this.target, dir), { recursive: true });
-    }
+    await mkdir(join(this.target, dir), { recursive: true });
 
     const md = await readFile(resolve(path), { encoding: "utf8" });
     let isTitleLine = false;
@@ -381,15 +384,21 @@ export class Generator {
   async copyResources() {
     console.info("Start: Copy resources");
     await Promise.all(
-      this.resources.map((resource) =>
-        cp(
-          join(resolve(this.template), resource),
-          join(resolve(this.target), resource),
-          {
+      this.resources.map(async (resource) => {
+        const src = join(resolve(this.template), resource);
+        const dest = join(resolve(this.target), resource);
+        const stat = await lstat(src);
+
+        if (stat.isFile()) {
+          await copyFile(src, dest);
+        } else if (stat.isDirectory()) {
+          await mkdir(dest, {
             recursive: true,
-          },
-        ),
-      ),
+            force: true,
+          });
+          cp(src, dest, { recursive: true, force: true });
+        }
+      }),
     );
     console.info("End  : Copy resources");
   }
@@ -404,4 +413,52 @@ export class Generator {
       resolve(path).startsWith(resolve(join(this.source, cat.path))),
     );
   }
+}
+
+const absolutePath = (relativePath) => {
+  // If path is already absolute, just normalize it
+  if (isAbsolute && isAbsolute(relativePath)) {
+    return normalize(relativePath);
+  }
+  return normalize(resolve(process.cwd(), relativePath));
+};
+
+export function generatorPlugin(config) {
+  return {
+    name: "generator-plugin",
+
+    async buildStart() {
+      console.info("buildStart()");
+      await new Generator(config).generate();
+    },
+
+    configureServer(server) {
+      const sourcePath = absolutePath(config.source);
+      const templatePath = absolutePath(config.template);
+
+      console.log("Watching source:", sourcePath);
+      console.log("Watching template:", templatePath);
+
+      // Add directories to watch
+      server.watcher.add([sourcePath, templatePath]);
+
+      // Listen to file changes
+      const regenerate = async (path) => {
+        if (path.startsWith(sourcePath) || path.startsWith(templatePath)) {
+          console.log(`${path} changed. Regenerating...`);
+          await new Generator(config).generate();
+
+          // Trigger full page reload
+          server.ws.send({
+            type: "full-reload",
+            path: "*",
+          });
+        }
+      };
+
+      server.watcher.on("change", regenerate);
+      server.watcher.on("add", regenerate);
+      server.watcher.on("unlink", regenerate);
+    },
+  };
 }
