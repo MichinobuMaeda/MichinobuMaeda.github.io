@@ -1,4 +1,7 @@
-export default {
+import { defineConfig } from "vite";
+import { generatorPlugin } from "./tools/generator.js";
+
+const config = {
   // Source directory for MarkDown files. Default: "./docs"
   source: "./docs",
   // Target directory for HTML files. Default: "./_site"
@@ -24,3 +27,28 @@ export default {
     { path: "p", name: "政治局" },
   ],
 };
+
+export default defineConfig({
+  root: "_site",
+  server: {
+    port: 8000,
+    open: true,
+    watch: {
+      ignored: ["!**/docs/**", "!**/template/**"],
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: "_site/index.html",
+      },
+    },
+  },
+  customLogger: {
+    info: () => {},
+    warn: console.warn,
+    error: console.error,
+  },
+  logLevel: "warn",
+  plugins: [generatorPlugin(config)],
+});

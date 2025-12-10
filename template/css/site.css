@@ -262,6 +262,18 @@ body {
   }
 }
 
+@media (width > 960px) {
+  body {
+    #main {
+      min-height: 100vh;
+    }
+
+    footer {
+      min-height: 100vh;
+    }
+  }
+}
+
 @media (width <= 960px) {
   body {
     flex-direction: column;
