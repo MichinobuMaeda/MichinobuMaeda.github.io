@@ -162,6 +162,7 @@ body {
     justify-content: start;
     align-items: flex-start;
     width: 480px;
+    min-width: 480px;
 
     background-color: light-dark(
       var(--color-light-surface-container-low),
@@ -258,6 +259,7 @@ body {
   body {
     footer {
       width: 360px;
+      min-width: 360px;
     }
   }
 }
@@ -319,8 +321,6 @@ body {
     }
 
     footer {
-      min-width: 0;
-
       #updates {
         padding: 0 0.25rem;
       }
