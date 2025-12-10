@@ -45,8 +45,14 @@ body {
       width: 100%;
       gap: 1rem;
       padding: 0.25rem 1rem 0.25rem 0.5rem;
-      background-color: #202020;
-      color: snow;
+      background-color: light-dark(
+        var(--color-light-inverse-surface),
+        var(--color-dark-surface)
+      );
+      color: light-dark(
+        var(--color-light-inverse-on-surface),
+        var(--color-dark-on-surface)
+      );
 
       a {
         display: flex;
