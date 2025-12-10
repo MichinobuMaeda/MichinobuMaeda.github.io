@@ -8,8 +8,8 @@ body {
   gap: 1px;
   min-height: 100vh;
   background-color: light-dark(
-    var(--color-light-surface-container-low),
-    var(--color-dark-surface-container-low)
+    var(--color-light-surface-container),
+    var(--color-dark-surface-container)
   );
 
   h1,
@@ -158,8 +158,8 @@ body {
     width: 480px;
 
     background-color: light-dark(
-      var(--color-light-surface-container),
-      var(--color-dark-surface-container)
+      var(--color-light-surface-container-low),
+      var(--color-dark-surface-container-low)
     );
     padding: 0 0 3rem 0;
 
@@ -251,7 +251,7 @@ body {
 @media (width <= 1280px) {
   body {
     footer {
-      width: 320px;
+      width: 360px;
     }
   }
 }
