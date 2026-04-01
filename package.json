@@ -19,11 +19,11 @@
   },
   "homepage": "https://michinobu.jp",
   "dependencies": {
-    "marked": "^16.4.2",
+    "marked": "^17.0.5",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "vite": "^7.2.7"
+    "prettier": "^3.8.1",
+    "vite": "^8.0.3"
   }
 }
