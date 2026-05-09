@@ -8,8 +8,6 @@ URL: <https://pages.michinobu.jp>
 
 - hugo >= v0.161
 
-### Initialize
-
 ### Build and test locally
 
 ```bash
