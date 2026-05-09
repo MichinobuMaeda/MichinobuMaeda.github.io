@@ -1,6 +1,7 @@
 baseURL = "https://pages.michinobu.jp/"
 locale = "ja"
 title = "みちのぶのねぐら"
+timeZone = "Asia/Tokyo"
 publishDir = "_site"
 uglyURLs = true
 enableRobotsTXT = false
@@ -8,7 +9,13 @@ enableRobotsTXT = false
 [params]
   year = "2026"
 
-disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
+disableKinds = ["sitemap"]
+
+[outputs]
+  home = ["HTML"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
 ignoreLogs = ["warning-module-mounts-excludefiles", "warning-module-mounts-includefiles", "deprecated"]
 
 [markup]

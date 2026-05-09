@@ -65,7 +65,7 @@
     <title>{{ block "title" . }}{{ if and (not .IsHome) .Title }}{{ .Title }} - {{ end }}みちのぶのねぐら{{ end }}</title>
   </head>
 
-  <body onload="onBodyLoading()">
+  <body>
     <!-- Mermaid: https://mermaid.js.org/ -->
     <script type="module">
       import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.8.1/+esm";
@@ -98,6 +98,5 @@
 
     {{ partial "sidebar.html" . }}
 
-    <script src="/js/main.js"></script>
   </body>
 </html>
