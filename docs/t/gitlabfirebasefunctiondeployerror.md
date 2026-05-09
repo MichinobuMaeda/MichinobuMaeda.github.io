@@ -1,7 +1,9 @@
-# GitLab で Firebase の Functions のデプロイがうまくいかない
-
-Update: 2020-07-11
-
++++
+title = "GitLab で Firebase の Functions のデプロイがうまくいかない"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["git", "firebase", "devops"]
++++
 
 GitLab で Firebase のデプロイをしていたら Functions でうまくいきません。
 Scheduler をトリガーにする function がエラーになります。
@@ -23,9 +25,3 @@ https://stackoverflow.com/questions/57255101/deploying-a-scheduler-cloud-functio
 まあ、そういうことはありそうだなぁ。
 
 追記： 自分用の Docker Image を作りました → [Firebase の CI/CD 用の Docker を作る](gitlabcicddockernodefirebase.html)
-
-
-Tag: git firebase devops
-
-
-

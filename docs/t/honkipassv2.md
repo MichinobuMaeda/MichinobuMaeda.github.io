@@ -1,6 +1,9 @@
-# 本気でパスワード v2.0
-
-Update: 2019-06-16
++++
+title = "本気でパスワード v2.0"
+date = 2019-06-16T00:00:00+09:00
+categories = ["tech"]
+tags = ["JavaScript", "security", "password"]
++++
 
 追記: 2021-05-23 最新版はこちら <https://pages.michinobu.jp/t/20210522honkipass.html>
 
@@ -16,5 +19,3 @@ Windows の Edge でタスクバーかスタートにピン止めした場合や
 実物はこちらです。 <https://michinobu.jp/honkipass/>
 
 ソースはこちらです。 <https://github.com/MichinobuMaeda/honkipass>
-
-Tag: JavaScript security password

@@ -1,6 +1,9 @@
-# OpenLDAP を Ubuntu 12.04 にインストール
-
-Update: 2012-12-23
++++
+title = "OpenLDAP を Ubuntu 12.04 にインストール"
+date = 2012-12-23T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 OpenLDAP を Ubuntu 12.04 にインストールしました。
 

@@ -1,8 +1,9 @@
-# PukiWiki で普通のサイトを作る
-
-Update: 2008-12-30
-
-
++++
+title = "PukiWiki で普通のサイトを作る"
+date = 2008-12-30T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 [PukiWiki](http://pukiwiki.sourceforge.jp/) で Wiki じゃない普通のサイトを作りました [IT業界の法令遵守をすすめよう!!](http://www.union-net.or.jp/compliance/) 。簡単です。 Wiki らしい機能を画面上から隠して、編集済みのページを凍結するだけです。
 

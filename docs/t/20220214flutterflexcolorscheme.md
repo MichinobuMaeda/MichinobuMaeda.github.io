@@ -1,6 +1,9 @@
-# Flutter の色の設定で楽をする
-
-Update: 2022-02-14
++++
+title = "Flutter の色の設定で楽をする"
+date = 2022-02-14T00:00:00+09:00
+categories = ["tech"]
+tags = ["flutter", "dart"]
++++
 
 Flutter の色の設定は
 
@@ -34,5 +37,3 @@ Flutter の色の設定は
         ...
   );
 ```
-
-Tag: flutter dart

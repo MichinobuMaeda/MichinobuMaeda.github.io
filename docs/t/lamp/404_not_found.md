@@ -1,6 +1,9 @@
-# 404 Not Found
-
-Update: 2011-05-12
++++
+title = "404 Not Found"
+date = 2011-05-12T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 ある日の、ある Web サーバのログです。
 

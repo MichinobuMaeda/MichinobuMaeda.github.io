@@ -1,6 +1,9 @@
-# react-scripts に Airbnb Style を足す
-
-Update: 2021-11-19
++++
+title = "react-scripts に Airbnb Style を足す"
+date = 2021-11-19T00:00:00+09:00
+categories = ["tech"]
+tags = ["nodejs", "react", "eslint"]
++++
 
 私はソースコードのスタイルをどうするか考えるのは面倒なのですが、かといってスタイルが揃ってないのも嫌なので、厳し目のルールを
 IDE などで自動で強制してもらうのが好みです。
@@ -53,7 +56,3 @@ $ yarn lint
 
 で大量のエラーと警告を表示してくれます。
 VS Code を起動し直すとエディタは真っ赤になります（笑
-
-
-
-Tag: nodejs react eslint

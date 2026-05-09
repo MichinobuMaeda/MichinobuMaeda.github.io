@@ -1,6 +1,9 @@
-# ubuntu 12.04 で resolv.conf が書き換えられる
-
-Update: 2012-08-25
++++
+title = "ubuntu 12.04 で resolv.conf が書き換えられる"
+date = 2012-08-25T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 まず最初に、 `resolve.conf` ではなく `resolv.conf` だそうです ^^;) bash の補完機能は便利ですねぇ ^^;;)
 

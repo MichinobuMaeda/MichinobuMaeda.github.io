@@ -1,6 +1,9 @@
-# Firebase で Cloud Tasks
-
-Update: 2022-08-21
++++
+title = "Firebase で Cloud Tasks"
+date = 2022-08-21T00:00:00+09:00
+categories = ["tech"]
+tags = ["firebase"]
++++
 
 Firebase functions で定時実行するジョブの実行の有無を、ジョブの結果で決めたいんだけど、ジョブ・キューみたいなことができるとうれしいんだけどとドキュメントを眺めていたら、いつの間にか
 [Enqueue functions with Cloud Tasks](https://firebase.google.com/docs/functions/task-functions)
@@ -35,5 +38,3 @@ exports.job2 = functions.region(region)
     .tasks.taskQueue({...})
     .onDispatch(async ({index}) => {...});
 ```
-
-Tag: firebase

@@ -1,8 +1,9 @@
-# GoodReader を使ってみた
-
-Update: 2010-09-18
-
-
++++
+title = "GoodReader を使ってみた"
+date = 2010-09-18T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 GoodReader というのは iPhone, iPad 向けの PDF Viewer その他の機能を持ったツールです。私の iPod touche でも動きます。書店でたまたま「GoodReader パーフェクトブック」 ( ISBN978-4-7973-6137-7 ) を見かけて買って、気に入ったので実物買いました。本は 1,280円、実物は 115円、なんだかなぁ。
 

@@ -1,7 +1,9 @@
-# Macで "xcrun: error:" が出たら
-
-Update: 2021-02-26
-
++++
+title = "Macで \"xcrun: error:\" が出たら"
+date = 2021-02-26T00:00:00+09:00
+categories = ["tech"]
+tags = ["macos", "xcode"]
++++
 
 私の MacBook で作業していると突然
 
@@ -35,8 +37,3 @@ https://developer.apple.com/download/more/
 
 から Xcode を入手しろとのことですが、私は Apple Developer ID は持ってないぞ。
 Xcode ならストアからインストールできるし、この記事を見る前はそれで巨大なやつを丸ごとインストールしてたけど。
-
-Tag: macos xcode
-
-
-

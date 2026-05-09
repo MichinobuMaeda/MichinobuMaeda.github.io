@@ -1,7 +1,9 @@
-# smtp_tls_security_level
-
-Update: 2017-12-07
-
++++
+title = "smtp_tls_security_level"
+date = 2017-12-07T00:00:00+09:00
+categories = ["tech"]
+tags = ["SMTP", "STARTTLS", "TLS", "Postfix"]
++++
 
 久しぶりに立てたメールサーバから Gmail 宛に送信すると、なんだか赤いマークが付いてます ^^;
 
@@ -21,6 +23,3 @@ smtp_tls_security_level = may
 ```
 
 で Gmail さんには文句言われなくなりました。
-
-Tag: SMTP STARTTLS TLS Postfix
-

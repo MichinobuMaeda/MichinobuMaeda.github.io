@@ -1,8 +1,9 @@
-# Subversion のレプリケート
-
-Update: 2010-12-05
-
-
++++
+title = "Subversion のレプリケート"
+date = 2010-12-05T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Google Code に置いた Subversion のリポジトリを他のサーバに複製することはできないかな？と思ってやってみました。複製先は自宅の Linux 機です。
 

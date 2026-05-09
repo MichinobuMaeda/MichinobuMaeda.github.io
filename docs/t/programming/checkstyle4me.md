@@ -1,8 +1,9 @@
-# Checkstyle をチェックする
-
-Update: 2006-01-06
-
-
++++
+title = "Checkstyle をチェックする"
+date = 2006-01-06T00:00:00+09:00
+categories = ["tech"]
+tags = ["java", "checkstyle"]
++++
 
 あまり真剣に読まないように。
 
@@ -1062,5 +1063,3 @@ static でも private でも無いメソッドについて、 次のいずれか
 
 
 `long` の定数 ( リテラル？ ) に、小文字の `l` ではなく `L` が付与されていることをチェックする。
-
-Tag: java checkstyle

@@ -1,7 +1,9 @@
-# Firebase の CI/CD 用の Docker を作る
-
-Update: 2020-07-11
-
++++
+title = "Firebase の CI/CD 用の Docker を作る"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["docker", "firebase", "gitlab", "node", "n"]
++++
 
 先日買った Chromebook の Debian に
 [Docker Engine](https://docs.docker.com/engine/)
@@ -35,5 +37,3 @@ n で node 10 にします。ベースイメージのバージョンを指定す
 
 これを最新にするにはイメージをキャッシュ無しで再ビルドすればいいはず。
 後日 firebase-tools のアップデートが出たらやってみます。
-
-Tag: docker firebase gitlab node n

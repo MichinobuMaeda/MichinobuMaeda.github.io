@@ -1,4 +1,9 @@
-# Flash やってみた
++++
+title = "Flash やってみた"
+date = 2000-01-01T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Update: unknown
 

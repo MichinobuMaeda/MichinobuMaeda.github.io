@@ -1,6 +1,9 @@
-# GitHub Pages で Actions を使う
-
-Update: 2022-05-30
++++
+title = "GitHub Pages で Actions を使う"
+date = 2022-05-30T00:00:00+09:00
+categories = ["tech"]
+tags = ["github", "actions"]
++++
 
 GitHub Pages に `push` する前に手元で目次ページを生成していたのを GitHub Actions で処理するようにしてみました。これで PC がなくても GitHub で直接ページを追加編集できるようになります。
 
@@ -35,5 +38,3 @@ Git の `add`, `commit`, `push` には
 [Add & Commit](https://github.com/EndBug/add-and-commit)
 を使いました。
 `git` コマンドでもできるかなと思ったけれど、差分無しで空振りする場合の対応などが面倒ですね。便利なものを使わせていただくことにします。
-
-Tag: github actions

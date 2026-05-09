@@ -1,4 +1,9 @@
-# Google App Engine で JST を使う ( python )
++++
+title = "Google App Engine で JST を使う ( python )"
+date = 2000-01-01T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Update: unknown
 

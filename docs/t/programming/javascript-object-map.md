@@ -1,4 +1,9 @@
-# 整理中：Javascript の Object と Map
++++
+title = "整理中：Javascript の Object と Map"
+date = 2000-01-01T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 久しぶりに、JSON を扱うプログラムを書いてみようと思い立ったものの、すっかり Javascript のことを忘れています。最初、
 

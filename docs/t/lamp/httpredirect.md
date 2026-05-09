@@ -1,6 +1,9 @@
-# HTTP で Redirect しよう
-
-Update: 2011-01-29
++++
+title = "HTTP で Redirect しよう"
+date = 2011-01-29T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 こちらの記事 ["How To Redirect A Web Page, The Smart Way"](http://www.stevenhargrove.com/redirect-web-pages/) によると、 Web サイトの引っ越しをする場合、 HTML で `<meta http-equiv="refresh" ...` とかしてリダイレクトしちゃだめなのだそうです。この方法は SPAM のために使われてきたので、サーチエンジンに嫌われるとのこと。 HTML ファイルに直接書かず JavaScript でどうにかしたとしても、そのくらいのものはサーチエンジンが容易に検出してしまうのでダメ。そのかわりに、 HTTP のステータス 301 でリダイレクトしましょうとのことです。
 

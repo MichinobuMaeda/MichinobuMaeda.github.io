@@ -1,8 +1,9 @@
-# 整理中：Windows で PHP の開発
-
-Update: 2008-06-30
-
-
++++
+title = "整理中：Windows で PHP の開発"
+date = 2008-06-30T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 > この記事を書いた後に [Zend Server](http://www.zend.com/en/products/server-ce/) や [XAMPP](http://www.apachefriends.org/jp/xampp.html) などを知りました。この記事のように個別に入れるよりこれらのパッケージを利用する方が楽です。 ( 参照 : [Zend Server CE / Zend Framework](zendservercezendframework.html) / [PHPのデバッグができる環境](phpdebugger.html) )
 

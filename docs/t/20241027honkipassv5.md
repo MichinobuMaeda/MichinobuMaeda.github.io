@@ -1,6 +1,9 @@
-# 本気でパスワード v5
-
-Update: 2024-10-27
++++
+title = "本気でパスワード v5"
+date = 2024-10-27T00:00:00+09:00
+categories = ["tech"]
+tags = ["tailwind", "material"]
++++
 
 追記 2025-11-29: React による実装に変更 <https://pages.michinobu.jp/honkipass5>
 
@@ -14,5 +17,3 @@ Flutter で作った [v4](https://github.com/MichinobuMaeda/honkipass) は起動
 ~~実物: <https://honkipass.michinobu.jp/>~~
 
 <img src="20241027honkipassv5.png" alt="本気でパスワード v5" style="width:320px;"/>
-
-Tag: tailwind material

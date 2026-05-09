@@ -1,8 +1,9 @@
-# Google App Engine は "multiple web servers"
-
-Update: 2010-10-25
-
-
++++
+title = "Google App Engine は \"multiple web servers\""
+date = 2010-10-25T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 先日から Google App Engine を Java で試しているのですが、どうも挙動がおかしいのです。アクセスするたびに初期化をやり直しているような雰囲気なのです。 Singleton のオブジェクトに格納して置いたはずのキャッシュデータを意図した通りに読んでくれていないようなのです。
 

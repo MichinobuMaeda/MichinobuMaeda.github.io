@@ -1,8 +1,9 @@
-# Geeklogのページをwgetで静的ページに
-
-Update: 2010-03-07
-
-
++++
+title = "Geeklogのページをwgetで静的ページに"
+date = 2010-03-07T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 このサイトを DokuWiki と Movable Type に移動して ( 2011-01 にまた Google sites と Blogger に引っ越し ) 後に残された Geeklog のページを、 wget 使って静的ページに移行しました。これで MySQL がいらなくなります。単純に「ダウンロードしてアップロードして終わり」というわけにはいかないのですが、今回の手順をスクリプトで自動化すれば、サーバの負荷の低減のために Blog系CMS や Wiki のページを静的コンテンツとして公開することも難しくなさそうです。
 

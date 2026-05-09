@@ -1,7 +1,9 @@
-# Chocolatey で Git や Node.js を入れる
-
-Update: 2021-05-05
-
++++
+title = "Chocolatey で Git や Node.js を入れる"
+date = 2021-05-05T00:00:00+09:00
+categories = ["tech"]
+tags = ["windows", "chocolatey", "nodejs", "ssh"]
++++
 
 [Tamuro デモ用ソース](https://github.com/MichinobuMaeda/tamurodemo) を Linux や Bash に慣れていない人に試してもらうための chocolatey で Git や Node.js を入れる手順です。
 
@@ -297,8 +299,3 @@ PS C:\Users\michinobu> code tamurodemo
 ```
 
 ``[Ctrl]+[Shift]+[`]`` でターミナルを起動できます。デフォルトは PowerShell です。 PowerShell が苦手ない人は CMD や Git Bash に変えてもいいですが、今後 Windows のサーバサイドの仕事をする人は慣れておいた方がいいです。
-
-Tag: windows chocolatey nodejs ssh
-
-
-

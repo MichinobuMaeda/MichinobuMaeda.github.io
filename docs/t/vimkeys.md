@@ -1,7 +1,9 @@
-# 覚書: neovim のキーアサイン
-
-Update: 2019-06-24
-
++++
+title = "覚書: neovim のキーアサイン"
+date = 2019-06-24T00:00:00+09:00
+categories = ["tech"]
+tags = ["vim"]
++++
 
 vim もだいたい同じ。
 
@@ -20,8 +22,3 @@ vim もだいたい同じ。
 
 Insert mode
 |<C-h> <C-w> <C-u>  |Delete backward    |
-
-Tag: vim
-
-
-

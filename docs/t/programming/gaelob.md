@@ -1,8 +1,9 @@
-# Google App Engine に大きなデータを入れる
-
-Update: 2010-10-10
-
-
++++
+title = "Google App Engine に大きなデータを入れる"
+date = 2010-10-10T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 > 追記 : 2012-12-23 今は無料コースでも BlogStore が使えるので、こんな面倒なことはしなくてだいじょうぶです。
 

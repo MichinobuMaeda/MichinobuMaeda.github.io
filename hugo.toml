@@ -1,0 +1,46 @@
+baseURL = "https://pages.michinobu.jp/"
+locale = "ja"
+title = "みちのぶのねぐら"
+publishDir = "_site"
+uglyURLs = true
+enableRobotsTXT = false
+
+[params]
+  year = "2026"
+
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
+ignoreLogs = ["warning-module-mounts-excludefiles", "warning-module-mounts-includefiles", "deprecated"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[[menus.main]]
+  name = "工作室"
+  url = "/t/"
+  weight = 1
+
+[[menus.main]]
+  name = "厚生部"
+  url = "/l/"
+  weight = 2
+
+[[menus.main]]
+  name = "政治局"
+  url = "/p/"
+  weight = 3
+
+[[module.mounts]]
+  source = "docs"
+  target = "content"
+  excludeFiles = ["**/*.html", "**/*.htm"]
+
+[[module.mounts]]
+  source = "static"
+  target = "static"
+
+[[module.mounts]]
+  source = "docs"
+  target = "static"
+  excludeFiles = ["**/*.md"]

@@ -1,7 +1,9 @@
-# 共用型レンタルサーバで Laravel
-
-Update: 2018-07-17
-
++++
+title = "共用型レンタルサーバで Laravel"
+date = 2018-07-17T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "Laravel"]
++++
 
 [Laravel](https://laravel.com) を共用型のレンタルサーバで動かす例はあるのですが、
 ssh を使ってインストールするものしか見つからなかったので、
@@ -44,5 +46,3 @@ https://michinobu.jp/larasamplepub/
 さくらのライトプランあたりで実際に試してみたいのですが、それはまたの機会に。
 
 追記：[共用型レンタルサーバで Laravelその２](laravelonsharedserver2.html)
-
-Tag: PHP Laravel

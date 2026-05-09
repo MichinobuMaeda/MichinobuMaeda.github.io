@@ -1,4 +1,9 @@
-# 整理中：Zend Server CE / Zend Framework
++++
+title = "整理中：Zend Server CE / Zend Framework"
+date = 2009-05-06T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 ##
 
@@ -6,7 +11,6 @@
 
 Windows, Linux, Mac にインストールする
 
-2009-05-06
 
 
 

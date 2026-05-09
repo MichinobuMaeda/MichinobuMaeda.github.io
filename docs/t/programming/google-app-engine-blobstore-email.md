@@ -1,6 +1,9 @@
-# Google App Engine の BlobStore やメールなど
-
-Update: 2012-01-22
++++
+title = "Google App Engine の BlobStore やメールなど"
+date = 2012-01-22T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 ※ 後でわかったことを追記しました ( 2012-01-22 )
 

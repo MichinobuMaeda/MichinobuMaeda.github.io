@@ -1,0 +1,14 @@
+{{ define "main" }} {{ partial "tag-cloud.html" . }}
+<ul id="toc">
+  {{ range (.RegularPagesRecursive.ByDate.Reverse) }}
+  <li>
+    <span class="date">{{ .Date.Format "2006/01/02" }}</span>
+    <a
+      href="{{ .RelPermalink }}"
+      title="{{ range .Params.tags }}{{ . }} {{ end }}"
+      >{{ .Title }}</a
+    >
+  </li>
+  {{ end }}
+</ul>
+{{ end }}

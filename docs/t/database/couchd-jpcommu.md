@@ -1,6 +1,9 @@
-# CouchDBを始めてみようと思ったのですが。。。
-
-Update: 2012-12-13
++++
+title = "CouchDBを始めてみようと思ったのですが。。。"
+date = 2012-12-13T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 [Apache CouchDB](http://couchdb.apache.org/) を始めてみようと思ったのですが、[日本のコミュニティのメーリングリスト](https://groups.google.com/group/couchdb-jp/topics?hl=ja) は今年の１月あたりが最後の投稿になっているような。。。周回遅れだったかな。。。とりあえず登録はしました。
 

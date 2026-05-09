@@ -1,6 +1,9 @@
-# 本気でパスワード
-
-Update: 2006-04-30
++++
+title = "本気でパスワード"
+date = 2006-04-30T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 追記: 2021-05-23 最新版はこちら https://pages.michinobu.jp/t/20210522honkipass.html
 

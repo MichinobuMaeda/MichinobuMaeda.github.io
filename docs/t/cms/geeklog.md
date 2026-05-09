@@ -1,6 +1,9 @@
-# Geeklog
-
-Update: 2008-01-22
++++
+title = "Geeklog"
+date = 2008-01-22T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 このサイトを以前 Geeklog で構築したときの記録です。
 

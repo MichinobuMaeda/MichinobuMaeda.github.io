@@ -1,8 +1,9 @@
-# Mac で Web開発するのだ
-
-Update: 2008-01-27
-
-
++++
+title = "Mac で Web開発するのだ"
+date = 2008-01-27T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 > この記事を書いた後に [Zend Server](http://www.zend.com/en/products/server-ce/) や [XAMPP](http://www.apachefriends.org/jp/xampp.html) などを知りました。この記事のように個別に入れるよりこれらのパッケージを利用する方が楽です。 ( 参照 : [Zend Server CE / Zend Framework](https://sites.google.com/site/michinobumaeda/lamp/zendservercezendframework) / [PHPのデバッグができる環境](https://sites.google.com/site/michinobumaeda/lamp/phpdebugger) )
 

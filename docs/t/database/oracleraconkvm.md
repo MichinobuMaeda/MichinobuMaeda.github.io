@@ -1,8 +1,9 @@
-# KVM で Oracle 10g RAC
-
-Update: 2009-12-23
-
-
++++
+title = "KVM で Oracle 10g RAC"
+date = 2009-12-23T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 以前作成した Oracle VM の環境をつぶして、 KVM を使った Oracle 10g RAC のお勉強用の環境を作ってみることにしました。なぜ KVM なのか？ それは、使ってみたかったからです。
 

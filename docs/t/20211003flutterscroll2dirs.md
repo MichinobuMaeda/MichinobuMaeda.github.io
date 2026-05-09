@@ -1,6 +1,9 @@
-# Flutter で見出し行・列固定のスクロール
-
-Update: 2021-10-03
++++
+title = "Flutter で見出し行・列固定のスクロール"
+date = 2021-10-03T00:00:00+09:00
+categories = ["tech"]
+tags = ["flutter", "dart"]
++++
 
 追記: 2021-10-06
 
@@ -371,7 +374,3 @@ Windows では横スクロールができない（一番下までスクロール
       ],
     ),
 ```
-
-
-
-Tag: flutter dart

@@ -1,8 +1,9 @@
-# Rails 4.0 beta を Ubuntu 12.04 に入れてみた
-
-Update: 2012-12-16
-
-
++++
+title = "Rails 4.0 beta を Ubuntu 12.04 に入れてみた"
+date = 2012-12-16T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Rails 未経験の私がひょんなことで Rails 4.0 beta を使ってみることになりました。職場の iMac に続いて自分の MacBook 中の VM で動いている Ubuntu に入れた記録です。MacBook にそのまま入れなかったのは、あまりきれいな環境ではなくて依存するものなど把握するにはよくない状態だからです。ベースにしたのは [CouchDBを始めてみようと思ったのですが。。。](https://sites.google.com/site/michinobumaeda/database/couchd-jpcommu) を入れた環境です。Ruby は入っていません。
 

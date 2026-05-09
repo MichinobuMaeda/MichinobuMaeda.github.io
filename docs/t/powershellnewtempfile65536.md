@@ -1,7 +1,9 @@
-# PowerShell の一時ファイルを消さないと 65,536日目に死ぬ
-
-Update: 2020-07-11
-
++++
+title = "PowerShell の一時ファイルを消さないと 65,536日目に死ぬ"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["powershell"]
++++
 
 65,536日って179年？ 長生きかも。
 
@@ -59,5 +61,3 @@ tmpFFFF.tmp
 
 ``New-TemporaryFile`` は環境変数 ``TEMP`` の場所に ``tmp1.tmp`` から ``tmpFFFF.tmp`` までのファイルをランダムに（たぶん）生成します。
 16進数で 4桁だから 2の 16乗、つまり 65,536個までできるということです。
-
-Tag: powershell

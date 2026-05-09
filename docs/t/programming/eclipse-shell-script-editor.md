@@ -1,6 +1,9 @@
-# Eclipse の Shell Script エディタ
-
-Update: 2013-04-25
++++
+title = "Eclipse の Shell Script エディタ"
+date = 2013-04-25T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 追記 ( 2013-04-25 )：
 

@@ -1,6 +1,9 @@
-# 本気でパスワード v3
-
-Update: 2021-05-26
++++
+title = "本気でパスワード v3"
+date = 2021-05-26T00:00:00+09:00
+categories = ["tech"]
+tags = ["javascript", "material"]
++++
 
 ランダムなパスワードを生成します。
 
@@ -19,5 +22,3 @@ UIのフレームワークには [MDB: Material Design for Bootstrap](https://md
 Google の [Material Components for the web](https://github.com/material-components/material-components-web) はテキストフィールド１個だけでもたいへんです。
 
 [![](20210522honkipass.png)](../honkipass)
-
-Tag: javascript material

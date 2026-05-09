@@ -1,6 +1,9 @@
-# Linux と VMware で Oracle の Cluster
-
-Update: 2008-02-10
++++
+title = "Linux と VMware で Oracle の Cluster"
+date = 2008-02-10T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 ## 低スペックマシンじゃ無理だぁ
 

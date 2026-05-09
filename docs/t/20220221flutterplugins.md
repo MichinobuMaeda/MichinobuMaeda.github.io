@@ -1,6 +1,9 @@
-# 使ってよかった Flutter プラグイン
-
-Update: 2022-02-21
++++
+title = "使ってよかった Flutter プラグイン"
+date = 2022-02-21T00:00:00+09:00
+categories = ["tech"]
+tags = ["flutter", "dart"]
++++
 
 私は基本的に「寄らば大樹の陰」なので、だいたい
 [Flutter Favorite](https://pub.dev/packages?q=is%3Aflutter-favorite)
@@ -34,5 +37,3 @@ Flutter は文書の掲示には向かないのですが、それでも例えば
 ## ``shared_preferences``
 
 Web では LocalStorage 、 Android では、、、とそれぞれについて同等のプログラムを自分で書きたくはないですから。
-
-Tag: flutter dart

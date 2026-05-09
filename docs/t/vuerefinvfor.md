@@ -1,7 +1,9 @@
-# Vue の v-for の中の要素に ref を設定する
-
-Update: 2020-06-24
-
++++
+title = "Vue の v-for の中の要素に ref を設定する"
+date = 2020-06-24T00:00:00+09:00
+categories = ["tech"]
+tags = ["vue"]
++++
 
 Vue の v-for でループしている要素に ref を設定する必要があって、
 
@@ -28,9 +30,3 @@ Answer 9. You have dynamic refs and have multiple elements. To target any single
   ... $refs.element[index] を参照する処理 ...
 </div>
 ```
-
-
-Tag: vue
-
-
-

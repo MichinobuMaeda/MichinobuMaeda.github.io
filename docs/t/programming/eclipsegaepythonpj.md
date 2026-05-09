@@ -1,4 +1,9 @@
-# Eclipse Pydev で Google App Engine
++++
+title = "Eclipse Pydev で Google App Engine"
+date = 2000-01-01T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Update: unknown
 

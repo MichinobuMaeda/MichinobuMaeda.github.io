@@ -1,7 +1,9 @@
-# yarn の警告 "No license field" を止める
-
-Update: 2021-05-08
-
++++
+title = "yarn の警告 \"No license field\" を止める"
+date = 2021-05-08T00:00:00+09:00
+categories = ["tech"]
+tags = ["nodejs"]
++++
 
 ``package.json`` には間違いなく
 
@@ -32,10 +34,3 @@ $ cat ../package.json
 
 たぶんそのディレクトリでまちがって npm か yarn を実行してしまったのでしょうね。
 ’’../package.json`` を消したら警告も表示されなくなりました。
-
-
-
-Tag: nodejs
-
-
-

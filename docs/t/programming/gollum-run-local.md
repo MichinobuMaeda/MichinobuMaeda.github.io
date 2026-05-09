@@ -1,4 +1,9 @@
-# gollum をローカルで動かしてみた
++++
+title = "gollum をローカルで動かしてみた"
+date = 2000-01-01T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Update: 2012/04/23
 

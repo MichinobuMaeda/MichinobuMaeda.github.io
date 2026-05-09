@@ -1,8 +1,9 @@
-# Java で LZH 形式のファイルを解凍する
-
-Update: 2010-10-02
-
-
++++
+title = "Java で LZH 形式のファイルを解凍する"
+date = 2010-10-02T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 郵便番号データを加工するプログラム http://www.zippyzip.jp/ ( 閉鎖 ) を Google App Engine に移植してみたいなと思い立ったのですが、最大の問題はデータが LHA で圧縮されて配布されていること。 Google App Engine で使うことができるプログラム言語はPython と Java なのですが、どちらも Zip 形式みたいに標準の API で OK なんてことは全くありません。
 

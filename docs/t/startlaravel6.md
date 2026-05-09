@@ -1,7 +1,9 @@
-# Laraval 5 による開発の手順 #6
-
-Update: 2018-12-22
-
++++
+title = "Laraval 5 による開発の手順 #6"
+date = 2018-12-22T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "Laravel"]
++++
 
 [Laraval 5 による開発の手順 #5](startlaravel5.html) の続きです。
 
@@ -260,5 +262,3 @@ git checkout tags/startlaravel6
 ----
 
 このシリーズはいったんここまでとします。
-
-Tag: PHP Laravel

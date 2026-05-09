@@ -1,6 +1,9 @@
-# Obsidian でタスク管理
-
-Update: 2025-06-08
++++
+title = "Obsidian でタスク管理"
+date = 2025-06-08T00:00:00+09:00
+categories = ["tech"]
+tags = ["markdown", "obsidian"]
++++
 
 私の日常の情報整理にはセキュリティなどのリスクが低めだという理由で Obsidian を使っています（常駐の客先の仕事を除く）。Markdown のファイルとして保存されるので、将来 Obsidian が使えなくなってもデータはそのまま残ります。PDF の資料やスクリーンショットの画像なども Obsidian のフォルダに放り込んでいます。デバイス間の同期はプラグイン Remotely Save を使った OneDrive 経由で問題なくできています。
 
@@ -51,5 +54,3 @@ done
 最初に作ったファイルの表示はこんな感じです。
 
 ![Preview of tasks](20250607obsidiantasks.png)
-
-Tag: markdown obsidian

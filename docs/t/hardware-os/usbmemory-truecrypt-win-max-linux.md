@@ -1,6 +1,9 @@
-# USBメモリを無料で暗号化
-
-Update: 2012-09-02
++++
+title = "USBメモリを無料で暗号化"
+date = 2012-09-02T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 > 追記 2021-05-15: TrueCrypt はメンテナンスが止まっています。後継のツールとして
 [VeraCrypt](https://veracrypt.fr/en/Home.html) などがあります。

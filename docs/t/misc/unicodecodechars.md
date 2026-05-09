@@ -1,8 +1,9 @@
-# Unicode 内のそれぞれの文字種の範囲
-
-Update: 2009-11-23
-
-
++++
+title = "Unicode 内のそれぞれの文字種の範囲"
+date = 2009-11-23T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 [郵便番号データを利用するサンプル](http://code.google.com/p/zippyzipjp/) を作っている最中に気になって、ひらがな、カタカナなどの文字種の Unicode の文字コードの範囲を調べました。
 

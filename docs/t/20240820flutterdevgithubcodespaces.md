@@ -1,6 +1,9 @@
-# GitHub Codespaces で Firebase & Flutter の開発
-
-Update: 2024-08-20
++++
+title = "GitHub Codespaces で Firebase & Flutter の開発"
+date = 2024-08-20T00:00:00+09:00
+categories = ["tech"]
+tags = ["github", "codespaces", "flutter", "firebase"]
++++
 
 ## やりたかったこと
 
@@ -197,5 +200,3 @@ fvm flutter run -d web-server --web-port=3000
 ## おまけ
 
 Codespaces での作業が終わったら、不要な課金をされないよう必ず忘れずに停止しましょう。
-
-Tag: github codespaces flutter firebase

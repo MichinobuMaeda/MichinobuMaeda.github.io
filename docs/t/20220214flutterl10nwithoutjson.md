@@ -1,6 +1,9 @@
-# Flutter の多言語化で JSON を使いたくない
-
-Update: 2022-02-14
++++
+title = "Flutter の多言語化で JSON を使いたくない"
+date = 2022-02-14T00:00:00+09:00
+categories = ["tech"]
+tags = ["flutter", "dart"]
++++
 
 Flutter の[国際化のガイド](https://docs.flutter.dev/development/accessibility-and-localization/internationalization)
 に ``*.arb`` という
@@ -17,5 +20,3 @@ Flutter の場合、その設定ファイルを変更した後にコード生成
 をその場所に変更して、コード生成のために作成した
 ``*.arb`` ファイルや　``l10n.yaml`` や ``pubspec.yaml`` の ``generate: true``
 の設定を消します。これでビルドが通れば OK.
-
-Tag: flutter dart

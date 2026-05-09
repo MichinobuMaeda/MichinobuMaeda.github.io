@@ -1,7 +1,9 @@
-# DokuWikiの「サイドバー」を変更
-
-Update: 2021-01-02
-
++++
+title = "DokuWikiの「サイドバー」を変更"
+date = 2021-01-02T00:00:00+09:00
+categories = ["tech"]
+tags = ["dokuwiki"]
++++
 
 dokuwikimyuserstyle に追加で以下のようなカスタマイズをしました。
 
@@ -30,5 +32,3 @@ $lang['sidebar']               = 'メニュー';
     padding-left: 0 !important;
 }
 ```
-
-Tag: dokuwiki

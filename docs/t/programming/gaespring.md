@@ -1,7 +1,9 @@
-# Google App Engine で Spring Framework
-
-Update: 2010-10-05
-
++++
+title = "Google App Engine で Spring Framework"
+date = 2010-10-05T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 参考にした本は「新人プログラマのための Google App Engine クラウド・アプリケーション開発講座」（掌田津耶乃 ISBN978-4-89977-248-4）です。そこそこ分量のある本なのですが、 Java で Google 提供の Ajax フレームワークを使わずにとなると、実際に使うのはほんの一部です。この著者の文章は読みやすくて、応用の利く説明の仕方になっているので Python の入門書としても使えるんじゃないかと思うけど、それはまた後日。
 

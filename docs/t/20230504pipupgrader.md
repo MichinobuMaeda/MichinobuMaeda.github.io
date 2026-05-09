@@ -1,6 +1,9 @@
-# pip-upgrader
-
-Update: 2023-05-04
++++
+title = "pip-upgrader"
+date = 2023-05-04T00:00:00+09:00
+categories = ["tech"]
+tags = ["python"]
++++
 
 Python で `requirements.txt` に入っているパッケージを全部まとめて更新したいけど、
 `pip` にはそれらしいコマンドがありません。
@@ -27,5 +30,3 @@ pip-upgrade -p all
 ```
 
 とします。
-
-Tag: python

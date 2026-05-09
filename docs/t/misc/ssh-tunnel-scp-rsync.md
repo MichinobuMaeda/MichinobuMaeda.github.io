@@ -1,6 +1,9 @@
-# ssh tunnel で scp と rsync
-
-Update: 2016-07-29
++++
+title = "ssh tunnel で scp と rsync"
+date = 2016-07-29T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 local ( Mac ) -- remote1 -- remote2 で scp と rsync する手順、Stack Overflow で見つけました。
 

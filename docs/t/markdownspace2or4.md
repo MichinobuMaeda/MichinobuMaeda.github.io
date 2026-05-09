@@ -1,7 +1,9 @@
-# Markdown のインデントはスペース 2個なのか 4個なのか
-
-Update: 2020-07-11
-
++++
+title = "Markdown のインデントはスペース 2個なのか 4個なのか"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["markdown"]
++++
 
 ## EditorConfig が効かない？
 
@@ -58,6 +60,3 @@ HTML みたいに仕様通りでなくても救っているということなの
 ## 結論
 
 JetBrains のツールの挙動に任せるのでいいや。
-
-
-Tag: markdown

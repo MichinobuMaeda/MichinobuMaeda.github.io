@@ -1,7 +1,9 @@
-# Travis CI で Firebase にデプロイする
-
-Update: 2018-07-01
-
++++
+title = "Travis CI で Firebase にデプロイする"
+date = 2018-07-01T00:00:00+09:00
+categories = ["tech"]
+tags = ["Node", "JavaScript", "TravisCI", "Firebase"]
++++
 
 Firebase の hosting と functions を Travis CI でデプロイしてみました。
 設定ファイルはこんな感じです。
@@ -57,5 +59,3 @@ $ yarn add firebase-admin -D
 ```
 
 ``npm`` の場合は ``npm install -D`` です。
-
-Tag: Node JavaScript TravisCI Firebase

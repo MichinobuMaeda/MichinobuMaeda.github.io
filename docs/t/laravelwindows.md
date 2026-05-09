@@ -1,7 +1,9 @@
-# Windows 10 で Laravel を開発する
-
-Update: 2020-07-11
-
++++
+title = "Windows 10 で Laravel を開発する"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["php", "phpunit", "powershell", "laravel", "windows", "git", "sqlite"]
++++
 
 私自身は「おうちにかえってからは Windows なんか見たくない」と言って Mac を使っているのですが、
 世の中そんな人ばかりではないので Windwos 上で Laravel を使う開発の環境を準備する手順を確認してみました。
@@ -175,6 +177,3 @@ php artisan migrate:refresh && .\vendor\bin\phpunit --coverage-html coverage
 php artisan migrate:refresh --seed && php artisan serve --host localhost --port 8000
 ```
 </del>
-Tag: php phpunit powershell laravel windows git sqlite
-
-

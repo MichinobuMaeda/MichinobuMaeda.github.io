@@ -1,6 +1,9 @@
-# Google Cloud Workstations を使ってみる
-
-Update: 2022-10-22
++++
+title = "Google Cloud Workstations を使ってみる"
+date = 2022-10-22T00:00:00+09:00
+categories = ["tech"]
+tags = ["cloud"]
++++
 
 Google が Cloud Workstations というサービスをはじめました。まだ Preview です。 Docker コンテナに Web版の Code OSS などのエディタやポートフォワーディングの機能が付いています。類似のものは GitHub や AWS など他からもでているのですが、私の用途に微妙に合わないところがあって使っていませんでした。これが使えると自分のPCの性能はどうでもよくなります。複数の環境の同居の仕組みで悩む必要もなくなります。
 
@@ -118,5 +121,3 @@ $ scp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -P 2222 fr
 ```
 
 Workstation を再起動するとどうも `sudo apt install` で入れたものが残っていないような。。。代わりに Mac で使い慣れている Homebrew を使いました。
-
-Tag: cloud

@@ -1,6 +1,9 @@
-# Mac OS X の Python に PIL を入れる
-
-Update: 2012-01-07
++++
+title = "Mac OS X の Python に PIL を入れる"
+date = 2012-01-07T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 > 追記 ( 2012-01-07 ) : 下記の手順でエラーは消えましたが、GAE の BlobStore 周りなどはまだ正常に動いていないようです。
 

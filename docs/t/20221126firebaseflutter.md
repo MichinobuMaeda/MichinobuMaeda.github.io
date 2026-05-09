@@ -1,6 +1,9 @@
-# FirebaseとFlutterでクロスプラットフォーム開発
-
-Update: 2022-11-26
++++
+title = "FirebaseとFlutterでクロスプラットフォーム開発"
+date = 2022-11-26T00:00:00+09:00
+categories = ["tech"]
+tags = ["firebase", "flutter", "github"]
++++
 
 [コンピュータ・ユニオン関西IT支部](https://cu-kansai-it.org/) IT技術者・クリエイターカフェ 2022年11月 資料
 
@@ -270,5 +273,3 @@ git push -u origin main
 ### 7. Firebase の設定の追加
 
 参照: [サンプルコード](https://github.com/MichinobuMaeda/cuflutter20221126/) `README.md` B.2. Firebase の設定の追加
-
-Tag: firebase flutter github

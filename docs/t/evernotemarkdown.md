@@ -1,6 +1,9 @@
-# Evernote で Markdown
-
-Update: 2021-05-05
++++
+title = "Evernote で Markdown"
+date = 2021-05-05T00:00:00+09:00
+categories = ["tech"]
+tags = ["markdown", "evernote"]
++++
 
 完全ではないのですが Evernote で Markdown が使えるようになっていました。以前はプログラムコードなどを等幅フォントにしてもイマイチな感じだったのですが、これくらいできてくれると、まあ、いいかな。
 
@@ -58,5 +61,3 @@ H3
 #### H4
 URL
 ```
-
-Tag: markdown evernote

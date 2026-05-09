@@ -1,7 +1,9 @@
-# Windows Subsystem for Linux の Debian で Web 開発の環境を作る
-
-Update: 2020-07-11
-
++++
+title = "Windows Subsystem for Linux の Debian で Web 開発の環境を作る"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["Windows", "WSL", "Debian", "python", "pip", "virtualenv", "git"]
++++
 
 Windows Subsystem for Linux の有効化の手順は
 <https://docs.microsoft.com/ja-jp/windows/wsl/install-win10>
@@ -168,8 +170,3 @@ $ . venv/bin/activate
 
 virtualenv で python のバージョンをプロジェクト毎に設定することも可能です。
 Node.js や PHP などの他の言語にも Python の virtualenv に似た仕組みがあります。
-
-Tag: Windows WSL Debian python pip virtualenv git
-
-
-

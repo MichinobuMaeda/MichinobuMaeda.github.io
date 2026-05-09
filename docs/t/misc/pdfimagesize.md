@@ -1,6 +1,9 @@
-# 画像を埋め込んでもサイズが大きくならないPDF生成
-
-Update: 2013-02-16
++++
+title = "画像を埋め込んでもサイズが大きくならないPDF生成"
+date = 2013-02-16T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 PDFに画像埋め込んだら、どうも元のデータサイズに比べてできあがったPDFの方がかなり大きいような。。。ということはよくあります。PDFである限り避けられないようなことではなかろうと思ったので、久しぶりに Apache FOP で試してみました。７年ぶりくらいかな？まだ Apache FOP ってあるのかな？と少し心配だったのですが、ありました --> [http://xmlgraphics.apache.org/fop/](http://xmlgraphics.apache.org/fop/)
 

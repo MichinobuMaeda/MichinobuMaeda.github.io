@@ -1,6 +1,9 @@
-# Flutter でパスワードの表示を切り替えるボタン
-
-Update: 2021-09-25
++++
+title = "Flutter でパスワードの表示を切り替えるボタン"
+date = 2021-09-25T00:00:00+09:00
+categories = ["tech"]
+tags = ["flutter", "dart", "material"]
++++
 
 ![Password hidden](20210925fluttercustomwidget1.png)
 
@@ -50,5 +53,3 @@ class VisibilityIconButton extends Widget {
 ```
 
 1箇所だけならカスタム・ウィジットを作らなくてもいいんですが、複数箇所の場合はアイコンや色の指定をまとめてできますから。
-
-Tag: flutter dart material

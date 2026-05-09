@@ -1,6 +1,9 @@
-# Windows で ping -a
-
-Update: 2012-08-03
++++
+title = "Windows で ping -a"
+date = 2012-08-03T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 私のように Windows と Unix/Linux を行ったり来たりしていると、似てるけど微妙に違うもので困ることがしょっちゅうあるのですが、今日は、 Windows 限定のちょっとだけ便利なものを見つけました。 Unix/Linux の方ではあり得ない機能なんですが ^^;
 

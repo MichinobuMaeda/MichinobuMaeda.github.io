@@ -1,6 +1,9 @@
-# 簡単開発：Oracle APEX
-
-Update: 2008-12-30
++++
+title = "簡単開発：Oracle APEX"
+date = 2008-12-30T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 https://picasaweb.google.com/105998202054304028324/A?authkey=Gv1sRgCMT4w9mvnqfMfQ#5565386323851339106
 

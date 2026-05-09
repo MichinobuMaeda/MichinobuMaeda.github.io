@@ -1,8 +1,9 @@
-# arno-iptables-firewall は楽でいい
-
-Update: 2016-09-04
-
-
++++
+title = "arno-iptables-firewall は楽でいい"
+date = 2016-09-04T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Debian で iptables を設定しようとしたのですが、どうせ特別変わった設定が必要なわけではないし簡単にできるものはないか、GUIは無しで、と [https://wiki.debian.org/Firewalls](https://wiki.debian.org/Firewalls) の一覧の先頭に載ってる arno-iptables-firewall を使ってみました。詳しいことは [https://github.com/arno-iptables-firewall/aif/](https://github.com/arno-iptables-firewall/aif/) を。Debian 8.5 の場合 apt-get で入れられます。
 

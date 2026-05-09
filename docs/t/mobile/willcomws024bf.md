@@ -1,8 +1,9 @@
-# Willcom どこでもWi-Fi 体験記
-
-Update: 2010-03-18
-
-
++++
+title = "Willcom どこでもWi-Fi 体験記"
+date = 2010-03-18T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Willcom の「どこでもWi-Fi」 ( バッファロー製 WS024BF ) を買いました。今、電波状態のよい都内の喫茶店で試しています。以下、レポートです。
 

@@ -1,6 +1,9 @@
-# VMware Fusion の DHCP の設定
-
-Update: 2011-02-20
++++
+title = "VMware Fusion の DHCP の設定"
+date = 2011-02-20T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 私の MacBook の VMware Fusion 3 に Ubuntu 10.10 Server を複数インストールしました。 ssh 使っていろいろしたくて IPアドレスは固定にしたかったのですが、 NAT や Host Only の仮想ネットワークで効いている DHCP の設定はどうなっていたっけ？とりあえずリース範囲外のアドレスを使いたいんだけど、と設定ファイルを探したのですが、見つかりません。
 

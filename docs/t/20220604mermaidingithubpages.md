@@ -1,6 +1,9 @@
-# GitHub Pages で Mermaid を使う
-
-Update: 2022-06-04
++++
+title = "GitHub Pages で Mermaid を使う"
+date = 2022-06-04T00:00:00+09:00
+categories = ["tech"]
+tags = ["github", "mermaid"]
++++
 
 しばらく前のことになりますが GitHub が Markdown への Mermaid のダイアグラムの埋め込みに対応しました。
 
@@ -51,5 +54,3 @@ graph TD;
 ```
 
 highlight.js が「 `mermaid` なんて言語は知らん」と言ってますが、警告出してなにも処理しないということのようなのでこのままとします。
-
-Tag: github mermaid

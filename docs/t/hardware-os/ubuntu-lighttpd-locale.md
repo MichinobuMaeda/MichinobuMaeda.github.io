@@ -1,8 +1,9 @@
-# Ubuntu で lighttpd 再起動すると locale が設定されてないと...
-
-Update: 2012-01-26
-
-
++++
+title = "Ubuntu で lighttpd 再起動すると locale が設定されてないと..."
+date = 2012-01-26T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Ubuntu に Lighttpd をインストールしたのですが、再起動するとこんなメッセージが出てきました。
 

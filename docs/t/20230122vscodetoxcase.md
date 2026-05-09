@@ -1,6 +1,9 @@
-# VS Code で大文字・小文字変換
-
-Update: 2023-01-22
++++
+title = "VS Code で大文字・小文字変換"
+date = 2023-01-22T00:00:00+09:00
+categories = ["tech"]
+tags = ["vscode"]
++++
 
 VS Code のメニューには大文字・小文字変換のような項目がありません。どうすればいいの？と検索すると、ショートカットキーの設定の例が出てます。
 [https://stackoverflow.com/questions/35184509/make-selected-block-of-text-uppercase](Make selected block of text uppercase)
@@ -24,5 +27,3 @@ Title case: `Vs Code To X Case`
 Kebab case: `vs-code-to-x-case`
 
 Snake case: `vs_code_to_x_case`
-
-Tag: vscode

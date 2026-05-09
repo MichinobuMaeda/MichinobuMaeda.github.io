@@ -1,7 +1,9 @@
-# イベント受付サイトを構築しました
-
-Update: 2018-10-03
-
++++
+title = "イベント受付サイトを構築しました"
+date = 2018-10-03T00:00:00+09:00
+categories = ["tech"]
+tags = ["Firebase", "GitHub", "Vuejs", "SPA"]
++++
 
 ボランティアでイベント受付サイトを構築しました。\\
 日本科学者会議という組織の「第22回総合学術研究集会 in 沖縄 2018.12.7-9」
@@ -47,5 +49,3 @@ https://github.com/MichinobuMaeda/jsasogaku
 
 ---------
 ※コンピユータ・ユニオン http://computer-union.jp/ の部内向け掲示板に投稿した内容を転載。
-
-Tag: Firebase GitHub Vuejs SPA

@@ -1,7 +1,9 @@
-# Laraval 5 による開発の手順 #1
-
-Update: 2018-09-22
-
++++
+title = "Laraval 5 による開発の手順 #1"
+date = 2018-09-22T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "composer", "Laravel", "SQLite"]
++++
 
 追記 : Windows での各種開発ツールの導入については、後から書いた [Chocolatey を使ってみる](chocolatey.html) もご参照ください。
 
@@ -118,5 +120,3 @@ Windows もこれでだいじょうぶそうな気がするけど。。。
 ----
 
 [Laraval 5 による開発の手順 #2](startlaravel2.html) に続く。
-
-Tag: PHP composer Laravel SQLite

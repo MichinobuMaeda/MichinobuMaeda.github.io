@@ -1,7 +1,9 @@
-# Windows で PHP の curl が証明書のエラーを出したら
-
-Update: 2019-01-04
-
++++
+title = "Windows で PHP の curl が証明書のエラーを出したら"
+date = 2019-01-04T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "curl", "SSL"]
++++
 
 Windows で PHP のテストをしていたら
 
@@ -25,5 +27,3 @@ curl.cainfo = C:\php\extras\ssl\cacert.pem
 ```
 
 これで OK
-
-Tag: PHP curl SSL

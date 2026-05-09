@@ -1,6 +1,9 @@
-# Movable Type に Twitter 投稿リンクを追加
-
-Update: 2010-09-28
++++
+title = "Movable Type に Twitter 投稿リンクを追加"
+date = 2010-09-28T00:00:00+09:00
+categories = ["tech"]
+tags = ["html", "twitter"]
++++
 
 みちのぶのねぐら B面 に Twitter で感想など投稿してもらうためのリンクを追加しました。やることは簡単。「ブログ記事」に次のコードを追加しただけ。
 
@@ -13,5 +16,3 @@ Update: 2010-09-28
 追記 : 2011-01-24
 
 引っ越し先のA面、B面、C面ではこのリンクはやめました。
-
-Tag: html twitter

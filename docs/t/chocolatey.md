@@ -1,7 +1,9 @@
-# Chocolatey を使ってみる
-
-Update: 2018-09-25
-
++++
+title = "Chocolatey を使ってみる"
+date = 2018-09-25T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 職場の Windows マシンはセキュリティ上の理由で入れられるものが制限されているので、
 [Laraval 5 による開発の手順 #1](startlaravel1.html) を書いたときにはまだ Chocolatey のことを知りませんでした。
@@ -89,4 +91,3 @@ choco upgrade all
 ``php`` は ``C:¥tools¥php72`` のようなフォルダに置かれます。
 ``php.ini`` の ``extensions`` がすべてコメントアウトされているので、
 全く使いそうにないもの以外はコメントアウトを外してください。
-

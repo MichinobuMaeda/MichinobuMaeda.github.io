@@ -1,6 +1,9 @@
-# draw.io で作図
-
-Update: 2018-11-10
++++
+title = "draw.io で作図"
+date = 2018-11-10T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "draw.io", "Electron"]
++++
 
 まだ [Laraval 5 による開発の手順 #6](startlaravel6.html) の途中ですが、
 そろそろ要件と仕様を整理しておかないとまずいなと作図ツールを探してみました。
@@ -29,5 +32,3 @@ Mac にダウンロードして中をのぞいてみたところ、
 Visio 等より若干とっつきにくいかもしれません。
 
 ![](draw.io.png)
-
-Tag: PHP draw.io Electron

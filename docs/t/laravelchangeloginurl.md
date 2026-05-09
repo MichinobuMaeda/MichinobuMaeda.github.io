@@ -1,7 +1,9 @@
-# Laravel のログインページの URL を変更する
-
-Update: 2019-01-01
-
++++
+title = "Laravel のログインページの URL を変更する"
+date = 2019-01-01T00:00:00+09:00
+categories = ["tech"]
+tags = ["Laravel"]
++++
 
 Laravel で作成中のサイトにログイン方法を選択するページを追加して、
 そのページが最初に表示されるようにしようと思ったのですが、
@@ -71,5 +73,3 @@ Route::post(
 ```
 
 のようなコードを追加すると ``AuthenticationException`` を拾ってくれるそうです。
-
-Tag: Laravel

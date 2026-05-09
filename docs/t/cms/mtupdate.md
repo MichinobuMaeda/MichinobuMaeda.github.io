@@ -1,8 +1,9 @@
-# Movable Type のアップグレード 4.32-ja → 5.02-ja
-
-Update: 2010-07-18
-
-
++++
+title = "Movable Type のアップグレード 4.32-ja → 5.02-ja"
+date = 2010-07-18T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 `http://www.zippyzip.jp/` ( 閉鎖 ) の Movable Type をアップグレードします。元のバージョンは 4.32-ja で、新しいバージョンは 5.02-ja です。Movable Type の日本語版は本家サイトからダウンロードできますが、リンクが見あたりません。ダウンロードボタンのリンクのURLの en を ja に書き換えて [http://www.movabletype.org/downloads/stable/MTOS-5.02-ja.zip](http://www.movabletype.org/downloads/stable/MTOS-5.02-ja.zip) をダウンロードします。
 

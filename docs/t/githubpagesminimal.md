@@ -1,6 +1,9 @@
-# このサイトを GitHub Pages に引っ越し
-
-Update: 2021-05-18
++++
+title = "このサイトを GitHub Pages に引っ越し"
+date = 2021-05-18T00:00:00+09:00
+categories = ["tech"]
+tags = ["github", "ruby", "jekyll"]
++++
 
 レンタルサーバ上の DokuWiki と Blogger 2個と Google Sites にバラバラにページを置いていたのが面倒になったので集約しました。
 
@@ -106,5 +109,3 @@ http://127.0.0.1:4000 でプレビューを参照できます。 出力先の `_
 ```
 
 詳細は [Minimal](https://github.com/pages-themes/minimal) か [私のサイトの設定](https://github.com/MichinobuMaeda/MichinobuMaeda.github.io) を見てください。
-
-Tag: github ruby jekyll

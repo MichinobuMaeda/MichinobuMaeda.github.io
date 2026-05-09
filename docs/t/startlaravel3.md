@@ -1,7 +1,9 @@
-# Laraval 5 による開発の手順 #3
-
-Update: 2018-09-25
-
++++
+title = "Laraval 5 による開発の手順 #3"
+date = 2018-09-25T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "Laravel", "localization"]
++++
 
 [Laraval 5 による開発の手順 #2](startlaravel2.html) の続きです。
 
@@ -162,5 +164,3 @@ git checkout tags/startlaravel3
 ----
 
 [Laraval 5 による開発の手順 #4](startlaravel4.html) に続く。
-
-Tag: PHP Laravel localization

@@ -1,6 +1,9 @@
-# Movable Type で問い合わせページ
-
-Update: 2009-08-25
++++
+title = "Movable Type で問い合わせページ"
+date = 2009-08-25T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 お問い合わせページを追加したのは http://www.zippyzip.jp/ ( 閉鎖 ) です。拡張子 .php のテンプレートを追加するという少し変な方法を使っています。
 

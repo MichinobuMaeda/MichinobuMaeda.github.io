@@ -1,7 +1,9 @@
-# Debian 9 から 10 にアップデート
-
-Update: 2020-07-11
-
++++
+title = "Debian 9 から 10 にアップデート"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["debian", "iptables", "arno-iptables-firewall"]
++++
 
 このサーバで Debian 9 を使っていたのですが、
 Debian 10 が出てからしばらく経つのでアップデートすることにします。
@@ -54,9 +56,3 @@ sudo shutdown -r now
 
 ``arno-iptables-firewall`` は再インストール。
 アンインストールする前の [設定ファイル](arnoiptablesfirewall.html) は残っていたので再設定は不要でした。
-
-
-Tag: debian iptables arno-iptables-firewall
-
-
-

@@ -1,7 +1,9 @@
-# Windows に WordPress のテスト環境を作る
-
-Update: 2021-04-29
-
++++
+title = "Windows に WordPress のテスト環境を作る"
+date = 2021-04-29T00:00:00+09:00
+categories = ["tech"]
+tags = ["Windows", "Apache", "MySQL", "WordPress"]
++++
 
 Webサーバで Linux や BSD などを使っていても、開発やテストには Windows を使う人は多いです。
 Windows でも [WSL](https://docs.microsoft.com/ja-jp/windows/wsl/install-win10) やその他の仮想マシンの製品を使えば Linux が動くので、基本的にはそちらの方をお勧めします。しかしながら Linux のコマンドを使い慣れていないとか、ハードウェア等の制約で WSL や仮想マシンを使えないといったこともあるでしょう。以下、 WSL や仮想マシンを使わずにできるだけ手間をかけずに Apache と PHP と MySQL をセットアップして WordPress を動かす環境を準備する手順です。
@@ -65,8 +67,3 @@ phpMyAdmin で「ユーザアカウント」を選択し、「ユーザアカウ
 ## サーバの停止
 
 Apache と MySQL は "XAMPP Control Panel" の Stop ボタンで停止してください。
-
-Tag: Windows Apache MySQL WordPress
-
-
-

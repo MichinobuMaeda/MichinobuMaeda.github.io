@@ -1,6 +1,9 @@
-# Oracle VM
-
-Update: 2009-07-17
++++
+title = "Oracle VM"
+date = 2009-07-17T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 ## 自宅のPCにインストール
 

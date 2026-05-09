@@ -1,7 +1,9 @@
-# WSL 2 に Docker を入れる
-
-Update: 2020-07-31
-
++++
+title = "WSL 2 に Docker を入れる"
+date = 2020-07-31T00:00:00+09:00
+categories = ["tech"]
+tags = ["windows", "docker", "wsl"]
++++
 
 私の Windows 10 PC にようやく WSL 2 が来ました。
 OneDrive がトラブっているのが原因で Windows のアップデートができないようだということまでわかったものの OneDrive のアンインストールなどの迂回策をとることができず、結局 OS をリセットしました。私の場合、メインのマシンが Mac で Windows のローカルに必要なデータはまったくないので、まあ、なんとか。
@@ -78,8 +80,3 @@ $ docker push michinobumaeda/firebase-tools
 ```
 
 とコマンドをたたくだけです。ただし "latest" だけでなく旧バージョンを残したい場合はタグを指定してください。
-
-Tag: windows docker wsl
-
-
-

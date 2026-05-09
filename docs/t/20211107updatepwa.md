@@ -1,6 +1,9 @@
-# PWA のアップデート
-
-Update: 2021-11-07
++++
+title = "PWA のアップデート"
+date = 2021-11-07T00:00:00+09:00
+categories = ["tech"]
+tags = ["pwa", "nodejs", "react"]
++++
 
 PWA のアプリをアップデートする単純で確実な仕組みがなかなか見つからなくて困っていました。
 以前 [Quasar](https://quasar.dev/) で作ったアプリはキャッシュを削除してリロードするのでよかったようなのですが、
@@ -42,5 +45,3 @@ export default App;
 としたものを Firebase hosting に置いて試してみました。
 
 Android はこれでよさそうです。
-
-Tag: pwa nodejs react

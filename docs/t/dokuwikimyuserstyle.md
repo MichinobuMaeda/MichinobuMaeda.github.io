@@ -1,6 +1,9 @@
-# このサイトのレイアウトを変更してみる
-
-Update: 2020-07-14
++++
+title = "このサイトのレイアウトを変更してみる"
+date = 2020-07-14T00:00:00+09:00
+categories = ["tech"]
+tags = ["dokuwiki"]
++++
 
 追記: 現在、当サイトは DokuWiki を使っていません。
 
@@ -92,9 +95,3 @@ div.dokuwiki div.autoarchive_selector ul li {
   margin-left: 0.75em;
 }
 ```
-
-
-Tag: dokuwiki
-
-
-

@@ -1,6 +1,9 @@
-# オンラインのアイコン・ジェネレータ
-
-Update: 2021-11-20
++++
+title = "オンラインのアイコン・ジェネレータ"
+date = 2021-11-20T00:00:00+09:00
+categories = ["tech"]
+tags = ["web"]
++++
 
 いまどきの Web アプリを作ろうとするとなんだかたくさんのアイコンの画像のファイルが必要になります。こんな感じ
 [What Are Favicons: A Comprehensive Guide](https://sympli.io/blog/heres-everything-you-need-to-know-about-favicons-in-2020/)
@@ -16,5 +19,3 @@ Update: 2021-11-20
 [ICO Convert](https://icoconvert.com/)
 で解像度の指定ができます。
 SVG の入力には対応していないので、先に生成した PNG を使うことになります。
-
-Tag: web

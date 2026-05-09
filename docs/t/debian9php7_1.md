@@ -1,7 +1,9 @@
-# Debian 9 に PHP 7.1, 7.2 をインストールする
-
-Update: 2018-07-03
-
++++
+title = "Debian 9 に PHP 7.1, 7.2 をインストールする"
+date = 2018-07-03T00:00:00+09:00
+categories = ["tech"]
+tags = ["Debian", "PHP"]
++++
 
 共用タイプのレンタルサーバの PHP のバージョンを調べてみると、
 今、この文章を書いている時点 ( 2018年7月 ) では
@@ -29,5 +31,3 @@ PHP 7.1 だったらこんな感じで。
 sudo apt update
 sudo apt install php7.1
 ```
-
-Tag: Debian PHP

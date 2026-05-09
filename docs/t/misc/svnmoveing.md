@@ -1,8 +1,9 @@
-# Subversion のお引っ越し
-
-Update: 2009-08-21
-
-
++++
+title = "Subversion のお引っ越し"
+date = 2009-08-21T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 かんたん、かんたん。
 

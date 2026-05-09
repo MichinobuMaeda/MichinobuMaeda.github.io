@@ -1,6 +1,9 @@
-# 整理中：jQuery 日記
-
-Update: 2011-01-24
++++
+title = "整理中：jQuery 日記"
+date = 2011-01-24T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 ## 2010-07-03 ちょいと試す
 

@@ -6,18 +6,15 @@ URL: <https://pages.michinobu.jp>
 
 ### Prerequisites
 
-- `nvm` or Node.js >= 22
+- hugo >= v0.161
 
 ### Initialize
-
-```bash
-git clone git@github.com:MichinobuMaeda/MichinobuMaeda.github.io.git
-cd MichinobuMaeda.github.io
-npm install
-```
 
 ### Build and test locally
 
 ```bash
-npm run build && npm run start
+git clone git@github.com:MichinobuMaeda/MichinobuMaeda.github.io.git
+cd MichinobuMaeda.github.io
+npm run build
+npm start
 ```

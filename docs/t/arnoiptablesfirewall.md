@@ -1,7 +1,9 @@
-# arno-iptables-firewall
-
-Update: 2017-11-26
-
++++
+title = "arno-iptables-firewall"
+date = 2017-11-26T00:00:00+09:00
+categories = ["tech"]
+tags = ["debian", "firewall", "arno-iptables-firewall"]
++++
 
 リモートで管理する debian 9 のサーバで簡単にファイアウォールの設定ができないものか、
 必要なポートを開けるだけでいいのだけどと探してみたところ、いいのがありました。
@@ -40,5 +42,3 @@ OPEN_ICMP=0
 # update-rc.d arno-iptables-firewall enable
 # service arno-iptables-firewall start
 ```
-
-Tag: debian firewall arno-iptables-firewall

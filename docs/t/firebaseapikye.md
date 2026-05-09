@@ -1,7 +1,9 @@
-# Firebase の API Key は隠さなくていいよね？
-
-Update: 2020-07-11
-
++++
+title = "Firebase の API Key は隠さなくていいよね？"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = ["Firebase", "GitHub"]
++++
 
 とあるイベントの申し込み受付を Firebase と Vue で作っていたのですが、
 GutHub にソースをコミットすると
@@ -38,6 +40,3 @@ Firebase のデータベースやストレージの場合、
 世間の皆さんがやらないことをやって変な穴を開けてしまっても困るし。
 
 > 追記： 結局 CI / CD の仕組みを使って動的に設定することにしました。
-
-Tag: Firebase GitHub
-

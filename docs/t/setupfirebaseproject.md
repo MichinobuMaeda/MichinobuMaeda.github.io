@@ -1,7 +1,9 @@
-# Google Firebase のプロジェクトの設定
-
-Update: 2020-07-11
-
++++
+title = "Google Firebase のプロジェクトの設定"
+date = 2020-07-11T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 [Firebase](https://firebase.google.com/) というのは Google 社が2014年に買い取ったモバイルアプリ、Webアプリ向けのデータ ＆ 認証の
 BaaS ( backend-as-a-service ) です。
@@ -94,8 +96,3 @@ $ firebase init
 $ firebase use project-name
 $ firebase projects:list
 ```
-
-Tag:
-
-
-

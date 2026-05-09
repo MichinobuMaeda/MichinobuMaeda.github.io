@@ -1,8 +1,9 @@
-# Load ave. って結局何？
-
-Update: 2011-11-04
-
-
++++
+title = "Load ave. って結局何？"
+date = 2011-11-04T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 Unix / Linux のサーバの CPU の負荷を表す指標として Load ave. というのがあります。 CPU 使用率だけじゃダメなんです。 CPU 使用率が短いスパンで見ても 10% 以下に収まっているようなときにはどちらも気にしなくていいのですが、負荷が上がった場合、それが継続する場合、気にしないわけにはいきません。「CPU 使用率が 100% だとしても、 Load ave. が 3 なのか 6 なのかでは違う」 ( [http://en.wikipedia.org/wiki/Load\_(computing)](http://en.wikipedia.org/wiki/Load_(computing)) ) ということなのですが、詳しい説明は省きます。
 

@@ -1,6 +1,9 @@
-# ebain 9 で Dovecot の SSL/TLS を設定する
-
-Update: 2017-12-02
++++
+title = "ebain 9 で Dovecot の SSL/TLS を設定する"
+date = 2017-12-02T00:00:00+09:00
+categories = ["tech"]
+tags = ["debian", "dovecot", "imap", "ssl", "tls", "STARTTLS"]
++++
 
 久しぶりにメールサーバのセットアップをしています。
 
@@ -112,5 +115,3 @@ Connection closed by foreign host.
 
 短いドキュメントを読み直してみた感じ、
 Self-signed の証明書でよければこんなものみたいです。
-
-Tag: debian dovecot imap ssl tls STARTTLS

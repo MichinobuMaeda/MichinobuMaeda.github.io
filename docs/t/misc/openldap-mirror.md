@@ -1,8 +1,9 @@
-# OpenLDAP でミラーリング
-
-Update: 2012-12-29
-
-
++++
+title = "OpenLDAP でミラーリング"
+date = 2012-12-29T00:00:00+09:00
+categories = ["tech"]
+tags = []
++++
 
 OpenLDAP でミラーリングしました。双方向、つまり master-master のレプリケーションです。会社でやったことの復習です。 OS は Ubuntu 12.04 Server です。レプリケーションの通信は TLS で保護します。内容は、記事 [OpenLDAP を Ubuntu 12.04 にインストール](https://sites.google.com/site/michinobumaeda/misc/openldap-ubuntu-12_04-install) と一部重複します。
 

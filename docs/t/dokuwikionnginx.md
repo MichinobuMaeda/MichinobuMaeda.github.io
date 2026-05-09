@@ -1,7 +1,9 @@
-# dokuwiki on Nginx
-
-Update: 2017-11-26
-
++++
+title = "dokuwiki on Nginx"
+date = 2017-11-26T00:00:00+09:00
+categories = ["tech"]
+tags = ["nginx", "dokuwiki", "php", "fpm", "fastcgi", "debian", "rewrite"]
++++
 
 久しぶりにサイトリニューアルしてみようかと思い立って、 Nginx に dokuwiki を載せてみました。
 サイト全体ではなくサブディレクトリに dokuwiki を置きます。
@@ -52,5 +54,3 @@ FastCGI の設定は初めてなので、不要な設定があるかもしれま
 dokuwiki のドキュメントには image medeia が云々と書かれていますが、最新版では何もしなくてだいじょうぶそうです。
 
 あとは、同様の設定を別のサブフォルダに入れて動くかどうかですね。
-
-Tag: nginx dokuwiki php fpm fastcgi debian rewrite

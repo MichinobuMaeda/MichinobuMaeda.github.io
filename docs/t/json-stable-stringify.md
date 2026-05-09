@@ -1,7 +1,9 @@
-# JSONを名前順にソートして出力する
-
-Update: 2018-07-01
-
++++
+title = "JSONを名前順にソートして出力する"
+date = 2018-07-01T00:00:00+09:00
+categories = ["tech"]
+tags = ["Node", "JavaScript", "JSON"]
++++
 
 JavaScript の JSON.stringify() は便利なのですが、
 オブジェクトのプロパティが出力される順番は実装依存です。
@@ -49,5 +51,3 @@ console.log(stringify(obj, {space: '  '}));
 ```
 
 と出力されます。
-
-Tag: Node JavaScript JSON

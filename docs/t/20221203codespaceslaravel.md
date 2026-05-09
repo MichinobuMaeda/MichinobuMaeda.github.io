@@ -1,6 +1,9 @@
-# GitHub Codespaces で Laravel を使った開発
-
-Update: 2022-12-03
++++
+title = "GitHub Codespaces で Laravel を使った開発"
+date = 2022-12-03T00:00:00+09:00
+categories = ["tech"]
+tags = ["codespaces", "laravel"]
++++
 
 レンタルサーバ上で動くツールを作成することになりました。
 最近の共用型レンタルサーバでは Composer が動くので Laravel を使います。
@@ -70,5 +73,3 @@ VS Code の拡張は "PHP Extension Pack" と "Laravel Extension Pack"  と "SQL
 作業が終わったら Codespace を止めます。
 
 ![Stop codespace](20221203codespaceslaravel05.png)
-
-Tag: codespaces laravel

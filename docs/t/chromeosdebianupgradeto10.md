@@ -1,7 +1,9 @@
-# Chrome OS の Debian を 10 にアップグレードする
-
-Update: 2020-07-25
-
++++
+title = "Chrome OS の Debian を 10 にアップグレードする"
+date = 2020-07-25T00:00:00+09:00
+categories = ["tech"]
+tags = ["debian", "ChromeOS", "Chromebook"]
++++
 
 Linux が普通に動くタブレットかそれに近いものが欲しくて Chrome OS のノートPCを買ってみました。
 Ubuntu Touch は開発が止まってしまって自分で同様のものをつくるのはかなりたいへんです、というか、無理です。
@@ -65,6 +67,3 @@ Debian GNU/Linux 10 \n \l
 無事にアップグレードできました。
 
 記事では 2時間30分くらいかかるかもとのことでしたが、回線状態が良かったからなのか 30分くらいでできました。
-
-
-Tag: debian ChromeOS Chromebook

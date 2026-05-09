@@ -1,7 +1,9 @@
-# SPFレコードの設定
-
-Update: 2017-12-03
-
++++
+title = "SPFレコードの設定"
+date = 2017-12-03T00:00:00+09:00
+categories = ["tech"]
+tags = ["SPF", "spam", "email", "DNS"]
++++
 
 新設したメールサーバのテストのために Gmail 宛にメールを送ったら迷惑メールにされてしまいました。
 DNSの逆引き設定はしてるし他になんかあったっけ？
@@ -25,7 +27,3 @@ Received-SPF: pass (google.com: domain of user@domain
   designates 123.45.67.89 as permitted sender)
   client-ip=123.45.67.89;
 ```
-
-Tag: SPF spam email DNS
-
-

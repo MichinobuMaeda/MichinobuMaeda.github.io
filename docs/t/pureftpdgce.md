@@ -1,7 +1,9 @@
-# Pure-FTPd の Google Compute Engine 向けの設定
-
-Update: 2019-03-16
-
++++
+title = "Pure-FTPd の Google Compute Engine 向けの設定"
+date = 2019-03-16T00:00:00+09:00
+categories = ["tech"]
+tags = ["Pure-FTPd", "Cloud"]
++++
 
 クラウドで FTP サーバを動かす用があって、
 Google Compute Engine に Pure-FTPd を入れてみました。
@@ -37,5 +39,3 @@ Passive 接続する FTP クライアントにその External IP
 というファイルを無ければ追加して External IP を記載すればいいです。
 設定の反映のために ``sudo service pure-ftpd restart`` してください。
 ( [Enable passive mode for Pure-ftpd on AWS](http://getasysadmin.com/2012/12/enable-passive-mode-for-pure-ftpd-on-aws/) )
-
-Tag: Pure-FTPd Cloud

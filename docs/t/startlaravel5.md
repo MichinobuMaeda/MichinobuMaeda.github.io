@@ -1,7 +1,9 @@
-# Laraval 5 による開発の手順 #5
-
-Update: 2018-10-14
-
++++
+title = "Laraval 5 による開発の手順 #5"
+date = 2018-10-14T00:00:00+09:00
+categories = ["tech"]
+tags = ["PHP", "Laravel", "Mailtrap"]
++++
 
 [Laraval 5 による開発の手順 #4](startlaravel4.html) の続きです。
 
@@ -211,5 +213,3 @@ git checkout tags/startlaravel5
 ----
 
 [Laraval 5 による開発の手順 #6](startlaravel6.html) に続く。
-
-Tag: PHP Laravel Mailtrap

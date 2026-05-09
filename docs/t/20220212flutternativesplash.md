@@ -1,6 +1,9 @@
-# Flutter アプリの起動時にロゴなど表示する
-
-Update: 2022-02-12
++++
+title = "Flutter アプリの起動時にロゴなど表示する"
+date = 2022-02-12T00:00:00+09:00
+categories = ["tech"]
+tags = ["flutter", "dart"]
++++
 
 Flutter のアプリを起動した後しばらく真っ白の状態になるのはなんとかできないものかと思っていたのですが、簡単に解決できますね。少し真面目探したらすぐに
 [flutter_native_splash](https://pub.dev/packages/flutter_native_splash)
@@ -32,5 +35,3 @@ $ flutter pub run flutter_native_splash:create
 ```
 
 を実行すると、 web の場合 ``web/splash`` というフォルダができます。これでできあがりです。
-
-Tag: flutter dart

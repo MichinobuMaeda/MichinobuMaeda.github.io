@@ -1,7 +1,9 @@
-# Anaconda をインストールする
-
-Update: 2021-04-15
-
++++
+title = "Anaconda をインストールする"
+date = 2021-04-15T00:00:00+09:00
+categories = ["tech"]
+tags = ["python"]
++++
 
 「Pythonによるプログラミング入門－東京大学教養学部テキスト－アルゴリズムと情報科学の基礎を学ぶ」ISBN: 978-4-13-062458-9 のための Python の環境として Anaconda をインストールしました。
 
@@ -272,8 +274,3 @@ Python 3.8.5
 ```
 
 までを消してください。私の場合、これを残した  ``.bash_profile_anaconda3`` と消した ``.bash_profile`` を使い分けるようにしています。
-
-Tag: python
-
-
-
