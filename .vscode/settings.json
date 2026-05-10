@@ -4,6 +4,7 @@
     "bierner",
     "certifi",
     "colorclass",
+    "davidanson",
     "docopt",
     "eamodio",
     "esbenp",
@@ -38,6 +39,5 @@
     "docs/",
     ".gitignore"
   ],
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "markdownlint.run": "onSave",
 }

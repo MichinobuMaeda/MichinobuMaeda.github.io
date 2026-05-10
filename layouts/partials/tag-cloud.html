@@ -1,19 +1,33 @@
-{{ $s := newScratch }} {{ range .RegularPagesRecursive }} {{ range .Params.tags
-}} {{ if . }}{{ $s.Add (lower .) 1 }}{{ end }} {{ end }} {{ end }} {{
-$allTagNames := slice }} {{ range .RegularPagesRecursive }} {{ range
-.Params.tags }} {{ if . }}{{ $allTagNames = $allTagNames | append (lower .) }}{{
-end }} {{ end }} {{ end }} {{ $sortedTags := $allTagNames | uniq | sort }} {{ if
-$sortedTags }}
+{{ $s := newScratch }}
+
+{{ range .RegularPagesRecursive }}
+  {{ range .Params.tags }}
+    {{ if . }}{{ $s.Add (lower .) 1 }}{{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $allTagNames := slice }}
+{{ range .RegularPagesRecursive }}
+  {{ range .Params.tags }}
+    {{ if . }}{{ $allTagNames = $allTagNames | append (lower .) }}{{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $sortedTags := $allTagNames | uniq | sort }}
+{{ if $sortedTags }}
 <ul id="tag-cloud">
-  {{ range $sortedTags }} {{ $tag := . }} {{ $count := $s.Get $tag | default 0
-  }} {{ $class := "tag-1" }} {{ if ge $count 16 }}{{ $class = "tag-5" }} {{ else
-  if ge $count 8 }}{{ $class = "tag-4" }} {{ else if ge $count 4 }}{{ $class =
-  "tag-3" }} {{ else if ge $count 2 }}{{ $class = "tag-2" }} {{ end }}
-  <li id="tag-{{ $tag }}">
-    <a href="{{ "/tags/" | relURL }}{{ $tag | urlize }}.html" class="{{ $class }}"
-      >{{ $tag }}</a
-    >
-  </li>
+  {{ range $sortedTags }}
+    {{ $tag := . }}
+    {{ $count := $s.Get $tag | default 0 }}
+    {{ $class := "tag-1" }}
+    {{ if ge $count 16 }}{{ $class = "tag-5" }}
+    {{ else if ge $count 8 }}{{ $class = "tag-4" }}
+    {{ else if ge $count 4 }}{{ $class = "tag-3" }}
+    {{ else if ge $count 2 }}{{ $class = "tag-2" }}
+    {{ end }}
+    <li id="tag-{{ $tag }}">
+      <a href="{{ "/tags/" | relURL }}{{ $tag | urlize }}.html" class="{{ $class }}">{{ $tag }}</a>
+    </li>
   {{ end }}
 </ul>
 {{ end }}

@@ -2,7 +2,7 @@
 title = "このサイトを GitHub Pages に引っ越し"
 date = 2021-05-18T00:00:00+09:00
 categories = ["tech"]
-tags = ["github", "ruby", "jekyll"]
+tags = ["github", "ruby", "jekyll", "site-generatror"]
 +++
 
 レンタルサーバ上の DokuWiki と Blogger 2個と Google Sites にバラバラにページを置いていたのが面倒になったので集約しました。

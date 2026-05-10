@@ -7,6 +7,17 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9QTE7Q732F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9QTE7Q732F');
+    </script>
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
     <!-- Twitter summary card -->
     <meta
       property="og:title"
@@ -63,6 +74,7 @@
     </script>
 
     <title>{{ block "title" . }}{{ if and (not .IsHome) .Title }}{{ .Title }} - {{ end }}みちのぶのねぐら{{ end }}</title>
+
   </head>
 
   <body>

@@ -13,6 +13,6 @@ URL: <https://pages.michinobu.jp>
 ```bash
 git clone git@github.com:MichinobuMaeda/MichinobuMaeda.github.io.git
 cd MichinobuMaeda.github.io
-npm run build
-npm start
+hugo
+hugo server --disableFastRender
 ```

@@ -1,4 +1,5 @@
 {{ define "main" }}
+{{ partial "tag-cloud.html" .Site.Home }}
 <h1>{{ .Title }}</h1>
 <ul id="toc">
   {{ range .Data.Terms.Alphabetical }}

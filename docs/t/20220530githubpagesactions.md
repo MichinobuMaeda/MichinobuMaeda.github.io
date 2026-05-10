@@ -2,12 +2,12 @@
 title = "GitHub Pages で Actions を使う"
 date = 2022-05-30T00:00:00+09:00
 categories = ["tech"]
-tags = ["github", "actions"]
+tags = ["github", "actions", "site-generatror"]
 +++
 
 GitHub Pages に `push` する前に手元で目次ページを生成していたのを GitHub Actions で処理するようにしてみました。これで PC がなくても GitHub で直接ページを追加編集できるようになります。
 
-```
+```yaml
 name: Generate indexes
 on: [push, pull_request]
 jobs:
