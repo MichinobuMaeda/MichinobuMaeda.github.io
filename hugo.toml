@@ -22,6 +22,11 @@ ignoreLogs = ["warning-module-mounts-excludefiles", "warning-module-mounts-inclu
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)'], ['$', '$']]
 
 [[menus.main]]
   name = "工作室"

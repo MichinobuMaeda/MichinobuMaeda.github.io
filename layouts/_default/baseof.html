@@ -38,30 +38,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:image"
-      content="https://pages.michinobu.jp/img/dragon2013.png"
+      content="https://pages.michinobu.jp/img/dragon2013.jpg"
     />
 
     <link href="/css/main.css" rel="stylesheet" />
 
     <!-- MathJax: https://www.mathjax.org/ -->
-    <script>
-      MathJax = {
-        tex: {
-          inlineMath: [
-            ["$", "$"],
-            ["\\(", "\\)"],
-          ],
-        },
-        svg: {
-          fontCache: "global",
-        },
-      };
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js">
     </script>
-    <script
-      id="MathJax-script"
-      async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
 
     <!-- highlight.js -->
     <link
@@ -80,11 +64,10 @@
   <body>
     <!-- Mermaid: https://mermaid.js.org/ -->
     <script type="module">
-      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.8.1/+esm";
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
       mermaid.initialize({ startOnLoad: false, theme: "default" });
       await mermaid.run({ querySelector: "code.language-mermaid" });
     </script>
-
     <div id="main">
       <header>
         <a href="/"
