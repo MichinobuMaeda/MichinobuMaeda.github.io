@@ -81,7 +81,8 @@
     <!-- Mermaid: https://mermaid.js.org/ -->
     <script type="module">
       import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.8.1/+esm";
-      mermaid.initialize({ startOnLoad: true });
+      mermaid.initialize({ startOnLoad: false, theme: "default" });
+      await mermaid.run({ querySelector: "code.language-mermaid" });
     </script>
 
     <div id="main">
